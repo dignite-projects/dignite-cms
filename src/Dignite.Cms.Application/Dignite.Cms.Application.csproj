@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+	  <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Volo.CmsKit.Application" Version="5.3.4" />
+    <ProjectReference Include="..\Dignite.Cms.Admin.Application\Dignite.Cms.Admin.Application.csproj" />
+    <ProjectReference Include="..\Dignite.Cms.Application.Contracts\Dignite.Cms.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Dignite.Cms.Public.Application\Dignite.Cms.Public.Application.csproj" />
+  </ItemGroup>
+
+</Project>

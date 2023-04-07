@@ -1,0 +1,43 @@
+﻿@using Dignite.Cms.Public.Web.TagHelpers;
+@using Dignite.Abp.DynamicForms;
+@using Dignite.FileExplorer.Files;
+@using System.Text.Json;
+@model EntryListViewModel
+
+@if(Model.Entries.Any())
+{
+<div class="row">
+    @foreach(var entry in Model.Entries)
+    {
+        var multiFiles = entry.GetField<List<FileDescriptorDto>>("multiFiles", null);
+        var category = entry.GetField<string[]>("category", null)?[0];
+        var imageUrl = "";
+        if (multiFiles != null && multiFiles.Any())
+        {
+            imageUrl = $"/api/file-explorer/files/{multiFiles[0].ContainerName}/{multiFiles[0].BlobName}";
+        }
+        
+        <div class="col-6 col-md-4 mb-3">
+            <div class="card h-100 bg-light">
+                <a href="@("/"+entry.Language+"/products/"+entry.Slug)" class="text-decoration-none">
+                <img src="@imageUrl" class="card-img-top">
+                <div class="card-body">
+                    <p class="text-secondary">
+                        @category
+                    </p>
+                    <p class="text-black">
+                        @entry.Title
+                    </p>
+                </div>
+                </a>
+            </div>
+        </div>        
+    }
+</div>
+}
+else
+{
+    <div class="alert alert-secondary" role="alert">
+        No matching products were found.
+    </div>
+}

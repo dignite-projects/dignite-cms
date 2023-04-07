@@ -1,0 +1,23 @@
+﻿@using Dignite.Cms.Public.Entries
+@model EntryDto
+@{
+    PageLayout.Content.Title = "荣欣的产品";
+}
+
+<h1 class="my-5 fw-semibold">
+    荣欣的产品
+</h1>
+
+<div class="row gx-5">
+    <div class="col-3">
+        <div class="card">
+            <div class="card-header">
+                <strong>产品分类</strong>
+            </div>
+            <cms-section site-id="Section.SiteId" section-name="products-list" partial-name="cms/Product-Category-Nav"></cms-section>
+        </div>
+    </div>
+    <div class="col-9">
+        <cms-entry-list site-id="Section.SiteId" section-name="products-list" result-count="30" language="@Model.Language" querying-by-field-parameters="@Context.Request.Query["query"]" partial-name="cms/Products-List"></cms-entry-list>
+    </div>
+</div>

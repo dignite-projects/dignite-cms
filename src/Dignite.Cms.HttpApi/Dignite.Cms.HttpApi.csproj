@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+	  <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Volo.CmsKit.HttpApi" Version="5.3.4" />
+    <ProjectReference Include="..\Dignite.Cms.Admin.HttpApi\Dignite.Cms.Admin.HttpApi.csproj" />
+    <ProjectReference Include="..\Dignite.Cms.Application.Contracts\Dignite.Cms.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Dignite.Cms.Public.HttpApi\Dignite.Cms.Public.HttpApi.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,56 @@
+﻿@{
+    var language = Context.Request.Path.Value.Substring(1).Split('/')[0];
+}
+
+<nav class="navbar navbar-expand-lg bg-white mt-2 mb-3" id="main-navbar">
+    <div class="container justify-content-between">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar-collapse" aria-controls="main-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="~/@language">
+            <img src="/sdrx/logo.jpg" alt="山东荣欣塑业有限公司标志" />
+        </a>
+        <div class="collapse navbar-collapse justify-content-center" id="main-navbar-collapse">
+            <ul class="navbar-nav main-navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="~/@language" id="MenuItem_Cms">
+                        首页
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="~/@language/products" id="MenuItem_Cms">
+                        产品
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="~/@language/about-us/introduction" id="MenuItem_Cms">
+                        了解荣欣
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="~/@language/news" id="MenuItem_Cms">
+                        新闻动态
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="~/@language/service-and-support" id="MenuItem_Cms">
+                        服务与支持
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="~/@language/contact" id="MenuItem_Cms">
+                        联系方式
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <div class="btn-group btn-group-sm" role="group" aria-label="语言切换">
+                    <a href="~/?culture=en" class="btn btn-outline-secondary @(language=="en"?"active":"")" role="button">English</a>
+                    <a href="~/?culture=zh-hans" class="btn btn-outline-secondary @(language.Equals("zh-hans", StringComparison.OrdinalIgnoreCase)?"active":"")" role="button">中文</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

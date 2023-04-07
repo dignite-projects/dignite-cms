@@ -1,0 +1,77 @@
+﻿@using Dignite.Cms.Public.Entries
+@using System.Text.Json;
+@using Dignite.Abp.DynamicForms;
+@using Dignite.FileExplorer.Files;
+@model EntryDto
+@{
+    PageLayout.Content.Title = Model.Title;
+}
+
+
+<div class="row justify-content-md-center">
+    <div class="col col-lg-10">
+        <img src="/sdrx/Service-And-Support-1.jpg" class="img-fluid" />
+        <h1 class="fw-bold mt-5 mb-3">
+            托起诚信，盘起品质
+        </h1>
+        <p class="fw-light lh-lg mb-3">
+            "质量至上，用户至上"是企业的宗旨。我们立志在已开创的领域中辛勤耕耘，以卓效的管理、先进的设备及严格的质量保证体系为用户提供品质优良的产品和服务。
+        </p>
+        <ol class="mb-5 fw-light lh-lg">
+            <li>我公司严格按照ISO9001质量体系运行，使产品质量得到充分的保证。</li>
+            <li>塑料托盘符合国家标准GB/T15234-94。</li>
+            <li>质保一年，质保期内，如有质量问题，人为损坏除外，我公司将提供免费更换。</li>
+        </ol>
+        <img src="/sdrx/Service-And-Support-2.jpg" class="img-fluid" />
+        <h1 class="fw-bold mt-5 mb-5 text-center">
+            服务理念
+        </h1>
+        <div class="row gx-5">
+            <div class="col-6">
+                <div class="d-flex mb-5">
+                    <div class="p-3">
+                        <i class="fa fa-black-tie text-primary fs-4" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-light lh-lg">
+                            专业化的服务团队
+                        </h3>
+                        <p class="fw-light lh-lg">
+                            我公司秉持"快速回应、高效沟通、耐心周到"的服务宗旨。在接到客户需求后，我们会在第一时间与客户取得联系，了解客户具体需求情况，使用环境，为客户推荐最适合的产品，帮助客户分析问题、解决问题
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="d-flex mb-5">
+                    <div class="p-3">
+                        <i class="fa fa-angellist text-primary fs-4" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-light lh-lg">
+                            充足的产品库存
+                        </h3>
+                        <p class="fw-light lh-lg">
+                            我公司拥有庞大的仓储能力，与国内多家大型物流企业合作，我们保证现货当天发货，定制3天交货，15天交付。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="d-flex mb-5">
+                    <div class="p-3">
+                        <i class="fa fa-asl-interpreting text-primary fs-4" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-light lh-lg">
+                            完善的售前售后服务流程
+                        </h3>
+                        <p class="fw-light lh-lg">
+                            我公司拥有完善的客户回访管理机制，有一支专业化的服务团队，为您提供量身定制的产品解决方案和快捷、贴心的服务。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+﻿@using Dignite.Abp.DynamicForms.Components;
+@using Dignite.Cms.Admin.Fields;
+@using Dignite.Cms.Admin.Sections;
+@using Dignite.Cms.Localization
+@using Volo.Abp.BlazoriseUI.Components.ObjectExtending
+@using Volo.Abp.Localization;
+@inject IEntryTypeAdminAppService AppService
+@inject IFieldGroupAdminAppService FieldGroupAppService
+@inject IFieldAdminAppService FieldAppService
+@inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
+@inherits AbpComponentBase
+
+<Validation MessageLocalizer="@LH.Localize">
+    <Field>
+        <FieldLabel>@L["DisplayName"]</FieldLabel>
+        <TextEdit @bind-Text="Entity.DisplayName" Autofocus="true">
+            <Feedback>
+                <ValidationError />
+            </Feedback>
+        </TextEdit>
+    </Field>
+</Validation>
+<Validation MessageLocalizer="@LH.Localize">
+    <Field>
+        <FieldLabel>@L["Name"]</FieldLabel>
+        <TextEdit @bind-Text="Entity.Name">
+            <Feedback>
+                <ValidationError />
+            </Feedback>
+        </TextEdit>
+    </Field>
+</Validation>
+<Card>
+    <CardHeader>
+        @L["FieldLayout"]
+    </CardHeader>
+    <CardBody Flex="Flex.Wrap">
+        <Div>
+            @foreach(var tab in Entity.FieldTabs)
+            {
+                <Tabs SelectedTab="@tab.Name">
+                    <Items>
+                        <Tab Name="@tab.Name">@tab.Name</Tab>
+                    </Items>
+                    <Content>
+                        <TabPanel Name="@tab.Name">
+                            <ListGroup ondragover="event.preventDefault();" @ondrop="@(()=> SectionFieldDropped(tab.Name))" Style="min-height:100px;">
+                                @foreach (var item in tab.Fields)
+                                {
+                                    <ListGroupItem draggable="true" @key="@(item.FieldId)"
+                                           @ondragstart="() => DraggingFieldId = item.FieldId"
+                                           @ondragend="@(()=> DraggingFieldId=Guid.Empty)"
+                                           @ondrag="@(()=> DraggingFieldId = item.FieldId)">@item.DisplayName</ListGroupItem>
+                                }
+                            </ListGroup>
+                        </TabPanel>
+                    </Content>
+                </Tabs>
+            }
+        </Div>
+        <Div Margin="Margin.IsAuto.FromStart" ondragover="event.preventDefault();" @ondrop="@FieldDropped">
+            @foreach (var group in FieldGroups)
+            {
+                var fields = AllFields.Where(f => f.GroupId == group.Id && !Entity.FieldTabs.SelectMany(ft=>ft.Fields).Select(ef=>ef.FieldId).Contains(f.Id)).ToList();
+                if (fields.Any())
+                {
+                    <Heading Size="HeadingSize.Is6" Margin="Margin.Is0.FromBottom">@group.Name</Heading>
+                    <ListGroup>
+                        @foreach (var item in fields)
+                        {
+                            <ListGroupItem draggable="true" @key="@(item.Id)"
+                               @ondragstart="() => DraggingFieldId = item.Id"
+                               @ondragend="@(()=> DraggingFieldId=null)"
+                               @ondrag="@(()=> DraggingFieldId = item.Id)">@item.DisplayName</ListGroupItem>
+                        }
+                    </ListGroup>
+                }
+            }
+            @if (AllFields.Where(f => !f.GroupId.HasValue && !Entity.FieldTabs.SelectMany(ft => ft.Fields).Select(ef => ef.FieldId).Contains(f.Id)).Any())
+            {
+                var fields = AllFields.Where(f => !f.GroupId.HasValue).ToList();
+                <Heading Size="HeadingSize.Is6" Margin="Margin.Is0.FromBottom">@L["UngroupedFields"]</Heading>
+                <ListGroup>
+                    @foreach (var item in fields)
+                    {
+                        <ListGroupItem draggable="true" @key="@(item.Id)"
+                               @ondragstart="() => DraggingFieldId = item.Id"
+                               @ondragend="@(()=> DraggingFieldId=null)"
+                               @ondrag="@(()=> DraggingFieldId = item.Id)">@item.DisplayName</ListGroupItem>
+                    }
+                </ListGroup>
+            }
+        </Div>
+    </CardBody>
+    <CardFooter>
+        <Button Color="Color.Default">
+            <Icon Name="IconName.PlusCircle" /> @L["NewTab"]
+        </Button>
+    </CardFooter>
+</Card>

@@ -1,0 +1,131 @@
+﻿@page "/cms/admin/sections"
+@attribute [Authorize(CmsAdminPermissions.Section.Default)]
+
+@using Dignite.Cms.Admin.Sections;
+@using Dignite.Cms.Admin.Sites;
+@using Dignite.Cms.Localization;
+@using Dignite.Cms.Permissions;
+@using Microsoft.AspNetCore.Authorization;
+@using Volo.Abp.Localization;
+@using Volo.Abp.AspNetCore.Components.Web.Theming.Layout
+@using Volo.Abp.BlazoriseUI.Components.ObjectExtending
+@inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
+
+@inject ISiteAdminAppService SiteAdminAppService
+@inherits AbpCrudPageBase<ISectionAdminAppService, SectionDto, Guid, GetSectionsInput, CreateSectionInput, UpdateSectionInput>
+
+<PageTitle>@L["Sections"]</PageTitle>
+@* ************************* PAGE HEADER ************************* *@
+<PageHeader Title="@L["Sections"]"
+            BreadcrumbItems="@BreadcrumbItems"
+            Toolbar="@Toolbar">
+</PageHeader>
+
+
+<Row>
+    <Column ColumnSize="ColumnSize.Is3">
+        <Card>
+            <CardHeader>
+                <Heading Size="HeadingSize.Is6" Margin="Margin.Is2.FromTop">@L["Sites"]</Heading>
+            </CardHeader>
+            <CardBody Padding="Padding.Is0">
+                <AutoHeight ExtraHeight="35">
+                    @* ************************* Sections ************************* *@
+                    @if (CurrentSite!=null)
+                    {
+                        <ListGroup Flush Mode="ListGroupMode.Selectable" @bind-SelectedItem="SelectedSiteItemName">
+                        @foreach (var item in AllSites)
+                            {
+                                <ListGroupItem Name="@item.Name" Color="Color.Light" Flex="Flex.JustifyContent.Between.AlignItems.Center" Clicked="()=>OnSiteClickAsync(item)">
+                                    @item.DisplayName
+                                </ListGroupItem>
+                            }
+                        </ListGroup>
+                        }
+                </AutoHeight>
+            </CardBody>
+        </Card>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is9">
+
+        @* ************************* PAGE BODY ************************* *@
+        <Card>
+            <CardHeader>
+                <Addons>
+                    <Addon AddonType="AddonType.Body">
+                        <TextEdit Placeholder="@L["Search"]" @bind-Text="@GetListInput.Filter" />
+                    </Addon>
+                    <Addon AddonType="AddonType.End">
+                        <Button Color="Color.Secondary" Clicked="SearchEntitiesAsync">
+                            <Icon Name="IconName.Search"></Icon>
+                        </Button>
+                    </Addon>
+                </Addons>
+            </CardHeader>
+            <CardBody>
+                @* ************************* DATA GRID ************************* *@
+                <ExtensibleDataGrid TItem="SectionDto"
+                                    Data="@Entities"
+                                    ReadData="@OnDataGridReadAsync"
+                                    TotalItems="@TotalCount"
+                                    ShowPager="true"
+                                    PageSize="@PageSize"
+                                    CurrentPage="@CurrentPage"
+                                    Columns="@SectionManagementTableColumns">
+                </ExtensibleDataGrid>
+            </CardBody>
+        </Card>
+
+    </Column>
+</Row>
+
+
+@* ************************* CREATE MODAL ************************* *@
+@if (HasCreatePermission)
+{
+    <Blazorise.Modal @ref="CreateModal" Closing="@ClosingCreateModal">
+        <Blazorise.ModalContent Centered="true">
+            <Blazorise.Form>
+                <Blazorise.ModalHeader>
+                    <Blazorise.ModalTitle>@L["New"]</Blazorise.ModalTitle>
+                    <Blazorise.CloseButton Clicked="CloseCreateModalAsync"/>
+                </Blazorise.ModalHeader>
+                <Blazorise.ModalBody>
+                    <Blazorise.Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                        <CreateOrUpdateSectionComponent Entity="@NewEntity"></CreateOrUpdateSectionComponent>
+                        <ExtensionProperties TEntityType="CreateSectionInput" TResourceType="CmsResource" Entity="@NewEntity" LH="@LH" />
+                    </Blazorise.Validations>
+                </Blazorise.ModalBody>
+                <Blazorise.ModalFooter>
+                    <Blazorise.Button Color="@Blazorise.Color.Secondary" Clicked="CloseCreateModalAsync">@L["Cancel"]</Blazorise.Button>
+                    <SubmitButton Clicked="@CreateEntityAsync"/>
+                </Blazorise.ModalFooter>
+            </Blazorise.Form>
+        </Blazorise.ModalContent>
+    </Blazorise.Modal>
+}
+@* ************************* EDIT MODAL ************************* *@
+@if (HasUpdatePermission)
+{
+    <Blazorise.Modal @ref="EditModal" Closing="@ClosingEditModal">
+        <Blazorise.ModalContent Centered="true">
+            <Blazorise.Form>
+                <Blazorise.ModalHeader>
+                    <Blazorise.ModalTitle>@L["Edit"]</Blazorise.ModalTitle>
+                    <Blazorise.CloseButton Clicked="CloseEditModalAsync"/>
+                </Blazorise.ModalHeader>
+                <Blazorise.ModalBody>
+                    <Blazorise.Validations @ref="@EditValidationsRef" Model="@EditingEntity" ValidateOnLoad="false">
+                        <input type="hidden" name="ConcurrencyStamp" @bind-value="EditingEntity.ConcurrencyStamp"/>
+                        <CreateOrUpdateSectionComponent Entity="@EditingEntity"></CreateOrUpdateSectionComponent>
+                        <ExtensionProperties TEntityType="UpdateSectionInput" TResourceType="CmsResource" Entity="@EditingEntity" LH="@LH" />
+                    </Blazorise.Validations>
+                </Blazorise.ModalBody>
+                <Blazorise.ModalFooter>
+                    <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="CloseEditModalAsync">@L["Cancel"]</Blazorise.Button>
+                    <SubmitButton Clicked="@UpdateEntityAsync"/>
+                </Blazorise.ModalFooter>
+            </Blazorise.Form>
+        </Blazorise.ModalContent>
+    </Blazorise.Modal>
+}

@@ -1,0 +1,93 @@
+﻿@using Dignite.Cms.Admin.Sites
+@using Dignite.Cms.Localization
+@using Volo.Abp.BlazoriseUI.Components.ObjectExtending
+@using Volo.Abp.Localization;
+@inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
+@inherits AbpComponentBase
+
+<Validation MessageLocalizer="@LH.Localize">
+    <Field>
+        <FieldLabel>@L["DisplayName"]</FieldLabel>
+        <TextEdit @bind-Text="Entity.DisplayName" Autofocus="true">
+            <Feedback>
+                <ValidationError />
+            </Feedback>
+        </TextEdit>
+    </Field>
+</Validation>
+<Validation MessageLocalizer="@LH.Localize">
+    <Field>
+        <FieldLabel>@L["Name"]</FieldLabel>
+        <TextEdit @bind-Text="Entity.Name">
+            <Feedback>
+                <ValidationError />
+            </Feedback>
+        </TextEdit>
+    </Field>
+</Validation>
+<Field>
+    <FieldLabel>@L["Languages"]</FieldLabel>
+    <ListGroup Flush>
+        @foreach (var language in AllLanguages)
+        {
+            <ListGroupItem Flex="Flex.JustifyContent.Between.AlignItems.Center">
+                <Check TValue="bool" Checked="@Entity.Languages.Any(l=>l.Language==language.CultureName)" CheckedChanged="(value)=>OnLanguageChanged(language.CultureName,value)">@language.DisplayName</Check>
+                <Button Color="Color.Primary" Size="Size.Small" Clicked="()=>OnSetDefault(language.CultureName)">@L["DefaultLanguage"]</Button>
+            </ListGroupItem>
+        }
+    </ListGroup>
+</Field>
+<Validation MessageLocalizer="@LH.Localize">
+    <Field>
+        <FieldLabel>@L["BaseUrl"]</FieldLabel>
+        <TextEdit @bind-Text="Entity.BaseUrl">
+            <Feedback>
+                <ValidationError />
+            </Feedback>
+        </TextEdit>
+    </Field>
+</Validation>
+<Field>
+    <Check TValue="bool" @bind-Checked="Entity.IsDefault">@L["IsDefault"]</Check>
+</Field>
+<Field>
+    <Check TValue="bool" @bind-Checked="Entity.IsActive">@L["IsActive"]</Check>
+</Field>
+
+
+@code {
+    [Parameter] public CreateOrUpdateSiteInputBase Entity { get; set; }
+    [Parameter] public IReadOnlyList<LanguageInfo> AllLanguages { get; set; }
+
+    public CreateOrUpdateSiteComponent()
+    {
+        LocalizationResource = typeof(CmsResource);
+    }
+
+    void OnLanguageChanged(string cultureName, bool value, bool defaultLanguage=false)
+    {
+        if (value)
+        {
+            Entity.Languages.Add(new CreateOrUpdateLanguageInput(defaultLanguage, cultureName));
+        }
+        else
+        {
+            Entity.Languages.RemoveAll(l => l.Language == cultureName);
+        }
+    }
+
+    void OnSetDefault(string cultureName)
+    {
+        foreach (var sl in Entity.Languages)
+        {
+            if (sl.Language == cultureName)
+            {
+                sl.IsDefault = true;
+            }
+            else
+            {
+                sl.IsDefault = false;
+            }
+        }
+    }
+}

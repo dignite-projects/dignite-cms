@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+	<RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Validation" Version="5.3.4" />
+	<PackageReference Include="Volo.CmsKit.Domain.Shared" Version="5.3.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.5" />
+  </ItemGroup>
+	
+  <ItemGroup>
+	<EmbeddedResource Include="Dignite\Cms\Localization\Resources\*.json" />
+	<Content Remove="Dignite\Cms\Localization\Resources\*.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\abp-modules\modules\field-customizing\src\Dignite.Abp.FieldCustomizing.Domain.Shared\Dignite.Abp.FieldCustomizing.Domain.Shared.csproj" />
+    <ProjectReference Include="..\..\..\abp-modules\modules\file-explorer\src\Dignite.FileExplorer.Domain.Shared\Dignite.FileExplorer.Domain.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

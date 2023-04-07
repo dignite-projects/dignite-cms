@@ -1,0 +1,94 @@
+﻿@page "/cms/admin/entries"
+@using Dignite.Cms.Admin.Entries;
+@using Dignite.Cms.Admin.Sections;
+@using Dignite.Cms.Admin.Sites;
+@using Dignite.Cms.Localization;
+@using Dignite.Cms.Permissions;
+@using Microsoft.AspNetCore.Authorization;
+@using Volo.Abp.AspNetCore.Components.Web.Theming.Layout
+@using Volo.Abp.Localization;
+@inject ISectionAdminAppService SectionAppService
+@inject ISiteAdminAppService SiteAppService
+@inject NavigationManager Navigation
+@inject ILanguageProvider LanguageProvider
+@attribute [Authorize(CmsAdminPermissions.Entry.Default)]
+@inherits AbpCrudPageBase<IEntryAdminAppService, EntryDto, Guid, GetEntriesInput, CreateEntryInput, UpdateEntryInput>
+
+
+<PageTitle>@L["Entries"]</PageTitle>
+
+@* ************************* PAGE HEADER ************************* *@
+<PageHeader Title="@L["Entries"]" BreadcrumbItems="@BreadcrumbItems" Toolbar="@Toolbar"></PageHeader>
+<Row>
+    <Column ColumnSize="ColumnSize.Is3">
+        <Card>
+            <CardBody Padding="Padding.Is0">
+                <AutoHeight ExtraHeight="35">
+                    @* ************************* Sections ************************* *@
+                    @if (CurrentSite != null)
+                    {
+                        <Select TValue="Guid" SelectedValue="@CurrentSite.Id" SelectedValueChanged="OnSiteChangedAsync">
+                            @foreach(var item in AllSites)
+                            {
+                                <SelectItem Value="@item.Id">@item.DisplayName</SelectItem>                                
+                            }
+                        </Select>
+                    }
+                    <ListGroup Flush Mode="ListGroupMode.Selectable" @bind-SelectedItem="@CurrentSectionName">
+                        @foreach (var item in Sections)
+                        {
+                            <ListGroupItem Name="@item.Name" Color="Color.Light" Clicked="()=>OnSectionClickAsync(item)">
+                                @item.DisplayName
+                            </ListGroupItem>
+                        }
+                    </ListGroup>
+                </AutoHeight>
+            </CardBody>
+        </Card>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is9">
+
+        @* ************************* PAGE BODY ************************* *@
+        <Card>
+            <CardHeader>
+                <Fields>
+                @if (CurrentSite != null && CurrentSite.Languages.Count > 1)
+                {
+                    <Column ColumnSize="ColumnSize.Is3.OnDesktop">
+                        <Select TValue="string" SelectedValue="@Language" SelectedValueChanged="@OnLanguageChangedAsync">
+                            @foreach(var sl in CurrentSite.Languages)
+                            {
+                                <SelectItem Value="sl.Language">@AllLanguages.First(l=>l.CultureName.Equals(sl.Language, StringComparison.OrdinalIgnoreCase)).DisplayName</SelectItem>
+                            }
+                        </Select>
+                    </Column>
+                }
+                    <Column ColumnSize="ColumnSize.Is9.OnDesktop">
+                    <Addons>
+                        <Addon AddonType="AddonType.Body">
+                            <TextEdit Placeholder="@L["Search"]" @bind-Text="@GetListInput.Filter" />
+                        </Addon>
+                        <Addon AddonType="AddonType.End">
+                            <Button Color="Color.Secondary" Clicked="SearchEntitiesAsync">
+                                <Icon Name="IconName.Search"></Icon>
+                            </Button>
+                        </Addon>
+                    </Addons>
+                </Column>
+                </Fields>
+            </CardHeader>
+            <CardBody>
+                @* ************************* DATA GRID ************************* *@
+                <ExtensibleDataGrid TItem="EntryDto"
+                                    Data="@Entities"
+                                    ReadData="@OnDataGridReadAsync"
+                                    TotalItems="@TotalCount"
+                                    ShowPager="true"
+                                    PageSize="@PageSize"
+                                    CurrentPage="@CurrentPage"
+                                    Columns="@EntryManagementTableColumns">
+                </ExtensibleDataGrid>
+            </CardBody>
+        </Card>
+    </Column>
+</Row>

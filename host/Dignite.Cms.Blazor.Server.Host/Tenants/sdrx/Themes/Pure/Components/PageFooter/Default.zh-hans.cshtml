@@ -1,0 +1,98 @@
+﻿@{
+    var language = Context.Request.Path.Value.Substring(1).Split('/')[0];
+}
+<div class="container-fluid mt-5 footer-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-6">
+                <div class="card bg-transparent border-0">
+                    <div class="card-header bg-transparent border-0 text-white-50">
+                        产品系列
+                    </div>
+                    <ul class="list-group d-flex flex-row flex-wrap">
+                        <li class="list-group-item border-0 bg-transparent text-white w-50">塑料托盘</li>
+                        <li class="list-group-item border-0 bg-transparent text-white w-50">吹塑托盘</li>
+                        <li class="list-group-item border-0 bg-transparent text-white w-50">防渗漏托盘</li>
+                        <li class="list-group-item border-0 bg-transparent text-white w-50">塑料卡板箱</li>
+                        <li class="list-group-item border-0 bg-transparent text-white w-50">塑料周转筐</li>
+                        <li class="list-group-item border-0 bg-transparent text-white w-50">塑料周转箱</li>
+                        <li class="list-group-item border-0 bg-transparent text-white w-50">塑料零件盒</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="card bg-transparent border-0">
+                    <div class="card-header bg-transparent border-0 text-white-50">
+                        了解公司
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item border-0 bg-transparent text-white">
+                            <a class="nav-link" href="~/@language/about-us/introduction" id="MenuItem_Cms">
+                                公司简介
+                            </a>
+                        </li>
+                        <li class="list-group-item border-0 bg-transparent text-white">
+                            
+                            <a class="nav-link" href="~/@language/about-us/production-capacity" id="MenuItem_Cms">
+                                生产能力
+                            </a>
+                        </li>
+                        <li class="list-group-item border-0 bg-transparent text-white">                            
+                            <a class="nav-link" href="~/@language/about-us/partner" id="MenuItem_Cms">
+                                合作伙伴
+                            </a>
+                        </li>
+                        <li class="list-group-item border-0 bg-transparent text-white">                            
+                            <a class="nav-link" href="~/@language/about-us/certifications" id="MenuItem_Cms">
+                                资质证书
+                            </a>
+                        </li>
+                        <li class="list-group-item border-0 bg-transparent text-white">
+                            <a class="nav-link" href="~/@language/about-us/company-culture" id="MenuItem_Cms">
+                                企业文化
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="card bg-transparent border-0">
+                    <div class="card-header bg-transparent border-0 text-white-50">
+                        其他
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item border-0 bg-transparent text-white">                            
+                            <a class="nav-link" href="~/@language/news" id="MenuItem_Cms">
+                                新闻动态
+                            </a>
+                        </li>
+                        <li class="list-group-item border-0 bg-transparent text-white">                            
+                            <a class="nav-link" href="~/@language/service-and-support" id="MenuItem_Cms">
+                                服务与支持
+                            </a>
+                        </li>
+                        <li class="list-group-item border-0 bg-transparent text-white">
+                            <a class="nav-link" href="~/@language/contact" id="MenuItem_Cms">
+                                联系方式
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <img src="~/sdrx/qrcode.jpg" class="img-fluid" style="max-width:200px;" />
+            </div>
+        </div>
+        <hr />
+        <div class="d-flex">
+            <ul class="list-inline text-white">
+                <li class="list-inline-item">Copyright©@DateTime.Now.Year</li>
+                <li class="list-inline-item">山东荣欣塑业有限公司</li>
+                <li class="list-inline-item"><a href="http://beian.miit.gov.cn" class="text-reset text-decoration-none">鲁ICP备2023007920号</a></li>
+            </ul>
+            <ul class="list-inline text-white ms-auto">
+                <li class="list-inline-item">Web Design By <a href="http://dignite.com" class="text-reset text-decoration-none">Dignite</a></li>
+            </ul>
+        </div>
+    </div>    
+</div>

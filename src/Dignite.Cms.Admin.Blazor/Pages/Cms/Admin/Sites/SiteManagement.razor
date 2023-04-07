@@ -1,0 +1,100 @@
+﻿@page "/cms/admin/sites"
+@attribute [Authorize(CmsAdminPermissions.Site.Default)]
+@using Dignite.Cms.Admin.Sites;
+@using Dignite.Cms.Localization;
+@using Dignite.Cms.Permissions;
+@using Microsoft.AspNetCore.Authorization;
+@using Volo.Abp.Localization;
+@using Volo.Abp.AspNetCore.Components.Web.Theming.Layout
+@using Volo.Abp.BlazoriseUI.Components.ObjectExtending
+@inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
+
+@inject ILanguageProvider LanguageProvider
+@inherits AbpCrudPageBase<ISiteAdminAppService, SiteDto, Guid, GetSitesInput, CreateSiteInput, UpdateSiteInput>
+
+<PageTitle>@L["Sites"]</PageTitle>
+@* ************************* PAGE HEADER ************************* *@
+<PageHeader Title="@L["Sites"]"
+            BreadcrumbItems="@BreadcrumbItems"
+            Toolbar="@Toolbar">
+</PageHeader>
+
+@* ************************* PAGE BODY ************************* *@
+<Card>
+    <CardHeader>
+        <Addons>
+            <Addon AddonType="AddonType.Body">
+                <TextEdit Placeholder="@L["Search"]" @bind-Text="@GetListInput.Filter" />
+            </Addon>
+            <Addon AddonType="AddonType.End">
+                <Button Color="Color.Secondary" Clicked="SearchEntitiesAsync">
+                    <Icon Name="IconName.Search"></Icon>
+                </Button>
+            </Addon>
+        </Addons>
+    </CardHeader>
+    <CardBody>
+        @* ************************* DATA GRID ************************* *@
+        <ExtensibleDataGrid TItem="SiteDto"
+                            Data="@Entities"
+                            ReadData="@OnDataGridReadAsync"
+                            TotalItems="@TotalCount"
+                            ShowPager="true"
+                            PageSize="@PageSize"
+                            CurrentPage="@CurrentPage"
+                            Columns="@SiteManagementTableColumns">
+        </ExtensibleDataGrid>
+    </CardBody>
+</Card>
+
+
+
+@* ************************* CREATE MODAL ************************* *@
+@if (HasCreatePermission)
+{
+    <Modal @ref="CreateModal" Closing="@ClosingCreateModal">
+        <ModalContent Centered="true">
+            <Form>
+                <ModalHeader>
+                    <ModalTitle>@L["New"]</ModalTitle>
+                    <CloseButton Clicked="CloseCreateModalAsync"/>
+                </ModalHeader>
+                <ModalBody>
+                    <Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                        <CreateOrUpdateSiteComponent Entity="@NewEntity" AllLanguages="@AllLanguages"></CreateOrUpdateSiteComponent>
+                        <ExtensionProperties TEntityType="CreateSiteInput" TResourceType="CmsResource" Entity="@NewEntity" LH="@LH" />
+                    </Validations>
+                </ModalBody>
+                <ModalFooter>
+                    <Button Color="@Color.Secondary" Clicked="CloseCreateModalAsync">@L["Cancel"]</Button>
+                    <SubmitButton Clicked="@CreateEntityAsync"/>
+                </ModalFooter>
+            </Form>
+        </ModalContent>
+    </Modal>
+}
+@* ************************* EDIT MODAL ************************* *@
+@if (HasUpdatePermission)
+{
+    <Modal @ref="EditModal" Closing="@ClosingEditModal">
+        <ModalContent Centered="true">
+            <Form>
+                <ModalHeader>
+                    <ModalTitle>@L["Edit"]</ModalTitle>
+                    <CloseButton Clicked="CloseEditModalAsync"/>
+                </ModalHeader>
+                <ModalBody>
+                    <Validations @ref="@EditValidationsRef" Model="@EditingEntity" ValidateOnLoad="false">
+                        <input type="hidden" name="ConcurrencyStamp" @bind-value="EditingEntity.ConcurrencyStamp"/>
+                        <CreateOrUpdateSiteComponent Entity="@EditingEntity" AllLanguages="@AllLanguages"></CreateOrUpdateSiteComponent>
+                        <ExtensionProperties TEntityType="UpdateSiteInput" TResourceType="CmsResource" Entity="@EditingEntity" LH="@LH" />
+                    </Validations>
+                </ModalBody>
+                <ModalFooter>
+                    <Button Color="Color.Secondary" Clicked="CloseEditModalAsync">@L["Cancel"]</Button>
+                    <SubmitButton Clicked="@UpdateEntityAsync"/>
+                </ModalFooter>
+            </Form>
+        </ModalContent>
+    </Modal>
+}

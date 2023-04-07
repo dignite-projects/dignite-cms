@@ -1,0 +1,11 @@
+﻿@using Dignite.Cms.Public.Entries
+@model EntryDto
+@{
+    PageLayout.Content.Title = "Rongxin's news, trends, notices";
+}
+
+<h1 class="my-5 fw-semibold">
+    Rongxin's news, trends, notices
+</h1>
+
+<cms-entry-list site-id="Section.SiteId" section-name="news-list" result-count="30" language="@Model.Language" partial-name="cms/News-List"></cms-entry-list>

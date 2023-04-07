@@ -1,0 +1,33 @@
+﻿@using Dignite.Cms.Public.Entries
+@using System.Text.Json;
+@using Dignite.Abp.DynamicForms;
+@using Dignite.FileExplorer.Files;
+@model EntryDto
+@{
+    PageLayout.Content.Title = Model.Title;
+}
+
+<nav aria-label="breadcrumb" class="bg-secondary bg-opacity-10 mb-3 p-2 ps-3">
+    <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="~/@Model.Language">Home</a></li>
+        <li class="breadcrumb-item"><a href="~/@Model.Language/news">News</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Details</li>
+    </ol>
+</nav>
+
+<div class="p-5">
+    <h3 class="mb-5 text-center">
+        @Model.Title
+    </h3>
+    <div class="row justify-content-md-center">
+        <div class="col col-lg-8">
+            <p>
+                Publish Time：@Model.PublishTime
+            </p>
+            <hr />
+            <div class="content">
+                @Html.Raw(Model.GetField<string>("content", null))
+            </div>
+        </div>
+    </div>
+</div>

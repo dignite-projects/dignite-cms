@@ -1,0 +1,99 @@
+﻿using Dignite.Abp.BlobStoring;
+using Dignite.Cms.Admin.Entries;
+using Dignite.Cms.Permissions;
+using Dignite.FileExplorer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp.Application;
+using Volo.Abp.AutoMapper;
+using Volo.Abp.BlobStoring;
+using Volo.Abp.Modularity;
+using Volo.CmsKit.Admin;
+
+namespace Dignite.Cms.Admin
+{
+    [DependsOn(
+        typeof(CmsDomainModule),
+        typeof(CmsAdminApplicationContractsModule),
+        typeof(CmsKitAdminApplicationModule),
+        typeof(AbpDddApplicationModule),
+        typeof(AbpAutoMapperModule),
+        typeof(FileExplorerApplicationModule)
+        )]
+    public class CmsAdminApplicationModule : AbpModule
+    {
+        public override void ConfigureServices(ServiceConfigurationContext context)
+        {
+            context.Services.AddAutoMapperObjectMapper<CmsAdminApplicationModule>();
+            Configure<AbpAutoMapperOptions>(options =>
+            {
+                options.AddMaps<CmsAdminApplicationModule>(validate: true);
+            });
+
+            Configure<AuthorizationOptions>(options =>
+            {
+                options.AddPolicy("DigniteCmsCreatePolicy", policy => policy.Requirements.Add(CommonOperations.Create));
+                options.AddPolicy("DigniteCmsUpdatePolicy", policy => policy.Requirements.Add(CommonOperations.Update));
+                options.AddPolicy("DigniteCmsDeletePolicy", policy => policy.Requirements.Add(CommonOperations.Delete));
+            });
+
+
+
+            //
+
+            Configure<AbpBlobStoringOptions>(options =>
+            {
+                options.Containers
+                    .Configure<CommonFileBlobContainer>(container =>
+                    {
+                        container.AddFileSizeLimitHandler(handler =>
+                        {
+                            handler.MaxFileSize = 10240;
+                        });
+                        container.AddFileTypeCheckHandler(handler =>
+                        {
+                            handler.AllowedFileTypeNames = new string[] { ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".zip", ".7z", ".rar", ".mp4", ".mp3", ".pdf", ".jpg", ".jpeg", ".png" };
+                        });
+                        container.AddImageResizeHandler(handler =>
+                        {
+                            handler.ImageWidth = 1920;
+                            handler.ImageHeight = 1080;
+                        });
+                        container.SetAuthorizationConfiguration(config =>
+                        {
+                            config.CreateDirectoryPermissionName = CmsAdminPermissions.Entry.Create;
+                            config.CreateFilePermissionName = CmsAdminPermissions.Entry.Create;
+                            config.UpdateFilePermissionName = CmsAdminPermissions.Entry.Update;
+                            config.DeleteFilePermissionName = CmsAdminPermissions.Entry.Delete;
+                            config.SetAuthorizationHandler<EntryResourceAuthorizationHandler>(); 
+                        });
+                    });
+                options.Containers
+                    .Configure<ImageBlobContainer>(container =>
+                    {
+                        container.AddFileSizeLimitHandler(handler =>
+                        {
+                            handler.MaxFileSize = 10240;
+                        });
+                        container.AddFileTypeCheckHandler(handler =>
+                        {
+                            handler.AllowedFileTypeNames = new string[] { ".jpg", ".jpeg", ".png" };
+                        });
+                        container.AddImageResizeHandler(handler =>
+                        {
+                            handler.ImageWidth = 1920;
+                            handler.ImageHeight = 1080;
+                        });
+                        container.SetAuthorizationConfiguration(config =>
+                        {
+                            config.CreateDirectoryPermissionName = CmsAdminPermissions.Entry.Create;
+                            config.CreateFilePermissionName = CmsAdminPermissions.Entry.Create;
+                            config.UpdateFilePermissionName = CmsAdminPermissions.Entry.Update;
+                            config.DeleteFilePermissionName = CmsAdminPermissions.Entry.Delete;
+                            config.SetAuthorizationHandler<EntryResourceAuthorizationHandler>(); 
+                        });
+                    });
+            });
+        }
+    }
+}

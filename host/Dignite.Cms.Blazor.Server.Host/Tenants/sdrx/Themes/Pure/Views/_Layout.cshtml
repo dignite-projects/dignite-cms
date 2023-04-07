@@ -1,0 +1,21 @@
+﻿@using Volo.Abp.AspNetCore.Mvc.UI.Theming
+@inject IThemeManager ThemeManager
+@{
+    Layout = ThemeManager.CurrentTheme.GetApplicationLayout();
+    @RenderBody()
+}
+
+@section styles
+    {
+    @await RenderSectionAsync("styles", false)
+    <link rel="stylesheet" href="/sdrx/website.css" />
+}
+
+@RenderBody()
+
+@section scripts
+    {
+    @await RenderSectionAsync("scripts", false)
+}
+
+

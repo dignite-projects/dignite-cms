@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+	  <TargetFramework>netstandard2.0</TargetFramework>
+	  <AssemblyName>Dignite.Cms.Admin.Application.Contracts</AssemblyName>
+	  <PackageId>Dignite.Cms.Admin.Application.Contracts</PackageId>
+	  <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+	  <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+	  <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+	  <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+	  <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Volo.CmsKit.Admin.Application.Contracts" Version="5.3.4" />
+	<ProjectReference Include="..\..\..\abp-modules\modules\ckeditor-component\Dignite.Abp.DynamicForms.CkEditor\Dignite.Abp.DynamicForms.CkEditor.csproj" />
+    <ProjectReference Include="..\..\..\abp-modules\modules\file-explorer\src\Dignite.FileExplorer.Application.Contracts\Dignite.FileExplorer.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Dignite.Cms.Common.Application.Contracts\Dignite.Cms.Common.Application.Contracts.csproj" />
+	<ProjectReference Include="..\..\..\abp-modules\modules\file-explorer\src\Dignite.Abp.DynamicForms.FileExplorer\Dignite.Abp.DynamicForms.FileExplorer.csproj" />
+  </ItemGroup>
+
+</Project>

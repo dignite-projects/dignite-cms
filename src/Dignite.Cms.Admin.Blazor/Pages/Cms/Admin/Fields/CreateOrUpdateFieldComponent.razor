@@ -1,0 +1,45 @@
+﻿@using Dignite.Abp.DynamicForms.Components;
+@using Dignite.Cms.Admin.Fields;
+@using Dignite.Cms.Localization
+@using Volo.Abp.BlazoriseUI.Components.ObjectExtending
+@using Volo.Abp.Localization;
+@inject IFieldAdminAppService FieldService
+@inject IFieldGroupAdminAppService FieldGroupService
+@inject IConfigurationComponentSelector ConfigurationComponentSelector
+@inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
+@inherits AbpComponentBase
+
+@if (AllGroups.Any())
+{
+    <Validation MessageLocalizer="@LH.Localize">
+        <Field>
+            <FieldLabel>@L["Group"]</FieldLabel>
+            <Select TValue="Guid?" @bind-SelectedValue="@Entity.GroupId">
+                <SelectItem Value="@(System.Guid.Empty)">@L["OptionalGrouping"]</SelectItem>
+                @foreach (var item in AllGroups)
+                {
+                    <SelectItem TValue="Guid" Value="@item.Id">@item.Name</SelectItem>
+                }
+            </Select>
+        </Field>
+    </Validation>
+}
+<Validation MessageLocalizer="@LH.Localize" Validator="@ValidationRule.None">
+    <Field>
+        <FieldLabel>@L["FieldType"]</FieldLabel>
+        <Select TValue="string" SelectedValue="@Entity.FormName" SelectedValueChanged="OnFormChangedAsync">
+            @foreach (var item in AllForms)
+            {
+                <SelectItem TValue="string" Value="@item.Name">@item.DisplayName</SelectItem>
+            }
+        </Select>
+    </Field>
+</Validation>
+
+<Divider />
+
+
+@if (FieldFormConfigurationComponentType is not null)
+{
+    <DynamicComponent Type="@FieldFormConfigurationComponentType" Parameters='@FieldFormConfigurationComponentParameters' />
+}

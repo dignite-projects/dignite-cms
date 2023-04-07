@@ -1,0 +1,30 @@
+{
+  "culture": "en",
+  "texts": {
+    "Menu:Cms": "CMS",
+    "Fields": "Fields",
+    "FieldGroup": "Field Group",
+    "DisplayName": "Display Name",
+    "Name": "Name",
+    "FormName": "Form Name",
+    "CreationTime": "Creation Time",
+    "New": "New",
+    "AllFields": "All Fields",
+    "FieldType": "Field Type",
+    "CreateField": "Create Field",
+    "Sites": "Sites",
+    "IsActive": "Is Active",
+    "IsDefault": "Is Default",
+    "BaseUrl": "Base Url",
+    "Sections": "Sections",
+    "SectionType": "Section Type",
+    "EntryType": "Entry Type",
+    "Entries": "Entries",
+    "Title": "Title",
+    "Status": "Status",
+    "PublishTime": "Publish Time",
+    "Slug": "Slug",
+    "ParentEntry": "Parent Entry",
+    "RevisionNotes": "Revision Notes"
+  }
+}

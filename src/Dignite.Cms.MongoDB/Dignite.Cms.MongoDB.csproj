@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+	  <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.MongoDB" Version="5.3.4" />
+	<PackageReference Include="Volo.CmsKit.MongoDB" Version="5.3.4" />
+    <ProjectReference Include="..\Dignite.Cms.Domain\Dignite.Cms.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

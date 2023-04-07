@@ -1,0 +1,141 @@
+﻿using Dignite.Cms.Fields;
+using Dignite.Cms.Sections;
+using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
+
+namespace Dignite.Cms.Admin.Sections
+{
+    public class SectionAdminAppService : CmsAdminAppServiceBase, ISectionAdminAppService
+    {
+        private readonly ISectionRepository _sectionRepository;
+        private readonly IFieldRepository _fieldRepository;
+
+        public SectionAdminAppService(ISectionRepository sectionRepository, IFieldRepository fieldRepository)
+        {
+            _sectionRepository = sectionRepository;
+            _fieldRepository = fieldRepository;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+
+        [Authorize(Permissions.CmsAdminPermissions.Section.Create)]
+        public async Task<SectionDto> CreateAsync(CreateSectionInput input)
+        {
+            await CheckNameExistenceAsync(input.SiteId, input.Name);
+
+            //
+            var section = new Section(
+                GuidGenerator.Create(),
+                input.SiteId,
+                input.Type,
+                input.DisplayName, input.Name,
+                input.IsDefault,
+                input.IsActive,
+                new EntryPage(input.EntryPage.Route,input.EntryPage.Template),
+                CurrentTenant.Id);
+
+            //
+            await _sectionRepository.InsertAsync(section);
+            return ObjectMapper.Map<Section, SectionDto>(section);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [Authorize(Permissions.CmsAdminPermissions.Section.Update)]
+        public async Task<SectionDto> UpdateAsync(Guid id, UpdateSectionInput input)
+        {
+            var section = await _sectionRepository.GetAsync(id);
+            if (!section.Name.Equals(input.Name,StringComparison.OrdinalIgnoreCase))
+            {
+                await CheckNameExistenceAsync(section.SiteId, input.Name,id);
+            }
+            section.SetActive(input.IsActive);
+            section.SetDefault(input.IsDefault); 
+            section.SetDisplayName(input.DisplayName);
+            section.SetEntryPage(new EntryPage(input.EntryPage.Route, input.EntryPage.Template));
+            section.SetName(input.Name);
+            section.SetType(input.Type);
+
+            //
+            await _sectionRepository.UpdateAsync(section);
+            return ObjectMapper.Map<Section, SectionDto>(section);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [Authorize(Permissions.CmsAdminPermissions.Section.Delete)]
+        public async Task DeleteAsync(Guid id)
+        {
+            await _sectionRepository.DeleteAsync(id);
+        }
+
+        [Authorize(Permissions.CmsAdminPermissions.Section.Default)]
+        public async Task<PagedResultDto<SectionDto>> GetListAsync(GetSectionsInput input)
+        {
+            if (input.SiteId == Guid.Empty)
+                return new PagedResultDto<SectionDto>(0, new List<SectionDto>());
+
+
+            var result = await _sectionRepository.GetListAsync(input.SiteId, input.Filter, input.IsActive,true);
+
+            var dto = ObjectMapper.Map<List<Section>, List<SectionDto>>(result);
+
+            return new PagedResultDto<SectionDto>(result.Count, dto);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [Authorize(Permissions.CmsAdminPermissions.Section.Default)]
+        public async Task<SectionDto> GetAsync(Guid id)
+        {
+            var result = await _sectionRepository.GetAsync(id, true);
+            var dto = ObjectMapper.Map<Section, SectionDto>(
+                result
+                );
+            await FillSectionFields(dto);
+            return dto;
+        }
+
+
+        protected virtual async Task CheckNameExistenceAsync(Guid siteId, string name, Guid? ignoredId = null)
+        {
+            if (await _sectionRepository.NameExistsAsync(siteId,name,ignoredId))
+            {
+                throw new SectionNameAlreadyExistException( name);
+            }
+        }
+        protected async Task FillSectionFields(SectionDto dto)
+        {
+            var allFields = await _fieldRepository.GetListAsync(false);
+            var fieldsDto = ObjectMapper.Map<List<Field>, List<FieldDto>>(allFields);
+            foreach (var entryType in dto.EntryTypes)
+            {
+                foreach (var fieldTab in entryType.FieldTabs)
+                {
+                    foreach (var entryField in fieldTab.Fields)
+                    {
+                        entryField.Field = fieldsDto.FirstOrDefault(f => f.Id == entryField.FieldId);
+                    }
+                }
+            }
+        }
+    }
+}

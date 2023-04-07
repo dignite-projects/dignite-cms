@@ -1,0 +1,77 @@
+﻿@using Dignite.Cms.Public.Entries
+@using System.Text.Json;
+@using Dignite.Abp.DynamicForms;
+@using Dignite.FileExplorer.Files;
+@model EntryDto
+@{
+    PageLayout.Content.Title = Model.Title;
+}
+
+
+<div class="row justify-content-md-center">
+    <div class="col col-lg-10">
+        <img src="/sdrx/Service-And-Support-1.jpg" class="img-fluid" />
+        <h1 class="fw-bold mt-5 mb-3">
+            Hold up integrity, hold up quality
+        </h1>
+        <p class="fw-light lh-lg mb-3">
+            "Quality first, customer first" is the tenet of the enterprise. We are determined to work hard in the field we have created, and provide users with high-quality products and services with efficient management, advanced equipment and strict quality assurance system.
+        </p>
+        <ol class="mb-5 fw-light lh-lg">
+            <li>Our company operates strictly in accordance with the ISO9001 quality system, so that the product quality is fully guaranteed.</li>
+            <li>The plastic tray conforms to the national standard GB/T15234-94.</li>
+            <li>The warranty is one year. During the warranty period, if there is any quality problem, except for man-made damage, our company will provide free replacement.</li>
+        </ol>
+        <img src="/sdrx/Service-And-Support-2.jpg" class="img-fluid" />
+        <h1 class="fw-bold mt-5 mb-5 text-center">
+            Service philosophy
+        </h1>
+        <div class="row gx-5">
+            <div class="col-6">
+                <div class="d-flex mb-5">
+                    <div class="p-3">
+                        <i class="fa fa-black-tie text-primary fs-4" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-light lh-lg">
+                            Professional service team
+                        </h3>
+                        <p class="fw-light lh-lg">
+                            Our company adheres to the service tenet of "quick response, efficient communication, patience and thoughtfulness". After receiving the customer's demand, we will get in touch with the customer as soon as possible to understand the customer's specific needs and use environment, recommend the most suitable product for the customer, and help the customer analyze and solve problems
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="d-flex mb-5">
+                    <div class="p-3">
+                        <i class="fa fa-angellist text-primary fs-4" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-light lh-lg">
+                            Adequate product inventory
+                        </h3>
+                        <p class="fw-light lh-lg">
+                            Our company has a huge warehousing capacity and cooperates with many large domestic logistics companies. We guarantee that the spot goods will be delivered on the same day, the customized delivery will be delivered within 3 days, and the delivery will be delivered within 15 days.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="d-flex mb-5">
+                    <div class="p-3">
+                        <i class="fa fa-asl-interpreting text-primary fs-4" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-light lh-lg">
+                            Perfect pre-sales and after-sales service process
+                        </h3>
+                        <p class="fw-light lh-lg">
+                            Our company has a complete customer return visit management mechanism and a professional service team to provide you with customized product solutions and fast and considerate services.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

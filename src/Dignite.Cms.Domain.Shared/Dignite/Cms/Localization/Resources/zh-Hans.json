@@ -1,0 +1,31 @@
+{
+  "culture": "zh-Hans",
+  "texts": {
+    "Menu:Cms": "内容管理",
+    "Fields": "字段",
+    "FieldGroup": "字段分组",
+    "DisplayName": "显示名称",
+    "Name": "名称",
+    "FormName": "表单名称",
+    "CreationTime": "创建时间",
+    "New": "新建",
+    "AllFields": "所有字段",
+    "FieldType": "字段类型",
+    "CreateField": "创建表单",
+    "Sites": "站点",
+    "IsActive": "激活",
+    "IsDefault": "默认",
+    "BaseUrl": "基础URL",
+    "Sections": "版块",
+    "SectionType": "版块类型",
+    "EntryType": "条目类型",
+    "Entries": "条目",
+    "Title": "标题",
+    "Status": "状态",
+    "PublishTime": "发布时间",
+    "Slug": "别名",
+    "ParentEntry": "上级条目",
+    "RevisionNotes": "修订说明",
+    "SamplePageMessage": "Cms模块的示例页面"
+  }
+}

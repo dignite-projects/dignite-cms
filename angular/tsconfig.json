@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.prod.json",
+  "compilerOptions": {
+    "paths": {
+      "@dignite/cms": [
+        "projects/cms/src/public-api.ts"
+      ],
+      "@dignite/cms/config": [
+        "projects/cms/config/src/public-api.ts"
+      ],
+      "@proxy": ["projects/cms/src/lib/proxy/index.ts"],
+      "@proxy/*": ["projects/cms/src/lib/proxy/*"]
+    }
+  }
+}

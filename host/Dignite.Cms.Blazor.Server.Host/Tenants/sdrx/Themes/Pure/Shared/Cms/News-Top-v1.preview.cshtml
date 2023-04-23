@@ -1,0 +1,30 @@
+﻿@using Dignite.Cms.Public.Web.TagHelpers;
+@using Dignite.Abp.DynamicForms;
+@using Dignite.FileExplorer.Files;
+@using System.Text.Json;
+@model EntryListViewModel
+
+<div class="row g-4">
+    @foreach (var entry in Model.Entries)
+    {
+        var fieldValue = entry.GetField("singleFile", null);
+        FileDescriptorDto file = null;
+        string imageUrl = null;
+        if (fieldValue != null)
+        {
+            file = JsonSerializer.Deserialize<List<FileDescriptorDto>>(fieldValue.ToString())[0];
+            imageUrl = $"/api/file-explorer/files/{file.ContainerName}/{file.BlobName}";
+        }
+        <div class="col-4">
+            <div class="card h-100 bg-light rounded-0 border-0">
+                <a href="@("/"+entry.Language+"/news/"+entry.Slug)" class="text-decoration-none link-dark">
+                <img src="@imageUrl" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text text-secondary mb-1">@entry.PublishTime</p>
+                    <h5 class="card-title">@entry.Title</h5>
+                </div>
+                </a>
+            </div>
+        </div>
+    }
+</div>

@@ -1,4 +1,5 @@
-﻿using Dignite.Cms.Localization;
+﻿using Dignite.Abp.TenantLocalization;
+using Dignite.Cms.Localization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AspNetCore.Mvc.Localization;
@@ -14,7 +15,8 @@ namespace Dignite.Cms.Public.Web;
     typeof(CmsPublicApplicationContractsModule),
     typeof(AbpAspNetCoreMvcUiThemeSharedModule),
     typeof(AbpAutoMapperModule),
-    typeof(CmsKitPublicWebModule)
+    typeof(CmsKitPublicWebModule),
+    typeof(AbpTenantLocalizationModule)
     )]
 public class CmsPublicWebModule : AbpModule
 {

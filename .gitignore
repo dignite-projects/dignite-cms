@@ -260,7 +260,3 @@ host/Dignite.Cms.Blazor.Server.Host/Logs/logs.txt
 
 # Use abp install-libs to restore.
 **/wwwroot/libs/*
-
-# 
-**/wwwroot/host/*
-**/wwwroot/tenants/*

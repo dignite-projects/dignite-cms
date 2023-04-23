@@ -9,13 +9,19 @@ a {
     transition: all .25s linear;
     text-decoration:none;
 }
-    a:hover {
-        text-decoration-line: underline;
-        text-underline-offset: 0.25em !important;
-    }
+a:hover {
+    text-decoration-line: underline;
+    text-underline-offset: 0.25em !important;
+}
 a:focus {
     outline: dashed 1px #888
 }
+
+:root {
+    --bs-link-color: #12995c;
+    --bs-primary: #12995c;
+}
+
 .btn-outline-dark:hover {
     color: #f3ae09;
 }
@@ -27,9 +33,9 @@ ul.main-navbar-nav li.nav-item a.nav-link {
     padding-right: 1rem;
     border: solid 1px #fff;
 }
-    ul.main-navbar-nav li.nav-item a.nav-link:hover {
-        text-underline-offset: 0.375em !important;
-    }
+ul.main-navbar-nav li.nav-item a.nav-link:hover {
+    text-underline-offset: 0.375em !important;
+}
 
 
 .carousel-control-prev,
@@ -92,4 +98,79 @@ ul.main-navbar-nav li.nav-item a.nav-link {
 }
 .nav-aboutus a:last-child {
     border-right: none;
+}
+
+ul.icon-1 {
+    padding:0;
+}
+ul.icon-1 li {
+    list-style:none;
+    padding-bottom:0.5rem;
+    padding-left:1.5rem;
+    position:relative;
+}
+ul.icon-1 li:before {
+    content: '\2724'; 
+    color:var(--bs-primary);
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+
+.icon-animated {
+    display: inline-block;
+    position: relative
+}
+
+.icon-animated:after {
+    position: absolute;
+    top: -.75rem;
+    font-size: 1.9rem;
+    font-weight: 300;
+    transition: all .5s
+}
+
+.icon-animate-right:after {
+    content: '›';
+    right: -.75rem
+}
+
+.icon-animate-right:hover:after {
+    right: -1rem
+}
+
+.icon-animated.btn {
+    padding-left: 1.25rem;
+    padding-right: 1.75rem
+}
+
+    .icon-animated.btn:after {
+        top: -.5rem
+    }
+
+.icon-animate-right.btn:after {
+    right: 1rem
+}
+
+.icon-animate-right.btn:hover:after {
+    right: .7rem
+}
+
+.icon-animated.btn-lg {
+    padding-left: 1.5rem;
+    padding-right: 2rem
+}
+
+    .icon-animated.btn-lg:after {
+        top: -.7rem;
+        font-size: 2.5rem
+    }
+
+.icon-animate-right.btn-lg:after {
+    right: 1rem
+}
+
+.icon-animate-right.btn-lg:hover:after {
+    right: .65rem
 }

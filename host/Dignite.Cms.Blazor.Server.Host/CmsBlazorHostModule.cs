@@ -14,6 +14,8 @@ using Dignite.Cms.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Localization.Routing;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
@@ -59,6 +61,8 @@ using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace Dignite.Cms.Blazor.Server.Host;
 
@@ -173,12 +177,23 @@ public class CmsBlazorHostModule : AbpModule
                 options.CustomSchemaIds(type => type.FullName);
             });
 
+
+        var supportedCultures = new List<CultureInfo>();
         Configure<AbpLocalizationOptions>(options =>
         {
             options.Languages.Add(new LanguageInfo("en", "en", "English"));
             options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
             options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
+
+            supportedCultures.AddRange(options.Languages.Select(l => new CultureInfo(l.CultureName)));
         });
+        Configure<RequestLocalizationOptions>(options => {
+            options.DefaultRequestCulture = new RequestCulture(culture: "en", uiCulture: "en");
+            options.SupportedCultures = supportedCultures;
+            options.SupportedUICultures = supportedCultures;
+            options.AddInitialRequestCultureProvider(new RouteDataRequestCultureProvider());
+        });
+
 
         Configure<AbpMultiTenancyOptions>(options =>
         {
@@ -241,6 +256,7 @@ public class CmsBlazorHostModule : AbpModule
         });
 
 
+
         if (!hostingEnvironment.IsDevelopment())
         {
             Configure<AbpTenantResolveOptions>(options =>
@@ -278,6 +294,7 @@ public class CmsBlazorHostModule : AbpModule
         app.UseCorrelationId();
         app.UseStaticFiles();
         app.UseRouting();
+        app.UseRequestLocalization();
         app.UseCors();
         app.UseAuthentication();
         app.UseJwtTokenMiddleware();

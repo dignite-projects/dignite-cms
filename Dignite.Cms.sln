@@ -155,7 +155,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.DynamicForms.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.DynamicForms", "..\abp-modules\framework\src\Dignite.Abp.DynamicForms\Dignite.Abp.DynamicForms.csproj", "{8C042C3D-5CD5-49C3-ABC2-CA1BAA6A4AFD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.TenantLocalization", "..\abp-modules\framework\src\Dignite.Abp.TenantLocalization\Dignite.Abp.TenantLocalization.csproj", "{AF57C9B7-E468-48AC-8CDE-FEAEB3CCD0DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Localization.MultiTenancy", "..\abp-modules\framework\src\Dignite.Abp.Localization.MultiTenancy\Dignite.Abp.Localization.MultiTenancy.csproj", "{AF57C9B7-E468-48AC-8CDE-FEAEB3CCD0DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

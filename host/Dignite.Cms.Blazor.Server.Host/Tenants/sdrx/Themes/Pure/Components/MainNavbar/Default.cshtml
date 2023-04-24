@@ -1,6 +1,6 @@
-﻿@using Dignite.Cms.Public.Web.TenantLocalization;
+﻿@using Dignite.Cms.Public.Web.Localization;
 @using Microsoft.Extensions.Localization;
-@inject IStringLocalizer<TenantCmsResource> localizer;
+@inject IStringLocalizer<CmsResource> localizer;
 @{
     var language = Context.Request.Path.Value.Substring(1).Split('/')[0];
 }

@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\abp-modules\framework\src\Dignite.Abp.TenantLocalization\Dignite.Abp.TenantLocalization.csproj" />
+    <ProjectReference Include="..\..\..\abp-modules\framework\src\Dignite.Abp.Localization.MultiTenancy\Dignite.Abp.Localization.MultiTenancy.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Public.Application.Contracts\Dignite.Cms.Public.Application.Contracts.csproj" />
   </ItemGroup>
 

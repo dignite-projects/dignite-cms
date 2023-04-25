@@ -1,7 +1,7 @@
 ﻿@using Volo.Abp.AspNetCore.Mvc.UI.Theming
 @inject IThemeManager ThemeManager
 @{
-    Layout = ThemeManager.CurrentTheme.GetApplicationLayout();
+    Layout = ThemeManager.CurrentTheme.GetPublicLayout();
     @RenderBody()
 }
 

@@ -63,6 +63,7 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
 using System.Collections.Generic;
 using System.Globalization;
+using Volo.Abp.AspNetCore.Mvc.UI.Theming;
 
 namespace Dignite.Cms.Blazor.Server.Host;
 
@@ -128,7 +129,7 @@ public class CmsBlazorHostModule : AbpModule
         {
                 // MVC UI
                 options.StyleBundles.Configure(
-                PureThemeBundles.Styles.Global,
+                PureThemeBundles.Styles.Public,
                 bundle =>
                 {
                     bundle.AddFiles("/global-styles.css");
@@ -242,6 +243,12 @@ public class CmsBlazorHostModule : AbpModule
                     .AllowAnyMethod()
                     .AllowCredentials();
             });
+        });
+
+
+        Configure<AbpThemingOptions>(options =>
+        {
+            options.DefaultThemeName = PureTheme.Name;
         });
 
         Configure<AbpBlobStoringOptions>(options =>

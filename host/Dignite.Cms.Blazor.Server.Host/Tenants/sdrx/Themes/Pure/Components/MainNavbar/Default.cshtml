@@ -2,7 +2,7 @@
 @using Microsoft.Extensions.Localization;
 @inject IStringLocalizer<CmsResource> localizer;
 @{
-    var language = Context.Request.Path.Value.Substring(1).Split('/')[0];
+    var language = CultureInfo.CurrentCulture.Name.ToLower();
 }
 
 <nav class="navbar navbar-expand-lg bg-white mt-2 mb-3" id="main-navbar">

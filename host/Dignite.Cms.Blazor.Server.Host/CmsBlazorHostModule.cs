@@ -183,8 +183,8 @@ public class CmsBlazorHostModule : AbpModule
         Configure<AbpLocalizationOptions>(options =>
         {
             options.Languages.Add(new LanguageInfo("en", "en", "English"));
-            options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
-            options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
+            options.Languages.Add(new LanguageInfo("zh-hans", "zh-Hans", "简体中文"));
+            options.Languages.Add(new LanguageInfo("zh-hant", "zh-Hant", "繁體中文"));
 
             supportedCultures.AddRange(options.Languages.Select(l => new CultureInfo(l.CultureName)));
         });
@@ -192,7 +192,7 @@ public class CmsBlazorHostModule : AbpModule
             options.DefaultRequestCulture = new RequestCulture(culture: "en", uiCulture: "en");
             options.SupportedCultures = supportedCultures;
             options.SupportedUICultures = supportedCultures;
-            options.AddInitialRequestCultureProvider(new RouteDataRequestCultureProvider());
+            options.AddInitialRequestCultureProvider(new RouteDataRequestCultureProvider()); // Set the current language through the culture value in the route
         });
 
 
@@ -299,6 +299,7 @@ public class CmsBlazorHostModule : AbpModule
 
         app.UseHttpsRedirection();
         app.UseCorrelationId();
+        app.UseDefaultFiles();
         app.UseStaticFiles();
         app.UseRouting();
         app.UseRequestLocalization();

@@ -2,11 +2,15 @@
 using Dignite.Abp.FieldCustomizing;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Public.Sections;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Cms.Public.Entries
@@ -94,6 +98,7 @@ namespace Dignite.Cms.Public.Entries
             var dto = ObjectMapper.Map<List<Entry>, List<EntryDto>>(result);
             foreach (var entry in dto)
             {
+                SetEntryUrl(entry, section);
                 entry.SetDefaultsForCustomizeFields(
                     section.EntryTypes.First(et => et.Id == entry.EntryTypeId)
                     .FieldTabs
@@ -116,6 +121,7 @@ namespace Dignite.Cms.Public.Entries
             }
 
             var dto = ObjectMapper.Map<Entry, EntryDto>(entry);
+            SetEntryUrl(dto, section);
             dto.SetDefaultsForCustomizeFields(
                 section.EntryTypes.First(et => et.Id == entry.EntryTypeId)
                 .FieldTabs
@@ -126,6 +132,84 @@ namespace Dignite.Cms.Public.Entries
             );
 
             return dto;
+        }
+
+        /// <summary>
+        /// set entry url
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <param name="section"></param>
+        protected void SetEntryUrl(EntryDto entry, SectionDto section)
+        {
+            var routeParameters = GetRouteParameters(section.EntryPage.Route).ToArray();
+            var siteDefaultLanguage = section.Site.Languages.OrderByDescending(l => l.IsDefault).First().Language;
+            entry.Url = section.EntryPage.Route;
+
+            //If there is a routing parameter, get the routing parameter value and update the URL
+            if (routeParameters.Any()) 
+            {
+                foreach (string routePerameter in routeParameters)
+                {
+                    var routeParameterName = routePerameter.RemovePreFix("{").RemovePostFix("}");
+                    if (routeParameterName.IndexOf(':') > -1)
+                    {
+                        var propertyName = routeParameterName.Split(':')[0];
+                        var parameterFormat = $"{{0:{routeParameterName.Split(':')[1]}}}";
+                        var propertyValue = GetPropertyValue(entry, propertyName);
+                        entry.Url = entry.Url.Replace(routePerameter, string.Format(parameterFormat, propertyValue));
+                    }
+                    else
+                    {
+                        var propertyValue = GetPropertyValue(entry, routeParameterName);
+                        entry.Url = entry.Url.Replace(routePerameter, propertyValue.ToString());
+                    }
+                }
+            }
+
+            //splice language path
+            if (!siteDefaultLanguage.Equals(entry.Language, StringComparison.OrdinalIgnoreCase))
+            {
+                entry.Url = entry.Language + entry.Url.EnsureStartsWith('/');
+            }
+
+            entry.Url = entry.Url.EnsureStartsWith('/');
+        }
+
+        /// <summary>
+        /// Get Route Parameters
+        /// </summary>
+        /// <param name="route"></param>
+        /// <returns></returns>
+        private IEnumerable<string> GetRouteParameters(string route)
+        {
+            Regex regex = new Regex(@"\{[a-zA-Z][\w:\-.\/]*\}");
+            var matchCollection = regex.Matches(route);
+
+            for (int i = 0; i < matchCollection.Count; i++)
+            {
+                yield return matchCollection[i].Groups[0].Value;
+            }
+        }
+
+        /// <summary>
+        /// Using reflection to get the value of an entry property
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        /// <exception cref="Volo.Abp.AbpException"></exception>
+        private object GetPropertyValue(EntryDto entry, string propertyName)
+        {
+            Type type = entry.GetType();
+            var property = type.GetProperty(propertyName, BindingFlags.Public | BindingFlags.IgnoreCase| BindingFlags.Instance);
+            if (property != null)
+            {
+                return property.GetValue(entry, new object[0]);
+            }
+            else
+            {
+                throw new Volo.Abp.AbpException($"The entry property corresponding to the routing parameter {propertyName} was not found in the entry");
+            }
         }
     }
 }

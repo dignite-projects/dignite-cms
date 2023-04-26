@@ -30,7 +30,7 @@ namespace Dignite.Cms.Sections
         /// <summary>
         /// Regular Expression of the page route property.
         /// </summary>dddd
-        public const string PageRouteRegularExpression = "^[A-Za-z0-9-_/{}.]+$";
+        public const string PageRouteRegularExpression = "^[A-Za-z0-9-_/{}:.]+$";
 
         /// <summary>
         /// Maximum length of the section page template property.

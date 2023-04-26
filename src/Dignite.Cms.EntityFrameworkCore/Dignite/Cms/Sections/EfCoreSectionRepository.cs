@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
@@ -42,7 +43,7 @@ namespace Dignite.Cms.Sections
         }
 
         public async Task<List<Section>> GetListAsync(
-            Guid siteId,
+            Guid? siteId,
             string filter = null,
             bool? isActive = null, 
             bool includeDetails = true,
@@ -60,12 +61,12 @@ namespace Dignite.Cms.Sections
         }
 
         protected virtual async Task< IQueryable<Section>> GetQueryableAsync(
-            Guid siteId,
+            Guid? siteId,
             string filter = null,
             bool? isActive = null)
         {
             return (await GetDbSetAsync())
-                .Where(s => s.SiteId == siteId)
+                .WhereIf(siteId.HasValue, s => s.SiteId == siteId.Value)
                 .WhereIf(!filter.IsNullOrEmpty(), et => et.DisplayName.Contains(filter))
                 .WhereIf(isActive.HasValue, s => s.IsActive == isActive);
         }

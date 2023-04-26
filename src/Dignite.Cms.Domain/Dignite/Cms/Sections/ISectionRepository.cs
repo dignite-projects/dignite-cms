@@ -15,7 +15,7 @@ namespace Dignite.Cms.Sections
         Task<Section> GetDefaultAsync(Guid siteId, bool includeDetails = true, CancellationToken cancellationToken = default);
 
         Task<List<Section>> GetListAsync(
-            Guid siteId,
+            Guid? siteId,
             string filter = null,
             bool? isActive= null,
             bool includeDetails = true,

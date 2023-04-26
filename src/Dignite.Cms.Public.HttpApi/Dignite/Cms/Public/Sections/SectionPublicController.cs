@@ -36,9 +36,9 @@ namespace Dignite.Cms.Public.Sections
         /// <returns></returns>
         [HttpGet]
         [Route("find-by-url")]
-        public async Task<SectionDto> FindByUrlAsync(Guid siteId, string url)
+        public async Task<SectionDto> FindByUrlAsync( string url)
         {
-            return await _sectionAppService.FindByUrlAsync(siteId, url);
+            return await _sectionAppService.FindByUrlAsync( url);
         }
 
         [HttpGet]

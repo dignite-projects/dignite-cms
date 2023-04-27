@@ -37,7 +37,8 @@ namespace Dignite.Cms.Admin.Sections
         public virtual string Name { get; set; }
 
         /// <summary>
-        /// The default section in the site
+        /// The default section in the site;
+        /// Only the single type of section can be set as the default section
         /// </summary>
         public virtual bool IsDefault { get; set; }
 

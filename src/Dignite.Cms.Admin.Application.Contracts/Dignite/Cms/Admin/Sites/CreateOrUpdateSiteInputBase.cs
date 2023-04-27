@@ -1,6 +1,7 @@
 ﻿using Dignite.Cms.Sites;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Volo.Abp.ObjectExtending;
 using Volo.Abp.Validation;
 
@@ -52,5 +53,19 @@ namespace Dignite.Cms.Admin.Sites
         /// Is this site active
         /// </summary>
         public virtual bool IsActive { get; set; }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Languages.Count(l => l.IsDefault) != 1)
+            {
+                yield return new ValidationResult(
+                "The site's language list is missing a unique default language!",
+                new[] { nameof(Languages) });
+            }
+            else
+            {
+                base.Validate(validationContext);
+            }
+        }
     }
 }

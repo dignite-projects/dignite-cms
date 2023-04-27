@@ -90,37 +90,43 @@ namespace Dignite.Cms.Public.Web.Controllers
 
         protected async Task<EntryDto> GetEntry(SectionDto section, string url, string language = null)
         {
-            string slug = null;
             if (language.IsNullOrEmpty())
             {
                 language = section.Site.Languages.OrderByDescending(l => l.IsDefault).First().Language;
             }
 
-            if (section.Type == Cms.Sections.SectionType.Single) // If the section type is single, then the slug value of the entry is the name of the section
+            // If the section type is single, then the slug value of the entry is the name of the section
+            if (section.Type == Cms.Sections.SectionType.Single) 
             {
-                slug = section.Name;
+                var result = await _entryPublicAppService.GetListAsync(new GetEntriesInput { 
+                    SectionId = section.Id,
+                    SkipCount=0,
+                    MaxResultCount=1,
+                    Language = language
+                });
+                return result.Items.Any() ? result.Items[0] : null;
             }
             else
             {
+                string slug = null;
                 //Extract Slug value from URL
-                var extractResult = FormattedStringValueExtracter.Extract(url.RemovePreFix("/"), section.EntryPage.Route.RemovePreFix("/"), ignoreCase: true);
+                var extractResult = FormattedStringValueExtracter.Extract(url.RemovePreFix("/").RemovePostFix("/"), section.EntryPage.Route.RemovePreFix("/").RemovePostFix("/"), ignoreCase: true);
                 if (extractResult.IsMatch)
                 {
                     slug = extractResult.Matches.First(m => m.Name.Equals(nameof(EntryDto.Slug), StringComparison.OrdinalIgnoreCase)).Value;
+                    //
+                    return await _entryPublicAppService.FindBySlugAsync(new FindBySlugInput
+                    {
+                        Language = language,
+                        SectionId = section.Id,
+                        Slug = slug
+                    });
                 }
                 else
                 {
                     throw new Volo.Abp.AbpException($"The structure type section and channel type section route of the entry must contain {{slug}}");
                 }
             }
-
-            //
-            return await _entryPublicAppService.FindBySlugAsync(new FindBySlugInput
-            {
-                Language = language,
-                SectionId = section.Id,
-                Slug = slug
-            });
         }
     }
 }

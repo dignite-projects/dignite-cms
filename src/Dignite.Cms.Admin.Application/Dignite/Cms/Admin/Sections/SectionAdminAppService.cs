@@ -1,4 +1,5 @@
-﻿using Dignite.Cms.Fields;
+﻿using Dignite.Cms.Entries;
+using Dignite.Cms.Fields;
 using Dignite.Cms.Sections;
 using Microsoft.AspNetCore.Authorization;
 using System;
@@ -44,6 +45,20 @@ namespace Dignite.Cms.Admin.Sections
                 CurrentTenant.Id);
 
             //
+            CheckSectionType(section);
+            CheckRoute(section);
+
+            //
+            if (section.IsDefault)
+            {
+                var sections = await _sectionRepository.GetListAsync(section.SiteId);
+                foreach (var item in sections)
+                {
+                    section.SetDefault(false);
+                }
+            }
+
+            //
             await _sectionRepository.InsertAsync(section);
             return ObjectMapper.Map<Section, SectionDto>(section);
         }
@@ -61,12 +76,28 @@ namespace Dignite.Cms.Admin.Sections
             {
                 await CheckNameExistenceAsync(section.SiteId, input.Name,id);
             }
+
+            //
+            if (input.IsDefault && !section.IsDefault)
+            {
+                var sections = await _sectionRepository.GetListAsync(section.SiteId);
+                foreach (var item in sections)
+                {
+                    section.SetDefault(false);
+                }
+            }
+
+            //
             section.SetActive(input.IsActive);
             section.SetDefault(input.IsDefault); 
             section.SetDisplayName(input.DisplayName);
             section.SetEntryPage(new EntryPage(input.EntryPage.Route, input.EntryPage.Template));
             section.SetName(input.Name);
             section.SetType(input.Type);
+
+            //
+            CheckSectionType(section);
+            CheckRoute(section);
 
             //
             await _sectionRepository.UpdateAsync(section);
@@ -122,6 +153,25 @@ namespace Dignite.Cms.Admin.Sections
                 throw new SectionNameAlreadyExistException( name);
             }
         }
+
+
+        protected virtual void CheckSectionType(Section section)
+        {
+            if (section.IsDefault && section.Type!= SectionType.Single)
+            {
+                throw new DefaultSectionMustBeSingleTypeException(section.Name);
+            }
+        }
+
+
+        protected virtual void CheckRoute(Section section)
+        {
+            if (section.Type != SectionType.Single && !section.EntryPage.Route.Contains($"{{{nameof(Entry.Slug)}}}", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new RouteNoSlugParameterException(section.Name, section.EntryPage.Route);
+            }
+        }
+
         protected async Task FillSectionFields(SectionDto dto)
         {
             var allFields = await _fieldRepository.GetListAsync(false);

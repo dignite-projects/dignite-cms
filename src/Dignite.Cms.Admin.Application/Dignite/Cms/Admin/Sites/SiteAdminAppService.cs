@@ -28,12 +28,20 @@ namespace Dignite.Cms.Admin.Pages
                 input.IsDefault,
                 input.IsActive, 
                 CurrentTenant.Id);
+
+            if (input.IsDefault)
+            {
+                var sites = await _siteRepository.GetListAsync();
+                foreach (var item in sites)
+                {
+                    item.SetDefault(false);
+                }
+            }
+
+
             await _siteRepository.InsertAsync(entity);
 
-            var dto =
-                ObjectMapper.Map<Site, SiteDto>(
-                    entity
-                    );
+            var dto = ObjectMapper.Map<Site, SiteDto>(entity);
 
             return dto;
         }
@@ -64,6 +72,18 @@ namespace Dignite.Cms.Admin.Pages
         public async Task<SiteDto> UpdateAsync(Guid id, UpdateSiteInput input)
         {
             var entity = await _siteRepository.GetAsync(id, false);
+
+            if (input.IsDefault && !entity.IsDefault)
+            {
+                var sites = await _siteRepository.GetListAsync();
+                foreach (var item in sites)
+                {
+                    item.SetDefault(false);
+                }
+            }
+
+
+            //
             entity.SetDisplayName(input.DisplayName);
             entity.SetName(input.Name);
             entity.SetBaseUrl(input.BaseUrl);

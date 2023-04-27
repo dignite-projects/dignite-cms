@@ -68,30 +68,44 @@ namespace Dignite.Cms.Public.Entries
         /// <returns></returns>
         public async Task<PagedResultDto<EntryDto>> GetListAsync(GetEntriesInput input)
         {
+            int count = 0;
+            List<Entry> result = new List<Entry>();
             var section = await _sectionPublicAppService.GetAsync(input.SectionId);
             if (input.Language.IsNullOrEmpty())
             {
                 input.Language = section.Site.Languages.OrderByDescending(l => l.IsDefault).First().Language;
             }
-            List<QueryingByFieldParameter> queryingByFieldParameters = input.QueryingByFieldParameters.IsNullOrEmpty()? null: JsonSerializer.Deserialize<List<QueryingByFieldParameter>>(input.QueryingByFieldParameters);
 
-            var count = await _entryRepository.GetCountAsync(input.SectionId, input.Language, input.CreatorId, EntryStatus.Published,input.Filter,input.StartPublishDate,input.ExpiryPublishDate, queryingByFieldParameters);
-            if (count == 0)
+            if (section.Type == Cms.Sections.SectionType.Single)
             {
-                return new PagedResultDto<EntryDto>(0, new List<EntryDto>());
+                result = await _entryRepository.GetListAsync(input.SectionId, input.Language, null, EntryStatus.Published, null, null, null, null, 1, 0);
             }
-            var result = await _entryRepository.GetListAsync(
-                    input.SectionId,
-                    input.Language,
-                    input.CreatorId,
-                    EntryStatus.Published,
-                    input.Filter,
-                    input.StartPublishDate,
-                    input.ExpiryPublishDate,
-                    queryingByFieldParameters,
-                    input.MaxResultCount,
-                    input.SkipCount
-                    );
+            else if (section.Type == Cms.Sections.SectionType.Structure)
+            {
+                result = await _entryRepository.GetListAsync(input.SectionId, input.Language, null, EntryStatus.Published, null, null, null, null, 1000, 0);
+                count = result.Count;
+            }
+            else
+            {
+                List<QueryingByFieldParameter> queryingByFieldParameters = input.QueryingByFieldParameters.IsNullOrEmpty() ? null : JsonSerializer.Deserialize<List<QueryingByFieldParameter>>(input.QueryingByFieldParameters);
+                count = await _entryRepository.GetCountAsync(input.SectionId, input.Language, input.CreatorId, EntryStatus.Published, input.Filter, input.StartPublishDate, input.ExpiryPublishDate, queryingByFieldParameters);
+                if (count == 0)
+                {
+                    return new PagedResultDto<EntryDto>(0, new List<EntryDto>());
+                }
+                result = await _entryRepository.GetListAsync(
+                        input.SectionId,
+                        input.Language,
+                        input.CreatorId,
+                        EntryStatus.Published,
+                        input.Filter,
+                        input.StartPublishDate,
+                        input.ExpiryPublishDate,
+                        queryingByFieldParameters,
+                        input.MaxResultCount,
+                        input.SkipCount
+                        );
+            }
 
             var dto = ObjectMapper.Map<List<Entry>, List<EntryDto>>(result);
             foreach (var entry in dto)

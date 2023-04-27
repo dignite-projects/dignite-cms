@@ -1,18 +1,16 @@
-﻿using Dignite.Cms.EntityFrameworkCore;
+﻿using Dignite.Abp.DynamicForms;
+using Dignite.Abp.FieldCustomizing;
+using Dignite.Abp.FieldCustomizing.EntityFrameworkCore.QueryingByFields;
+using Dignite.Cms.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
-using Dignite.Abp.FieldCustomizing.EntityFrameworkCore.QueryingByFields;
-using Dignite.Abp.FieldCustomizing;
-using System.Linq.Dynamic.Core;
-using Dignite.Abp.DynamicForms;
-using System.Collections;
-using Dignite.Cms.Fields;
 
 namespace Dignite.Cms.Entries
 {
@@ -37,7 +35,7 @@ namespace Dignite.Cms.Entries
         {
             return await (await GetDbSetAsync())
                        .WhereIf(ignoredId != null, ct => ct.Id != ignoredId)
-                       .AnyAsync(e => e.SectionId== sectionId && e.Language==language && e.Slug == slug, GetCancellationToken(cancellationToken));
+                       .AnyAsync(e => e.SectionId== sectionId && e.Language==language && e.Slug == slug && e.Revision.IsActive, GetCancellationToken(cancellationToken));
         }
 
         public async Task<bool> AnyAsync(Guid sectionId, string language, CancellationToken cancellationToken = default)
@@ -146,7 +144,7 @@ namespace Dignite.Cms.Entries
         public async Task<Entry> FindBySlugAsync(Guid sectionId, string language, string slug, bool includeDetails = true, CancellationToken cancellationToken = default)
         {
             return await (await GetDbSetAsync())
-                .FirstOrDefaultAsync(e => e.SectionId == sectionId && e.Language==language && e.Slug == slug, GetCancellationToken(cancellationToken));
+                .FirstOrDefaultAsync(e => e.SectionId == sectionId && e.Language==language && e.Status== EntryStatus.Published && e.Slug == slug && e.Revision.IsActive, GetCancellationToken(cancellationToken));
         }
 
         public async Task<Entry> FindPrevAsync(Guid id, bool includeDetails = false, CancellationToken cancellationToken = default)
@@ -154,7 +152,7 @@ namespace Dignite.Cms.Entries
             var dbSet = await GetDbSetAsync();
             var currentEntry = await dbSet.FirstAsync(e => e.Id == id, GetCancellationToken(cancellationToken));
             return await dbSet
-                    .Where(e => e.SectionId == currentEntry.SectionId && e.Language==currentEntry.Language && e.PublishTime < currentEntry.PublishTime && e.Status == EntryStatus.Published)
+                    .Where(e => e.SectionId == currentEntry.SectionId && e.Language==currentEntry.Language && e.PublishTime < currentEntry.PublishTime && e.Status == EntryStatus.Published && e.Revision.IsActive)
                     .OrderByDescending(e => e.CreationTime)
                     .FirstOrDefaultAsync(GetCancellationToken(cancellationToken));           
 
@@ -165,7 +163,7 @@ namespace Dignite.Cms.Entries
             var dbSet = await GetDbSetAsync();
             var currentEntry = await dbSet.FirstAsync(e => e.Id == id, GetCancellationToken(cancellationToken));
             return await dbSet
-                    .Where(e => e.SectionId == currentEntry.SectionId && e.Language == currentEntry.Language && e.PublishTime > currentEntry.PublishTime && e.Status == EntryStatus.Published)
+                    .Where(e => e.SectionId == currentEntry.SectionId && e.Language == currentEntry.Language && e.PublishTime > currentEntry.PublishTime && e.Status == EntryStatus.Published && e.Revision.IsActive)
                     .OrderBy(e => e.CreationTime)
                     .FirstOrDefaultAsync(GetCancellationToken(cancellationToken));
         }
@@ -191,7 +189,7 @@ namespace Dignite.Cms.Entries
             DateTime? start = null,
             DateTime? end = null)
         {
-            return (await GetDbSetAsync()).Where(e => e.SectionId == sectionId && e.Language == language)
+            return (await GetDbSetAsync()).Where(e => e.SectionId == sectionId && e.Language == language && e.Revision.IsActive)
                 .WhereIf(creatorId.HasValue, e => e.CreatorId == creatorId.Value)
                 .WhereIf(status.HasValue, e => e.Status == status.Value)
                 .WhereIf(!filter.IsNullOrEmpty(), e => e.Title.Contains(filter))

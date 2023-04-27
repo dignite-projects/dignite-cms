@@ -25,7 +25,7 @@ namespace Dignite.Cms.Sections
         {
             return await(await GetQueryableAsync())
                 .IncludeDetails(includeDetails)
-                .FirstOrDefaultAsync(s => s.SiteId==siteId && s.IsActive && s.IsDefault, GetCancellationToken(cancellationToken));
+                .FirstOrDefaultAsync(s => s.SiteId==siteId && s.IsActive && s.IsDefault && s.Type== SectionType.Single, GetCancellationToken(cancellationToken));
         }
 
         public async Task<bool> NameExistsAsync(Guid siteId, string name, Guid? ignoredId = null, CancellationToken cancellationToken = default)

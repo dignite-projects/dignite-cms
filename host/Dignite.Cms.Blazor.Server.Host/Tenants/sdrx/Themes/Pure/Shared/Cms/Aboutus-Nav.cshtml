@@ -8,6 +8,6 @@
 <nav class="nav bg-secondary bg-opacity-10 p-2 nav-aboutus">
     @foreach(var item in Model.Entries)
     {
-        <a class="flex-sm-fill text-sm-center nav-link link-secondary" aria-current="page" href="@("/"+item.Language+"/about-us/"+item.Slug)">@item.Title</a>
+        <a class="flex-sm-fill text-sm-center nav-link link-secondary" aria-current="page" href="@item.Url">@item.Title</a>
     }
 </nav>

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Volo.Abp.Text.Formatting;
 
 namespace Dignite.Cms.Public.Sections
@@ -49,18 +48,17 @@ namespace Dignite.Cms.Public.Sections
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="siteId"></param>
         /// <param name="url">
         /// 
         /// </param>
         /// <returns></returns>
         public async Task<SectionDto> FindByUrlAsync(string url)
         {
-            url = url.RemovePreFix("/");
+            url = url.RemovePreFix("/").RemovePostFix("/");
             var allSections = await _sectionRepository.GetListAsync(null,null,true,true);
             foreach ( var section in allSections) 
             {
-                var route = section.EntryPage.Route.RemovePreFix("/");
+                var route = section.EntryPage.Route.RemovePreFix("/").RemovePostFix("/");
                 var extractResult = FormattedStringValueExtracter.Extract(url,route , ignoreCase: true);
                 if (extractResult.IsMatch)
                 {
@@ -73,12 +71,20 @@ namespace Dignite.Cms.Public.Sections
 
         public async Task<SectionDto> GetDefaultAsync(Guid siteId)
         {
-            var dto = ObjectMapper.Map<Section, SectionDto>(
-                await _sectionRepository.GetDefaultAsync(siteId)
-                );
+            var result = await _sectionRepository.GetDefaultAsync(siteId);
+            if (result == null)
+            {
+                return null;
+            }
+            else
+            {
+                var dto = ObjectMapper.Map<Section, SectionDto>(
+                    result
+                    );
 
-            await FillSectionFields(dto);
-            return dto;
+                await FillSectionFields(dto);
+                return dto;
+            }
         }
 
         protected async Task FillSectionFields(SectionDto dto)

@@ -13,7 +13,8 @@ namespace Dignite.Cms.Sections
         /// </summary>
         /// <example>
         /// Route with formatting parameters:
-        /// /news/{publishTime:yyyy-M}/{slug}
+        /// 1./news
+        /// 2./news/{publishTime:yyyy-M}/{slug}
         /// </example>
         /// <remarks>
         /// 1.If the section is not a single type, {slug} must be included in the route;
@@ -24,7 +25,9 @@ namespace Dignite.Cms.Sections
         [RegularExpression(SectionConsts.PageRouteRegularExpression)]
         public string Route { get; set; }
 
-
+        /// <summary>
+        /// asp.net core mvc Razor Page
+        /// </summary>
         [DynamicMaxLength(typeof(SectionConsts), nameof(SectionConsts.MaxPagetemplateLength))]
         [RegularExpression(SectionConsts.PageTemplateRegularExpression)]
         public string Template { get; set; }

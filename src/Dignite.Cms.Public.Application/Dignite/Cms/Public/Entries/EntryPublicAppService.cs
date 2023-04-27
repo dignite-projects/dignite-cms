@@ -2,7 +2,6 @@
 using Dignite.Abp.FieldCustomizing;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Public.Sections;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,6 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Cms.Public.Entries

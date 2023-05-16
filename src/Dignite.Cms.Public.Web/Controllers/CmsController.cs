@@ -11,6 +11,7 @@ using Volo.Abp.Text.Formatting;
 
 namespace Dignite.Cms.Public.Web.Controllers
 {
+    [Route("/")]
     public class CmsController : AbpController
     {
         private readonly ISitePublicAppService _sitePublicAppService;
@@ -26,7 +27,7 @@ namespace Dignite.Cms.Public.Web.Controllers
             _sitePublicAppService = sitePublicAppService;
         }
 
-        [HttpGet("/")]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return await EntryViewResult("/", null);
@@ -43,7 +44,8 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// 2.{culture}/{url}
         /// </param>
         /// <returns></returns>
-        [HttpGet("/{culture:culture}/{*url}")]
+        [HttpGet]
+        [Route("{culture:culture}/{*url}")]
         public async Task<IActionResult> Entry(string culture, string url)
         {
             return await EntryViewResult(url, culture);
@@ -55,7 +57,8 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        [HttpGet("/{*url}")]
+        [HttpGet]
+        [Route("{*url:regex(^(?!cms|identity).*$)}")]
         public async Task<IActionResult> Entry(string url)
         {
             return await EntryViewResult(url, null);

@@ -1,7 +1,10 @@
 ﻿@using Dignite.Cms.Public.Entries
+@using Dignite.Cms.Public.Web.Localization;
+@using Microsoft.Extensions.Localization;
+@inject IStringLocalizer<CmsResource> localizer;
 @model EntryDto
 @{
-    PageLayout.Content.Title = "Shandong Rongxin Plastic Industry Co., Ltd.";
+    PageLayout.Content.Title = @localizer["CompanyName"];
 }
 
 <div class="row g-0">
@@ -9,23 +12,23 @@
         <div class="d-flex justify-content-center mt-5">
             <div class="col-12 col-md-8 mt-5">
                 <h1 class="fw-bold mb-3">
-                    More than 100 kinds of products
+                    @localizer["Home-Lunbo-Title"]
                 </h1>
                 <p class="mb-5 lh-base">
-                    There are mainly plastic tray series, blow molding tray series, anti-leakage tray series, plastic pallet box series, plastic turnover basket series, plastic turnover box series, plastic parts box series, etc.
+                    @localizer["Home-Lunbo-Description"]
                 </p>
-                <a href="~/@Model.Language/products" class="btn btn-outline-dark border-3 rounded-pill px-5 py-2" tabindex="-1" role="button" aria-disabled="true">View all products</a>
+                <a href="~/@Model.Language/products" class="btn btn-outline-dark border-3 rounded-pill px-5 py-2" tabindex="-1" role="button" aria-disabled="true">@localizer["ViewAllProductsText"]</a>
             </div>
         </div>
     </div>
     <div class="col-6">
-        <img src="/tenants/sdrx/product-category-xuanchuan.jpg" class="img-fluid" alt="产品系列" />
+        <img src="/tenants/sdrx/product-category-xuanchuan.jpg" class="img-fluid" alt="@localizer["ProductSeriesText"]" />
     </div>
 </div>
 
 
 <div class="pt-5 mt-5 mb-5 pb-5">
-    <h2 class="fw-semibold mb-3">Partner clients</h2>
+    <h2 class="fw-semibold mb-3">@localizer["PartnerClients"]</h2>
     <div id="carousel-huoban" class="carousel slide">
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -115,7 +118,7 @@
 
 <div class="mt-5 mb-5 pb-5">
     <div class="d-flex justify-content-between mb-4">
-        <h2 class="fw-semibold">Our Services</h2>
+        <h2 class="fw-semibold">@localizer["OurServices"]</h2>
         
     </div>
     <div class="row g-5">
@@ -126,7 +129,7 @@
                     <h5 class="card-title">Has a workshop of 7000+ square meters</h5>
                     <p class="card-text text-secondary mb-1">Has multiple production lines and more than 20 sets of equipment with industry competitive advantages</p>
 
-                    <a href="~/@Model.Language/about-us/production-capacity" class="icon-animated icon-animate-right">Read more</a>
+                    <a href="~/@Model.Language/about-us/production-capacity" class="icon-animated icon-animate-right">@localizer["ReadMore"]</a>
                 </div>
             </div>
         </div>
@@ -138,7 +141,7 @@
                     <p class="card-text text-secondary mb-1">
                         The technical indicators meet <span class="text-decoration-underline">GB/T15234-94</span> national standards and enterprise standards
                     </p>
-                    <a href="~/@Model.Language/about-us/introduction" class="icon-animated icon-animate-right">Read more</a>
+                    <a href="~/@Model.Language/about-us/introduction" class="icon-animated icon-animate-right">@localizer["ReadMore"]</a>
                 </div>
             </div>
         </div>
@@ -152,7 +155,7 @@
                     <p class="card-text text-secondary mb-1">
                         Cooperate with many large domestic logistics companies, deliver goods on the same day, and deliver goods within 3 days
                     </p>
-                    <a href="~/@Model.Language/about-us/production-capacity" class="icon-animated icon-animate-right">Read more</a>
+                    <a href="~/@Model.Language/about-us/production-capacity" class="icon-animated icon-animate-right">@localizer["ReadMore"]</a>
                 </div>
             </div>
         </div>
@@ -210,9 +213,9 @@
 </div>
 
 <div class="pt-5 mt-5 mb-5 pb-5">
-    <h2 class="fw-semibold">Our Team</h2>
+    <h2 class="fw-semibold">@localizer["OurTeam"]</h2>
     <p class="text-secondary mb-4">
-        Our team at the transportation company works diligenty to provide our customers with top-quality plastic transportaton products that meet ther unique needs and requirements.
+        @localizer["OurTeamDescription"]
     </p>
     <div class="row g-5">
         <div class="col-6">
@@ -237,7 +240,7 @@
                                 mattis, pulvinar
                                 dapibus leo luctus
                             </p>
-                            <a href="~/@Model.Language/about-us/introduction" class="icon-animated icon-animate-right">Read more</a>
+                            <a href="~/@Model.Language/about-us/introduction" class="icon-animated icon-animate-right">@localizer["ReadMore"]</a>
                         </div>
                     </div>
                 </div>
@@ -265,7 +268,7 @@
                                 mattis, pulvinar
                                 dapibus leo luctus
                             </p>
-                            <a href="~/@Model.Language/about-us/production-capacity" class="icon-animated icon-animate-right">Read more</a>
+                            <a href="~/@Model.Language/about-us/production-capacity" class="icon-animated icon-animate-right">@localizer["ReadMore"]</a>
                         </div>
                     </div>
                 </div>
@@ -278,8 +281,8 @@
 
 <div class="pt-5 mt-5 mb-5 pb-5">
     <div class="d-flex justify-content-between mb-4">
-        <h2 class="fw-semibold">Company News</h2>
-        <a href="~/@Model.Language/products" class="btn btn-sm btn-outline-dark border-3 rounded-pill px-3 py-2" tabindex="-1" role="button" aria-disabled="false">View all news</a>
+        <h2 class="fw-semibold">@localizer["CompanyNews"]</h2>
+        <a href="~/@Model.Language/news" class="btn btn-sm btn-outline-dark border-3 rounded-pill px-3 py-2" tabindex="-1" role="button" aria-disabled="false">@localizer["ViewAllNews"]</a>
     </div>
     <cms-entry-list site-id="Section.SiteId" section-name="news-list" result-count="1" language="@Model.Language" partial-name="cms/News-Top"></cms-entry-list>    
 </div>
@@ -291,8 +294,8 @@
             <div class="row g-0 bg-secondary bg-opacity-10">
                 <div class="col-md-6">
                     <div class="card-body">
-                        <h4 class="card-title fw-semibold">All product</h4>
-                        <p class="card-text text-secondary">Provide customers with better products</p>
+                            <h4 class="card-title fw-semibold">@localizer["AllProducts"]</h4>
+                            <p class="card-text text-secondary">@localizer["AllProductsDescription"]</p>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -308,8 +311,8 @@
             <div class="row g-0 bg-secondary bg-opacity-10">
                 <div class="col-md-6">
                     <div class="card-body">
-                            <h4 class="card-title fw-semibold">Order</h4>
-                            <p class="card-text text-secondary">Welcome to order products in 1688 store</p>
+                            <h4 class="card-title fw-semibold">@localizer["Order"]</h4>
+                            <p class="card-text text-secondary">@localizer["OrderDescription"]</p>
                         </div>
                 </div>
                 <div class="col-md-6">
@@ -325,8 +328,8 @@
             <div class="row g-0 bg-secondary bg-opacity-10">
                 <div class="col-md-6">
                     <div class="card-body">
-                            <h4 class="card-title fw-semibold">Contact us</h4>
-                            <p class="card-text text-secondary">Hear from the experts behind the product</p>
+                            <h4 class="card-title fw-semibold">@localizer["ContactUs"]</h4>
+                            <p class="card-text text-secondary">@localizer["ContactUsDescription"]</p>
                     </div>
                 </div>
                 <div class="col-md-6">

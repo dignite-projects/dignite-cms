@@ -14,9 +14,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.AutoMapper" Version="5.3.4" />
-    <PackageReference Include="Volo.Abp.Ddd.Application" Version="5.3.4" />
-	  <PackageReference Include="Volo.CmsKit.Public.Application" Version="5.3.4" />
+    <PackageReference Include="Volo.Abp.AutoMapper" Version="6.0.3" />
+    <PackageReference Include="Volo.Abp.Ddd.Application" Version="6.0.3" />
+	  <PackageReference Include="Volo.CmsKit.Public.Application" Version="6.0.3" />
     <ProjectReference Include="..\..\..\abp-modules\modules\file-explorer\src\Dignite.FileExplorer.Application\Dignite.FileExplorer.Application.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Public.Application.Contracts\Dignite.Cms.Public.Application.Contracts.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Domain\Dignite.Cms.Domain.csproj" />

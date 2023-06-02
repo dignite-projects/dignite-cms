@@ -70,8 +70,4 @@
         </None>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Tenants\sdrx\Themes\Pure\Layouts\" />
-    </ItemGroup>
-
 </Project>

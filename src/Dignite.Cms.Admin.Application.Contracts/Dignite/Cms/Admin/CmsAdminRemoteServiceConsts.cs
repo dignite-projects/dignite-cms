@@ -4,6 +4,6 @@
     {
         public const string RemoteServiceName = "CmsAdmin";
 
-        public const string ModuleName = "CmsAdmin";
+        public const string ModuleName = "cms-admin";
     }
 }

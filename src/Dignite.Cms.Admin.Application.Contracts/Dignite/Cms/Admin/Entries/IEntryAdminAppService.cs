@@ -33,7 +33,7 @@ namespace Dignite.Cms.Admin.Entries
         /// <param name="id"></param>
         /// <param name="version"></param>
         /// <returns></returns>
-        Task<EntryDto> GetByVersion(Guid id, int version);
+        Task<EntryDto> GetByVersionAsync(Guid id, int version);
 
         /// <summary>
         /// 

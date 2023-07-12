@@ -1,4 +1,5 @@
 ﻿using Blazorise;
+using Blazorise.DataGrid;
 using Dignite.Cms.Admin.Entries;
 using Dignite.Cms.Admin.Sections;
 using Dignite.Cms.Admin.Sites;
@@ -47,9 +48,10 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
         protected override async Task OnInitializedAsync()
         {
-            await InitializePageDataAsync();
             await base.OnInitializedAsync();
+            await InitializePageDataAsync();
         }
+
 
 
         protected override ValueTask SetToolbarItemsAsync()

@@ -48,11 +48,6 @@ public class CmsPublicWebModule : AbpModule
             options.AddMaps<CmsPublicWebModule>(validate: true);
         });
 
-        Configure<RazorPagesOptions>(options =>
-        {
-                //Configure authorization.
-            });
-
         context.Services.AddRouting(options =>
         {
             options.ConstraintMap.Add("culture", typeof(CultureRouteConstraint));

@@ -159,6 +159,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Localization.Mu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Mvc.UI.Theme.MultiTenancy", "..\abp-modules\framework\src\Dignite.Abp.AspNetCore.Mvc.UI.Theme.MultiTenancy\Dignite.Abp.AspNetCore.Mvc.UI.Theme.MultiTenancy.csproj", "{7433D7DC-DB8A-4BD4-BEEB-D5F9BD0E098F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Components.CkEditor.WebAssembly", "..\abp-modules\modules\ckeditor-component\Dignite.Abp.AspNetCore.Components.CkEditor.WebAssembly\Dignite.Abp.AspNetCore.Components.CkEditor.WebAssembly.csproj", "{BAF89A45-7814-40DC-AF60-F6DB73BEF362}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -429,6 +431,10 @@ Global
 		{7433D7DC-DB8A-4BD4-BEEB-D5F9BD0E098F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7433D7DC-DB8A-4BD4-BEEB-D5F9BD0E098F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7433D7DC-DB8A-4BD4-BEEB-D5F9BD0E098F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAF89A45-7814-40DC-AF60-F6DB73BEF362}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAF89A45-7814-40DC-AF60-F6DB73BEF362}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAF89A45-7814-40DC-AF60-F6DB73BEF362}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAF89A45-7814-40DC-AF60-F6DB73BEF362}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -508,6 +514,7 @@ Global
 		{8C042C3D-5CD5-49C3-ABC2-CA1BAA6A4AFD} = {10FFBFD3-A62E-48D0-9262-C10D5D1720F9}
 		{AF57C9B7-E468-48AC-8CDE-FEAEB3CCD0DD} = {10FFBFD3-A62E-48D0-9262-C10D5D1720F9}
 		{7433D7DC-DB8A-4BD4-BEEB-D5F9BD0E098F} = {10FFBFD3-A62E-48D0-9262-C10D5D1720F9}
+		{BAF89A45-7814-40DC-AF60-F6DB73BEF362} = {1BA2D526-33F5-441B-B1E0-5D1F6C2D216C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4324B3B4-B60B-4E3C-91D8-59576B4E26DD}

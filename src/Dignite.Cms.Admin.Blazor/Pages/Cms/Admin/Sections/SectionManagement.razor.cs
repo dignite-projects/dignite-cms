@@ -1,4 +1,5 @@
 ﻿using Blazorise;
+using Blazorise.DataGrid;
 using Dignite.Cms.Admin.Sections;
 using Dignite.Cms.Admin.Sites;
 using Dignite.Cms.Localization;
@@ -33,21 +34,26 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
 
         protected override async Task OnInitializedAsync()
         {
+            await base.OnInitializedAsync();
             try
             {
                 AllSites = (await SiteAdminAppService.GetListAsync(new GetSitesInput())).Items;
-                CurrentSite = AllSites
-                    .OrderByDescending(s => s.IsDefault)
-                    .ThenBy(s => s.CreationTime)
-                    .FirstOrDefault();
-                SelectedSiteItemName=CurrentSite?.Name;
+                if (AllSites.Any())
+                {
+                    CurrentSite = AllSites
+                        .OrderByDescending(s => s.IsDefault)
+                        .ThenBy(s => s.CreationTime)
+                        .FirstOrDefault();
+                    SelectedSiteItemName = CurrentSite?.Name;
+                    await OnSiteClickAsync(CurrentSite);
+                }
             }
             catch (Exception ex)
             {
                 await HandleErrorAsync(ex);
             }
-            await base.OnInitializedAsync();
         }
+
 
         protected override async Task UpdateGetListInputAsync()
         {

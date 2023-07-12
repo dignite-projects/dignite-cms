@@ -1,6 +1,4 @@
-﻿using Dignite.Abp.DynamicForms.NumericEdit;
-using Dignite.Abp.FieldCustomizing;
-using Dignite.Cms.Entries;
+﻿using Dignite.Cms.Entries;
 using Dignite.Cms.Sections;
 using Microsoft.AspNetCore.Authorization;
 using System;
@@ -126,18 +124,12 @@ namespace Dignite.Cms.Admin.Entries
             if (input.SectionId == Guid.Empty)
                 return new PagedResultDto<EntryDto>(0, new List<EntryDto>());
 
-
-            IList<QueryingByFieldParameter> queryingByFieldParameters = new List<QueryingByFieldParameter>
-            {
-                //new QueryingByFieldParameter("shuzi","5-25")
-            };
-
-            var count = await _entryRepository.GetCountAsync(input.SectionId, input.Language, input.CreatorId, input.Status, input.Filter,input.StartPublishDate,input.ExpiryPublishDate, queryingByFieldParameters);
+            var count = await _entryRepository.GetCountAsync(input.SectionId, input.Language, input.CreatorId, input.Status, input.Filter,input.StartPublishDate,input.ExpiryPublishDate, null);
             if (count == 0)
                 return new PagedResultDto<EntryDto>(0, new List<EntryDto>());
 
             //get entry list
-            var result = await _entryRepository.GetListAsync(input.SectionId, input.Language, input.CreatorId, input.Status, input.Filter, input.StartPublishDate, input.ExpiryPublishDate, queryingByFieldParameters, input.MaxResultCount, input.SkipCount, input.Sorting);
+            var result = await _entryRepository.GetListAsync(input.SectionId, input.Language, input.CreatorId, input.Status, input.Filter, input.StartPublishDate, input.ExpiryPublishDate, null, input.MaxResultCount, input.SkipCount, input.Sorting);
             var dto = ObjectMapper.Map<List<Entry>, List<EntryDto>>(result);
 
             return new PagedResultDto<EntryDto>(count, dto);
@@ -203,7 +195,7 @@ namespace Dignite.Cms.Admin.Entries
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         [Authorize(Permissions.CmsAdminPermissions.Entry.Default)]
-        public async Task<EntryDto> GetByVersion(Guid id, int version)
+        public async Task<EntryDto> GetByVersionAsync(Guid id, int version)
         {
             var entry = await _entryRepository.GetAsync(id, false);
             var result = await _entryRepository.FindByVersionAsync(entry.Revision.InitialId, version);

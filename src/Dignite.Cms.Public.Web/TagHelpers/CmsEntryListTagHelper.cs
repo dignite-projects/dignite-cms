@@ -1,10 +1,13 @@
-﻿using Dignite.Cms.Public.Entries;
+﻿using Dignite.Abp.FieldCustomizing;
+using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
 using Dignite.Cms.Public.Sites;
+using Dignite.Cms.Public.Web.Models;
 using Dignite.Cms.Public.Web.Razor;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Dignite.Cms.Public.Web.TagHelpers
@@ -40,7 +43,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         /// <summary>
         /// 
         /// </summary>
-        public string QueryingByFieldParameters { get; set; }
+        public IList<QueryingByFieldParameter> QueryingByFieldParameters { get; set; }
 
         /// <summary>
         /// The name or path of the view that is rendered to the response.
@@ -99,11 +102,19 @@ namespace Dignite.Cms.Public.Web.TagHelpers
                 }
 
                 Section = await _sectionAppService.FindByNameAsync(SiteId.Value, SectionName);
+                if (Section==null)
+                {
+                    output.TagName = "p";
+                    output.Attributes.Add("class", "p-2 bg-warning text-dark");
+                    output.Content.SetContent($"The section named {SectionName} is null. Please check if the {SectionName} name is valid");
+                    return;
+                }
             }
 
             var model = await GetViewModel();
             var body = await _renderer.RenderAsync(PartialName, model);
 
+            output.TagName = null;
             output.Content.SetHtmlContent(body);
             output.Attributes.Clear();
         }
@@ -114,9 +125,9 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             {
                 SectionId = Section.Id,
                 Language = Language,
-                QueryingByFieldParameters = QueryingByFieldParameters,
-                MaxResultCount =this.ResultCount.Value,
-                SkipCount = (this.CurrentPage-1) * ResultCount.Value
+                QueryingByFieldParameters = QueryingByFieldParameters == null ? null : JsonSerializer.Serialize(QueryingByFieldParameters),
+                MaxResultCount = this.ResultCount.Value,
+                SkipCount = (this.CurrentPage - 1) * ResultCount.Value
             });
 
 

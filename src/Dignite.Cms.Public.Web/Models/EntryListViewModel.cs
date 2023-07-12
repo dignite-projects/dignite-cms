@@ -2,17 +2,17 @@
 using Dignite.Cms.Public.Sections;
 using System.Collections.Generic;
 
-namespace Dignite.Cms.Public.Web.TagHelpers
+namespace Dignite.Cms.Public.Web.Models
 {
     public class EntryListViewModel
     {
-        public EntryListViewModel(SectionDto section, IReadOnlyList<EntryDto> entries,int totalCount,int pageIndex,int pageSize)
+        public EntryListViewModel(SectionDto section, IReadOnlyList<EntryDto> entries, int totalCount, int pageIndex, int pageSize)
         {
-            this.Section = section;
-            this.Entries = entries;
-            this.TotalCount = totalCount;
-            this.PageIndex = pageIndex;
-            this.PageSize = pageSize;
+            Section = section;
+            Entries = entries;
+            TotalCount = totalCount;
+            PageIndex = pageIndex;
+            PageSize = pageSize;
         }
 
         public SectionDto Section { get; protected set; }
@@ -38,7 +38,10 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         public int PageSize { get; protected set; }
 
 
-        public int CurrentPage { get {
+        public int CurrentPage
+        {
+            get
+            {
                 return PageIndex + 1;
             }
         }

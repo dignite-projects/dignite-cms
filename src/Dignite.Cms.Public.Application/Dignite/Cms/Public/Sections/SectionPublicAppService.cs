@@ -55,14 +55,18 @@ namespace Dignite.Cms.Public.Sections
         public async Task<SectionDto> FindByUrlAsync(string url)
         {
             url = url.RemovePreFix("/").RemovePostFix("/");
-            var allSections = await _sectionRepository.GetListAsync(null,null,true,true);
+            var allSections = (await _sectionRepository.GetListAsync(null,null,true,true)).OrderByDescending(s=>s.EntryPage.Route);
             foreach ( var section in allSections) 
             {
                 var route = section.EntryPage.Route.RemovePreFix("/").RemovePostFix("/");
                 var extractResult = FormattedStringValueExtracter.Extract(url,route , ignoreCase: true);
                 if (extractResult.IsMatch)
                 {
-                    return ObjectMapper.Map<Section, SectionDto>(section);
+                    var dto = ObjectMapper.Map<Section, SectionDto>(
+                        section
+                        );
+                    await FillSectionFields(dto);
+                    return dto;
                 }
             }
 

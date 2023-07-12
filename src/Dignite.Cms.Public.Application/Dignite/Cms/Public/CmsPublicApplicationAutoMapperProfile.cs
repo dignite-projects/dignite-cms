@@ -26,7 +26,8 @@ public class CmsPublicApplicationAutoMapperProfile : Profile
         CreateMap<EntryPage, EntryPageDto>();
         CreateMap<EntryType, EntryTypeDto>();
         CreateMap<EntryFieldTab, EntryFieldTabDto>();
-        CreateMap<EntryField, EntryFieldDto>();
+        CreateMap<EntryField, EntryFieldDto>()
+                .Ignore(ef => ef.Field);
 
 
         /**** entity *****************************************/

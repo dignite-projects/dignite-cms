@@ -2,6 +2,7 @@
 using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
 using Dignite.Cms.Public.Sites;
+using Dignite.Cms.Public.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -11,7 +12,6 @@ using Volo.Abp.Text.Formatting;
 
 namespace Dignite.Cms.Public.Web.Controllers
 {
-    [Route("/")]
     public class CmsController : AbpController
     {
         private readonly ISitePublicAppService _sitePublicAppService;
@@ -27,7 +27,6 @@ namespace Dignite.Cms.Public.Web.Controllers
             _sitePublicAppService = sitePublicAppService;
         }
 
-        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return await EntryViewResult("/", null);
@@ -44,9 +43,7 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// 2.{culture}/{url}
         /// </param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("{culture:culture}/{*url}")]
-        public async Task<IActionResult> Entry(string culture, string url)
+        public async Task<IActionResult> CultureEntry(string culture, string url)
         {
             return await EntryViewResult(url, culture);
         }
@@ -57,8 +54,6 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("{*url:regex(^(?!cms|identity).*$)}")]
         public async Task<IActionResult> Entry(string url)
         {
             return await EntryViewResult(url, null);
@@ -74,8 +69,9 @@ namespace Dignite.Cms.Public.Web.Controllers
         {
             var section = await GetSection(url);
             var entry = await GetEntry(section, url, language);
-            ViewBag.Section = section;
-            return View(section.EntryPage.Template, entry);
+            var viewModel = ObjectMapper.Map<EntryDto, EntryViewModel>(entry);
+            viewModel.Section=section;
+            return View(section.EntryPage.Template, viewModel);
         }
 
         protected async Task<SectionDto> GetSection(string url)

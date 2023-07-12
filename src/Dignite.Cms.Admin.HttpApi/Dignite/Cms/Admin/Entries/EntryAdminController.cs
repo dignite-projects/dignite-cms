@@ -117,9 +117,9 @@ namespace Dignite.Cms.Admin.Entries
         /// <returns></returns>
         [HttpGet]
         [Route("{id:Guid}/{version:int}")]
-        public async Task<EntryDto> GetByVersion(Guid id, int version)
+        public async Task<EntryDto> GetByVersionAsync(Guid id, int version)
         {
-            return await _entryAppService.GetByVersion(id,version);
+            return await _entryAppService.GetByVersionAsync(id,version);
         }
 
         /// <summary>

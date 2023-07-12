@@ -27,7 +27,8 @@ namespace Dignite.Cms.Admin
             CreateMap<EntryPage, EntryPageDto>();
             CreateMap<EntryType, EntryTypeDto>();
             CreateMap<EntryFieldTab, EntryFieldTabDto>();
-            CreateMap<EntryField, EntryFieldDto>();
+            CreateMap<EntryField, EntryFieldDto>()
+                .Ignore(ef => ef.Field);
 
 
             /**** entity *****************************************/

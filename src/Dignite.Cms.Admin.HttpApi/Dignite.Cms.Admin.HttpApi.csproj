@@ -18,7 +18,7 @@
   <ItemGroup>
     <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="7.2.2" />
 	<PackageReference Include="Volo.CmsKit.Admin.HttpApi" Version="7.2.2" />
-    <ProjectReference Include="..\..\..\abp-modules\modules\file-explorer\src\Dignite.FileExplorer.HttpApi\Dignite.FileExplorer.HttpApi.csproj" />
+    <ProjectReference Include="..\..\..\dignite-abp\modules\file-explorer\src\Dignite.FileExplorer.HttpApi\Dignite.FileExplorer.HttpApi.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Admin.Application.Contracts\Dignite.Cms.Admin.Application.Contracts.csproj" />
   </ItemGroup>
 

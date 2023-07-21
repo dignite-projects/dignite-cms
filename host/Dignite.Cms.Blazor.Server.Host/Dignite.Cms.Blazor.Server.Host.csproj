@@ -21,8 +21,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\abp-modules\modules\pure-theme\src\Dignite.Abp.AspNetCore.Components.Server.PureTheme\Dignite.Abp.AspNetCore.Components.Server.PureTheme.csproj" />
-        <ProjectReference Include="..\..\..\abp-modules\modules\pure-theme\src\Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure\Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure.csproj" />
+        <ProjectReference Include="..\..\..\dignite-abp\modules\pure-theme\src\Dignite.Abp.AspNetCore.Components.Server.PureTheme\Dignite.Abp.AspNetCore.Components.Server.PureTheme.csproj" />
+        <ProjectReference Include="..\..\..\dignite-abp\modules\pure-theme\src\Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure\Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure.csproj" />
         <ProjectReference Include="..\..\src\Dignite.Cms.Admin.Blazor.Server\Dignite.Cms.Admin.Blazor.Server.csproj" />
         <ProjectReference Include="..\..\src\Dignite.Cms.Application\Dignite.Cms.Application.csproj" />
         <PackageReference Include="Volo.Abp.EntityFrameworkCore.SqlServer" Version="7.2.2" />

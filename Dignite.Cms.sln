@@ -53,37 +53,37 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Cms.Blazor.Server.H
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Cms.Installer", "src\Dignite.Cms.Installer\Dignite.Cms.Installer.csproj", "{BE39FD00-745B-4049-8161-FC129817CBE4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "abp-modules", "abp-modules", "{10FFBFD3-A62E-48D0-9262-C10D5D1720F9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dignite-abp", "dignite-abp", "{10FFBFD3-A62E-48D0-9262-C10D5D1720F9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.FieldCustomizing.Domain", "..\abp-modules\modules\field-customizing\src\Dignite.Abp.FieldCustomizing.Domain\Dignite.Abp.FieldCustomizing.Domain.csproj", "{9FB4DB8B-7F41-484E-8846-E7870812BB00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.FieldCustomizing.Domain", "..\dignite-abp\modules\field-customizing\src\Dignite.Abp.FieldCustomizing.Domain\Dignite.Abp.FieldCustomizing.Domain.csproj", "{9FB4DB8B-7F41-484E-8846-E7870812BB00}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.FieldCustomizing.EntityFrameworkCore", "..\abp-modules\modules\field-customizing\src\Dignite.Abp.FieldCustomizing.EntityFrameworkCore\Dignite.Abp.FieldCustomizing.EntityFrameworkCore.csproj", "{A8F9210E-B7C4-45AD-A7F5-7B1C33FF7678}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.FieldCustomizing.EntityFrameworkCore", "..\dignite-abp\modules\field-customizing\src\Dignite.Abp.FieldCustomizing.EntityFrameworkCore\Dignite.Abp.FieldCustomizing.EntityFrameworkCore.csproj", "{A8F9210E-B7C4-45AD-A7F5-7B1C33FF7678}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FileExplorer.Application", "..\abp-modules\modules\file-explorer\src\Dignite.FileExplorer.Application\Dignite.FileExplorer.Application.csproj", "{2950C92F-2488-40D2-9083-8674D40DA90F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FileExplorer.Application", "..\dignite-abp\modules\file-explorer\src\Dignite.FileExplorer.Application\Dignite.FileExplorer.Application.csproj", "{2950C92F-2488-40D2-9083-8674D40DA90F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FileExplorer.Domain", "..\abp-modules\modules\file-explorer\src\Dignite.FileExplorer.Domain\Dignite.FileExplorer.Domain.csproj", "{2DD9CCBF-C730-4DC0-899F-848B38B3171A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FileExplorer.Domain", "..\dignite-abp\modules\file-explorer\src\Dignite.FileExplorer.Domain\Dignite.FileExplorer.Domain.csproj", "{2DD9CCBF-C730-4DC0-899F-848B38B3171A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FileExplorer.EntityFrameworkCore", "..\abp-modules\modules\file-explorer\src\Dignite.FileExplorer.EntityFrameworkCore\Dignite.FileExplorer.EntityFrameworkCore.csproj", "{A9A06B80-47BB-4EA8-B7D1-7517AB6ACE77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FileExplorer.EntityFrameworkCore", "..\dignite-abp\modules\file-explorer\src\Dignite.FileExplorer.EntityFrameworkCore\Dignite.FileExplorer.EntityFrameworkCore.csproj", "{A9A06B80-47BB-4EA8-B7D1-7517AB6ACE77}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FileExplorer.HttpApi", "..\abp-modules\modules\file-explorer\src\Dignite.FileExplorer.HttpApi\Dignite.FileExplorer.HttpApi.csproj", "{0E0A7C96-2B43-4ADF-AF48-BE99E4C6E324}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FileExplorer.HttpApi", "..\dignite-abp\modules\file-explorer\src\Dignite.FileExplorer.HttpApi\Dignite.FileExplorer.HttpApi.csproj", "{0E0A7C96-2B43-4ADF-AF48-BE99E4C6E324}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FileExplorer.HttpApi.Client", "..\abp-modules\modules\file-explorer\src\Dignite.FileExplorer.HttpApi.Client\Dignite.FileExplorer.HttpApi.Client.csproj", "{F8070497-D107-4A7D-A394-13E3AB4EE025}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FileExplorer.HttpApi.Client", "..\dignite-abp\modules\file-explorer\src\Dignite.FileExplorer.HttpApi.Client\Dignite.FileExplorer.HttpApi.Client.csproj", "{F8070497-D107-4A7D-A394-13E3AB4EE025}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Components.Server.PureTheme", "..\abp-modules\modules\pure-theme\src\Dignite.Abp.AspNetCore.Components.Server.PureTheme\Dignite.Abp.AspNetCore.Components.Server.PureTheme.csproj", "{CEC4F07F-2390-4776-994C-E4CB12E8E7CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Components.Server.PureTheme", "..\dignite-abp\modules\pure-theme\src\Dignite.Abp.AspNetCore.Components.Server.PureTheme\Dignite.Abp.AspNetCore.Components.Server.PureTheme.csproj", "{CEC4F07F-2390-4776-994C-E4CB12E8E7CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure", "..\abp-modules\modules\pure-theme\src\Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure\Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure.csproj", "{374FEAD0-D8E8-44C8-8B52-8110D485427F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure", "..\dignite-abp\modules\pure-theme\src\Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure\Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure.csproj", "{374FEAD0-D8E8-44C8-8B52-8110D485427F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.NotificationCenter.Application", "..\abp-modules\modules\notification-center\src\Dignite.Abp.NotificationCenter.Application\Dignite.Abp.NotificationCenter.Application.csproj", "{8AB20247-D3DC-4A0E-A555-776863F3D465}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.NotificationCenter.Application", "..\dignite-abp\modules\notification-center\src\Dignite.Abp.NotificationCenter.Application\Dignite.Abp.NotificationCenter.Application.csproj", "{8AB20247-D3DC-4A0E-A555-776863F3D465}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.NotificationCenter.Blazor.Server", "..\abp-modules\modules\notification-center\src\Dignite.Abp.NotificationCenter.Blazor.Server\Dignite.Abp.NotificationCenter.Blazor.Server.csproj", "{6F41CFF9-9B24-4A99-8178-BA556AB98977}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.NotificationCenter.Blazor.Server", "..\dignite-abp\modules\notification-center\src\Dignite.Abp.NotificationCenter.Blazor.Server\Dignite.Abp.NotificationCenter.Blazor.Server.csproj", "{6F41CFF9-9B24-4A99-8178-BA556AB98977}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.NotificationCenter.Domain", "..\abp-modules\modules\notification-center\src\Dignite.Abp.NotificationCenter.Domain\Dignite.Abp.NotificationCenter.Domain.csproj", "{60DFAB00-5E75-410F-9C8D-2A7290A1BAB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.NotificationCenter.Domain", "..\dignite-abp\modules\notification-center\src\Dignite.Abp.NotificationCenter.Domain\Dignite.Abp.NotificationCenter.Domain.csproj", "{60DFAB00-5E75-410F-9C8D-2A7290A1BAB1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.NotificationCenter.EntityFrameworkCore", "..\abp-modules\modules\notification-center\src\Dignite.Abp.NotificationCenter.EntityFrameworkCore\Dignite.Abp.NotificationCenter.EntityFrameworkCore.csproj", "{FE258C3C-363D-4D97-9EB6-6143598F5FAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.NotificationCenter.EntityFrameworkCore", "..\dignite-abp\modules\notification-center\src\Dignite.Abp.NotificationCenter.EntityFrameworkCore\Dignite.Abp.NotificationCenter.EntityFrameworkCore.csproj", "{FE258C3C-363D-4D97-9EB6-6143598F5FAE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.NotificationCenter.HttpApi", "..\abp-modules\modules\notification-center\src\Dignite.Abp.NotificationCenter.HttpApi\Dignite.Abp.NotificationCenter.HttpApi.csproj", "{1AF81B36-D90A-45B9-B016-B5439051D5F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.NotificationCenter.HttpApi", "..\dignite-abp\modules\notification-center\src\Dignite.Abp.NotificationCenter.HttpApi\Dignite.Abp.NotificationCenter.HttpApi.csproj", "{1AF81B36-D90A-45B9-B016-B5439051D5F3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.NotificationCenter.HttpApi.Client", "..\abp-modules\modules\notification-center\src\Dignite.Abp.NotificationCenter.HttpApi.Client\Dignite.Abp.NotificationCenter.HttpApi.Client.csproj", "{F059BEEA-4EBE-449C-BDCC-93DDD53C3A8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.NotificationCenter.HttpApi.Client", "..\dignite-abp\modules\notification-center\src\Dignite.Abp.NotificationCenter.HttpApi.Client\Dignite.Abp.NotificationCenter.HttpApi.Client.csproj", "{F059BEEA-4EBE-449C-BDCC-93DDD53C3A8D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Cms.Admin.Application", "src\Dignite.Cms.Admin.Application\Dignite.Cms.Admin.Application.csproj", "{AB450112-7C31-413F-92A8-1444587A0BB5}"
 EndProject
@@ -99,11 +99,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Cms.Admin.HttpApi",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Cms.Admin.HttpApi.Client", "src\Dignite.Cms.Admin.HttpApi.Client\Dignite.Cms.Admin.HttpApi.Client.csproj", "{B09BB538-7C5B-4B37-BF2B-1DF8B9CE0E11}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FileExplorer.Application.Contracts", "..\abp-modules\modules\file-explorer\src\Dignite.FileExplorer.Application.Contracts\Dignite.FileExplorer.Application.Contracts.csproj", "{F702AC87-F4F4-4387-8621-BB7985D83337}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FileExplorer.Application.Contracts", "..\dignite-abp\modules\file-explorer\src\Dignite.FileExplorer.Application.Contracts\Dignite.FileExplorer.Application.Contracts.csproj", "{F702AC87-F4F4-4387-8621-BB7985D83337}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.BlazoriseUI", "..\abp-modules\framework\src\Dignite.Abp.BlazoriseUI\Dignite.Abp.BlazoriseUI.csproj", "{E5E8FE8F-2CD7-4EAC-B32E-8989C67CF7C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.BlazoriseUI", "..\dignite-abp\framework\src\Dignite.Abp.BlazoriseUI\Dignite.Abp.BlazoriseUI.csproj", "{E5E8FE8F-2CD7-4EAC-B32E-8989C67CF7C1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FileExplorer.Blazor", "..\abp-modules\modules\file-explorer\src\Dignite.FileExplorer.Blazor\Dignite.FileExplorer.Blazor.csproj", "{8D49F1AC-4938-433F-B4C0-CFDEDF0929DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FileExplorer.Blazor", "..\dignite-abp\modules\file-explorer\src\Dignite.FileExplorer.Blazor\Dignite.FileExplorer.Blazor.csproj", "{8D49F1AC-4938-433F-B4C0-CFDEDF0929DC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "admin", "admin", "{F90CC8F8-33D6-4E23-9277-52C71690B499}"
 EndProject
@@ -125,23 +125,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Cms.Public.HttpApi.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Cms.Public.Web", "src\Dignite.Cms.Public.Web\Dignite.Cms.Public.Web.csproj", "{1EB6E0F9-C35A-4795-BC90-ABD1772390EF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FileExplorer.Domain.Shared", "..\abp-modules\modules\file-explorer\src\Dignite.FileExplorer.Domain.Shared\Dignite.FileExplorer.Domain.Shared.csproj", "{7B4DA3CC-4034-43EB-BF2F-C0C1C234B62B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FileExplorer.Domain.Shared", "..\dignite-abp\modules\file-explorer\src\Dignite.FileExplorer.Domain.Shared\Dignite.FileExplorer.Domain.Shared.csproj", "{7B4DA3CC-4034-43EB-BF2F-C0C1C234B62B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.FieldCustomizing.Domain.Shared", "..\abp-modules\modules\field-customizing\src\Dignite.Abp.FieldCustomizing.Domain.Shared\Dignite.Abp.FieldCustomizing.Domain.Shared.csproj", "{48F12F54-53B7-472E-BE72-3A90DAA13C1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.FieldCustomizing.Domain.Shared", "..\dignite-abp\modules\field-customizing\src\Dignite.Abp.FieldCustomizing.Domain.Shared\Dignite.Abp.FieldCustomizing.Domain.Shared.csproj", "{48F12F54-53B7-472E-BE72-3A90DAA13C1F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.DynamicForms.Components.BlazoriseUI", "..\abp-modules\framework\src\Dignite.Abp.DynamicForms.Components.BlazoriseUI\Dignite.Abp.DynamicForms.Components.BlazoriseUI.csproj", "{B8E09F8B-637E-4F35-92B5-2360E0067AED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.DynamicForms.Components.BlazoriseUI", "..\dignite-abp\framework\src\Dignite.Abp.DynamicForms.Components.BlazoriseUI\Dignite.Abp.DynamicForms.Components.BlazoriseUI.csproj", "{B8E09F8B-637E-4F35-92B5-2360E0067AED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.DynamicForms.FileExplorer", "..\abp-modules\modules\file-explorer\src\Dignite.Abp.DynamicForms.FileExplorer\Dignite.Abp.DynamicForms.FileExplorer.csproj", "{426DF1BD-1197-4505-B3F2-548C9B3C61A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.DynamicForms.FileExplorer", "..\dignite-abp\modules\file-explorer\src\Dignite.Abp.DynamicForms.FileExplorer\Dignite.Abp.DynamicForms.FileExplorer.csproj", "{426DF1BD-1197-4505-B3F2-548C9B3C61A2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.DynamicForms.Components.FileExplorer", "..\abp-modules\modules\file-explorer\src\Dignite.Abp.DynamicForms.Components.FileExplorer\Dignite.Abp.DynamicForms.Components.FileExplorer.csproj", "{9DE50E9F-B3C8-4AFC-A0BB-F7D502AFA212}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.DynamicForms.Components.FileExplorer", "..\dignite-abp\modules\file-explorer\src\Dignite.Abp.DynamicForms.Components.FileExplorer\Dignite.Abp.DynamicForms.Components.FileExplorer.csproj", "{9DE50E9F-B3C8-4AFC-A0BB-F7D502AFA212}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Components.CkEditor", "..\abp-modules\modules\ckeditor-component\Dignite.Abp.AspNetCore.Components.CkEditor\Dignite.Abp.AspNetCore.Components.CkEditor.csproj", "{5075CFDB-ECCA-45C6-9950-E97AC9868699}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Components.CkEditor", "..\dignite-abp\modules\ckeditor-component\Dignite.Abp.AspNetCore.Components.CkEditor\Dignite.Abp.AspNetCore.Components.CkEditor.csproj", "{5075CFDB-ECCA-45C6-9950-E97AC9868699}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Components.CkEditor.Server", "..\abp-modules\modules\ckeditor-component\Dignite.Abp.AspNetCore.Components.CkEditor.Server\Dignite.Abp.AspNetCore.Components.CkEditor.Server.csproj", "{CAF6B2A9-DBEC-4426-9A13-59BBD049D9C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Components.CkEditor.Server", "..\dignite-abp\modules\ckeditor-component\Dignite.Abp.AspNetCore.Components.CkEditor.Server\Dignite.Abp.AspNetCore.Components.CkEditor.Server.csproj", "{CAF6B2A9-DBEC-4426-9A13-59BBD049D9C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.DynamicForms.CkEditor", "..\abp-modules\modules\ckeditor-component\Dignite.Abp.DynamicForms.CkEditor\Dignite.Abp.DynamicForms.CkEditor.csproj", "{F5C4F305-F48D-41AC-B07E-615705EE79C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.DynamicForms.CkEditor", "..\dignite-abp\modules\ckeditor-component\Dignite.Abp.DynamicForms.CkEditor\Dignite.Abp.DynamicForms.CkEditor.csproj", "{F5C4F305-F48D-41AC-B07E-615705EE79C5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.DynamicForms.Components.CkEditor", "..\abp-modules\modules\ckeditor-component\Dignite.Abp.DynamicForms.Components.CkEditor\Dignite.Abp.DynamicForms.Components.CkEditor.csproj", "{85B62A50-4180-412C-A12B-5F169F37481C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.DynamicForms.Components.CkEditor", "..\dignite-abp\modules\ckeditor-component\Dignite.Abp.DynamicForms.Components.CkEditor\Dignite.Abp.DynamicForms.Components.CkEditor.csproj", "{85B62A50-4180-412C-A12B-5F169F37481C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CkEditor", "CkEditor", "{1BA2D526-33F5-441B-B1E0-5D1F6C2D216C}"
 EndProject
@@ -151,15 +151,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FieldCustomizing", "FieldCu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NotificationCenter", "NotificationCenter", "{D5240801-D4F3-4A3B-ACD1-8D3D4EBD83F2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.DynamicForms.Components", "..\abp-modules\framework\src\Dignite.Abp.DynamicForms.Components\Dignite.Abp.DynamicForms.Components.csproj", "{175CCA21-CB94-4A95-9F13-B5A1F7DF4DA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.DynamicForms.Components", "..\dignite-abp\framework\src\Dignite.Abp.DynamicForms.Components\Dignite.Abp.DynamicForms.Components.csproj", "{175CCA21-CB94-4A95-9F13-B5A1F7DF4DA9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.DynamicForms", "..\abp-modules\framework\src\Dignite.Abp.DynamicForms\Dignite.Abp.DynamicForms.csproj", "{8C042C3D-5CD5-49C3-ABC2-CA1BAA6A4AFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.DynamicForms", "..\dignite-abp\framework\src\Dignite.Abp.DynamicForms\Dignite.Abp.DynamicForms.csproj", "{8C042C3D-5CD5-49C3-ABC2-CA1BAA6A4AFD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Localization.MultiTenancy", "..\abp-modules\framework\src\Dignite.Abp.Localization.MultiTenancy\Dignite.Abp.Localization.MultiTenancy.csproj", "{AF57C9B7-E468-48AC-8CDE-FEAEB3CCD0DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Localization.MultiTenancy", "..\dignite-abp\framework\src\Dignite.Abp.Localization.MultiTenancy\Dignite.Abp.Localization.MultiTenancy.csproj", "{AF57C9B7-E468-48AC-8CDE-FEAEB3CCD0DD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Mvc.UI.Theme.MultiTenancy", "..\abp-modules\framework\src\Dignite.Abp.AspNetCore.Mvc.UI.Theme.MultiTenancy\Dignite.Abp.AspNetCore.Mvc.UI.Theme.MultiTenancy.csproj", "{7433D7DC-DB8A-4BD4-BEEB-D5F9BD0E098F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Mvc.UI.Theme.MultiTenancy", "..\dignite-abp\framework\src\Dignite.Abp.AspNetCore.Mvc.UI.Theme.MultiTenancy\Dignite.Abp.AspNetCore.Mvc.UI.Theme.MultiTenancy.csproj", "{7433D7DC-DB8A-4BD4-BEEB-D5F9BD0E098F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Components.CkEditor.WebAssembly", "..\abp-modules\modules\ckeditor-component\Dignite.Abp.AspNetCore.Components.CkEditor.WebAssembly\Dignite.Abp.AspNetCore.Components.CkEditor.WebAssembly.csproj", "{BAF89A45-7814-40DC-AF60-F6DB73BEF362}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Components.CkEditor.WebAssembly", "..\dignite-abp\modules\ckeditor-component\Dignite.Abp.AspNetCore.Components.CkEditor.WebAssembly\Dignite.Abp.AspNetCore.Components.CkEditor.WebAssembly.csproj", "{BAF89A45-7814-40DC-AF60-F6DB73BEF362}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

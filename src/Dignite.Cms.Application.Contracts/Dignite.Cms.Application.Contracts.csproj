@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Volo.CmsKit.Application.Contracts" Version="7.2.2" />
+	  <PackageReference Include="Volo.CmsKit.Application.Contracts" Version="7.3.0" />
     <ProjectReference Include="..\Dignite.Cms.Admin.Application.Contracts\Dignite.Cms.Admin.Application.Contracts.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Public.Application.Contracts\Dignite.Cms.Public.Application.Contracts.csproj" />
   </ItemGroup>

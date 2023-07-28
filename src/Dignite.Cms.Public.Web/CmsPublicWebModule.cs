@@ -1,8 +1,9 @@
 ﻿using Dignite.Abp.Localization.MultiTenancy;
 using Dignite.Cms.Localization;
+using Dignite.Cms.Public.Web.Controllers;
 using Dignite.Cms.Public.Web.Routes;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.Localization;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AutoMapper;
@@ -51,6 +52,11 @@ public class CmsPublicWebModule : AbpModule
         context.Services.AddRouting(options =>
         {
             options.ConstraintMap.Add("culture", typeof(CultureRouteConstraint));
+        });
+        
+        context.Services.Configure<AbpAspNetCoreMvcOptions>(options =>
+        {
+            options.ControllersToRemove.Add(typeof(CmsController));
         });
     }
 }

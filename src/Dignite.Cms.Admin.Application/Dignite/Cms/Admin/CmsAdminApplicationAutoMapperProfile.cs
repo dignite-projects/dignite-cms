@@ -20,6 +20,7 @@ namespace Dignite.Cms.Admin
 
             /**** field *****************************************/
             CreateMap<Cms.Fields.FieldGroup, FieldGroupDto>();
+            CreateMap<Cms.Fields.Field, Dignite.Cms.Fields.FieldDto>();
             CreateMap<Cms.Fields.Field, FieldDto>();
 
             /**** section *****************************************/

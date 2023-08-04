@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Volo.CmsKit.Public.Application.Contracts" Version="7.3.0" />
+	  <PackageReference Include="Volo.CmsKit.Public.Application.Contracts" Version="7.3.1" />
 	  <ProjectReference Include="..\..\..\dignite-abp\modules\file-explorer\src\Dignite.FileExplorer.Application.Contracts\Dignite.FileExplorer.Application.Contracts.csproj" />
 	  <ProjectReference Include="..\Dignite.Cms.Common.Application.Contracts\Dignite.Cms.Common.Application.Contracts.csproj" />
   </ItemGroup>

@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.MongoDB" Version="7.3.0" />
-	<PackageReference Include="Volo.CmsKit.MongoDB" Version="7.3.0" />
+    <PackageReference Include="Volo.Abp.MongoDB" Version="7.3.1" />
+	<PackageReference Include="Volo.CmsKit.MongoDB" Version="7.3.1" />
     <ProjectReference Include="..\Dignite.Cms.Domain\Dignite.Cms.Domain.csproj" />
   </ItemGroup>
 

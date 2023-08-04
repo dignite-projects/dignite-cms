@@ -3,6 +3,7 @@ using Dignite.Cms.Entries;
 using Dignite.Cms.Fields;
 using Dignite.Cms.Sections;
 using Dignite.Cms.Sites;
+using Dignite.FileExplorer.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Reflection.Emit;
@@ -10,6 +11,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using Volo.Abp;
 using Volo.Abp.EntityFrameworkCore.Modeling;
+using Volo.CmsKit.EntityFrameworkCore;
 
 namespace Dignite.Cms.EntityFrameworkCore;
 
@@ -20,6 +22,8 @@ public static class CmsDbContextModelCreatingExtensions
     {
         Check.NotNull(builder, nameof(builder));
 
+        builder.ConfigureCmsKit();
+        builder.ConfigureFileExplorer();
 
         builder.Entity<Site>(site =>
         {

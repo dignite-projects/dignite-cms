@@ -1,10 +1,8 @@
-﻿using Dignite.FileExplorer.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
-using Volo.CmsKit.EntityFrameworkCore;
 
 namespace Dignite.Cms.EntityFrameworkCore;
 
@@ -34,8 +32,6 @@ public class CmsDbContext : AbpDbContext<CmsDbContext>, ICmsDbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.ConfigureCmsKit();
-        builder.ConfigureFileExplorer();
         builder.ConfigureCms();
     }
 }

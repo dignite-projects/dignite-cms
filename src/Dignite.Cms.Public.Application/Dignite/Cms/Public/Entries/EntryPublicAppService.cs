@@ -184,7 +184,7 @@ namespace Dignite.Cms.Public.Entries
                 entry.Url = entry.Language + entry.Url.EnsureStartsWith('/');
             }
 
-            entry.Url = entry.Url.EnsureStartsWith('/');
+            entry.Url = section.Site.BaseUrl.EnsureEndsWith('/') + entry.Url.RemovePreFix("/");
         }
 
         /// <summary>

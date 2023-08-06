@@ -26,9 +26,9 @@
         public static int MaxLanguageLength { get; set; } = 16;
 
         /// <summary>
-        /// Maximum length of the site base url property.
-        /// Default value: 256
+        /// Maximum length of the site host property.
+        /// Default value: 128
         /// </summary>
-        public static int MaxBaseUrlLength { get; set; } = 256;
+        public static int MaxHostLength { get; set; } = 128;
     }
 }

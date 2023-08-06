@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NUglify.Helpers;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp;
@@ -23,7 +24,9 @@ namespace Dignite.Cms.Public.Entries
         [Route("find-by-slug")]
         public async Task<EntryDto> FindBySlugAsync(FindBySlugInput input)
         {
-            return await _entryAppService.FindBySlugAsync(input);
+            var entry = await _entryAppService.FindBySlugAsync(input);
+            SetEntryUrl(entry);
+            return entry;
         }
 
         /// <summary>
@@ -35,7 +38,9 @@ namespace Dignite.Cms.Public.Entries
         [Route("{id:Guid}/prev")]
         public async Task<EntryDto> FindPrevAsync(Guid id)
         {
-            return await _entryAppService.FindPrevAsync(id);
+            var entry = await _entryAppService.FindPrevAsync(id);
+            SetEntryUrl(entry);
+            return entry;
         }
 
         /// <summary>
@@ -47,7 +52,9 @@ namespace Dignite.Cms.Public.Entries
         [Route("{id:Guid}/next")]
         public async Task<EntryDto> FindNextAsync(Guid id)
         {
-            return await _entryAppService.FindNextAsync(id);
+            var entry = await _entryAppService.FindNextAsync(id);
+            SetEntryUrl(entry);
+            return entry;
         }
 
 
@@ -60,7 +67,18 @@ namespace Dignite.Cms.Public.Entries
         [HttpGet]
         public async Task<PagedResultDto<EntryDto>> GetListAsync(GetEntriesInput input)
         {
-            return await _entryAppService.GetListAsync(input);
+            var result = await _entryAppService.GetListAsync(input);
+            result.Items.ForEach(entry => SetEntryUrl(entry));
+            return result;
+        }
+
+        protected void SetEntryUrl(EntryDto entry)
+        {
+            var hostAddress = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
+            if (entry.Url.StartsWith(hostAddress, StringComparison.OrdinalIgnoreCase))
+            {
+                entry.Url = entry.Url.RemovePreFix(StringComparison.OrdinalIgnoreCase, hostAddress);
+            } 
         }
     }
 }

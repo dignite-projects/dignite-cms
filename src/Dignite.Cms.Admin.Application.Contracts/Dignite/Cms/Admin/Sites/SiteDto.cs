@@ -26,9 +26,9 @@ namespace Dignite.Cms.Admin.Sites
         public ICollection<SiteLanguageDto> Languages { get; set; }
 
         /// <summary>
-        /// Base Url of this site
+        /// Host of this site
         /// </summary>
-        public virtual string BaseUrl { get; set; }
+        public virtual string Host { get; set; }
 
         /// <summary>
         /// Is this site a default

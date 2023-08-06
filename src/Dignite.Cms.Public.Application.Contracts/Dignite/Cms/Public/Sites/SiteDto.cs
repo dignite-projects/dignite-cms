@@ -25,9 +25,9 @@ namespace Dignite.Cms.Public.Sites
         public ICollection<SiteLanguageDto> Languages { get; set; }
 
         /// <summary>
-        /// Base Url of this site
+        /// Host of this site
         /// </summary>
-        public string BaseUrl { get; set; }
+        public string Host { get; set; }
 
         /// <summary>
         /// Is this site a active

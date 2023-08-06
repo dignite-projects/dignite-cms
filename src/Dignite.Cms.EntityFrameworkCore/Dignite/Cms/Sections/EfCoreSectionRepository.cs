@@ -47,10 +47,15 @@ namespace Dignite.Cms.Sections
             string filter = null,
             bool? isActive = null, 
             bool includeDetails = true,
+            int maxResultCount = int.MaxValue,
+            int skipCount = 0,
+            string sorting = null,
             CancellationToken cancellationToken = default)
         {
             return await (await GetQueryableAsync(siteId, filter, isActive))
                 .IncludeDetails(includeDetails)
+                .OrderBy(sorting.IsNullOrEmpty() ? $"{nameof(Section.Name)} asc" : sorting)
+                .PageBy(skipCount, maxResultCount)
                 .ToListAsync(GetCancellationToken(cancellationToken));
         }
 

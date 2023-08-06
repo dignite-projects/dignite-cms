@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Volo.Abp.ObjectExtending;
 using Volo.Abp.Validation;
 
@@ -37,11 +38,12 @@ namespace Dignite.Cms.Admin.Sites
         public ICollection<CreateOrUpdateLanguageInput> Languages { get; set; }
 
         /// <summary>
-        /// Base Url of this site
+        /// Host of this site.
+        /// The host of the site must be a domain name
         /// </summary>
         [Required]
-        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxBaseUrlLength))]
-        public virtual string BaseUrl { get;  set; }
+        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxHostLength))]
+        public virtual string Host { get;  set; }
 
         /// <summary>
         /// Is this site a default
@@ -56,16 +58,29 @@ namespace Dignite.Cms.Admin.Sites
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            if (!IsHostURL())
+            {
+                yield return new ValidationResult(
+                "The host of the site must be a domain name or IP",
+                new[] { nameof(Host) });
+            }
+
             if (Languages.Count(l => l.IsDefault) != 1)
             {
                 yield return new ValidationResult(
                 "The site's language list is missing a unique default language!",
                 new[] { nameof(Languages) });
             }
-            else
-            {
-                base.Validate(validationContext);
-            }
+
+            base.Validate(validationContext);
+        }
+
+        protected bool IsHostURL()
+        {
+            // 匹配可包含端口号的 IP 地址的主机 URL 的正则表达式
+            string hostURLPattern = @"^(http|https)://((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|([a-zA-Z0-9\-]{1,63}(\.[a-zA-Z0-9\-]{1,63})*))(:\d+)?$";
+
+            return Regex.IsMatch(Host, hostURLPattern);
         }
     }
 }

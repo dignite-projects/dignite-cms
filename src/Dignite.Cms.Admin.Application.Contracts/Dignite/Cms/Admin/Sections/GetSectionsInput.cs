@@ -1,8 +1,9 @@
 ﻿using System;
+using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Cms.Admin.Sections
 {
-    public class GetSectionsInput
+    public class GetSectionsInput: PagedAndSortedResultRequestDto
     {
         public Guid SiteId { get; set; }
 

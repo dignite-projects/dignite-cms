@@ -122,7 +122,7 @@ namespace Dignite.Cms.Admin.Sections
                 return new PagedResultDto<SectionDto>(0, new List<SectionDto>());
 
 
-            var result = await _sectionRepository.GetListAsync(input.SiteId, input.Filter, input.IsActive,true);
+            var result = await _sectionRepository.GetListAsync(input.SiteId, input.Filter, input.IsActive,true, input.MaxResultCount, input.SkipCount, input.Sorting);
 
             var dto = ObjectMapper.Map<List<Section>, List<SectionDto>>(result);
 
@@ -168,7 +168,7 @@ namespace Dignite.Cms.Admin.Sections
         {
             if (section.Type != SectionType.Single && !section.EntryPage.Route.Contains($"{{{nameof(Entry.Slug)}}}", StringComparison.OrdinalIgnoreCase))
             {
-                throw new RouteNoSlugParameterException(section.Name, section.EntryPage.Route);
+                throw new RouteNoSlugParameterException(section.Type, section.EntryPage.Route);
             }
         }
 

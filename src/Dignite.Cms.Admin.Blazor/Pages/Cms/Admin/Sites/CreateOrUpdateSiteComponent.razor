@@ -25,6 +25,17 @@
         </TextEdit>
     </Field>
 </Validation>
+<Validation MessageLocalizer="@LH.Localize">
+    <Field>
+        <FieldLabel>@L["Host"]</FieldLabel>
+        <TextEdit @bind-Text="Entity.Host">
+            <Feedback>
+                <ValidationError />
+            </Feedback>
+        </TextEdit>
+        <FieldHelp>@L["SiteHostRequirements"]</FieldHelp>
+    </Field>
+</Validation>
 <Field>
     <FieldLabel>@L["Languages"]</FieldLabel>
     <ListGroup Flush>
@@ -37,16 +48,6 @@
         }
     </ListGroup>
 </Field>
-<Validation MessageLocalizer="@LH.Localize">
-    <Field>
-        <FieldLabel>@L["BaseUrl"]</FieldLabel>
-        <TextEdit @bind-Text="Entity.BaseUrl">
-            <Feedback>
-                <ValidationError />
-            </Feedback>
-        </TextEdit>
-    </Field>
-</Validation>
 <Field>
     <Check TValue="bool" @bind-Checked="Entity.IsDefault">@L["IsDefault"]</Check>
 </Field>

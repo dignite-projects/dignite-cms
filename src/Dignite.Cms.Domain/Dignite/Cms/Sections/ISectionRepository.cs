@@ -19,6 +19,9 @@ namespace Dignite.Cms.Sections
             string filter = null,
             bool? isActive= null,
             bool includeDetails = true,
+            int maxResultCount = int.MaxValue,
+            int skipCount = 0,
+            string sorting = null,
             CancellationToken cancellationToken = default);
     }
 }

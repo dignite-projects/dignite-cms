@@ -24,7 +24,7 @@ namespace Dignite.Cms.Admin.Pages
                 input.DisplayName, 
                 input.Name,
                 input.Languages.Select(l=>new SiteLanguage(l.IsDefault,l.Language)).ToList(),
-                input.BaseUrl,
+                input.Host,
                 input.IsDefault,
                 input.IsActive, 
                 CurrentTenant.Id);
@@ -86,7 +86,7 @@ namespace Dignite.Cms.Admin.Pages
             //
             entity.SetDisplayName(input.DisplayName);
             entity.SetName(input.Name);
-            entity.SetBaseUrl(input.BaseUrl);
+            entity.SetHost(input.Host);
             entity.SetDefault(input.IsDefault);
             entity.SetActive(input.IsActive);
             entity.SetLanguages(input.Languages.Select(l => new SiteLanguage(l.IsDefault, l.Language)).ToList());

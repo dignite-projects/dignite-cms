@@ -109,8 +109,8 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sites
                     },
                     new TableColumn
                     {
-                        Title = L["BaseUrl"],
-                        Data = nameof(SiteDto.BaseUrl)
+                        Title = L["Host"],
+                        Data = nameof(SiteDto.Host)
                     },
                     new TableColumn
                     {

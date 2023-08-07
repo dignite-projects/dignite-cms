@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Cms.Admin.Sections
@@ -127,12 +126,12 @@ namespace Dignite.Cms.Admin.Sections
             if (input.SiteId == Guid.Empty)
                 return new PagedResultDto<SectionDto>(0, new List<SectionDto>());
 
-
+            var count = await _sectionRepository.GetCountAsync(input.SiteId, input.Filter, input.IsActive);
             var result = await _sectionRepository.GetListAsync(input.SiteId, input.Filter, input.IsActive,true, input.MaxResultCount, input.SkipCount, input.Sorting);
 
             var dto = ObjectMapper.Map<List<Section>, List<SectionDto>>(result);
 
-            return new PagedResultDto<SectionDto>(result.Count, dto);
+            return new PagedResultDto<SectionDto>(count, dto);
         }
 
         /// <summary>

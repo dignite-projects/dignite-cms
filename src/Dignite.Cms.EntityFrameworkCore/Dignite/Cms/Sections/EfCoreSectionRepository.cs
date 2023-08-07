@@ -46,6 +46,15 @@ namespace Dignite.Cms.Sections
                 .IncludeDetails(includeDetails))
                 .FirstOrDefaultAsync(s => s.Name == name, GetCancellationToken(cancellationToken));
         }
+        public async Task<int> GetCountAsync(
+            Guid? siteId,
+            string filter = null,
+            bool? isActive = null,
+            CancellationToken cancellationToken = default
+            )
+        {
+            return await (await GetQueryableAsync(siteId, filter, isActive)).CountAsync(GetCancellationToken(cancellationToken));
+        }
 
         public async Task<List<Section>> GetListAsync(
             Guid? siteId,

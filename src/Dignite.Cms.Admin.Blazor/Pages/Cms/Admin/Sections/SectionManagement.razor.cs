@@ -1,5 +1,4 @@
 ﻿using Blazorise;
-using Blazorise.DataGrid;
 using Dignite.Cms.Admin.Sections;
 using Dignite.Cms.Admin.Sites;
 using Dignite.Cms.Localization;

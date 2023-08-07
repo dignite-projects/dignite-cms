@@ -8,7 +8,8 @@ namespace Dignite.Cms.Sections
 {
     public interface ISectionRepository : IBasicRepository<Section, Guid>
     {
-        Task<bool> NameExistsAsync(Guid siteId, string name, Guid? ignoredId = null, CancellationToken cancellationToken = default);
+        Task<bool> NameExistsAsync(Guid siteId, string name, CancellationToken cancellationToken = default);
+        Task<bool> RouteExistsAsync(Guid siteId, string route, CancellationToken cancellationToken = default);
 
         Task<Section> FindByNameAsync(Guid siteId, string name, bool includeDetails = true, CancellationToken cancellationToken = default);
 

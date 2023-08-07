@@ -5,11 +5,11 @@ using Volo.Abp;
 namespace Dignite.Cms.Sections
 {
     [Serializable]
-    public class RouteNoSlugParameterException : BusinessException
+    public class MissingSlugRoutingParameterException : BusinessException
     {
-        public RouteNoSlugParameterException([NotNull] SectionType type,[NotNull]string route)
+        public MissingSlugRoutingParameterException([NotNull] SectionType type,[NotNull]string route)
         {
-            Code = CmsErrorCodes.Sections.RouteNoSlugParameter;
+            Code = CmsErrorCodes.Sections.RouteMissingSlugRoutingParameter;
             WithData(nameof(Section.Type), type);
             WithData(nameof(Section.EntryPage.Route), route);
         }

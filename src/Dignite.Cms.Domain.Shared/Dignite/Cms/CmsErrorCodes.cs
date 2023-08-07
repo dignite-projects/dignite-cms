@@ -12,7 +12,8 @@ public static class CmsErrorCodes
         public const string NameAlreadyExist = "Cms:Section:0001";
         public const string DefaultSectionCannotSetNotActive = "Cms:Section:0002";
         public const string DefaultSectionMustBeSingleType = "Cms:Section:0003";
-        public const string RouteNoSlugParameter = "Cms:Section:0004";
+        public const string RouteMissingSlugRoutingParameter = "Cms:Section:0004";
+        public const string RouteAlreadyExist = "Cms:Section:0005";
     }
     public static class EntryTypes
     {

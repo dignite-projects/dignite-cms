@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Cms.Admin.Sections
@@ -32,6 +33,7 @@ namespace Dignite.Cms.Admin.Sections
         public async Task<SectionDto> CreateAsync(CreateSectionInput input)
         {
             await CheckNameExistenceAsync(input.SiteId, input.Name);
+            await CheckRouteExistenceAsync(input.SiteId, input.EntryPage.Route);
 
             //
             var section = new Section(
@@ -46,7 +48,7 @@ namespace Dignite.Cms.Admin.Sections
 
             //
             CheckSectionType(section);
-            CheckRoute(section);
+            CheckSlugRoutingParameter(section);
 
             //
             if (section.IsDefault)
@@ -74,7 +76,11 @@ namespace Dignite.Cms.Admin.Sections
             var section = await _sectionRepository.GetAsync(id);
             if (!section.Name.Equals(input.Name,StringComparison.OrdinalIgnoreCase))
             {
-                await CheckNameExistenceAsync(section.SiteId, input.Name,id);
+                await CheckNameExistenceAsync(section.SiteId, input.Name);
+            }
+            if (!section.EntryPage.Route.Equals(input.EntryPage.Route, StringComparison.OrdinalIgnoreCase))
+            {
+                await CheckRouteExistenceAsync(section.SiteId, input.EntryPage.Route);
             }
 
             //
@@ -83,7 +89,7 @@ namespace Dignite.Cms.Admin.Sections
                 var sections = await _sectionRepository.GetListAsync(section.SiteId);
                 foreach (var item in sections)
                 {
-                    section.SetDefault(false);
+                    item.SetDefault(false);
                 }
             }
 
@@ -97,7 +103,7 @@ namespace Dignite.Cms.Admin.Sections
 
             //
             CheckSectionType(section);
-            CheckRoute(section);
+            CheckSlugRoutingParameter(section);
 
             //
             await _sectionRepository.UpdateAsync(section);
@@ -146,11 +152,18 @@ namespace Dignite.Cms.Admin.Sections
         }
 
 
-        protected virtual async Task CheckNameExistenceAsync(Guid siteId, string name, Guid? ignoredId = null)
+        protected virtual async Task CheckNameExistenceAsync(Guid siteId, string name)
         {
-            if (await _sectionRepository.NameExistsAsync(siteId,name,ignoredId))
+            if (await _sectionRepository.NameExistsAsync(siteId,name))
             {
                 throw new SectionNameAlreadyExistException( name);
+            }
+        }
+        protected virtual async Task CheckRouteExistenceAsync(Guid siteId, string route)
+        {
+            if (await _sectionRepository.RouteExistsAsync(siteId, route))
+            {
+                throw new SectionRouteAlreadyExistException(route);
             }
         }
 
@@ -164,11 +177,11 @@ namespace Dignite.Cms.Admin.Sections
         }
 
 
-        protected virtual void CheckRoute(Section section)
+        protected virtual void CheckSlugRoutingParameter(Section section)
         {
             if (section.Type != SectionType.Single && !section.EntryPage.Route.Contains($"{{{nameof(Entry.Slug)}}}", StringComparison.OrdinalIgnoreCase))
             {
-                throw new RouteNoSlugParameterException(section.Type, section.EntryPage.Route);
+                throw new MissingSlugRoutingParameterException(section.Type, section.EntryPage.Route);
             }
         }
 

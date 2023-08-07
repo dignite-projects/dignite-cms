@@ -28,11 +28,16 @@ namespace Dignite.Cms.Sections
                 .FirstOrDefaultAsync(s => s.SiteId==siteId && s.IsActive && s.IsDefault && s.Type== SectionType.Single, GetCancellationToken(cancellationToken));
         }
 
-        public async Task<bool> NameExistsAsync(Guid siteId, string name, Guid? ignoredId = null, CancellationToken cancellationToken = default)
+        public async Task<bool> NameExistsAsync(Guid siteId, string name, CancellationToken cancellationToken = default)
         {
             return await (await GetDbSetAsync()).Where(s=>s.SiteId==siteId)
-                       .WhereIf(ignoredId != null, s => s.Id != ignoredId)
                        .AnyAsync(s => s.Name == name, GetCancellationToken(cancellationToken));
+        }
+
+        public async Task<bool> RouteExistsAsync(Guid siteId, string route, CancellationToken cancellationToken = default)
+        {
+            return await (await GetDbSetAsync()).Where(s => s.SiteId == siteId)
+                       .AnyAsync(s => s.EntryPage.Route == route, GetCancellationToken(cancellationToken));
         }
 
         public async Task<Section> FindByNameAsync(Guid siteId, string name, bool includeDetails = true, CancellationToken cancellationToken = default)

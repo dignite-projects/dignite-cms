@@ -34,8 +34,17 @@
                   }
                 },
                 {
-                  "name": "GetDefaultAsync",
-                  "parametersOnMethod": [],
+                  "name": "FindByHostAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "host",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
                   "returnValue": {
                     "type": "Dignite.Cms.Public.Sites.SiteDto",
                     "typeSimple": "Dignite.Cms.Public.Sites.SiteDto"
@@ -82,14 +91,36 @@
               "allowAnonymous": null,
               "implementFrom": "Dignite.Cms.Public.Sites.ISitePublicAppService"
             },
-            "GetDefaultAsync": {
-              "uniqueName": "GetDefaultAsync",
-              "name": "GetDefaultAsync",
+            "FindByHostAsyncByHost": {
+              "uniqueName": "FindByHostAsyncByHost",
+              "name": "FindByHostAsync",
               "httpMethod": "GET",
-              "url": "api/cms-public/sites/get-default",
+              "url": "api/cms-public/sites/find-by-host",
               "supportedVersions": [],
-              "parametersOnMethod": [],
-              "parameters": [],
+              "parametersOnMethod": [
+                {
+                  "name": "host",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "host",
+                  "name": "host",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
               "returnValue": {
                 "type": "Dignite.Cms.Public.Sites.SiteDto",
                 "typeSimple": "Dignite.Cms.Public.Sites.SiteDto"

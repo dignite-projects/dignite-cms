@@ -41,6 +41,6 @@ namespace Dignite.Cms.Sections
         /// <summary>
         /// Regular Expression of the template path property.
         /// </summary>
-        public const string PageTemplateRegularExpression = "^[A-Za-z0-9-_/.]+$";
+        public const string PageTemplateRegularExpression = "^[A-Za-z0-9-_][A-Za-z0-9-_/.]*$";
     }
 }

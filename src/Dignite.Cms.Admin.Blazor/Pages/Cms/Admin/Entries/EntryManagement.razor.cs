@@ -173,8 +173,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                 {
                     await OnSiteChangedAsync(
                         AllSites.
-                        OrderByDescending(s=>s.IsActive)
-                        .ThenByDescending(s=>s.IsDefault)
+                        OrderBy(s=>s.CreationTime)
                         .First()
                         .Id);
                 }

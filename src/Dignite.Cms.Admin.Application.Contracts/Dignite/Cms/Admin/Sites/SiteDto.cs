@@ -30,11 +30,6 @@ namespace Dignite.Cms.Admin.Sites
         /// </summary>
         public virtual string Host { get; set; }
 
-        /// <summary>
-        /// Is this site a default
-        /// </summary>
-        public virtual bool IsDefault { get; set; }
-
 
         /// <summary>
         /// Is this site active

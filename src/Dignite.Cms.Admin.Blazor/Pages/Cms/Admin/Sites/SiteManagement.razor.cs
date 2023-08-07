@@ -103,12 +103,6 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sites
                     },
                     new TableColumn
                     {
-                        Title = L["IsDefault"],
-                        Sortable = true,
-                        Data = nameof(SiteDto.IsDefault)
-                    },
-                    new TableColumn
-                    {
                         Title = L["Host"],
                         Data = nameof(SiteDto.Host)
                     },

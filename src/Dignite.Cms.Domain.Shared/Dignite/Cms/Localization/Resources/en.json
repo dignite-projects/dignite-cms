@@ -27,6 +27,7 @@
     "PublishTime": "Publish Time",
     "Slug": "Slug",
     "ParentEntry": "Parent Entry",
-    "RevisionNotes": "Revision Notes"
+    "RevisionNotes": "Revision Notes",
+    "{0}SectionHasNotCreatedAnEntryType": "{0} Section Has Not Created An Entry Type"
   }
 }

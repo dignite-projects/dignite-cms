@@ -12,6 +12,8 @@ namespace Dignite.Cms.Sites
 
         Task<Site> FindByNameAsync(string name, CancellationToken cancellationToken = default);
 
+        Task<Site> FindByHostAsync(string host, CancellationToken cancellationToken = default);
+        
 
         Task<List<Site>> GetListAsync(
             string filter = null,

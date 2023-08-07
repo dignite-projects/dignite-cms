@@ -14,14 +14,13 @@ namespace Dignite.Cms.Sites
         {
         }
 
-        public Site(Guid id, string displayName, string name, ICollection<SiteLanguage> languages, string host, bool isDefault, bool isActive, Guid? tenantId)
+        public Site(Guid id, string displayName, string name, ICollection<SiteLanguage> languages, string host, bool isActive, Guid? tenantId)
             :base(id)
         {
             DisplayName = displayName;
             Name = name;
             Languages = languages;
             Host = host;
-            IsDefault = isDefault;
             IsActive = isActive;
             TenantId = tenantId;
         }
@@ -47,11 +46,6 @@ namespace Dignite.Cms.Sites
         /// </summary>
         public virtual string Host { get; protected set; }
 
-        /// <summary>
-        /// The default site
-        /// </summary>
-        public virtual bool IsDefault { get; protected set; }
-
 
         /// <summary>
         /// Is this site active
@@ -65,15 +59,7 @@ namespace Dignite.Cms.Sites
 
         public virtual void SetActive(bool isActive) 
         {
-            if (IsDefault && !isActive)
-            {
-                throw new DefaultSiteCannotSetNotActiveException(DisplayName);
-            }
             IsActive= isActive;
-        }
-        public virtual void SetDefault(bool isDefault)
-        {
-            IsDefault= isDefault;
         }
         public virtual void SetDisplayName(string displayName)
         {

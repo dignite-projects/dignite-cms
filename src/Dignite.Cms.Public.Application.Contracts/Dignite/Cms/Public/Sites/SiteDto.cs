@@ -33,10 +33,5 @@ namespace Dignite.Cms.Public.Sites
         /// Is this site a active
         /// </summary>
         public bool IsActive { get; set; }
-
-        /// <summary>
-        /// The default site
-        /// </summary>
-        public bool IsDefault { get; set; }
     }
 }

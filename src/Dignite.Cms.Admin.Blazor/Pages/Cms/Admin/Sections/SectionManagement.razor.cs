@@ -40,8 +40,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
                 if (AllSites.Any())
                 {
                     CurrentSite = AllSites
-                        .OrderByDescending(s => s.IsDefault)
-                        .ThenBy(s => s.CreationTime)
+                        .OrderBy(s => s.CreationTime)
                         .FirstOrDefault();
                     SelectedSiteItemName = CurrentSite?.Name;
                     await OnSiteClickAsync(CurrentSite);

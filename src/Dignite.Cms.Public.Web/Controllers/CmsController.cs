@@ -78,7 +78,8 @@ namespace Dignite.Cms.Public.Web.Controllers
         {
             if (url.IsNullOrEmpty() || url == "/")
             {
-                var site = await _sitePublicAppService.GetDefaultAsync();
+                var hostUrl= $"{Request.Scheme}://{Request.Host.Value}";
+                var site = await _sitePublicAppService.FindByHostAsync(hostUrl);
                 return await _sectionPublicAppService.GetDefaultAsync(site.Id);
             }
             else

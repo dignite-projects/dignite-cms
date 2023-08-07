@@ -25,18 +25,8 @@ namespace Dignite.Cms.Admin.Pages
                 input.Name,
                 input.Languages.Select(l=>new SiteLanguage(l.IsDefault,l.Language)).ToList(),
                 input.Host,
-                input.IsDefault,
                 input.IsActive, 
                 CurrentTenant.Id);
-
-            if (input.IsDefault)
-            {
-                var sites = await _siteRepository.GetListAsync();
-                foreach (var item in sites)
-                {
-                    item.SetDefault(false);
-                }
-            }
 
 
             await _siteRepository.InsertAsync(entity);
@@ -73,21 +63,12 @@ namespace Dignite.Cms.Admin.Pages
         {
             var entity = await _siteRepository.GetAsync(id, false);
 
-            if (input.IsDefault && !entity.IsDefault)
-            {
-                var sites = await _siteRepository.GetListAsync();
-                foreach (var item in sites)
-                {
-                    item.SetDefault(false);
-                }
-            }
 
 
             //
             entity.SetDisplayName(input.DisplayName);
             entity.SetName(input.Name);
             entity.SetHost(input.Host);
-            entity.SetDefault(input.IsDefault);
             entity.SetActive(input.IsActive);
             entity.SetLanguages(input.Languages.Select(l => new SiteLanguage(l.IsDefault, l.Language)).ToList());
             await _siteRepository.UpdateAsync(entity);

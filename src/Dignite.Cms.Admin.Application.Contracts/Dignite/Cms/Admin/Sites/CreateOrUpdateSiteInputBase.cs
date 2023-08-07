@@ -1,4 +1,5 @@
 ﻿using Dignite.Cms.Sites;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -45,11 +46,6 @@ namespace Dignite.Cms.Admin.Sites
         [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxHostLength))]
         public virtual string Host { get;  set; }
 
-        /// <summary>
-        /// Is this site a default
-        /// </summary>
-        public virtual bool IsDefault { get; set; }
-
 
         /// <summary>
         /// Is this site active
@@ -77,6 +73,8 @@ namespace Dignite.Cms.Admin.Sites
 
         protected bool IsHostURL()
         {
+            Host = Host.RemovePostFix("/");
+            Host = Host.RemovePostFix("\\");
             // 匹配可包含端口号的 IP 地址的主机 URL 的正则表达式
             string hostURLPattern = @"^(http|https)://((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|([a-zA-Z0-9\-]{1,63}(\.[a-zA-Z0-9\-]{1,63})*))(:\d+)?$";
 

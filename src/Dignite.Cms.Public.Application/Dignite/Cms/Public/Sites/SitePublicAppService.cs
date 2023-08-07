@@ -2,6 +2,7 @@
 using Dignite.Cms.Sites;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Dignite.Cms.Public.Pages
 {
@@ -21,11 +22,10 @@ namespace Dignite.Cms.Public.Pages
             return ObjectMapper.Map<Site, SiteDto>(result);
         }
 
-        public async Task<SiteDto> GetDefaultAsync()
+        public async Task<SiteDto> FindByHostAsync(string host)
         {
-            var result = await _siteRepository.GetListAsync(null,true);
-            var site = result.OrderByDescending(e => e.IsDefault).FirstOrDefault();
-            return ObjectMapper.Map<Site, SiteDto>(site);
+            var result = await _siteRepository.FindByHostAsync(host);
+            return ObjectMapper.Map<Site, SiteDto>(result);
         }
     }
 }

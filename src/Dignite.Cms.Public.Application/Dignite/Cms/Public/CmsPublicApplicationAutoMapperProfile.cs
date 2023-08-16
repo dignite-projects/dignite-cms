@@ -23,7 +23,6 @@ public class CmsPublicApplicationAutoMapperProfile : Profile
 
         /**** section *****************************************/
         CreateMap<Section, SectionDto>();
-        CreateMap<EntryPage, EntryPageDto>();
         CreateMap<EntryType, EntryTypeDto>();
         CreateMap<EntryFieldTab, EntryFieldTabDto>();
         CreateMap<EntryField, EntryFieldDto>()

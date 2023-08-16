@@ -12,7 +12,7 @@ namespace Dignite.Cms.Sections
     /// </summary>
     public class Section : FullAuditedAggregateRoot<Guid>,IMultiTenant
     {
-        public Section(Guid id, Guid siteId, SectionType type, string displayName, string name, bool isDefault, bool isActive, EntryPage entryPage, Guid? tenantId)
+        public Section(Guid id, Guid siteId, SectionType type, string displayName, string name, bool isDefault, bool isActive, string route, string template, Guid? tenantId)
             :base(id)
         {
             SiteId = siteId;
@@ -21,7 +21,8 @@ namespace Dignite.Cms.Sections
             Name = name;
             IsDefault = isDefault;
             IsActive = isActive;
-            EntryPage = entryPage;
+            Route = route;
+            Template = template;
             TenantId = tenantId;
             this.EntryTypes = new List<EntryType>();
         }
@@ -62,9 +63,14 @@ namespace Dignite.Cms.Sections
         public virtual bool IsActive { get; protected set; }
 
         /// <summary>
-        /// Entry Page of this section
+        /// 
         /// </summary>
-        public virtual EntryPage EntryPage { get; protected set; }
+        public string Route { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Template { get; set; }
 
         /// <summary>
         /// TenantId of this section.
@@ -98,10 +104,6 @@ namespace Dignite.Cms.Sections
         public virtual void SetName(string name)
         {
             Name = name;
-        }
-        public virtual void SetEntryPage(EntryPage entryPage)
-        {
-            EntryPage = entryPage;
         }
         public virtual void SetType(SectionType type)
         {

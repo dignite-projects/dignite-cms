@@ -55,10 +55,10 @@ namespace Dignite.Cms.Public.Sections
         public async Task<SectionDto> FindByUrlAsync(string url)
         {
             url = url.RemovePreFix("/").RemovePostFix("/");
-            var allSections = (await _sectionRepository.GetListAsync(null,null,true,true)).OrderByDescending(s=>s.EntryPage.Route);
+            var allSections = (await _sectionRepository.GetListAsync(null,null,true,true)).OrderByDescending(s=>s.Route);
             foreach ( var section in allSections) 
             {
-                var route = section.EntryPage.Route.RemovePreFix("/").RemovePostFix("/");
+                var route = section.Route.RemovePreFix("/").RemovePostFix("/");
                 var extractResult = FormattedStringValueExtracter.Extract(url,route , ignoreCase: true);
                 if (extractResult.IsMatch)
                 {

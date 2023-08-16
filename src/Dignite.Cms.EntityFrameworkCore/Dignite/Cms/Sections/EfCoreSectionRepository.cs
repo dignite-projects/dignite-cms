@@ -37,7 +37,7 @@ namespace Dignite.Cms.Sections
         public async Task<bool> RouteExistsAsync(Guid siteId, string route, CancellationToken cancellationToken = default)
         {
             return await (await GetDbSetAsync()).Where(s => s.SiteId == siteId)
-                       .AnyAsync(s => s.EntryPage.Route == route, GetCancellationToken(cancellationToken));
+                       .AnyAsync(s => s.Route == route, GetCancellationToken(cancellationToken));
         }
 
         public async Task<Section> FindByNameAsync(Guid siteId, string name, bool includeDetails = true, CancellationToken cancellationToken = default)
@@ -68,7 +68,7 @@ namespace Dignite.Cms.Sections
         {
             return await (await GetQueryableAsync(siteId, filter, isActive))
                 .IncludeDetails(includeDetails)
-                .OrderBy(sorting.IsNullOrEmpty() ? $"{nameof(Section.Name)} asc" : sorting)
+                .OrderBy(sorting.IsNullOrEmpty() ? $"{nameof(Section.Template)} asc" : sorting)
                 .PageBy(skipCount, maxResultCount)
                 .ToListAsync(GetCancellationToken(cancellationToken));
         }

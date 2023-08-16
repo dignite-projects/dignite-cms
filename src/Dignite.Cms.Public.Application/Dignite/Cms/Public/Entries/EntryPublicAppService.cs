@@ -153,9 +153,9 @@ namespace Dignite.Cms.Public.Entries
         /// <param name="section"></param>
         protected void SetEntryUrl(EntryDto entry, SectionDto section)
         {
-            var routeParameters = GetRouteParameters(section.EntryPage.Route).ToArray();
+            var routeParameters = GetRouteParameters(section.Route).ToArray();
             var siteDefaultLanguage = section.Site.Languages.OrderByDescending(l => l.IsDefault).First().Language;
-            entry.Url = section.EntryPage.Route;
+            entry.Url = section.Route;
 
             //If there is a routing parameter, get the routing parameter value and update the URL
             if (routeParameters.Any()) 

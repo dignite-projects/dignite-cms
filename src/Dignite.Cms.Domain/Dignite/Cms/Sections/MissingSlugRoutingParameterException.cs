@@ -11,7 +11,7 @@ namespace Dignite.Cms.Sections
         {
             Code = CmsErrorCodes.Sections.RouteMissingSlugRoutingParameter;
             WithData(nameof(Section.Type), type);
-            WithData(nameof(Section.EntryPage.Route), route);
+            WithData(nameof(Section.Route), route);
         }
     }
 }

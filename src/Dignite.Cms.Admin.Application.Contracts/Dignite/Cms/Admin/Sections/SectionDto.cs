@@ -44,9 +44,24 @@ namespace Dignite.Cms.Admin.Sections
         public virtual bool IsActive { get; set; }
 
         /// <summary>
-        /// Entry Page of this section
+        /// Routing format for entry page;
         /// </summary>
-        public virtual EntryPageDto EntryPage { get; set; }
+        /// <example>
+        /// Route with formatting parameters:
+        /// 1./news
+        /// 2./news/{publishTime:yyyy-M}/{slug}
+        /// </example>
+        /// <remarks>
+        /// 1.If the section is not a single type, {slug} must be included in the route;
+        /// 2.Route parameters must be public properties in the entry;
+        /// 3.Routing parameters support formatting
+        /// </remarks>
+        public string Route { get; set; }
+
+        /// <summary>
+        /// asp.net core mvc Razor Page
+        /// </summary>
+        public string Template { get; set; }
 
         /// <summary>
         /// 

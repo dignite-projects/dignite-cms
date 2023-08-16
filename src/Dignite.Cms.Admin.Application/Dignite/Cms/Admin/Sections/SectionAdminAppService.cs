@@ -32,7 +32,7 @@ namespace Dignite.Cms.Admin.Sections
         public async Task<SectionDto> CreateAsync(CreateSectionInput input)
         {
             await CheckNameExistenceAsync(input.SiteId, input.Name);
-            await CheckRouteExistenceAsync(input.SiteId, input.EntryPage.Route);
+            await CheckRouteExistenceAsync(input.SiteId, input.Route);
 
             //
             var section = new Section(
@@ -42,7 +42,8 @@ namespace Dignite.Cms.Admin.Sections
                 input.DisplayName, input.Name,
                 input.IsDefault,
                 input.IsActive,
-                new EntryPage(input.EntryPage.Route,input.EntryPage.Template),
+                input.Route,
+                input.Template,
                 CurrentTenant.Id);
 
             //
@@ -77,9 +78,9 @@ namespace Dignite.Cms.Admin.Sections
             {
                 await CheckNameExistenceAsync(section.SiteId, input.Name);
             }
-            if (!section.EntryPage.Route.Equals(input.EntryPage.Route, StringComparison.OrdinalIgnoreCase))
+            if (!section.Route.Equals(input.Route, StringComparison.OrdinalIgnoreCase))
             {
-                await CheckRouteExistenceAsync(section.SiteId, input.EntryPage.Route);
+                await CheckRouteExistenceAsync(section.SiteId, input.Route);
             }
 
             //
@@ -96,7 +97,8 @@ namespace Dignite.Cms.Admin.Sections
             section.SetActive(input.IsActive);
             section.SetDefault(input.IsDefault); 
             section.SetDisplayName(input.DisplayName);
-            section.SetEntryPage(new EntryPage(input.EntryPage.Route, input.EntryPage.Template));
+            section.Route = input.Route;
+            section.Template = input.Template;
             section.SetName(input.Name);
             section.SetType(input.Type);
 
@@ -178,9 +180,9 @@ namespace Dignite.Cms.Admin.Sections
 
         protected virtual void CheckSlugRoutingParameter(Section section)
         {
-            if (section.Type != SectionType.Single && !section.EntryPage.Route.Contains($"{{{nameof(Entry.Slug)}}}", StringComparison.OrdinalIgnoreCase))
+            if (section.Type != SectionType.Single && !section.Route.Contains($"{{{nameof(Entry.Slug)}}}", StringComparison.OrdinalIgnoreCase))
             {
-                throw new MissingSlugRoutingParameterException(section.Type, section.EntryPage.Route);
+                throw new MissingSlugRoutingParameterException(section.Type, section.Route);
             }
         }
 

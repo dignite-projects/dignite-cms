@@ -65,13 +65,13 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// <param name="url"></param>
         /// <param name="language"></param>
         /// <returns></returns>
-        protected async Task<IActionResult> EntryViewResult( string url, string language)
+        protected async Task<IActionResult> EntryViewResult( string url, string language=null)
         {
             var section = await GetSection(url);
             var entry = await GetEntry(section, url, language);
             var viewModel = ObjectMapper.Map<EntryDto, EntryViewModel>(entry);
             viewModel.Section=section;
-            return View(section.EntryPage.Template, viewModel);
+            return View(section.Template, viewModel);
         }
 
         protected async Task<SectionDto> GetSection(string url)
@@ -110,7 +110,7 @@ namespace Dignite.Cms.Public.Web.Controllers
             {
                 string slug = null;
                 //Extract Slug value from URL
-                var extractResult = FormattedStringValueExtracter.Extract(url.RemovePreFix("/").RemovePostFix("/"), section.EntryPage.Route.RemovePreFix("/").RemovePostFix("/"), ignoreCase: true);
+                var extractResult = FormattedStringValueExtracter.Extract(url.RemovePreFix("/").RemovePostFix("/"), section.Route.RemovePreFix("/").RemovePostFix("/"), ignoreCase: true);
                 if (extractResult.IsMatch)
                 {
                     slug = extractResult.Matches.First(m => m.Name.Equals(nameof(EntryDto.Slug), StringComparison.OrdinalIgnoreCase)).Value;

@@ -10,7 +10,6 @@ namespace Dignite.Cms.Admin.Sections
         protected CreateOrUpdateSectionInputBase()
         {
             Type = SectionType.Single;
-            EntryPage = new EntryPageInput();
             IsActive = true;
         }
 
@@ -48,8 +47,29 @@ namespace Dignite.Cms.Admin.Sections
         public virtual bool IsActive { get; set; }
 
         /// <summary>
-        /// Entry Page of this section
+        /// Routing format for entry page;
         /// </summary>
-        public virtual EntryPageInput EntryPage { get; set; }
+        /// <example>
+        /// Route with formatting parameters:
+        /// 1./news
+        /// 2./news/{publishTime:yyyy-M}/{slug}
+        /// </example>
+        /// <remarks>
+        /// 1.If the section is not a single type, {slug} must be included in the route;
+        /// 2.Route parameters must be public properties in the entry;
+        /// 3.Routing parameters support formatting
+        /// </remarks>
+        [Required]
+        [DynamicMaxLength(typeof(SectionConsts), nameof(SectionConsts.MaxPageRouteLength))]
+        [RegularExpression(SectionConsts.PageRouteRegularExpression)]
+        public string Route { get; set; }
+
+        /// <summary>
+        /// asp.net core mvc Razor Page
+        /// </summary>
+        [Required]
+        [DynamicMaxLength(typeof(SectionConsts), nameof(SectionConsts.MaxPagetemplateLength))]
+        [RegularExpression(SectionConsts.PageTemplateRegularExpression)]
+        public string Template { get; set; }
     }
 }

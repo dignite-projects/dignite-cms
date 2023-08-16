@@ -10,7 +10,7 @@ namespace Dignite.Cms.Sections
         public SectionRouteAlreadyExistException([NotNull]string route)
         {
             Code = CmsErrorCodes.Sections.RouteAlreadyExist;
-            WithData(nameof(Section.EntryPage.Route), route);
+            WithData(nameof(Section.Route), route);
         }
     }
 }

@@ -28,7 +28,6 @@ namespace Dignite.Cms.Admin.Blazor
             CreateMap<EntryFieldDto, EntryFieldInput>();
             CreateMap<EntryDto, UpdateEntryInput>()
                 .Ignore(u => u.CustomizedFieldFiles);
-            CreateMap<EntryPageDto, EntryPageInput>();
         }
     }
 }

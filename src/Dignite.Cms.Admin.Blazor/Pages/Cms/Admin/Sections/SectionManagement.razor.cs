@@ -104,14 +104,23 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
                     new TableColumn
                     {
                         Title = L["DisplayName"],
-                        Sortable = true,
                         Data = nameof(SectionDto.DisplayName)
                     },
                     new TableColumn
                     {
                         Title = L["Name"],
-                        Sortable = true,
                         Data = nameof(SectionDto.Name)
+                    },
+                    new TableColumn
+                    {
+                        Title = L["Route"],
+                        Data = nameof(SectionDto.Route)
+                    },
+                    new TableColumn
+                    {
+                        Title = L["Template"],
+                        Sortable = true,
+                        Data = nameof(SectionDto.Template)
                     },
                     new TableColumn
                     {
@@ -128,7 +137,6 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
                     new TableColumn
                     {
                         Title = L["IsDefault"],
-                        Sortable = true,
                         Data = nameof(SectionDto.IsDefault)
                     },
                     new TableColumn

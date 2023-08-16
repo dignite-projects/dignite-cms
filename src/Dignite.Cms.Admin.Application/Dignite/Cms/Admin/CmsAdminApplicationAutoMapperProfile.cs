@@ -20,12 +20,11 @@ namespace Dignite.Cms.Admin
 
             /**** field *****************************************/
             CreateMap<Cms.Fields.FieldGroup, FieldGroupDto>();
-            CreateMap<Cms.Fields.Field, Dignite.Cms.Fields.FieldDto>();
+            CreateMap<Cms.Fields.Field, Cms.Fields.FieldDto>();
             CreateMap<Cms.Fields.Field, FieldDto>();
 
             /**** section *****************************************/
             CreateMap<Section, SectionDto>();
-            CreateMap<EntryPage, EntryPageDto>();
             CreateMap<EntryType, EntryTypeDto>();
             CreateMap<EntryFieldTab, EntryFieldTabDto>();
             CreateMap<EntryField, EntryFieldDto>()

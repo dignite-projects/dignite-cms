@@ -59,13 +59,8 @@ public static class CmsDbContextModelCreatingExtensions
             //Properties
             section.Property(s => s.DisplayName).IsRequired().HasMaxLength(SectionConsts.MaxDisplayNameLength);
             section.Property(s => s.Name).IsRequired().HasMaxLength(SectionConsts.MaxNameLength);
-            section.OwnsOne(
-                    e => e.EntryPage,
-                    e =>
-                    {
-                        e.Property(r => r.Route).HasMaxLength(SectionConsts.MaxPageRouteLength).HasColumnName("EntryPage_Route");
-                        e.Property(r => r.Template).HasMaxLength(SectionConsts.MaxPagetemplateLength).HasColumnName("EntryPage_Template");
-                    });
+            section.Property(r => r.Route).IsRequired().HasMaxLength(SectionConsts.MaxPageRouteLength);
+            section.Property(r => r.Template).IsRequired().HasMaxLength(SectionConsts.MaxPagetemplateLength);
 
             //Relations
             section.HasMany(s => s.EntryTypes).WithOne().HasForeignKey(et => et.SectionId);

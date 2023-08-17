@@ -55,7 +55,7 @@ namespace Dignite.Cms.Public.Sections
         public async Task<SectionDto> FindByUrlAsync(Guid siteId, string url)
         {
             url = url.RemovePreFix("/").RemovePostFix("/");
-            var allSections = (await _sectionRepository.GetListAsync(siteId, null, true, true)).OrderByDescending(s => s.Route);
+            var allSections = (await _sectionRepository.GetListAsync(siteId, null, true, true)).OrderBy(s=>s.Type).ThenByDescending(s => s.Route);
             foreach ( var section in allSections) 
             {
                 var route = section.Route.RemovePreFix("/").RemovePostFix("/");

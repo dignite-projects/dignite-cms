@@ -47,7 +47,7 @@ namespace Dignite.Cms.Sections
                 .FirstOrDefaultAsync(s => s.Name == name, GetCancellationToken(cancellationToken));
         }
         public async Task<int> GetCountAsync(
-            Guid? siteId,
+            Guid siteId,
             string filter = null,
             bool? isActive = null,
             CancellationToken cancellationToken = default
@@ -57,7 +57,7 @@ namespace Dignite.Cms.Sections
         }
 
         public async Task<List<Section>> GetListAsync(
-            Guid? siteId,
+            Guid siteId,
             string filter = null,
             bool? isActive = null, 
             bool includeDetails = true,
@@ -80,12 +80,11 @@ namespace Dignite.Cms.Sections
         }
 
         protected virtual async Task< IQueryable<Section>> GetQueryableAsync(
-            Guid? siteId,
+            Guid siteId,
             string filter = null,
             bool? isActive = null)
         {
-            return (await GetDbSetAsync())
-                .WhereIf(siteId.HasValue, s => s.SiteId == siteId.Value)
+            return (await GetDbSetAsync()).Where(s => s.SiteId == siteId)
                 .WhereIf(!filter.IsNullOrEmpty(), et => et.DisplayName.Contains(filter))
                 .WhereIf(isActive.HasValue, s => s.IsActive == isActive);
         }

@@ -1,6 +1,4 @@
-﻿using Dignite.Abp.FieldCustomizing;
-using Dignite.Cms.Entries;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,13 +16,13 @@ namespace Dignite.Cms.Sections
         Task<Section> GetDefaultAsync(Guid siteId, bool includeDetails = true, CancellationToken cancellationToken = default);
 
         Task<int> GetCountAsync(
-            Guid? siteId,
+            Guid siteId,
             string filter = null,
             bool? isActive = null,
             CancellationToken cancellationToken = default
             );
         Task<List<Section>> GetListAsync(
-            Guid? siteId,
+            Guid siteId,
             string filter = null,
             bool? isActive= null,
             bool includeDetails = true,

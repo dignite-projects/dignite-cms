@@ -17,7 +17,7 @@ namespace Dignite.Cms.Public.Sections
         /// 
         /// </param>
         /// <returns></returns>
-        Task<SectionDto> FindByUrlAsync(string url);
+        Task<SectionDto> FindByUrlAsync(Guid siteId, string url);
 
         Task<SectionDto> GetDefaultAsync(Guid siteId);
     }

@@ -76,15 +76,15 @@ namespace Dignite.Cms.Public.Web.Controllers
 
         protected async Task<SectionDto> GetSection(string url)
         {
+            var hostUrl= $"{Request.Scheme}://{Request.Host.Value}";
+            var site = await _sitePublicAppService.FindByHostAsync(hostUrl);
             if (url.IsNullOrEmpty() || url == "/")
             {
-                var hostUrl= $"{Request.Scheme}://{Request.Host.Value}";
-                var site = await _sitePublicAppService.FindByHostAsync(hostUrl);
                 return await _sectionPublicAppService.GetDefaultAsync(site.Id);
             }
             else
             {
-                return await _sectionPublicAppService.FindByUrlAsync(url);
+                return await _sectionPublicAppService.FindByUrlAsync(site.Id,url);
             }
         }
 

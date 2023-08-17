@@ -9,7 +9,7 @@ using System.Linq;
 namespace Dignite.Cms.Public.Web.TagHelpers
 {
     [HtmlTargetElement("a",Attributes ="cms-site")]
-    public class CmsAnchorSiteTagHelper : TagHelper
+    public class CmsEntryUrlWithSiteTagHelper : TagHelper
     {
         /// <summary>
         /// 

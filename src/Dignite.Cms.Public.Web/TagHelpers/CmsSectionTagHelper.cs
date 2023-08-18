@@ -42,6 +42,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             var model = await _sectionAppService.FindByNameAsync(SiteId,SectionName);
             var body = await _renderer.RenderAsync(PartialName, model);
 
+            output.TagName = null;
             output.Content.SetHtmlContent(body);
             output.Attributes.Clear();
         }

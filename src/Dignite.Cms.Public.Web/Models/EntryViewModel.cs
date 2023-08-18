@@ -3,8 +3,15 @@ using Dignite.Cms.Public.Sections;
 
 namespace Dignite.Cms.Public.Web.Models
 {
-    public class EntryViewModel:EntryDto
+    public class EntryViewModel
     {
-        public SectionDto Section { get; set; }
+        public EntryViewModel(EntryDto entry, SectionDto section)
+        {
+            Entry = entry;
+            Section = section;
+        }
+
+        public EntryDto Entry { get;  }
+        public SectionDto Section { get; }
     }
 }

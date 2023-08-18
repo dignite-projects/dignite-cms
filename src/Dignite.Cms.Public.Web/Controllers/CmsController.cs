@@ -69,8 +69,7 @@ namespace Dignite.Cms.Public.Web.Controllers
         {
             var section = await GetSection(url);
             var entry = await GetEntry(section, url, language);
-            var viewModel = ObjectMapper.Map<EntryDto, EntryViewModel>(entry);
-            viewModel.Section=section;
+            var viewModel = new EntryViewModel(entry, section);
             return View(section.Template, viewModel);
         }
 

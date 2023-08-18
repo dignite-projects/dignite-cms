@@ -28,10 +28,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Components\**\*.js" />
     <EmbeddedResource Include="Components\**\*.css" />
-    <EmbeddedResource Include="wwwroot\**\*.*" />
     <Content Remove="Components\**\*.js" />
     <Content Remove="Components\**\*.css" />
-    <Content Remove="wwwroot\**\*.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Cms\" />
   </ItemGroup>
 
 </Project>

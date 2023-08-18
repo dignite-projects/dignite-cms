@@ -1,0 +1,17 @@
+﻿@using Dignite.Abp.DynamicForms.Matrix;
+@using Dignite.Cms.Public.Web.Models;
+@using Dignite.Abp.DynamicForms;
+@model EntryFieldViewModel
+@{
+    var matrixBlocks = Model.Entry.GetField<List<MatrixBlock>>(Model.Field.Name, new List<MatrixBlock>());
+    var matrixBlockConfig = new MatrixConfiguration(Model.Field.FormConfiguration);
+}
+@foreach (var matrixBlock in matrixBlocks)
+{
+    var matrixBlockType = matrixBlockConfig.MatrixBlockTypes.FirstOrDefault(mbt => mbt.Name.Equals(matrixBlock.MatrixBlockTypeName, StringComparison.OrdinalIgnoreCase));
+    if (matrixBlockType != null)
+    {
+        var viewModel = new MatrixBlockViewModel(matrixBlockType, matrixBlock);
+        <partial name="cms/fields/matrix/@matrixBlockType.Name" model="viewModel" />
+    }
+}

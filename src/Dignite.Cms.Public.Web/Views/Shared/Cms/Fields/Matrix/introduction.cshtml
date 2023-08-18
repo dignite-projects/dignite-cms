@@ -1,0 +1,99 @@
+﻿@using Dignite.Abp.DynamicForms.Select;
+@using Dignite.Cms.Public.Web.Models;
+@using Dignite.Abp.DynamicForms;
+@using Dignite.FileExplorer.Files;
+@using Dignite.Cms.Public.Web.TagHelpers
+@model MatrixBlockViewModel
+@{
+    var titleField = Model.Type.FieldDefinitions.First(fd => fd.Name == "title");
+    var descriptionField = Model.Type.FieldDefinitions.First(fd => fd.Name == "description");
+    var layouts = Model.Block.GetField<IEnumerable<string>>("layout");
+    var files = Model.Block.GetField<List<FileDescriptorDto>>("illustration");
+    var linkText = Model.Block.GetField<string>("link-text", null);
+    var linkUrl = Model.Block.GetField<string>("link-url", null);
+    FileDescriptorDto illustration = (files != null && files.Any()) ? files[0] : null;
+}
+
+@if (layouts != null && layouts.Any())
+{
+    var layout = layouts.First();
+    switch (layout)
+    {
+        case "top-and-bottom":
+            <div class="row row-cols-1 row-cols-md-2 gx-5 my-5">
+                <div class="col">
+                    <h2 class="fs-1">
+                        <cms-field field="titleField" entry="Model.Block"></cms-field>
+                    </h2>
+                </div>
+                <div class="col">
+                    <div class="rich-text">
+                        <cms-field field="descriptionField" entry="Model.Block"></cms-field>
+                        @if (!linkUrl.IsNullOrWhiteSpace())
+                        {
+                            <a href="@linkUrl" class="btn btn-primary">@linkText</a>
+                        }
+                    </div>
+                </div>
+            </div>
+            <img src="@illustration?.Url" class="img-fluid my-md-5" alt="@Model.Block.GetField("title")">
+            break;
+        case "left-and-right":
+            <div class="row row-cols-1 row-cols-md-2 gx-5 my-5">
+                <div class="col">
+                    <h2 class="fs-1">
+                        <cms-field field="titleField" entry="Model.Block"></cms-field>
+                    </h2>
+                    <div class="rich-text">
+                        <cms-field field="descriptionField" entry="Model.Block"></cms-field>
+                        @if (!linkUrl.IsNullOrWhiteSpace())
+                        {
+                            <a href="@linkUrl" class="btn btn-primary">@linkText</a>
+                        }
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="@illustration?.Url" class="img-fluid my-md-5" alt="@Model.Block.GetField("title")">
+                </div>
+            </div>
+            break;
+        case "right-and-left":
+            <div class="row row-cols-1 row-cols-md-2 gx-5 my-5">
+                <div class="col order-md-1">
+                    <img src="@illustration?.Url" class="img-fluid my-md-5" alt="@Model.Block.GetField("title")">
+                </div>
+                <div class="col order-md-0">
+                    <h2 class="fs-1">
+                        <cms-field field="titleField" entry="Model.Block"></cms-field>
+                    </h2>
+                    <div class="rich-text">
+                        <cms-field field="descriptionField" entry="Model.Block"></cms-field>
+                        @if (!linkUrl.IsNullOrWhiteSpace())
+                        {
+                            <a href="@linkUrl" class="btn btn-primary">@linkText</a>
+                        }
+                    </div>
+                </div>
+            </div>
+            break;
+        default:
+            <div class="row row-cols-1 row-cols-md-2 gx-5 my-5">
+                <div class="col">
+                    <h2 class="fs-1">
+                        <cms-field field="titleField" entry="Model.Block"></cms-field>
+                    </h2>
+                </div>
+                <div class="col">
+                    <div class="rich-text">
+                        <cms-field field="descriptionField" entry="Model.Block"></cms-field>
+                        @if (!linkUrl.IsNullOrWhiteSpace())
+                        {
+                            <a href="@linkUrl" class="btn btn-primary">@linkText</a>
+                        }
+                    </div>
+                </div>
+            </div>
+            <img src="@illustration?.Url" class="img-fluid my-md-5" alt="@Model.Block.GetField("title")">
+            break;
+    }
+}

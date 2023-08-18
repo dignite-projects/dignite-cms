@@ -9,7 +9,5 @@ public class CmsPublicWebAutoMapperProfile : Profile
 {
     public CmsPublicWebAutoMapperProfile()
     {
-        CreateMap<EntryDto, EntryViewModel>()
-            .Ignore(e=>e.Section);
     }
 }

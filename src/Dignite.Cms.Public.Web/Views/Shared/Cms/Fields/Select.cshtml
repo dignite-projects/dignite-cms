@@ -1,0 +1,28 @@
+﻿@using Dignite.Abp.DynamicForms.Select;
+@using Dignite.Cms.Public.Web.Models;
+@using Dignite.Abp.DynamicForms;
+@model EntryFieldViewModel
+@{
+    var categories = Model.Entry.GetField<IEnumerable<string>>(Model.Field.Name, null);
+    var configuration = new SelectConfiguration(Model.Field.FormConfiguration);
+}
+@if (categories != null)
+{
+    @if (configuration.Multiple)
+    {
+        <ul class="list-inline">
+            @foreach(var item in categories)
+            {
+            <li class="list-inline-item">@item</li>
+            }
+        </ul>
+    }
+    else
+    {
+        if (categories.Any())
+        {
+            var option = configuration.Options.FirstOrDefault(o => o.Value == categories.First());
+            @option?.Text
+        }
+    }
+}

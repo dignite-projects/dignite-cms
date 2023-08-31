@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Dignite.Cms.Blazor.Server.Host.Migrations
 {
     [DbContext(typeof(UnifiedDbContext))]
-    [Migration("20230805024839_Modify_Cms_Site_Entity")]
-    partial class ModifyCmsSiteEntity
+    [Migration("20230831141708_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -372,8 +372,18 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
+                    b.Property<string>("Route")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
                     b.Property<Guid>("SiteId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Template")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<Guid?>("TenantId")
                         .HasColumnType("uniqueidentifier")
@@ -432,9 +442,6 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDefault")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
@@ -2024,31 +2031,6 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasForeignKey("SiteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.OwnsOne("Dignite.Cms.Sections.EntryPage", "EntryPage", b1 =>
-                        {
-                            b1.Property<Guid>("SectionId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Route")
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("EntryPage_Route");
-
-                            b1.Property<string>("Template")
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("EntryPage_Template");
-
-                            b1.HasKey("SectionId");
-
-                            b1.ToTable("CmsSections");
-
-                            b1.WithOwner()
-                                .HasForeignKey("SectionId");
-                        });
-
-                    b.Navigation("EntryPage");
 
                     b.Navigation("Site");
                 });

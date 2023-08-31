@@ -20,9 +20,9 @@
     switch (layout)
     {
         case "top-and-bottom":
-            <div class="row row-cols-1 row-cols-md-2 gx-5 my-5">
+            <div class="row row-cols-1 row-cols-md-2 gx-5 my-3">
                 <div class="col">
-                    <h2 class="fs-1">
+                    <h2 class="fs-2 mb-3">
                         <cms-field field="titleField" entry="Model.Block"></cms-field>
                     </h2>
                 </div>
@@ -36,12 +36,15 @@
                     </div>
                 </div>
             </div>
-            <img src="@illustration?.Url" class="img-fluid my-md-5" alt="@Model.Block.GetField("title")">
+            @if (illustration != null)
+            {
+                <img src="@illustration?.Url" class="img-fluid my-md-5" alt="@Model.Block.GetField("title")">
+            }
             break;
         case "left-and-right":
-            <div class="row row-cols-1 row-cols-md-2 gx-5 my-5">
-                <div class="col">
-                    <h2 class="fs-1">
+            <div class="row row-cols-1 row-cols-md-2 gx-0 align-items-center">
+                <div class="col pe-md-5">
+                    <h2 class="fs-2 mb-3">
                         <cms-field field="titleField" entry="Model.Block"></cms-field>
                     </h2>
                     <div class="rich-text">
@@ -53,17 +56,17 @@
                     </div>
                 </div>
                 <div class="col">
-                    <img src="@illustration?.Url" class="img-fluid my-md-5" alt="@Model.Block.GetField("title")">
+                    <img src="@illustration?.Url" class="img-fluid" alt="@Model.Block.GetField("title")">
                 </div>
             </div>
             break;
         case "right-and-left":
-            <div class="row row-cols-1 row-cols-md-2 gx-5 my-5">
-                <div class="col order-md-1">
-                    <img src="@illustration?.Url" class="img-fluid my-md-5" alt="@Model.Block.GetField("title")">
-                </div>
+            <div class="row row-cols-1 row-cols-md-2 gx-0 align-items-center">
                 <div class="col order-md-0">
-                    <h2 class="fs-1">
+                    <img src="@illustration?.Url" class="img-fluid" alt="@Model.Block.GetField("title")">
+                </div>
+                <div class="col order-md-1 ps-md-5">
+                    <h2 class="fs-2 mb-3">
                         <cms-field field="titleField" entry="Model.Block"></cms-field>
                     </h2>
                     <div class="rich-text">
@@ -75,25 +78,6 @@
                     </div>
                 </div>
             </div>
-            break;
-        default:
-            <div class="row row-cols-1 row-cols-md-2 gx-5 my-5">
-                <div class="col">
-                    <h2 class="fs-1">
-                        <cms-field field="titleField" entry="Model.Block"></cms-field>
-                    </h2>
-                </div>
-                <div class="col">
-                    <div class="rich-text">
-                        <cms-field field="descriptionField" entry="Model.Block"></cms-field>
-                        @if (!linkUrl.IsNullOrWhiteSpace())
-                        {
-                            <a href="@linkUrl" class="btn btn-primary">@linkText</a>
-                        }
-                    </div>
-                </div>
-            </div>
-            <img src="@illustration?.Url" class="img-fluid my-md-5" alt="@Model.Block.GetField("title")">
             break;
     }
 }

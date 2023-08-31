@@ -1,0 +1,19 @@
+﻿@using Dignite.Abp.DynamicForms.Select;
+@using Dignite.Cms.Public.Web.Models;
+@using Dignite.Abp.DynamicForms;
+@using Dignite.FileExplorer.Files;
+@using Dignite.Cms.Public.Web.TagHelpers
+@model MatrixBlockViewModel
+@{
+    var contentField = Model.Type.FieldDefinitions.First(fd => fd.Name == "rich-text");
+    var subject = Model.Block.GetField<string>("subject",null);
+}
+@if (!subject.IsNullOrEmpty())
+{
+    <h2 class="fw-semibold mt-5" id="@subject.ToLower().Replace(" ","-")">
+        @subject
+    </h2>
+}
+<div class="rich-text">
+    <cms-field field="contentField" entry="Model.Block"></cms-field>
+</div>

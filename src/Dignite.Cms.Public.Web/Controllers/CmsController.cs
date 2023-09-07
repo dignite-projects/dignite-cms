@@ -69,8 +69,15 @@ namespace Dignite.Cms.Public.Web.Controllers
         {
             var section = await GetSection(url);
             var entry = await GetEntry(section, url, language);
-            var viewModel = new EntryViewModel(entry, section);
-            return View(section.Template, viewModel);
+            if (entry == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var viewModel = new EntryViewModel(entry, section);
+                return View(section.Template, viewModel);
+            }
         }
 
         protected async Task<SectionDto> GetSection(string url)
@@ -91,9 +98,10 @@ namespace Dignite.Cms.Public.Web.Controllers
         {
             if (language.IsNullOrEmpty())
             {
-                language = section.Site.Languages.OrderByDescending(l => l.IsDefault).First().Language;
+                language = section.Site.GetDefaultLanguage();
             }
 
+            EntryDto entry = null;
             // If the section type is single, then the slug value of the entry is the name of the section
             if (section.Type == Cms.Sections.SectionType.Single) 
             {
@@ -103,7 +111,7 @@ namespace Dignite.Cms.Public.Web.Controllers
                     MaxResultCount=1,
                     Language = language
                 });
-                return result.Items.Any() ? result.Items[0] : null;
+                entry = result.Items.Any() ? result.Items[0] : null;
             }
             else
             {
@@ -114,7 +122,7 @@ namespace Dignite.Cms.Public.Web.Controllers
                 {
                     slug = extractResult.Matches.First(m => m.Name.Equals(nameof(EntryDto.Slug), StringComparison.OrdinalIgnoreCase)).Value;
                     //
-                    return await _entryPublicAppService.FindBySlugAsync(new FindBySlugInput
+                    entry = await _entryPublicAppService.FindBySlugAsync(new FindBySlugInput
                     {
                         Language = language,
                         SectionId = section.Id,
@@ -125,6 +133,31 @@ namespace Dignite.Cms.Public.Web.Controllers
                 {
                     throw new Volo.Abp.AbpException($"The structure type section and channel type section route of the entry must contain {{slug}}");
                 }
+            }
+
+
+            if (entry == null)
+            {
+                if (!language.Equals(section.Site.GetDefaultLanguage(), StringComparison.OrdinalIgnoreCase))
+                {
+                    return await GetEntry(section, url, section.Site.GetDefaultLanguage());
+                }
+            }
+            else
+            {
+                SetEntryUrl(entry);
+            }
+
+            return entry;
+        }
+
+
+        protected void SetEntryUrl(EntryDto entry)
+        {
+            var hostAddress = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
+            if (entry.Url.StartsWith(hostAddress, StringComparison.OrdinalIgnoreCase))
+            {
+                entry.Url = entry.Url.RemovePreFix(StringComparison.OrdinalIgnoreCase, hostAddress);
             }
         }
     }

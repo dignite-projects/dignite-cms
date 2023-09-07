@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace Dignite.Cms.Public.Web.TagHelpers
 {
+    /// <summary>
+    /// Add language to href by specifying <see cref="CmsEntryUrlWithSiteTagHelper.CmsSite"/> and <see cref="CmsEntryUrlWithSiteTagHelper.CmsLanguage"/> 
+    /// </summary>
     [HtmlTargetElement("a",Attributes ="cms-site")]
     public class CmsEntryUrlWithSiteTagHelper : TagHelper
     {
@@ -17,7 +20,8 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         public SiteDto CmsSite { get; set; }
 
         /// <summary>
-        /// 
+        /// Specify the language of the link,
+        /// otherwise the site default language is used.
         /// </summary>
         public string CmsLanguage { get; set; }
 

@@ -1,8 +1,7 @@
 ﻿using Dignite.Cms.Public.Sites;
 using Dignite.Cms.Sites;
-using System.Linq;
+using System;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Dignite.Cms.Public.Pages
 {
@@ -24,7 +23,7 @@ namespace Dignite.Cms.Public.Pages
 
         public async Task<SiteDto> FindByHostAsync(string host)
         {
-            var result = await _siteRepository.FindByHostAsync(host);
+            var result = await _siteRepository.FindByHostAsync(host.RemovePostFix("/"));
             return ObjectMapper.Map<Site, SiteDto>(result);
         }
     }

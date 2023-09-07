@@ -2,6 +2,7 @@
 using Dignite.Abp.FieldCustomizing;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Public.Sections;
+using Dignite.Cms.Public.Sites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace Dignite.Cms.Public.Entries
             var section = await _sectionPublicAppService.GetAsync(input.SectionId);
             if (input.Language.IsNullOrEmpty())
             {
-                input.Language = section.Site.Languages.OrderByDescending(l => l.IsDefault).First().Language;
+                input.Language = section.Site.GetDefaultLanguage();
             }
             var entry = await _entryRepository.FindBySlugAsync(input.SectionId,input.Language,input.Slug);
 
@@ -73,7 +74,7 @@ namespace Dignite.Cms.Public.Entries
             var section = await _sectionPublicAppService.GetAsync(input.SectionId);
             if (input.Language.IsNullOrEmpty())
             {
-                input.Language = section.Site.Languages.OrderByDescending(l => l.IsDefault).First().Language;
+                input.Language = section.Site.GetDefaultLanguage();
             }
 
             if (section.Type == Cms.Sections.SectionType.Single)
@@ -154,7 +155,7 @@ namespace Dignite.Cms.Public.Entries
         protected void SetEntryUrl(EntryDto entry, SectionDto section)
         {
             var routeParameters = GetRouteParameters(section.Route).ToArray();
-            var siteDefaultLanguage = section.Site.Languages.OrderByDescending(l => l.IsDefault).First().Language;
+            var siteDefaultLanguage = section.Site.GetDefaultLanguage();
             entry.Url = section.Route;
 
             //If there is a routing parameter, get the routing parameter value and update the URL

@@ -4,7 +4,9 @@ using Dignite.Cms.Public.Sections;
 using Dignite.Cms.Public.Sites;
 using Dignite.Cms.Public.Web.Models;
 using Dignite.Cms.Public.Web.Razor;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using NUglify.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -68,18 +70,21 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         private readonly IEntryPublicAppService _entryAppService;
         private readonly ISectionPublicAppService _sectionAppService;
         private readonly ISitePublicAppService _siteAppService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public CmsEntryListTagHelper(
             IRazorPartialRenderer renderer,
             IEntryPublicAppService entryAppService,
             ISectionPublicAppService sectionAppService,
-            ISitePublicAppService siteAppService
+            ISitePublicAppService siteAppService,
+            IHttpContextAccessor httpContextAccessor
             )
         {
             _renderer = renderer;
             _entryAppService = entryAppService;
             _sectionAppService = sectionAppService;
             _siteAppService = siteAppService;
+            _httpContextAccessor = httpContextAccessor;
             CurrentPage = 1;
         }
 
@@ -131,8 +136,18 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             });
 
 
+            result.Items.ForEach(entry => SetEntryUrl(entry));
             var model = new EntryListViewModel(Section, result.Items, (int)result.TotalCount, CurrentPage, ResultCount.Value);
             return model;
+        }
+
+        protected void SetEntryUrl(EntryDto entry)
+        {
+            var hostAddress = _httpContextAccessor.HttpContext.Request.Scheme + "://" + _httpContextAccessor.HttpContext.Request.Host;
+            if (entry.Url.StartsWith(hostAddress, StringComparison.OrdinalIgnoreCase))
+            {
+                entry.Url = entry.Url.RemovePreFix(StringComparison.OrdinalIgnoreCase, hostAddress);
+            }
         }
     }
 }

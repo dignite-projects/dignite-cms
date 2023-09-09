@@ -10,7 +10,7 @@
     var photos = Model.Block.GetField<List<FileDescriptorDto>>("photos");
 }
 
-@if (layouts != null && layouts.Any())
+@if (layouts != null && layouts.Any() && photos!=null)
 {
     var layout = layouts.First();
     switch (layout)

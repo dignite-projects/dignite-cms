@@ -43,7 +43,7 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// 2.{culture}/{url}
         /// </param>
         /// <returns></returns>
-        public async Task<IActionResult> CultureEntry(string culture, string url)
+        public async Task<IActionResult> CultureEntry(string culture, string url=null)
         {
             return await EntryViewResult(url, culture);
         }
@@ -54,7 +54,7 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Entry(string url)
+        public async Task<IActionResult> Entry(string url=null)
         {
             return await EntryViewResult(url, null);
         }
@@ -65,25 +65,48 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// <param name="url"></param>
         /// <param name="language"></param>
         /// <returns></returns>
-        protected async Task<IActionResult> EntryViewResult( string url, string language=null)
+        protected async Task<IActionResult> EntryViewResult(string url = null, string language=null)
         {
             var section = await GetSection(url);
-            var entry = await GetEntry(section, url, language);
-            if (entry == null)
+            var defaultLanguage = section.Site.GetDefaultLanguage();
+            if (section == null)
             {
                 return NotFound();
             }
-            else
+
+
+            if (language.IsNullOrEmpty())
+            {
+                language = defaultLanguage;
+            }
+
+            var entry = await GetEntry(section, url, language);
+            if (entry != null)
             {
                 var viewModel = new EntryViewModel(entry, section);
                 return View(section.Template, viewModel);
             }
+            else
+            {
+                if (!language.Equals(defaultLanguage, StringComparison.OrdinalIgnoreCase))
+                {
+                    return Redirect(url.EnsureStartsWith('/'));
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
         }
 
-        protected async Task<SectionDto> GetSection(string url)
+        protected async Task<SectionDto> GetSection(string url = null)
         {
             var hostUrl= $"{Request.Scheme}://{Request.Host.Value}";
             var site = await _sitePublicAppService.FindByHostAsync(hostUrl);
+
+            if (site == null)
+                return null;
+
             if (url.IsNullOrEmpty() || url == "/")
             {
                 return await _sectionPublicAppService.GetDefaultAsync(site.Id);
@@ -94,13 +117,8 @@ namespace Dignite.Cms.Public.Web.Controllers
             }
         }
 
-        protected async Task<EntryDto> GetEntry(SectionDto section, string url, string language = null)
+        protected async Task<EntryDto> GetEntry(SectionDto section, string url, string language)
         {
-            if (language.IsNullOrEmpty())
-            {
-                language = section.Site.GetDefaultLanguage();
-            }
-
             EntryDto entry = null;
             // If the section type is single, then the slug value of the entry is the name of the section
             if (section.Type == Cms.Sections.SectionType.Single) 
@@ -136,14 +154,7 @@ namespace Dignite.Cms.Public.Web.Controllers
             }
 
 
-            if (entry == null)
-            {
-                if (!language.Equals(section.Site.GetDefaultLanguage(), StringComparison.OrdinalIgnoreCase))
-                {
-                    return await GetEntry(section, url, section.Site.GetDefaultLanguage());
-                }
-            }
-            else
+            if (entry != null)
             {
                 SetEntryUrl(entry);
             }

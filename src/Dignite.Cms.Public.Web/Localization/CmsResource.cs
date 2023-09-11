@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.Localization.MultiTenancy;
+﻿using Dignite.Abp.Localization;
 
 namespace Dignite.Cms.Public.Web.Localization
 {

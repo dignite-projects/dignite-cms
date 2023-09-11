@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.Localization.MultiTenancy;
+﻿using Dignite.Abp.Localization;
 using Dignite.Cms.Localization;
 using Dignite.Cms.Public.Web.Routing;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,7 +17,7 @@ namespace Dignite.Cms.Public.Web;
     typeof(AbpAspNetCoreMvcUiThemeSharedModule),
     typeof(AbpAutoMapperModule),
     typeof(CmsKitPublicWebModule),
-    typeof(AbpLocalizationMultiTenancyModule)
+    typeof(DigniteAbpLocalizationModule)
     )]
 public class CmsPublicWebModule : AbpModule
 {

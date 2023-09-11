@@ -9,7 +9,7 @@ using System.Linq;
 namespace Dignite.Cms.Public.Web.TagHelpers
 {
     /// <summary>
-    /// Add language to href by specifying <see cref="CmsEntryUrlWithSiteTagHelper.CmsSite"/> and <see cref="CmsEntryUrlWithSiteTagHelper.CmsLanguage"/> 
+    /// Add region to href by specifying <see cref="CmsEntryUrlWithSiteTagHelper.CmsSite"/> and <see cref="CmsEntryUrlWithSiteTagHelper.CmsRegion"/> 
     /// </summary>
     [HtmlTargetElement("a",Attributes ="cms-site")]
     public class CmsEntryUrlWithSiteTagHelper : TagHelper
@@ -20,10 +20,10 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         public SiteDto CmsSite { get; set; }
 
         /// <summary>
-        /// Specify the language of the link,
-        /// otherwise the site default language is used.
+        /// Specify the region of the link,
+        /// otherwise the site default region is used.
         /// </summary>
-        public string CmsLanguage { get; set; }
+        public string CmsRegion { get; set; }
 
 
         [ViewContext, HtmlAttributeNotBound]
@@ -35,22 +35,22 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             var href = output.Attributes.SingleOrDefault(a => a.Name == "href")?.Value.ToString();
 
             //
-            if (CmsLanguage.IsNullOrWhiteSpace())
+            if (CmsRegion.IsNullOrWhiteSpace())
             {
-                CmsLanguage = CultureInfo.CurrentCulture.Name;
+                CmsRegion = CultureInfo.CurrentCulture.Name;
             }
 
             //
-            var defaultLanguage = CmsSite.Languages.First(l => l.IsDefault);
-            if (!defaultLanguage.Language.Equals(CmsLanguage, StringComparison.OrdinalIgnoreCase))
+            var defaultRegion = CmsSite.Regions.First(l => l.IsDefault);
+            if (!defaultRegion.Region.Equals(CmsRegion, StringComparison.OrdinalIgnoreCase))
             {
-                href = CmsLanguage.EnsureEndsWith('/') + href.RemovePreFix("/");
+                href = CmsRegion.EnsureEndsWith('/') + href.RemovePreFix("/");
             }
 
             //
-            if (!CmsSite.Host.Equals(hostAddress, StringComparison.OrdinalIgnoreCase))
+            if (!CmsSite.HostUrl.Equals(hostAddress, StringComparison.OrdinalIgnoreCase))
             {
-                href = CmsSite.Host.EnsureEndsWith('/') + href.RemovePreFix("/");
+                href = CmsSite.HostUrl.EnsureEndsWith('/') + href.RemovePreFix("/");
             }
 
             //

@@ -20,15 +20,15 @@
         public const string NameRegularExpression= "^[A-Za-z0-9_-]+$";
 
         /// <summary>
-        /// Maximum length of the site language property.
+        /// Maximum length of the site region property.
         /// Default value: 16
         /// </summary>
-        public static int MaxLanguageLength { get; set; } = 16;
+        public static int MaxRegionLength { get; set; } = 16;
 
         /// <summary>
-        /// Maximum length of the site host property.
+        /// Maximum length of the site hostUrl property.
         /// Default value: 128
         /// </summary>
-        public static int MaxHostLength { get; set; } = 128;
+        public static int MaxHostUrlLength { get; set; } = 128;
     }
 }

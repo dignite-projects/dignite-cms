@@ -19,6 +19,7 @@ namespace Dignite.Cms.Public.Entries
         }
 
 
+
         [HttpGet]
         [Route("find-by-slug")]
         public async Task<EntryDto> FindBySlugAsync(FindBySlugInput input)

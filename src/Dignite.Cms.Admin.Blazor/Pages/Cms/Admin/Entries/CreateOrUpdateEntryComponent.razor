@@ -74,11 +74,11 @@
         }
         <Validation MessageLocalizer="@LH.Localize" Validator="@ValidationRule.None">
             <Field>
-                <Blazorise.FieldLabel>@L["Language"]</Blazorise.FieldLabel>
-                <Select TValue="string" SelectedValue="Entry.Language" SelectedValueChanged="@OnLanguageSelectedValueChanged">
-                    @foreach (var item in Section.Site.Languages)
+                <Blazorise.FieldLabel>@L["Region"]</Blazorise.FieldLabel>
+                <Select TValue="string" SelectedValue="Entry.Region" SelectedValueChanged="@OnRegionSelectedValueChanged">
+                    @foreach (var item in Section.Site.Regions)
                     {
-                        <SelectItem Value="@item.Language">@AllLanguages.FirstOrDefault(l=>l.CultureName==item.Language)?.DisplayName</SelectItem>
+                        <SelectItem Value="@item.Region">@AllRegions.FirstOrDefault(l=>l.CultureName==item.Region)?.DisplayName</SelectItem>
                     }
                 </Select>
             </Field>

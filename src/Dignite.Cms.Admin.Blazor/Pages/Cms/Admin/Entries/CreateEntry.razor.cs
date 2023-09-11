@@ -20,7 +20,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
         [Parameter]
         [SupplyParameterFromQuery]
-        public string Language { get; set; }
+        public string Region { get; set; }
         protected CreateEntryInput NewEntity { get; set; }
         protected SectionDto Section { get; set; }
         protected PageToolbar Toolbar { get; } = new();
@@ -37,7 +37,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         {
             await base.OnInitializedAsync();
             Section = await SectionAppService.GetAsync(SectionId);
-            Language = Language.IsNullOrEmpty() ? Section.Site.Languages.OrderByDescending(l => l.IsDefault).First().Language : Language;
+            Region = Region.IsNullOrEmpty() ? Section.Site.Regions.OrderByDescending(l => l.IsDefault).First().Region : Region;
 
             if (!Section.EntryTypes.Any())
             {
@@ -49,7 +49,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                 Slug = Nanoid.Nanoid.Generate(size: 8),
                 PublishTime = Clock.Now,
                 EntryTypeId = Section.EntryTypes.First().Id,
-                Language = Language,
+                Region = Region,
             };
         }
 
@@ -83,7 +83,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                 if (validate)
                 {
                     await EntryAppService.CreateAsync(NewEntity);
-                    Navigation.NavigateTo($"/cms/admin/entries?sectionId={SectionId}&language={NewEntity.Language}");
+                    Navigation.NavigateTo($"/cms/admin/entries?sectionId={SectionId}&region={NewEntity.Region}");
                 }
             }
             catch (Exception ex)

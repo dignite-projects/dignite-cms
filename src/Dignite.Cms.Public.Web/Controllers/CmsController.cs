@@ -36,16 +36,16 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="culture"></param>
+        /// <param name="region"></param>
         /// <param name="url">
         /// There are several formats:
-        /// 1.{culture}
-        /// 2.{culture}/{url}
+        /// 1.{region}
+        /// 2.{region}/{url}
         /// </param>
         /// <returns></returns>
-        public async Task<IActionResult> CultureEntry(string culture, string url=null)
+        public async Task<IActionResult> EntryByRegion(string region, string url="/")
         {
-            return await EntryViewResult(url, culture);
+            return await EntryViewResult(url, region);
         }
 
 
@@ -54,7 +54,7 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Entry(string url=null)
+        public async Task<IActionResult> Entry(string url="/")
         {
             return await EntryViewResult(url, null);
         }
@@ -63,24 +63,23 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// 
         /// </summary>
         /// <param name="url"></param>
-        /// <param name="language"></param>
+        /// <param name="region"></param>
         /// <returns></returns>
-        protected async Task<IActionResult> EntryViewResult(string url = null, string language=null)
+        protected async Task<IActionResult> EntryViewResult(string url, string region = null)
         {
             var section = await GetSection(url);
-            var defaultLanguage = section.Site.GetDefaultLanguage();
+            var defaultRegion = section.Site.GetDefaultRegion();
             if (section == null)
             {
                 return NotFound();
             }
 
-
-            if (language.IsNullOrEmpty())
+            if (region.IsNullOrEmpty())
             {
-                language = defaultLanguage;
+                region = defaultRegion;
             }
 
-            var entry = await GetEntry(section, url, language);
+            var entry = await GetEntry(section, url, region);
             if (entry != null)
             {
                 var viewModel = new EntryViewModel(entry, section);
@@ -88,7 +87,7 @@ namespace Dignite.Cms.Public.Web.Controllers
             }
             else
             {
-                if (!language.Equals(defaultLanguage, StringComparison.OrdinalIgnoreCase))
+                if (!region.Equals(defaultRegion, StringComparison.OrdinalIgnoreCase))
                 {
                     return Redirect(url.EnsureStartsWith('/'));
                 }
@@ -102,7 +101,7 @@ namespace Dignite.Cms.Public.Web.Controllers
         protected async Task<SectionDto> GetSection(string url = null)
         {
             var hostUrl= $"{Request.Scheme}://{Request.Host.Value}";
-            var site = await _sitePublicAppService.FindByHostAsync(hostUrl);
+            var site = await _sitePublicAppService.FindByHostUrlAsync(hostUrl);
 
             if (site == null)
                 return null;
@@ -117,7 +116,7 @@ namespace Dignite.Cms.Public.Web.Controllers
             }
         }
 
-        protected async Task<EntryDto> GetEntry(SectionDto section, string url, string language)
+        protected async Task<EntryDto> GetEntry(SectionDto section, string url, string region)
         {
             EntryDto entry = null;
             // If the section type is single, then the slug value of the entry is the name of the section
@@ -127,7 +126,7 @@ namespace Dignite.Cms.Public.Web.Controllers
                     SectionId = section.Id,
                     SkipCount=0,
                     MaxResultCount=1,
-                    Language = language
+                    Region = region
                 });
                 entry = result.Items.Any() ? result.Items[0] : null;
             }
@@ -142,7 +141,7 @@ namespace Dignite.Cms.Public.Web.Controllers
                     //
                     entry = await _entryPublicAppService.FindBySlugAsync(new FindBySlugInput
                     {
-                        Language = language,
+                        Region = region,
                         SectionId = section.Id,
                         Slug = slug
                     });

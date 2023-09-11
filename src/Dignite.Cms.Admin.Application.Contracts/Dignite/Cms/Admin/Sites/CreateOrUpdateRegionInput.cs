@@ -6,23 +6,23 @@ using Volo.Abp.Validation;
 namespace Dignite.Cms.Admin.Sites
 {
     [Serializable]
-    public class CreateOrUpdateLanguageInput
+    public class CreateOrUpdateRegionInput
     {
-        public CreateOrUpdateLanguageInput()
+        public CreateOrUpdateRegionInput()
         {
         }
 
-        public CreateOrUpdateLanguageInput(bool isDefault, string language)
+        public CreateOrUpdateRegionInput(bool isDefault, string region)
         {
             IsDefault = isDefault;
-            Language = language;
+            Region = region;
         }
 
         [Required]
         public bool IsDefault { get; set; }
 
         [Required]
-        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxLanguageLength))]
-        public string Language { get; set; }
+        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxRegionLength))]
+        public string Region { get; set; }
     }
 }

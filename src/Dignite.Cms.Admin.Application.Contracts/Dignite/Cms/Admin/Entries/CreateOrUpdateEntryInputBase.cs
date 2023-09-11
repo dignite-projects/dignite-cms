@@ -4,12 +4,10 @@ using Dignite.Cms.Entries;
 using Dignite.Cms.Fields;
 using Dignite.Cms.Sites;
 using Microsoft.Extensions.DependencyInjection;
-using Nito.AsyncEx;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 using Volo.Abp.Threading;
 using Volo.Abp.Validation;
 
@@ -28,11 +26,11 @@ namespace Dignite.Cms.Admin.Entries
         public Guid EntryTypeId { get; set; }
 
         /// <summary>
-        /// The language corresponding to the entry
+        /// The region corresponding to the entry
         /// </summary>
         [Required]
-        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxLanguageLength))]
-        public string Language { get; set; }
+        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxRegionLength))]
+        public string Region { get; set; }
 
 
         /// <summary>

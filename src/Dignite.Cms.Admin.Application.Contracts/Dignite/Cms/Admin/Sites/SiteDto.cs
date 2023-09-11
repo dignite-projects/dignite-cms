@@ -21,14 +21,14 @@ namespace Dignite.Cms.Admin.Sites
         public virtual string Name { get; set; }
 
         /// <summary>
-        /// Languages supported on this site
+        /// Regions supported on this site
         /// </summary>
-        public ICollection<SiteLanguageDto> Languages { get; set; }
+        public ICollection<SiteRegionDto> Regions { get; set; }
 
         /// <summary>
-        /// Host of this site
+        /// Host Url of this site
         /// </summary>
-        public virtual string Host { get; set; }
+        public virtual string HostUrl { get; set; }
 
 
         /// <summary>

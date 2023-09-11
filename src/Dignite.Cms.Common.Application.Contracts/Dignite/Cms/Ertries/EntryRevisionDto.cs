@@ -2,6 +2,7 @@
 
 namespace Dignite.Cms.Entries
 {
+    // TODO: This class may not be useful in the common area
     /// <summary>
     /// Entry Revision Information
     /// </summary>

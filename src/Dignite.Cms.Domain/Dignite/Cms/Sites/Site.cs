@@ -14,13 +14,13 @@ namespace Dignite.Cms.Sites
         {
         }
 
-        public Site(Guid id, string displayName, string name, ICollection<SiteLanguage> languages, string host, bool isActive, Guid? tenantId)
+        public Site(Guid id, string displayName, string name, ICollection<SiteRegion> regions, string hostUrl, bool isActive, Guid? tenantId)
             :base(id)
         {
             DisplayName = displayName;
             Name = name;
-            Languages = languages;
-            Host = host;
+            Regions = regions;
+            HostUrl = hostUrl;
             IsActive = isActive;
             TenantId = tenantId;
         }
@@ -37,14 +37,14 @@ namespace Dignite.Cms.Sites
         public virtual string Name { get; protected set; }
 
         /// <summary>
-        /// Languages supported on this site
+        /// Regions supported on this site
         /// </summary>
-        public ICollection<SiteLanguage> Languages { get; protected set; }
+        public ICollection<SiteRegion> Regions { get; protected set; }
 
         /// <summary>
-        /// Host of this site
+        /// Host url of this site
         /// </summary>
-        public virtual string Host { get; protected set; }
+        public virtual string HostUrl { get; protected set; }
 
 
         /// <summary>
@@ -69,13 +69,13 @@ namespace Dignite.Cms.Sites
         {
             Name = name;
         }
-        public virtual void SetHost(string host)
+        public virtual void SetHostUrl(string hostUrl)
         {
-            Host = host;
+            HostUrl = hostUrl;
         }
-        public virtual void SetLanguages(ICollection<SiteLanguage> languages)
+        public virtual void SetRegions(ICollection<SiteRegion> regions)
         {
-            Languages = languages;
+            Regions = regions;
         }
     }
 }

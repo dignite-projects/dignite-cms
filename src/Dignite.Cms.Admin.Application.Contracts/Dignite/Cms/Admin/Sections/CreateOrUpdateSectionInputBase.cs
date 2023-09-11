@@ -1,4 +1,5 @@
 ﻿using Dignite.Cms.Sections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.ObjectExtending;
 using Volo.Abp.Validation;
@@ -71,5 +72,11 @@ namespace Dignite.Cms.Admin.Sections
         [DynamicMaxLength(typeof(SectionConsts), nameof(SectionConsts.MaxPagetemplateLength))]
         [RegularExpression(SectionConsts.PageTemplateRegularExpression)]
         public string Template { get; set; }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            // TODO: Here the verify route cannot start with "/en/,"/zh-cn/" or any other region.
+            return base.Validate(validationContext);
+        }
     }
 }

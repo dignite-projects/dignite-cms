@@ -13,7 +13,7 @@ namespace Dignite.Cms.Admin.Sites
     {
         protected CreateOrUpdateSiteInputBase() : base(false)
         {
-            this.Languages = new List<CreateOrUpdateLanguageInput>();
+            this.Regions = new List<CreateOrUpdateRegionInput>();
         }
 
         /// <summary>
@@ -33,18 +33,18 @@ namespace Dignite.Cms.Admin.Sites
         public virtual string Name { get; set; }
 
         /// <summary>
-        /// Languages supported on this site
+        /// Regions supported on this site
         /// </summary>
         [Required]
-        public ICollection<CreateOrUpdateLanguageInput> Languages { get; set; }
+        public ICollection<CreateOrUpdateRegionInput> Regions { get; set; }
 
         /// <summary>
         /// Host of this site.
         /// The host of the site must be a domain name
         /// </summary>
         [Required]
-        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxHostLength))]
-        public virtual string Host { get;  set; }
+        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxHostUrlLength))]
+        public virtual string HostUrl { get;  set; }
 
 
         /// <summary>
@@ -58,14 +58,14 @@ namespace Dignite.Cms.Admin.Sites
             {
                 yield return new ValidationResult(
                 "The host of the site must be a domain name or IP",
-                new[] { nameof(Host) });
+                new[] { nameof(HostUrl) });
             }
 
-            if (Languages.Count(l => l.IsDefault) != 1)
+            if (Regions.Count(l => l.IsDefault) != 1)
             {
                 yield return new ValidationResult(
-                "The site's language list is missing a unique default language!",
-                new[] { nameof(Languages) });
+                "The site's region list is missing a unique default region!",
+                new[] { nameof(Regions) });
             }
 
             base.Validate(validationContext);
@@ -73,12 +73,13 @@ namespace Dignite.Cms.Admin.Sites
 
         protected bool IsHostURL()
         {
-            Host = Host.RemovePostFix("/");
-            Host = Host.RemovePostFix("\\");
-            // 匹配可包含端口号的 IP 地址的主机 URL 的正则表达式
+            HostUrl = HostUrl.RemovePostFix("/");
+            HostUrl = HostUrl.RemovePostFix("\\");
+
+            // Regular expression that matches a host URL with an IP address containing a port number
             string hostURLPattern = @"^(http|https)://((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|([a-zA-Z0-9\-]{1,63}(\.[a-zA-Z0-9\-]{1,63})*))(:\d+)?$";
 
-            return Regex.IsMatch(Host, hostURLPattern);
+            return Regex.IsMatch(HostUrl, hostURLPattern);
         }
     }
 }

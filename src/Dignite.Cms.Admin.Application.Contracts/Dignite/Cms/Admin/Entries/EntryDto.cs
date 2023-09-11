@@ -24,9 +24,9 @@ namespace Dignite.Cms.Admin.Entries
         public virtual Guid EntryTypeId { get; set;}
 
         /// <summary>
-        /// The language corresponding to the entry
+        /// The region corresponding to the entry
         /// </summary>
-        public virtual string Language { get; set; }
+        public virtual string Region { get; set; }
 
         public virtual string Title { get; set; }
 

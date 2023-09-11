@@ -24,11 +24,11 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
         [Parameter]
         [SupplyParameterFromQuery]
-        public string Language { get; set; }
+        public string Region { get; set; }
 
         protected PageToolbar Toolbar { get; } = new();
         protected List<TableColumn> EntryManagementTableColumns => TableColumns.Get<EntryManagement>();
-        protected IReadOnlyList<LanguageInfo> AllLanguages = new List<LanguageInfo>();
+        protected IReadOnlyList<LanguageInfo> AllRegions = new List<LanguageInfo>();
         protected IReadOnlyList<SiteDto> AllSites { get; set; }=new List<SiteDto>();
         protected IReadOnlyList<SectionDto> Sections { get; set; }=new List<SectionDto>();
         protected SiteDto CurrentSite { get; set; }
@@ -140,12 +140,12 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
             if (CurrentSection != null)
             {
                 GetListInput.SectionId = CurrentSection.Id;
-                GetListInput.Language = Language;
+                GetListInput.Region = Region;
             }
             else
             {
                 GetListInput.SectionId = SectionId.HasValue ? SectionId.Value : Guid.Empty;
-                GetListInput.Language = Language.IsNullOrEmpty() ? "en" : Language;
+                GetListInput.Region = Region.IsNullOrEmpty() ? "en" : Region;
             }
             return base.UpdateGetListInputAsync();
         }
@@ -153,7 +153,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
         protected async Task InitializePageDataAsync()
         {
-            AllLanguages = await LanguageProvider.GetLanguagesAsync();
+            AllRegions = await LanguageProvider.GetLanguagesAsync();
             AllSites = (await SiteAppService.GetListAsync(new GetSitesInput())).Items;
             if (SectionId.HasValue)
             {
@@ -210,17 +210,17 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         {
             CurrentSection = value;
             CurrentSectionName = CurrentSection.Name;
-            Language = Language.IsNullOrEmpty()? 
-                CurrentSite.Languages.OrderByDescending(l => l.IsDefault).First().Language:
-                CurrentSite.Languages.Any(l=>l.Language== Language)?Language: CurrentSite.Languages.OrderByDescending(l => l.IsDefault).First().Language;
+            Region = Region.IsNullOrEmpty()? 
+                CurrentSite.Regions.OrderByDescending(l => l.IsDefault).First().Region:
+                CurrentSite.Regions.Any(l=>l.Region== Region)?Region: CurrentSite.Regions.OrderByDescending(l => l.IsDefault).First().Region;
 
             GetListInput.Filter = null; 
             await SearchEntitiesAsync();
         }
 
-        protected async Task OnLanguageChangedAsync(string value)
+        protected async Task OnRegionChangedAsync(string value)
         { 
-            Language = value;
+            Region = value;
             await SearchEntitiesAsync();
         }
 
@@ -234,7 +234,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
             {
                 if (CurrentSection.EntryTypes.Any())
                 {
-                    Navigation.NavigateTo($"/cms/admin/entries/create?sectionId={CurrentSection.Id}&language={Language}");
+                    Navigation.NavigateTo($"/cms/admin/entries/create?sectionId={CurrentSection.Id}&region={Region}");
                 }
                 else
                 {

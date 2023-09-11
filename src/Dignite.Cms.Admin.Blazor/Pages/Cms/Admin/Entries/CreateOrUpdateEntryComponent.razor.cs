@@ -17,7 +17,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         [Parameter] public SectionDto Section { get; set; }
 
         protected EntryTypeDto CurrentEntryType { get; set; }
-        protected IReadOnlyList<LanguageInfo> AllLanguages = new List<LanguageInfo>();
+        protected IReadOnlyList<LanguageInfo> AllRegions = new List<LanguageInfo>();
         protected IReadOnlyList<EntryDto> AllEntriesOfStructure;
         public CreateOrUpdateEntryComponent()
         {
@@ -28,8 +28,8 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         {
             await base.OnInitializedAsync();
             await SetEntryType(Entry.EntryTypeId);
-            AllLanguages = await LanguageProvider.GetLanguagesAsync();
-            await SetLanguageAsync(Entry.Language);
+            AllRegions = await LanguageProvider.GetLanguagesAsync();
+            await SetRegionAsync(Entry.Region);
         }
         protected async Task OnEntryTypeSelectedValueChanged(Guid value)
         {
@@ -43,19 +43,19 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
             return Task.CompletedTask;
         }
 
-        protected async Task OnLanguageSelectedValueChanged(string value)
+        protected async Task OnRegionSelectedValueChanged(string value)
         { 
-            await SetLanguageAsync(value);
+            await SetRegionAsync(value);
         }
 
-        protected async Task SetLanguageAsync(string language)
+        protected async Task SetRegionAsync(string region)
         { 
-            Entry.Language = language;
+            Entry.Region = region;
             if (Section.Type == Dignite.Cms.Sections.SectionType.Structure && Entry.GetType() == typeof(CreateEntryInput))
             {
                 AllEntriesOfStructure =( await AppService.GetListAsync(new GetEntriesInput { 
                     SectionId=Section.Id,
-                    Language= language,
+                    Region= region,
                     MaxResultCount=1000
                 })).Items;
             }

@@ -7,10 +7,10 @@ namespace Dignite.Cms.Entries
     [Serializable]
     public class EntrySlugAlreadyExistException : BusinessException
     {
-        public EntrySlugAlreadyExistException([NotNull]string language, [NotNull] string slug)
+        public EntrySlugAlreadyExistException([NotNull]string region, [NotNull] string slug)
         {
             Code = CmsErrorCodes.Entries.SlugAlreadyExist;
-            WithData(nameof(Entry.Language), language);
+            WithData(nameof(Entry.Region), region);
             WithData(nameof(Entry.Slug), slug);
         }
     }

@@ -21,7 +21,7 @@ namespace Dignite.Cms.Public.Pages
             return ObjectMapper.Map<Site, SiteDto>(result);
         }
 
-        public async Task<SiteDto> FindByHostAsync(string host)
+        public async Task<SiteDto> FindByHostUrlAsync(string host)
         {
             var result = await _siteRepository.FindByHostAsync(host.RemovePostFix("/"));
             return ObjectMapper.Map<Site, SiteDto>(result);

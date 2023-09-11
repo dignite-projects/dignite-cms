@@ -19,7 +19,7 @@ namespace Dignite.Cms.Admin.Blazor
                 .MapExtraProperties();
             CreateMap<SiteDto, UpdateSiteInput>()
                 .MapExtraProperties();
-            CreateMap<SiteLanguageDto, CreateOrUpdateLanguageInput>(); 
+            CreateMap<SiteRegionDto, CreateOrUpdateRegionInput>(); 
             CreateMap<SectionDto, UpdateSectionInput>()
                 .MapExtraProperties();
             CreateMap<EntryTypeDto, UpdateEntryTypeInput>()

@@ -18,7 +18,7 @@ namespace Dignite.Cms.Entries
             Guid id, 
             Guid sectionId, 
             Guid entryTypeId, 
-            string language, 
+            string region, 
             string title, 
             string slug, 
             DateTime publishTime, 
@@ -32,7 +32,7 @@ namespace Dignite.Cms.Entries
         {
             SectionId = sectionId;
             EntryTypeId = entryTypeId;
-            Language = language;
+            Region = region;
             Title = title;
             Slug = slug;
             PublishTime = publishTime;
@@ -55,9 +55,9 @@ namespace Dignite.Cms.Entries
         public virtual Guid EntryTypeId { get; protected set;}
 
         /// <summary>
-        /// The language corresponding to the entry
+        /// The region corresponding to the entry
         /// </summary>
-        public virtual string Language { get; set; }
+        public virtual string Region { get; set; }
 
         public virtual string Title { get; set; }
 

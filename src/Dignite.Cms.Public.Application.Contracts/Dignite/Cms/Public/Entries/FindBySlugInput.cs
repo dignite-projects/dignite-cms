@@ -12,10 +12,10 @@ namespace Dignite.Cms.Public.Entries
         public Guid SectionId { get; set; }
 
         /// <summary>
-        /// The language corresponding to the entry
+        /// The region corresponding to the entry
         /// </summary>
-        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxLanguageLength))]
-        public string Language { get; set; }
+        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxRegionLength))]
+        public string Region { get; set; }
 
         /// <summary>
         /// 

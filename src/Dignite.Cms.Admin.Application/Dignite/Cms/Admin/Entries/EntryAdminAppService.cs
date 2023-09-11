@@ -32,7 +32,7 @@ namespace Dignite.Cms.Admin.Entries
         [Authorize(Permissions.CmsAdminPermissions.Entry.Create)]
         public async Task<EntryDto> CreateAsync(CreateEntryInput input)
         {
-            await CheckSlugExistenceAsync(input.SectionId,input.Language, input.Slug);
+            await CheckSlugExistenceAsync(input.SectionId,input.Region, input.Slug);
 
             var id = GuidGenerator.Create();
             var revision = await CreateRevisionVersionAsync(
@@ -40,12 +40,12 @@ namespace Dignite.Cms.Admin.Entries
                 input.InitialId.HasValue ? input.InitialId.Value : id,
                 input.RevisionNotes
                 );
-            var order = (await _entryRepository.GetMaxOrderAsync(input.SectionId,input.Language, input.ParentId))+1;
+            var order = (await _entryRepository.GetMaxOrderAsync(input.SectionId,input.Region, input.ParentId))+1;
             var entry = new Entry(
                 id, 
                 input.SectionId, 
                 input.EntryTypeId,
-                input.Language,
+                input.Region,
                 input.Title, 
                 input.Slug, 
                 input.PublishTime,
@@ -77,10 +77,10 @@ namespace Dignite.Cms.Admin.Entries
                 CheckEntryType(section, input.EntryTypeId);
             }
 
-            if (!input.Language.Equals(entry.Language, StringComparison.OrdinalIgnoreCase) || 
+            if (!input.Region.Equals(entry.Region, StringComparison.OrdinalIgnoreCase) || 
                 !input.Slug.Equals(entry.Slug,StringComparison.OrdinalIgnoreCase))
             {
-                await CheckSlugExistenceAsync(entry.SectionId,input.Language, input.Slug);
+                await CheckSlugExistenceAsync(entry.SectionId,input.Region, input.Slug);
             }
 
             //
@@ -88,7 +88,7 @@ namespace Dignite.Cms.Admin.Entries
             entry.Title=input.Title;
             entry.Slug = input.Slug;
             entry.PublishTime = input.PublishTime;
-            entry.Language = input.Language;
+            entry.Region = input.Region;
             entry.CustomFields = input.CustomFields;
             entry.Revision.Notes = input.RevisionNotes;
 
@@ -124,12 +124,12 @@ namespace Dignite.Cms.Admin.Entries
             if (input.SectionId == Guid.Empty)
                 return new PagedResultDto<EntryDto>(0, new List<EntryDto>());
 
-            var count = await _entryRepository.GetCountAsync(input.SectionId, input.Language, input.CreatorId, input.Status, input.Filter,input.StartPublishDate,input.ExpiryPublishDate, null);
+            var count = await _entryRepository.GetCountAsync(input.SectionId, input.Region, input.CreatorId, input.Status, input.Filter,input.StartPublishDate,input.ExpiryPublishDate, null);
             if (count == 0)
                 return new PagedResultDto<EntryDto>(0, new List<EntryDto>());
 
             //get entry list
-            var result = await _entryRepository.GetListAsync(input.SectionId, input.Language, input.CreatorId, input.Status, input.Filter, input.StartPublishDate, input.ExpiryPublishDate, null, input.MaxResultCount, input.SkipCount, input.Sorting);
+            var result = await _entryRepository.GetListAsync(input.SectionId, input.Region, input.CreatorId, input.Status, input.Filter, input.StartPublishDate, input.ExpiryPublishDate, null, input.MaxResultCount, input.SkipCount, input.Sorting);
             var dto = ObjectMapper.Map<List<Entry>, List<EntryDto>>(result);
 
             return new PagedResultDto<EntryDto>(count, dto);
@@ -244,11 +244,11 @@ namespace Dignite.Cms.Admin.Entries
         }
 
 
-        protected virtual async Task CheckSlugExistenceAsync(Guid sectionId,string language, string slug)
+        protected virtual async Task CheckSlugExistenceAsync(Guid sectionId,string region, string slug)
         {
-            if (await _entryRepository.SlugExistsAsync(sectionId,language, slug))
+            if (await _entryRepository.SlugExistsAsync(sectionId,region, slug))
             {
-                throw new EntrySlugAlreadyExistException( language, slug);
+                throw new EntrySlugAlreadyExistException( region, slug);
             }
         }
         protected virtual void CheckEntryType(Section section, Guid entryTypeId)
@@ -267,13 +267,13 @@ namespace Dignite.Cms.Admin.Entries
 
             if (position == MoveEntryPosition.Inside)
             {
-                newOrder = (await _entryRepository.GetMaxOrderAsync(entry.SectionId, entry.Language, targetId)) + 1;
+                newOrder = (await _entryRepository.GetMaxOrderAsync(entry.SectionId, entry.Region, targetId)) + 1;
                 parentId = targetId;
             }
             else if (position == MoveEntryPosition.Bottom)
             {
                 var targetEntry = await _entryRepository.GetAsync(targetId, false);
-                newOrder = (await _entryRepository.GetMaxOrderAsync(entry.SectionId, entry.Language, targetEntry.ParentId)) + 1;
+                newOrder = (await _entryRepository.GetMaxOrderAsync(entry.SectionId, entry.Region, targetEntry.ParentId)) + 1;
                 parentId = targetEntry.ParentId;
             }
             else

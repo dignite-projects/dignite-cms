@@ -35,14 +35,14 @@ public static class CmsDbContextModelCreatingExtensions
             //Properties
             site.Property(s => s.DisplayName).IsRequired().HasMaxLength(SiteConsts.MaxDisplayNameLength);
             site.Property(s => s.Name).IsRequired().HasMaxLength(SiteConsts.MaxNameLength);
-            site.Property(s => s.Host).IsRequired().HasMaxLength(SiteConsts.MaxHostLength);
-            site.Property(s => s.Languages).HasConversion(
+            site.Property(s => s.HostUrl).IsRequired().HasMaxLength(SiteConsts.MaxHostUrlLength);
+            site.Property(s => s.Regions).HasConversion(
                 config => JsonSerializer.Serialize(config, new JsonSerializerOptions
                     {
                         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                         WriteIndented = true
                     }),
-                jsonData => JsonSerializer.Deserialize<ICollection<SiteLanguage>>(jsonData,new JsonSerializerOptions())
+                jsonData => JsonSerializer.Deserialize<ICollection<SiteRegion>>(jsonData,new JsonSerializerOptions())
                 );
 
             //Indexs
@@ -123,7 +123,7 @@ public static class CmsDbContextModelCreatingExtensions
             entry.ConfigureByConvention();
             entry.ConfigureObjectCustomizedFields();
 
-            entry.Property(e => e.Language).IsRequired().HasMaxLength(SiteConsts.MaxLanguageLength);
+            entry.Property(e => e.Region).IsRequired().HasMaxLength(SiteConsts.MaxRegionLength);
             entry.Property(e => e.Title).IsRequired().HasMaxLength(EntryConsts.MaxTitleLength);
             entry.Property(e => e.Slug).IsRequired().HasMaxLength(EntryConsts.MaxSlugLength);
             entry.OwnsOne(
@@ -137,9 +137,9 @@ public static class CmsDbContextModelCreatingExtensions
                     });
 
             //Indexes
-            entry.HasIndex(e => new { e.SectionId, e.Language, e.PublishTime, e.Status });
+            entry.HasIndex(e => new { e.SectionId, e.Region, e.PublishTime, e.Status });
             entry.HasIndex(e => new { e.SectionId, e.CreatorId, e.PublishTime, e.Status });
-            entry.HasIndex(e => new { e.SectionId, e.Language, e.Slug });
+            entry.HasIndex(e => new { e.SectionId, e.Region, e.Slug });
         });
 
         builder.TryConfigureObjectExtensions<CmsDbContext>();

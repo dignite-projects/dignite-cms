@@ -9,13 +9,13 @@ namespace Dignite.Cms.Entries
 {
     public interface IEntryRepository : IBasicRepository<Entry, Guid>
     {
-        Task<bool> SlugExistsAsync( Guid sectionId,string language, string slug, Guid? ignoredId = null, CancellationToken cancellationToken = default);
+        Task<bool> SlugExistsAsync( Guid sectionId,string region, string slug, Guid? ignoredId = null, CancellationToken cancellationToken = default);
 
-        Task<bool> AnyAsync(Guid sectionId, string language, CancellationToken cancellationToken = default);
+        Task<bool> AnyAsync(Guid sectionId, string region, CancellationToken cancellationToken = default);
 
         Task<List<Entry>> GetListAsync(
             Guid sectionId, 
-            string language,
+            string region,
             Guid? creatorId = null, 
             EntryStatus? auditedStatus = null,  
             string filter=null,
@@ -28,7 +28,7 @@ namespace Dignite.Cms.Entries
             CancellationToken cancellationToken = default);
         Task<int> GetCountAsync(
              Guid sectionId,
-             string language,
+             string region,
              Guid? creatorId = null,
              EntryStatus? auditedStatus = null,
              string filter = null,
@@ -67,12 +67,12 @@ namespace Dignite.Cms.Entries
         /// <returns>
         /// This method gets the active revision
         /// </returns>
-        Task<Entry> FindBySlugAsync(Guid sectionId, string language, string slug, bool includeDetails = true, CancellationToken cancellationToken = default);
+        Task<Entry> FindBySlugAsync(Guid sectionId, string region, string slug, bool includeDetails = true, CancellationToken cancellationToken = default);
 
         Task<Entry> FindPrevAsync(Guid id, bool includeDetails = false, CancellationToken cancellationToken = default);
 
         Task<Entry> FindNextAsync(Guid id, bool includeDetails = false, CancellationToken cancellationToken = default);
 
-        Task<int> GetMaxOrderAsync(Guid sectionId, string language, Guid? parentId, CancellationToken cancellationToken = default);
+        Task<int> GetMaxOrderAsync(Guid sectionId, string region, Guid? parentId, CancellationToken cancellationToken = default);
     }
 }

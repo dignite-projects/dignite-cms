@@ -20,14 +20,14 @@ namespace Dignite.Cms.Public.Sites
         public string Name { get; set; }
 
         /// <summary>
-        /// Languages supported on this site
+        /// Regions supported on this site
         /// </summary>
-        public ICollection<SiteLanguageDto> Languages { get; set; }
+        public ICollection<SiteRegionDto> Regions { get; set; }
 
         /// <summary>
         /// Host of this site
         /// </summary>
-        public string Host { get; set; }
+        public string HostUrl { get; set; }
 
         /// <summary>
         /// Is this site a active

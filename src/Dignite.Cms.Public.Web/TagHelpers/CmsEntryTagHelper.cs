@@ -19,9 +19,9 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         public string SectionName { get; set; }
 
         /// <summary>
-        /// The language corresponding to the entry
+        /// The region corresponding to the entry
         /// </summary>
-        public string Language { get; set; }
+        public string Region { get; set; }
 
         /// <summary>
         /// 
@@ -52,24 +52,24 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             var section = await _sectionAppService.FindByNameAsync(SiteId, SectionName);
-            var defaultLanguage = section.Site.GetDefaultLanguage();
-            if (Language.IsNullOrEmpty())
+            var defaultRegion = section.Site.GetDefaultRegion();
+            if (Region.IsNullOrEmpty())
             {
-                Language= defaultLanguage;
+                Region= defaultRegion;
             }
 
             var findEntryBySlugInput = new FindBySlugInput
             {
                 SectionId = section.Id,
-                Language = Language,
+                Region = Region,
                 Slug = Slug
             };
             var model = await _entryAppService.FindBySlugAsync(findEntryBySlugInput);
             if (model == null)
             {
-                if (!Language.Equals(defaultLanguage, StringComparison.OrdinalIgnoreCase))
+                if (!Region.Equals(defaultRegion, StringComparison.OrdinalIgnoreCase))
                 {
-                    findEntryBySlugInput.Language = defaultLanguage;
+                    findEntryBySlugInput.Region = defaultRegion;
                     model = await _entryAppService.FindBySlugAsync(findEntryBySlugInput);
                 }
             }
@@ -78,7 +78,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             {
                 output.TagName = "p";
                 output.Attributes.Add("class", "p-2 bg-warning text-dark");
-                output.Content.SetContent($"No entries were found for Slug in language {Language} for {Slug}.");
+                output.Content.SetContent($"No entries were found for Slug in {Region} for {Slug}.");
             }
             else
             {

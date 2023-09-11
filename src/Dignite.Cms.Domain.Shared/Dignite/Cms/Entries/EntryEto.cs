@@ -20,7 +20,11 @@ namespace Dignite.Cms.Entries
         /// 
         /// </summary>
         public virtual Guid EntryTypeId { get; set; }
-        public virtual string Language { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual string Region { get; set; }
 
         /// <summary>
         /// 

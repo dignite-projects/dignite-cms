@@ -593,7 +593,7 @@
                 },
                 {
                   "nameOnMethod": "input",
-                  "name": "Language",
+                  "name": "Region",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",
@@ -732,7 +732,7 @@
                 },
                 {
                   "nameOnMethod": "input",
-                  "name": "Language",
+                  "name": "Region",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",

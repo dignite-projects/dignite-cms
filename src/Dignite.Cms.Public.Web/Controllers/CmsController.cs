@@ -12,8 +12,11 @@ using Volo.Abp.Text.Formatting;
 
 namespace Dignite.Cms.Public.Web.Controllers
 {
+    [ControllerName(ControllerName)]
     public class CmsController : AbpController
     {
+        public const string ControllerName = "Cms";
+
         private readonly ISitePublicAppService _sitePublicAppService;
         private readonly ISectionPublicAppService _sectionPublicAppService;
         private readonly IEntryPublicAppService _entryPublicAppService;

@@ -50,7 +50,7 @@ public class CmsPublicWebModule : AbpModule
 
         context.Services.AddRouting(options =>
         {
-            options.ConstraintMap.Add("RegionalConstraint", typeof(RegionRouteDataConstraint));
+            options.ConstraintMap.Add("RegionalConstraint", typeof(RegionRouteSegmentConstraint));
         });
     }
 }

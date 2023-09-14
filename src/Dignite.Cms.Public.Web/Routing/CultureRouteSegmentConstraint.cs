@@ -10,14 +10,17 @@ using Volo.Abp.Localization;
 namespace Dignite.Cms.Public.Web.Routing;
 
 /// <summary>
-/// This is a constraint class for the route parameter region. 
-/// This is used when constraining the region route parameter in the configuration route pattern using the code {region:RegionalConstraint}.
+/// This is a constraint class for the route parameter Culture. 
+/// This is used when constraining the Culture route parameter in the configuration route pattern using the code {culture:CultureConstraint}.
 /// </summary>
-public class RegionRouteSegmentConstraint : IRouteConstraint
+public class CultureRouteSegmentConstraint : IRouteConstraint
 {
+    public const string RouteConstraintName = "CultureConstraint";
+    public const string RouteSegmentName = "Culture";
+
     public bool Match(HttpContext httpContext, IRouter route, string routeKey, RouteValueDictionary values, RouteDirection routeDirection)
     {
-        string region = values["region"]?.ToString();
+        string culture = values[RouteSegmentName]?.ToString();
 
         /*
          Using the IOptions<AbpLocalizationOptions> approach to get the multilingual list improves performance compared to using the IAbpRequestLocalizationOptionsProvider approach.
@@ -28,7 +31,7 @@ public class RegionRouteSegmentConstraint : IRouteConstraint
         var languages = localizationOptions.Value.Languages;
 
         Regex rgx = new Regex(@"^(" + languages.Select(l => l.CultureName).JoinAsString("|") + ")$", RegexOptions.IgnoreCase);
-        if (rgx.IsMatch(region))
+        if (rgx.IsMatch(culture))
         {
             return true;
         }

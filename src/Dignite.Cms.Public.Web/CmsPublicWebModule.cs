@@ -1,7 +1,6 @@
 ﻿using Dignite.Abp.Localization;
 using Dignite.Cms.Localization;
 using Dignite.Cms.Public.Web.Routing;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AspNetCore.Mvc.Localization;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
@@ -50,7 +49,7 @@ public class CmsPublicWebModule : AbpModule
 
         context.Services.AddRouting(options =>
         {
-            options.ConstraintMap.Add("RegionalConstraint", typeof(RegionRouteSegmentConstraint));
+            options.ConstraintMap.Add(CultureRouteSegmentConstraint.RouteConstraintName, typeof(CultureRouteSegmentConstraint));
         });
     }
 }

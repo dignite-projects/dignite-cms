@@ -1,4 +1,5 @@
 ﻿using Dignite.Cms.Public.Web.Controllers;
+using Dignite.Cms.Public.Web.Routing;
 using Microsoft.AspNetCore.Builder;
 
 namespace Dignite.Cms.Public.Web.Builder
@@ -20,11 +21,11 @@ namespace Dignite.Cms.Public.Web.Builder
                     defaults: new { controller = CmsController.ControllerName, action = "Index" });
                 endpoints.MapControllerRoute(
                     name: "cms-entry-by-region",
-                    pattern: "{region:RegionalConstraint}/{*url}",
+                    pattern: "{"+ CultureRouteSegmentConstraint.RouteSegmentName + ":"+ CultureRouteSegmentConstraint.RouteConstraintName + "}/{*url}",
                     defaults: new { controller = CmsController.ControllerName, action = "EntryByRegion" });
                 endpoints.MapControllerRoute(
                     name: "cms-entry",
-                    pattern: "{*url:regex(^(?!swagger/).*)}",
+                    pattern: "{*url:regex(^(?!swagger/|account/).*)}", //TODO: Use an options to configure the regular expression for the url
                     defaults: new { controller = CmsController.ControllerName, action = "Entry" });
             });
 

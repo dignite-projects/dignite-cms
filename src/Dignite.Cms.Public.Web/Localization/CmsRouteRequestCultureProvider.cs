@@ -1,5 +1,6 @@
 ﻿using Dignite.Cms.Public.Sites;
 using Dignite.Cms.Public.Web.Controllers;
+using Dignite.Cms.Public.Web.Routing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Routing;
@@ -18,10 +19,10 @@ namespace Dignite.Cms.Public.Web.Localization;
 public class CmsRouteRequestCultureProvider : RequestCultureProvider
 {
     /// <summary>
-    /// The key that contains the region name.
-    /// Defaults to "region".
+    /// The key that contains the Culture name.
+    /// Defaults to "Culture".
     /// </summary>
-    public string RouteDataStringKey { get; set; } = "region";
+    public string RouteDataStringKey { get; set; } = CultureRouteSegmentConstraint.RouteSegmentName;
 
     /// <inheritdoc />
     public override async Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)

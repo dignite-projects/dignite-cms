@@ -3,6 +3,7 @@ using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
 using Dignite.Cms.Public.Sites;
 using Dignite.Cms.Public.Web.Models;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -39,16 +40,16 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="region"></param>
+        /// <param name="culture"></param>
         /// <param name="url">
         /// There are several formats:
-        /// 1.{region}
-        /// 2.{region}/{url}
+        /// 1.{culture}
+        /// 2.{culture}/{url}
         /// </param>
         /// <returns></returns>
-        public async Task<IActionResult> EntryByRegion(string region, string url="/")
+        public async Task<IActionResult> EntryByRegion(string culture, string url="/")
         {
-            return await EntryViewResult(url, region);
+            return await EntryViewResult(url, culture);
         }
 
 
@@ -80,6 +81,13 @@ namespace Dignite.Cms.Public.Web.Controllers
             if (region.IsNullOrEmpty())
             {
                 region = defaultRegion;
+            }
+            else
+            {
+                if (region.Equals(defaultRegion, StringComparison.OrdinalIgnoreCase))
+                {
+                    return RedirectPermanent(Request.GetEncodedPathAndQuery().EnsureEndsWith('/').RemovePreFix($"/{region}/").EnsureStartsWith('/'));
+                }
             }
 
             var entry = await GetEntry(section, url, region);

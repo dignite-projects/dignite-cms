@@ -1,0 +1,38 @@
+﻿@using System.Linq
+@using Microsoft.AspNetCore.Http.Extensions;
+@using Dignite.Cms.Public.Web.Components.RegionSwitch;
+@model RegionSwitchViewComponentModel
+@if (Model.AllLanguages.Any())
+{
+    <li class="nav-item">
+        <div class="dropdown">
+            <a class="btn btn-outline-primary border-primary-subtle" href="#" id="Menu_RegionSwitch" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="@Model.CurrentLanguage.DisplayName">
+                <i class="fa fa-globe" aria-hidden="true"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg-end border-0" aria-labelledby="Menu_RegionSwitch">
+                @foreach (var language in Model.AllLanguages)
+                {
+                    var currentPageUrl = Context.Request.GetEncodedPathAndQuery().EnsureEndsWith('/');
+                    if (currentPageUrl.StartsWith($"/{Model.CurrentLanguage.CultureName}/", StringComparison.OrdinalIgnoreCase))
+                    {
+                        currentPageUrl = currentPageUrl.RemovePreFix(StringComparison.OrdinalIgnoreCase, $"/{Model.CurrentLanguage.CultureName}/");
+                        currentPageUrl = "/" + currentPageUrl;
+                    }
+                    currentPageUrl = language.CultureName + currentPageUrl.RemovePostFix("/");
+                    if (Model.CurrentLanguage.CultureName == language.CultureName)
+                    {
+                        <span class="dropdown-item active">
+                            @language.DisplayName
+                        </span>
+                    }
+                    else
+                    {
+                        <a class="dropdown-item" href="~/@currentPageUrl">
+                            @language.DisplayName
+                        </a>
+                    }
+                }
+            </div>
+        </div>
+    </li>
+}

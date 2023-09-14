@@ -28,8 +28,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Components\**\*.js" />
     <EmbeddedResource Include="Components\**\*.css" />
-    <Content Remove="Components\**\*.js" />
-    <Content Remove="Components\**\*.css" />
   </ItemGroup>
 
   <ItemGroup>

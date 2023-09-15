@@ -30,8 +30,4 @@
     <EmbeddedResource Include="Components\**\*.css" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Cms\" />
-  </ItemGroup>
-
 </Project>

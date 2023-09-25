@@ -13,7 +13,7 @@ namespace Dignite.Cms.Admin.Sites
     {
         protected CreateOrUpdateSiteInputBase() : base(false)
         {
-            this.Regions = new List<CreateOrUpdateRegionInput>();
+            this.Cultures = new List<CreateOrUpdateCultureInput>();
         }
 
         /// <summary>
@@ -33,10 +33,10 @@ namespace Dignite.Cms.Admin.Sites
         public virtual string Name { get; set; }
 
         /// <summary>
-        /// Regions supported on this site
+        /// Cultures supported on this site
         /// </summary>
         [Required]
-        public ICollection<CreateOrUpdateRegionInput> Regions { get; set; }
+        public ICollection<CreateOrUpdateCultureInput> Cultures { get; set; }
 
         /// <summary>
         /// Host of this site.
@@ -61,11 +61,11 @@ namespace Dignite.Cms.Admin.Sites
                 new[] { nameof(HostUrl) });
             }
 
-            if (Regions.Count(l => l.IsDefault) != 1)
+            if (Cultures.Count(l => l.IsDefault) != 1)
             {
                 yield return new ValidationResult(
-                "The site's region list is missing a unique default region!",
-                new[] { nameof(Regions) });
+                "The site's culture list is missing a unique default culture!",
+                new[] { nameof(Cultures) });
             }
 
             base.Validate(validationContext);

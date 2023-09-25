@@ -49,7 +49,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             var hostAddress = ViewContext.HttpContext.Request.Scheme + "://" + ViewContext.HttpContext.Request.Host;
             var urlHelper = ViewContext.GetUrlHelper();
             var routeParameters = GetRouteParameters(section.Route).ToArray();
-            var siteDefaultRegion = section.Site.GetDefaultRegion();
+            string siteDefaultCulture = section.Site.GetDefaultCulture();
             string url = section.Route;
 
             //If there is a routing parameter, get the routing parameter value and update the URL
@@ -73,14 +73,14 @@ namespace Dignite.Cms.Public.Web.TagHelpers
                 }
             }
 
-            //splice region path
-            if (siteDefaultRegion.Equals(entry.Region, StringComparison.OrdinalIgnoreCase))
+            //splice Culture path
+            if (siteDefaultCulture.Equals(entry.Culture, StringComparison.OrdinalIgnoreCase))
             {
                 url = urlHelper.ActionLink(nameof(CmsController.Entry), CmsController.ControllerName, new { url });
             }
             else
             {
-                url = urlHelper.ActionLink(nameof(CmsController.EntryByRegion), CmsController.ControllerName, new { culture = entry.Region, url });
+                url = urlHelper.ActionLink(nameof(CmsController.EntryByCulture), CmsController.ControllerName, new { culture = entry.Culture, url });
             }
 
             //Since the URL is encoded in the ActionLink method, it is decoded here

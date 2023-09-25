@@ -40,7 +40,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         /// <summary>
         /// 
         /// </summary>
-        public string Region { get; set; }
+        public string Culture { get; set; }
 
         /// <summary>
         /// 
@@ -129,7 +129,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             var result = await _entryAppService.GetListAsync(new GetEntriesInput
             {
                 SectionId = Section.Id,
-                Region = Region,
+                Culture = Culture,
                 QueryingByFieldParameters = QueryingByFieldParameters == null ? null : JsonSerializer.Serialize(QueryingByFieldParameters),
                 MaxResultCount = this.ResultCount.Value,
                 SkipCount = (this.CurrentPage - 1) * ResultCount.Value

@@ -24,9 +24,9 @@ namespace Dignite.Cms.Public.Entries
         public Guid EntryTypeId { get; set;}
 
         /// <summary>
-        /// The region corresponding to the entry
+        /// The Culture corresponding to the entry
         /// </summary>
-        public string Region { get; set; }
+        public string Culture { get; set; }
 
         public string Title { get; set; }
 

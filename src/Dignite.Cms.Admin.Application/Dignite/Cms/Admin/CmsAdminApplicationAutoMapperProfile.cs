@@ -16,7 +16,7 @@ namespace Dignite.Cms.Admin
         {
             /**** site *****************************************/
             CreateMap<Site, SiteDto>();
-            CreateMap<SiteRegion, SiteRegionDto>();
+            CreateMap<SiteCulture, SiteCultureDto>();
 
             /**** field *****************************************/
             CreateMap<Cms.Fields.FieldGroup, FieldGroupDto>();

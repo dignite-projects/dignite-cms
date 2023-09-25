@@ -37,13 +37,13 @@
     </Field>
 </Validation>
 <Field>
-    <FieldLabel>@L["Regions"]</FieldLabel>
+    <FieldLabel>@L["Cultures"]</FieldLabel>
     <ListGroup Flush>
-        @foreach (var region in AllRegions)
+        @foreach (var culture in AllCultures)
         {
             <ListGroupItem Flex="Flex.JustifyContent.Between.AlignItems.Center">
-                <Check TValue="bool" Checked="@Entity.Regions.Any(l=>l.Region.Equals(region.CultureName,StringComparison.OrdinalIgnoreCase))" CheckedChanged="(value)=>OnRegionChanged(region.CultureName,value)">@region.DisplayName</Check>
-                <Button Color="Color.Primary" Size="Size.Small" Clicked="()=>OnSetDefault(region.CultureName)">@L["DefaultRegion"]</Button>
+                <Check TValue="bool" Checked="@Entity.Cultures.Any(l=>l.CultureName.Equals(culture.CultureName,StringComparison.OrdinalIgnoreCase))" CheckedChanged="(value)=>OnCultureChanged(culture.CultureName,value)">@culture.DisplayName</Check>
+                <Button Color="Color.Primary" Size="Size.Small" Clicked="()=>OnSetDefault(culture.CultureName)">@L["DefaultCulture"]</Button>
             </ListGroupItem>
         }
     </ListGroup>
@@ -55,30 +55,30 @@
 
 @code {
     [Parameter] public CreateOrUpdateSiteInputBase Entity { get; set; }
-    [Parameter] public IReadOnlyList<LanguageInfo> AllRegions { get; set; }
+    [Parameter] public IReadOnlyList<LanguageInfo> AllCultures { get; set; }
 
     public CreateOrUpdateSiteComponent()
     {
         LocalizationResource = typeof(CmsResource);
     }
 
-    void OnRegionChanged(string cultureName, bool value, bool defaultRegion=false)
+    void OnCultureChanged(string cultureName, bool value, bool defaultCulture = false)
     {
         if (value)
         {
-            Entity.Regions.Add(new CreateOrUpdateRegionInput(defaultRegion, cultureName));
+            Entity.Cultures.Add(new CreateOrUpdateCultureInput(defaultCulture, cultureName));
         }
         else
         {
-            Entity.Regions.RemoveAll(l => l.Region == cultureName);
+            Entity.Cultures.RemoveAll(l => l.CultureName == cultureName);
         }
     }
 
     void OnSetDefault(string cultureName)
     {
-        foreach (var sl in Entity.Regions)
+        foreach (var sl in Entity.Cultures)
         {
-            if (sl.Region == cultureName)
+            if (sl.CultureName == cultureName)
             {
                 sl.IsDefault = true;
             }

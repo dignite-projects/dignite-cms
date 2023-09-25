@@ -21,9 +21,9 @@ namespace Dignite.Cms.Admin.Sites
         public virtual string Name { get; set; }
 
         /// <summary>
-        /// Regions supported on this site
+        /// cultures supported on this site
         /// </summary>
-        public ICollection<SiteRegionDto> Regions { get; set; }
+        public ICollection<SiteCultureDto> Cultures { get; set; }
 
         /// <summary>
         /// Host Url of this site

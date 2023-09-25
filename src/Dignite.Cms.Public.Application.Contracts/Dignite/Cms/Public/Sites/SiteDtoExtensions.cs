@@ -6,13 +6,13 @@ namespace Dignite.Cms.Public.Sites
 {
     public static class SiteDtoExtensions
     {
-        public static string GetDefaultRegion([NotNull] this SiteDto source)
+        public static string GetDefaultCulture([NotNull] this SiteDto source)
         {
-            return source.Regions.OrderByDescending(l => l.IsDefault).First().Region;
+            return source.Cultures.OrderByDescending(l => l.IsDefault).First().CultureName;
         }
-        public static bool RegionExists([NotNull] this SiteDto source,string region)
+        public static bool CultureExists([NotNull] this SiteDto source,string culture)
         {
-            return source.Regions.Any(r=>r.Region.Equals(region,StringComparison.OrdinalIgnoreCase));
+            return source.Cultures.Any(r=>r.CultureName.Equals(culture,StringComparison.OrdinalIgnoreCase));
         }        
     }
 }

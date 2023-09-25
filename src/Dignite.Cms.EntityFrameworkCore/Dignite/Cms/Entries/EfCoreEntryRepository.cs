@@ -31,23 +31,23 @@ namespace Dignite.Cms.Entries
         }
 
 
-        public async Task<bool> SlugExistsAsync(Guid sectionId, string region, string slug, Guid? ignoredId = null, CancellationToken cancellationToken = default)
+        public async Task<bool> SlugExistsAsync(Guid sectionId, string culture, string slug, Guid? ignoredId = null, CancellationToken cancellationToken = default)
         {
             return await (await GetDbSetAsync())
                        .WhereIf(ignoredId != null, ct => ct.Id != ignoredId)
-                       .AnyAsync(e => e.SectionId== sectionId && e.Region==region && e.Slug == slug && e.Revision.IsActive, GetCancellationToken(cancellationToken));
+                       .AnyAsync(e => e.SectionId== sectionId && e.Culture==culture && e.Slug == slug && e.Revision.IsActive, GetCancellationToken(cancellationToken));
         }
 
-        public async Task<bool> AnyAsync(Guid sectionId, string region, CancellationToken cancellationToken = default)
+        public async Task<bool> AnyAsync(Guid sectionId, string culture, CancellationToken cancellationToken = default)
         {
             return await (await GetDbSetAsync())
-                       .AnyAsync(e => e.SectionId == sectionId && e.Region == region, GetCancellationToken(cancellationToken));
+                       .AnyAsync(e => e.SectionId == sectionId && e.Culture == culture, GetCancellationToken(cancellationToken));
         }
 
 
         public async Task<List<Entry>> GetListAsync(
             Guid sectionId,
-            string region,
+            string culture,
             Guid? creatorId = null,
             EntryStatus? status = null,
             string filter = null,
@@ -61,14 +61,14 @@ namespace Dignite.Cms.Entries
         {
             if (queryingByFieldParameters == null || !queryingByFieldParameters.Any())
             {
-                return await (await GetQueryableAsync(sectionId, region, creatorId, status, filter, start, end))
+                return await (await GetQueryableAsync(sectionId, culture, creatorId, status, filter, start, end))
                     .OrderBy(sorting.IsNullOrEmpty() ? $"{nameof(Entry.PublishTime)} desc" : sorting)
                     .PageBy(skipCount, maxResultCount)
                     .ToListAsync(GetCancellationToken(cancellationToken));
             }
             else
             {                
-                var enumerable = (await GetQueryableAsync(sectionId, region, creatorId, status, filter, start, end))
+                var enumerable = (await GetQueryableAsync(sectionId, culture, creatorId, status, filter, start, end))
                     .OrderByDescending(e => e.PublishTime).AsEnumerable<Entry>();
                 enumerable = await QueryingByFieldParameters(enumerable, queryingByFieldParameters);
 
@@ -79,7 +79,7 @@ namespace Dignite.Cms.Entries
 
         public async Task<int> GetCountAsync(
             Guid sectionId,
-            string region,
+            string culture,
             Guid? creatorId = null,
             EntryStatus? status = null,
             string filter = null,
@@ -91,12 +91,12 @@ namespace Dignite.Cms.Entries
         {
             if (queryingByFieldParameters == null || !queryingByFieldParameters.Any())
             {
-                return await (await GetQueryableAsync(sectionId, region, creatorId, status, filter, start, end))
+                return await (await GetQueryableAsync(sectionId, culture, creatorId, status, filter, start, end))
                 .CountAsync(GetCancellationToken(cancellationToken));
             }
             else
             {
-                var enumerable = (await GetQueryableAsync(sectionId, region, creatorId, status, filter, start, end))
+                var enumerable = (await GetQueryableAsync(sectionId, culture, creatorId, status, filter, start, end))
                     .AsEnumerable<Entry>();
                 enumerable = await QueryingByFieldParameters(enumerable, queryingByFieldParameters);
 
@@ -141,10 +141,10 @@ namespace Dignite.Cms.Entries
                 .FirstOrDefaultAsync(GetCancellationToken(cancellationToken));
         }
 
-        public async Task<Entry> FindBySlugAsync(Guid sectionId, string region, string slug, bool includeDetails = true, CancellationToken cancellationToken = default)
+        public async Task<Entry> FindBySlugAsync(Guid sectionId, string culture, string slug, bool includeDetails = true, CancellationToken cancellationToken = default)
         {
             return await (await GetDbSetAsync())
-                .FirstOrDefaultAsync(e => e.SectionId == sectionId && e.Region==region && e.Status== EntryStatus.Published && e.Slug == slug && e.Revision.IsActive, GetCancellationToken(cancellationToken));
+                .FirstOrDefaultAsync(e => e.SectionId == sectionId && e.Culture==culture && e.Status== EntryStatus.Published && e.Slug == slug && e.Revision.IsActive, GetCancellationToken(cancellationToken));
         }
 
         public async Task<Entry> FindPrevAsync(Guid id, bool includeDetails = false, CancellationToken cancellationToken = default)
@@ -152,7 +152,7 @@ namespace Dignite.Cms.Entries
             var dbSet = await GetDbSetAsync();
             var currentEntry = await dbSet.FirstAsync(e => e.Id == id, GetCancellationToken(cancellationToken));
             return await dbSet
-                    .Where(e => e.SectionId == currentEntry.SectionId && e.Region==currentEntry.Region && e.PublishTime < currentEntry.PublishTime && e.Status == EntryStatus.Published && e.Revision.IsActive)
+                    .Where(e => e.SectionId == currentEntry.SectionId && e.Culture==currentEntry.Culture && e.PublishTime < currentEntry.PublishTime && e.Status == EntryStatus.Published && e.Revision.IsActive)
                     .OrderByDescending(e => e.CreationTime)
                     .FirstOrDefaultAsync(GetCancellationToken(cancellationToken));           
 
@@ -163,14 +163,14 @@ namespace Dignite.Cms.Entries
             var dbSet = await GetDbSetAsync();
             var currentEntry = await dbSet.FirstAsync(e => e.Id == id, GetCancellationToken(cancellationToken));
             return await dbSet
-                    .Where(e => e.SectionId == currentEntry.SectionId && e.Region == currentEntry.Region && e.PublishTime > currentEntry.PublishTime && e.Status == EntryStatus.Published && e.Revision.IsActive)
+                    .Where(e => e.SectionId == currentEntry.SectionId && e.Culture == currentEntry.Culture && e.PublishTime > currentEntry.PublishTime && e.Status == EntryStatus.Published && e.Revision.IsActive)
                     .OrderBy(e => e.CreationTime)
                     .FirstOrDefaultAsync(GetCancellationToken(cancellationToken));
         }
 
-        public async Task<int> GetMaxOrderAsync(Guid sectionId, string region, Guid? parentId, CancellationToken cancellationToken = default)
+        public async Task<int> GetMaxOrderAsync(Guid sectionId, string culture, Guid? parentId, CancellationToken cancellationToken = default)
         {
-            return await (await GetDbSetAsync()).Where(e => e.SectionId == sectionId && e.Region == region && e.ParentId==parentId)
+            return await (await GetDbSetAsync()).Where(e => e.SectionId == sectionId && e.Culture == culture && e.ParentId==parentId)
                 .MaxAsync(e=>(int?)e.Order, GetCancellationToken(cancellationToken))??0;
         }
 
@@ -182,14 +182,14 @@ namespace Dignite.Cms.Entries
 
         protected virtual async Task<IQueryable<Entry>> GetQueryableAsync(
              Guid sectionId,
-             string region,
+             string culture,
              Guid? creatorId = null,
              EntryStatus? status = null,
              string filter = null,
             DateTime? start = null,
             DateTime? end = null)
         {
-            return (await GetDbSetAsync()).Where(e => e.SectionId == sectionId && e.Region == region && e.Revision.IsActive)
+            return (await GetDbSetAsync()).Where(e => e.SectionId == sectionId && e.Culture == culture && e.Revision.IsActive)
                 .WhereIf(creatorId.HasValue, e => e.CreatorId == creatorId.Value)
                 .WhereIf(status.HasValue, e => e.Status == status.Value)
                 .WhereIf(!filter.IsNullOrEmpty(), e => e.Title.Contains(filter))

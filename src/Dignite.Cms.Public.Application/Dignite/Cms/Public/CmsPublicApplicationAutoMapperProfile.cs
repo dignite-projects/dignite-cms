@@ -16,7 +16,7 @@ public class CmsPublicApplicationAutoMapperProfile : Profile
     {
         /**** site *****************************************/
         CreateMap<Site, SiteDto>();
-        CreateMap<SiteRegion, SiteRegionDto>();
+        CreateMap<SiteCulture, SiteCultureDto>();
 
         /**** field *****************************************/
         CreateMap<Field, FieldDto>();

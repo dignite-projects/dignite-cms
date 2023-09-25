@@ -52,13 +52,13 @@
         <Card>
             <CardHeader>
                 <Fields>
-                @if (CurrentSite != null && CurrentSite.Regions.Count > 1)
+                @if (CurrentSite != null && CurrentSite.Cultures.Count > 1)
                 {
                     <Column ColumnSize="ColumnSize.Is3.OnDesktop">
-                        <Select TValue="string" SelectedValue="@Region" SelectedValueChanged="@OnRegionChangedAsync">
-                            @foreach(var sl in CurrentSite.Regions)
+                            <Select TValue="string" SelectedValue="@Culture" SelectedValueChanged="@OnCultureChangedAsync">
+                            @foreach(var sl in CurrentSite.Cultures)
                             {
-                                <SelectItem Value="sl.Region">@AllRegions.First(l=>l.CultureName.Equals(sl.Region, StringComparison.OrdinalIgnoreCase)).DisplayName</SelectItem>
+                                    <SelectItem Value="sl.CultureName">@AllCultures.First(l=>l.CultureName.Equals(sl.CultureName, StringComparison.OrdinalIgnoreCase)).DisplayName</SelectItem>
                             }
                         </Select>
                     </Column>

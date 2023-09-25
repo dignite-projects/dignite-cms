@@ -20,7 +20,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
         [Parameter]
         [SupplyParameterFromQuery]
-        public string Region { get; set; }
+        public string Culture { get; set; }
         protected CreateEntryInput NewEntity { get; set; }
         protected SectionDto Section { get; set; }
         protected PageToolbar Toolbar { get; } = new();
@@ -37,7 +37,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         {
             await base.OnInitializedAsync();
             Section = await SectionAppService.GetAsync(SectionId);
-            Region = Region.IsNullOrEmpty() ? Section.Site.Regions.OrderByDescending(l => l.IsDefault).First().Region : Region;
+            Culture = Culture.IsNullOrEmpty() ? Section.Site.Cultures.OrderByDescending(l => l.IsDefault).First().CultureName : Culture;
 
             if (!Section.EntryTypes.Any())
             {
@@ -49,7 +49,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                 Slug = Nanoid.Nanoid.Generate(size: 8),
                 PublishTime = Clock.Now,
                 EntryTypeId = Section.EntryTypes.First().Id,
-                Region = Region,
+                Culture = Culture,
             };
         }
 
@@ -83,7 +83,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                 if (validate)
                 {
                     await EntryAppService.CreateAsync(NewEntity);
-                    Navigation.NavigateTo($"/cms/admin/entries?sectionId={SectionId}&region={NewEntity.Region}");
+                    Navigation.NavigateTo($"/cms/admin/entries?sectionId={SectionId}&culture={NewEntity.Culture}");
                 }
             }
             catch (Exception ex)

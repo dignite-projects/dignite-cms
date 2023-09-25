@@ -1,6 +1,5 @@
 ﻿using Dignite.Cms.Public.Web.Routing;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.AspNetCore.Routing;
@@ -20,10 +19,10 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         public string EntryUrl { get; set; }
 
         /// <summary>
-        /// Specify region;
-        /// If not specified, defaults to current region;
+        /// Specify Culture;
+        /// If not specified, defaults to current Culture;
         /// </summary>
-        public string Region { get; set; }
+        public string Culture { get; set; }
 
         /// <summary>
         /// The site's host url
@@ -40,12 +39,12 @@ namespace Dignite.Cms.Public.Web.TagHelpers
 
             if (urlHelper.IsLocalUrl(EntryUrl))
             {
-                if (Region.IsNullOrEmpty())
+                if (Culture.IsNullOrEmpty())
                 {
-                    Region = ViewContext.HttpContext.GetRouteValue(CultureRouteSegmentConstraint.RouteSegmentName)?.ToString();
+                    Culture = ViewContext.HttpContext.GetRouteValue(CultureRouteSegmentConstraint.RouteSegmentName)?.ToString();
                 }
 
-                EntryUrl = ("~/" + Region).EnsureEndsWith('/') + EntryUrl.RemovePreFix("~").RemovePreFix("/");
+                EntryUrl = ("~/" + Culture).EnsureEndsWith('/') + EntryUrl.RemovePreFix("~").RemovePreFix("/");
 
                 if (!HostUrl.IsNullOrEmpty())
                 {

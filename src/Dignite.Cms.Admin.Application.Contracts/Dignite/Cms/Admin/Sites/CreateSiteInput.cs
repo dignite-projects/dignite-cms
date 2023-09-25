@@ -8,7 +8,7 @@ namespace Dignite.Cms.Admin.Sites
         public CreateSiteInput():base()
         {
             IsActive= true;
-            Regions.Add(new CreateOrUpdateRegionInput(true,"en"));
+            Cultures.Add(new CreateOrUpdateCultureInput(true,"en"));
         }
     }
 }

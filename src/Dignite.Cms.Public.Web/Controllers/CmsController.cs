@@ -3,12 +3,18 @@ using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
 using Dignite.Cms.Public.Sites;
 using Dignite.Cms.Public.Web.Models;
+using Dignite.Cms.Public.Web.Routing;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RequestLocalization;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.Localization;
 using Volo.Abp.Text.Formatting;
 
 namespace Dignite.Cms.Public.Web.Controllers
@@ -21,14 +27,17 @@ namespace Dignite.Cms.Public.Web.Controllers
         private readonly ISitePublicAppService _sitePublicAppService;
         private readonly ISectionPublicAppService _sectionPublicAppService;
         private readonly IEntryPublicAppService _entryPublicAppService;
+        private readonly IOptions<AbpLocalizationOptions> _localizationOptions;
 
 
-        public CmsController(ISitePublicAppService sitePublicAppService, ISectionPublicAppService sectionPublicAppService, IEntryPublicAppService entryPublicAppService)
+        public CmsController(ISitePublicAppService sitePublicAppService, ISectionPublicAppService sectionPublicAppService, IEntryPublicAppService entryPublicAppService,
+            IOptions<AbpLocalizationOptions> localizationOptions)
         {
             LocalizationResource = typeof(CmsResource);
             _sectionPublicAppService = sectionPublicAppService;
             _entryPublicAppService = entryPublicAppService;
             _sitePublicAppService = sitePublicAppService;
+            _localizationOptions = localizationOptions;
         }
 
         public async Task<IActionResult> Index()
@@ -47,7 +56,7 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// 2.{culture}/{url}
         /// </param>
         /// <returns></returns>
-        public async Task<IActionResult> EntryByRegion(string culture, string url="/")
+        public async Task<IActionResult> EntryByCulture(string culture, string url="/")
         {
             return await EntryViewResult(url, culture);
         }
@@ -67,30 +76,51 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// 
         /// </summary>
         /// <param name="url"></param>
-        /// <param name="region"></param>
+        /// <param name="culture"></param>
         /// <returns></returns>
-        protected async Task<IActionResult> EntryViewResult(string url, string region = null)
+        protected async Task<IActionResult> EntryViewResult(string url, string culture = null)
         {
             var section = await GetSection(url);
-            var defaultRegion = section.Site.GetDefaultRegion();
             if (section == null)
             {
                 return NotFound();
             }
 
-            if (region.IsNullOrEmpty())
+            //
+            var defaultCulture = section.Site.GetDefaultCulture();
+            if (culture.IsNullOrEmpty())
             {
-                region = defaultRegion;
+                culture = defaultCulture;
             }
             else
             {
-                if (region.Equals(defaultRegion, StringComparison.OrdinalIgnoreCase))
+                /* Remove the default culture prefix and redirect to the new Url.
+                 * Example: the default culture is en, the current request path is /en/about, will jump to /about Url
+                 */
+                if (culture.Equals(defaultCulture, StringComparison.OrdinalIgnoreCase) 
+                    && Request.Path.Value.EnsureEndsWith('/').StartsWith($"/{culture}/"))
                 {
-                    return RedirectPermanent(Request.GetEncodedPathAndQuery().EnsureEndsWith('/').RemovePreFix($"/{region}/").EnsureStartsWith('/'));
+                    return RedirectPermanent("~"+Request.GetEncodedPathAndQuery().EnsureEndsWith('/').RemovePreFix($"/{culture}/").EnsureStartsWith('/'));
+                }
+
+                if (!culture.Equals(defaultCulture, StringComparison.OrdinalIgnoreCase) 
+                    && !Request.RouteValues.Any(r=>r.Key.Equals( CultureRouteSegmentConstraint.RouteSegmentName,StringComparison.OrdinalIgnoreCase)))
+                {
+                    return Redirect(culture.ToLower());
                 }
             }
 
-            var entry = await GetEntry(section, url, region);
+            //Saving the currently requested cultural information to a cookie
+            AbpRequestCultureCookieHelper.SetCultureCookie(
+                HttpContext, 
+                new RequestCulture(
+                    culture, 
+                    _localizationOptions.Value.Languages.First(l=>l.CultureName.Equals(culture,StringComparison.OrdinalIgnoreCase)).UiCultureName
+                    )
+                );
+
+            //
+            var entry = await GetEntry(section, url, culture);
             if (entry != null)
             {
                 var viewModel = new EntryViewModel(entry, section);
@@ -98,7 +128,7 @@ namespace Dignite.Cms.Public.Web.Controllers
             }
             else
             {
-                if (!region.Equals(defaultRegion, StringComparison.OrdinalIgnoreCase))
+                if (!culture.Equals(defaultCulture, StringComparison.OrdinalIgnoreCase))
                 {
                     return Redirect(url.EnsureStartsWith('/'));
                 }
@@ -127,7 +157,7 @@ namespace Dignite.Cms.Public.Web.Controllers
             }
         }
 
-        protected async Task<EntryDto> GetEntry(SectionDto section, string url, string region)
+        protected async Task<EntryDto> GetEntry(SectionDto section, string url, string culture)
         {
             EntryDto entry = null;
             // If the section type is single, then the slug value of the entry is the name of the section
@@ -137,7 +167,7 @@ namespace Dignite.Cms.Public.Web.Controllers
                     SectionId = section.Id,
                     SkipCount=0,
                     MaxResultCount=1,
-                    Region = region
+                    Culture = culture
                 });
                 entry = result.Items.Any() ? result.Items[0] : null;
             }
@@ -152,7 +182,7 @@ namespace Dignite.Cms.Public.Web.Controllers
                     //
                     entry = await _entryPublicAppService.FindBySlugAsync(new FindBySlugInput
                     {
-                        Region = region,
+                        Culture = culture,
                         SectionId = section.Id,
                         Slug = slug
                     });

@@ -18,7 +18,7 @@ namespace Dignite.Cms.Admin.Entries
         public Guid SectionId { get; set; }
 
         [Required]
-        public string Region { get; set; }
+        public string Culture { get; set; }
 
         public DateTime? StartPublishDate { get; set; }
 

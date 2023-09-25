@@ -24,7 +24,7 @@ namespace Dignite.Cms.Entries
         /// <summary>
         /// 
         /// </summary>
-        public virtual string Region { get; set; }
+        public virtual string Culture { get; set; }
 
         /// <summary>
         /// 

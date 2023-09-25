@@ -20,12 +20,12 @@ namespace Dignite.Cms.Public.Web.Builder
                     pattern: "/",
                     defaults: new { controller = CmsController.ControllerName, action = "Index" });
                 endpoints.MapControllerRoute(
-                    name: "cms-entry-by-region",
+                    name: "cms-entry-by-culture",
                     pattern: "{"+ CultureRouteSegmentConstraint.RouteSegmentName + ":"+ CultureRouteSegmentConstraint.RouteConstraintName + "}/{*url}",
-                    defaults: new { controller = CmsController.ControllerName, action = "EntryByRegion" });
+                    defaults: new { controller = CmsController.ControllerName, action = "EntryByCulture" });
                 endpoints.MapControllerRoute(
                     name: "cms-entry",
-                    pattern: "{*url:regex(^(?!swagger/|account/).*)}", //TODO: Use an options to configure the regular expression for the url
+                    pattern: "{*url:regex(^(?!swagger/).*)}", //TODO: Use an options to configure the regular expression for the url
                     defaults: new { controller = CmsController.ControllerName, action = "Entry" });
             });
 

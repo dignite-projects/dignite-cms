@@ -26,11 +26,11 @@ namespace Dignite.Cms.Admin.Entries
         public Guid EntryTypeId { get; set; }
 
         /// <summary>
-        /// The region corresponding to the entry
+        /// The culture corresponding to the entry
         /// </summary>
         [Required]
-        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxRegionLength))]
-        public string Region { get; set; }
+        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxCultureLength))]
+        public string Culture { get; set; }
 
 
         /// <summary>

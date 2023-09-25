@@ -28,11 +28,11 @@ namespace Dignite.Cms.Public.Entries
         public async Task<EntryDto> FindBySlugAsync(FindBySlugInput input)
         {
             var section = await _sectionPublicAppService.GetAsync(input.SectionId);
-            if (input.Region.IsNullOrEmpty())
+            if (input.Culture.IsNullOrEmpty())
             {
-                input.Region = section.Site.GetDefaultRegion();
+                input.Culture = section.Site.GetDefaultCulture();
             }
-            var entry = await _entryRepository.FindBySlugAsync(input.SectionId,input.Region,input.Slug);
+            var entry = await _entryRepository.FindBySlugAsync(input.SectionId,input.Culture,input.Slug);
 
             return GetEntryDto(section,entry);
         }
@@ -72,31 +72,31 @@ namespace Dignite.Cms.Public.Entries
             int count = 0;
             List<Entry> result = new List<Entry>();
             var section = await _sectionPublicAppService.GetAsync(input.SectionId);
-            if (input.Region.IsNullOrEmpty())
+            if (input.Culture.IsNullOrEmpty())
             {
-                input.Region = section.Site.GetDefaultRegion();
+                input.Culture = section.Site.GetDefaultCulture();
             }
 
             if (section.Type == Cms.Sections.SectionType.Single)
             {
-                result = await _entryRepository.GetListAsync(input.SectionId, input.Region, null, EntryStatus.Published, null, null, null, null, 1, 0);
+                result = await _entryRepository.GetListAsync(input.SectionId, input.Culture, null, EntryStatus.Published, null, null, null, null, 1, 0);
             }
             else if (section.Type == Cms.Sections.SectionType.Structure)
             {
-                result = await _entryRepository.GetListAsync(input.SectionId, input.Region, null, EntryStatus.Published, null, null, null, null, 1000, 0);
+                result = await _entryRepository.GetListAsync(input.SectionId, input.Culture, null, EntryStatus.Published, null, null, null, null, 1000, 0);
                 count = result.Count;
             }
             else
             {
                 List<QueryingByFieldParameter> queryingByFieldParameters = input.QueryingByFieldParameters.IsNullOrEmpty() ? null : JsonSerializer.Deserialize<List<QueryingByFieldParameter>>(input.QueryingByFieldParameters);
-                count = await _entryRepository.GetCountAsync(input.SectionId, input.Region, input.CreatorId, EntryStatus.Published, input.Filter, input.StartPublishDate, input.ExpiryPublishDate, queryingByFieldParameters);
+                count = await _entryRepository.GetCountAsync(input.SectionId, input.Culture, input.CreatorId, EntryStatus.Published, input.Filter, input.StartPublishDate, input.ExpiryPublishDate, queryingByFieldParameters);
                 if (count == 0)
                 {
                     return new PagedResultDto<EntryDto>(0, new List<EntryDto>());
                 }
                 result = await _entryRepository.GetListAsync(
                         input.SectionId,
-                        input.Region,
+                        input.Culture,
                         input.CreatorId,
                         EntryStatus.Published,
                         input.Filter,
@@ -155,7 +155,7 @@ namespace Dignite.Cms.Public.Entries
         protected void SetEntryUrl(EntryDto entry, SectionDto section)
         {
             var routeParameters = GetRouteParameters(section.Route).ToArray();
-            var siteDefaultRegion = section.Site.GetDefaultRegion();
+            var siteDefaultCulture = section.Site.GetDefaultCulture();
             entry.Url = section.Route;
 
             //If there is a routing parameter, get the routing parameter value and update the URL
@@ -179,10 +179,10 @@ namespace Dignite.Cms.Public.Entries
                 }
             }
 
-            //splice region path
-            if (!siteDefaultRegion.Equals(entry.Region, StringComparison.OrdinalIgnoreCase))
+            //splice Culture path
+            if (!siteDefaultCulture.Equals(entry.Culture, StringComparison.OrdinalIgnoreCase))
             {
-                entry.Url = entry.Region + entry.Url.EnsureStartsWith('/');
+                entry.Url = entry.Culture + entry.Url.EnsureStartsWith('/');
             }
 
             entry.Url = section.Site.HostUrl.EnsureEndsWith('/') + entry.Url.RemovePreFix("/");

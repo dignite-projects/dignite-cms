@@ -75,7 +75,7 @@ namespace Dignite.Cms.Admin.Sections
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            // TODO: Here the verify route cannot start with "/en/,"/zh-cn/" or any other region.
+            // TODO: Here the verify route cannot start with "/en/,"/zh-cn/" or any other culture.
             return base.Validate(validationContext);
         }
     }

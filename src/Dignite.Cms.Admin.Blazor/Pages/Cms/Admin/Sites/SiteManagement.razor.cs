@@ -14,7 +14,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sites
 {
     public partial class SiteManagement
     {
-        protected IReadOnlyList<LanguageInfo> AllRegions = new List<LanguageInfo>();
+        protected IReadOnlyList<LanguageInfo> AllCultures = new List<LanguageInfo>();
         protected PageToolbar Toolbar { get; } = new();
         protected List<TableColumn> SiteManagementTableColumns => TableColumns.Get<SiteManagement>();
 
@@ -36,7 +36,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sites
 
             try
             {
-                AllRegions= await LanguageProvider.GetLanguagesAsync();
+                AllCultures= await LanguageProvider.GetLanguagesAsync();
             }
             catch (Exception ex)
             {
@@ -108,8 +108,8 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sites
                     },
                     new TableColumn
                     {
-                        Title = L["Regions"],
-                        Data = nameof(SiteDto.Regions)
+                        Title = L["Cultures"],
+                        Data = nameof(SiteDto.Cultures)
                     },
                     new TableColumn
                     {

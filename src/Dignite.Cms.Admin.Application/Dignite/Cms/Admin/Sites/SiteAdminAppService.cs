@@ -23,7 +23,7 @@ namespace Dignite.Cms.Admin.Pages
                 GuidGenerator.Create(), 
                 input.DisplayName, 
                 input.Name,
-                input.Regions.Select(l=>new SiteRegion(l.IsDefault,l.Region)).ToList(),
+                input.Cultures.Select(l=>new SiteCulture(l.IsDefault,l.CultureName)).ToList(),
                 input.HostUrl,
                 input.IsActive, 
                 CurrentTenant.Id);
@@ -70,7 +70,7 @@ namespace Dignite.Cms.Admin.Pages
             entity.SetName(input.Name);
             entity.SetHostUrl(input.HostUrl);
             entity.SetActive(input.IsActive);
-            entity.SetRegions(input.Regions.Select(l => new SiteRegion(l.IsDefault, l.Region)).ToList());
+            entity.SetCultures(input.Cultures.Select(l => new SiteCulture(l.IsDefault, l.CultureName)).ToList());
             await _siteRepository.UpdateAsync(entity);
 
             var dto =

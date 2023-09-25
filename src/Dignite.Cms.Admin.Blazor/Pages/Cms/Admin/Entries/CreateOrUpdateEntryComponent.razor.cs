@@ -17,7 +17,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         [Parameter] public SectionDto Section { get; set; }
 
         protected EntryTypeDto CurrentEntryType { get; set; }
-        protected IReadOnlyList<LanguageInfo> AllRegions = new List<LanguageInfo>();
+        protected IReadOnlyList<LanguageInfo> AllLanguages = new List<LanguageInfo>();
         protected IReadOnlyList<EntryDto> AllEntriesOfStructure;
         public CreateOrUpdateEntryComponent()
         {
@@ -28,8 +28,8 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         {
             await base.OnInitializedAsync();
             await SetEntryType(Entry.EntryTypeId);
-            AllRegions = await LanguageProvider.GetLanguagesAsync();
-            await SetRegionAsync(Entry.Region);
+            AllLanguages = await LanguageProvider.GetLanguagesAsync();
+            await SetCultureAsync(Entry.Culture);
         }
         protected async Task OnEntryTypeSelectedValueChanged(Guid value)
         {
@@ -43,19 +43,19 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
             return Task.CompletedTask;
         }
 
-        protected async Task OnRegionSelectedValueChanged(string value)
+        protected async Task OnCultureSelectedValueChanged(string value)
         { 
-            await SetRegionAsync(value);
+            await SetCultureAsync(value);
         }
 
-        protected async Task SetRegionAsync(string region)
+        protected async Task SetCultureAsync(string culture)
         { 
-            Entry.Region = region;
+            Entry.Culture = culture;
             if (Section.Type == Dignite.Cms.Sections.SectionType.Structure && Entry.GetType() == typeof(CreateEntryInput))
             {
                 AllEntriesOfStructure =( await AppService.GetListAsync(new GetEntriesInput { 
                     SectionId=Section.Id,
-                    Region= region,
+                    Culture= culture,
                     MaxResultCount=1000
                 })).Items;
             }

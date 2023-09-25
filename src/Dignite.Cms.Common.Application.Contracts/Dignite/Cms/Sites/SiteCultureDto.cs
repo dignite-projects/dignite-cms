@@ -1,9 +1,9 @@
 ﻿namespace Dignite.Cms.Sites
 {
-    public class SiteRegionDto
+    public class SiteCultureDto
     {
         public bool IsDefault { get; set; }
 
-        public string Region { get; set; }
+        public string CultureName { get; set; }
     }
 }

@@ -49,11 +49,11 @@ public class CmsRouteRequestCultureProvider : RequestCultureProvider
         {
             if (culture == null)
             {
-                //Getting the default region from the Cms site
+                //Getting the default Culture from the Cms site
                 var _siteAppService = httpContext.RequestServices.GetRequiredService<ISitePublicAppService>();
                 var hostUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host.Value}";
                 var site = await _siteAppService.FindByHostUrlAsync(hostUrl);
-                culture = site.GetDefaultRegion();
+                culture = site.GetDefaultCulture();
             }
         }
 

@@ -34,10 +34,10 @@
                   }
                 },
                 {
-                  "name": "FindByHostAsync",
+                  "name": "FindByHostUrlAsync",
                   "parametersOnMethod": [
                     {
-                      "name": "host",
+                      "name": "hostUrl",
                       "typeAsString": "System.String, System.Private.CoreLib",
                       "type": "System.String",
                       "typeSimple": "string",
@@ -91,15 +91,15 @@
               "allowAnonymous": null,
               "implementFrom": "Dignite.Cms.Public.Sites.ISitePublicAppService"
             },
-            "FindByHostAsyncByHost": {
-              "uniqueName": "FindByHostAsyncByHost",
-              "name": "FindByHostAsync",
+            "FindByHostUrlAsyncByHostUrl": {
+              "uniqueName": "FindByHostUrlAsyncByHostUrl",
+              "name": "FindByHostUrlAsync",
               "httpMethod": "GET",
-              "url": "api/cms-public/sites/find-by-host",
+              "url": "api/cms-public/sites/find-by-host-url",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
-                  "name": "host",
+                  "name": "hostUrl",
                   "typeAsString": "System.String, System.Private.CoreLib",
                   "type": "System.String",
                   "typeSimple": "string",
@@ -109,8 +109,8 @@
               ],
               "parameters": [
                 {
-                  "nameOnMethod": "host",
-                  "name": "host",
+                  "nameOnMethod": "hostUrl",
+                  "name": "hostUrl",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",
@@ -187,6 +187,14 @@
                 {
                   "name": "FindByUrlAsync",
                   "parametersOnMethod": [
+                    {
+                      "name": "siteId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
                     {
                       "name": "url",
                       "typeAsString": "System.String, System.Private.CoreLib",
@@ -279,13 +287,21 @@
               "allowAnonymous": null,
               "implementFrom": "Dignite.Cms.Public.Sections.ISectionPublicAppService"
             },
-            "FindByUrlAsyncByUrl": {
-              "uniqueName": "FindByUrlAsyncByUrl",
+            "FindByUrlAsyncBySiteIdAndUrl": {
+              "uniqueName": "FindByUrlAsyncBySiteIdAndUrl",
               "name": "FindByUrlAsync",
               "httpMethod": "GET",
               "url": "api/cms-public/sections/find-by-url",
               "supportedVersions": [],
               "parametersOnMethod": [
+                {
+                  "name": "siteId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
                 {
                   "name": "url",
                   "typeAsString": "System.String, System.Private.CoreLib",
@@ -296,6 +312,18 @@
                 }
               ],
               "parameters": [
+                {
+                  "nameOnMethod": "siteId",
+                  "name": "siteId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
                 {
                   "nameOnMethod": "url",
                   "name": "url",
@@ -593,7 +621,7 @@
                 },
                 {
                   "nameOnMethod": "input",
-                  "name": "Region",
+                  "name": "Culture",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",
@@ -732,7 +760,7 @@
                 },
                 {
                   "nameOnMethod": "input",
-                  "name": "Region",
+                  "name": "Culture",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",

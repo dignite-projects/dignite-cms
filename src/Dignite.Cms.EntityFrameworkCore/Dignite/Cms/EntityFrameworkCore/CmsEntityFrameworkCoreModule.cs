@@ -10,7 +10,7 @@ namespace Dignite.Cms.EntityFrameworkCore;
 [DependsOn(
     typeof(CmsDomainModule),
     typeof(AbpEntityFrameworkCoreModule),
-    typeof(AbpFieldCustomizingEntityFrameworkCoreModule),
+    typeof(DigniteAbpFieldCustomizingEntityFrameworkCoreModule),
     typeof(FileExplorerEntityFrameworkCoreModule),
     typeof(CmsKitEntityFrameworkCoreModule)
 )]

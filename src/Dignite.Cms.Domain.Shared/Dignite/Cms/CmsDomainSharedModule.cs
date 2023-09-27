@@ -13,7 +13,7 @@ using Dignite.FileExplorer;
 namespace Dignite.Cms;
 [DependsOn(
     typeof(AbpValidationModule),
-    typeof(AbpFieldCustomizingDomainSharedModule),
+    typeof(DigniteAbpFieldCustomizingDomainSharedModule),
     typeof(FileExplorerDomainSharedModule),
     typeof(CmsKitDomainSharedModule)
 )]

@@ -9,7 +9,7 @@ namespace Dignite.Cms.Admin.Blazor.WebAssembly
         typeof(CmsAdminBlazorModule),
         typeof(CmsAdminHttpApiClientModule),
         typeof(AbpAspNetCoreComponentsWebAssemblyThemingModule),
-        typeof(AbpAspNetCoreComponentsCkEditorWebAssemblyModule)
+        typeof(DigniteAbpAspNetCoreComponentsCkEditorWebAssemblyModule)
         )]
     public class CmsAdminBlazorWebAssemblyModule : AbpModule
     {

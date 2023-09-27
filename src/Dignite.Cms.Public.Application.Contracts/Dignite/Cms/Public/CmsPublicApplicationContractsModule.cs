@@ -8,7 +8,7 @@ namespace Dignite.Cms.Public;
 [DependsOn(
     typeof(CmsCommonApplicationContractsModule),
     typeof(FileExplorerApplicationContractsModule),
-    typeof(AbpDynamicFormsFileExplorerModule),
+    typeof(DigniteAbpDynamicFormsFileExplorerModule),
     typeof(CmsKitPublicApplicationContractsModule)
     )]
 public class CmsPublicApplicationContractsModule : AbpModule

@@ -8,7 +8,7 @@ namespace Dignite.Cms.Admin.Blazor.Server
     [DependsOn(
         typeof(AbpAspNetCoreComponentsServerThemingModule),
         typeof(CmsAdminBlazorModule),
-        typeof(AbpAspNetCoreComponentsCkEditorServerModule)
+        typeof(DigniteAbpAspNetCoreComponentsCkEditorServerModule)
         )]
     public class CmsAdminBlazorServerModule : AbpModule
     {

@@ -12,7 +12,7 @@ namespace Dignite.Cms;
 [DependsOn(
     typeof(AbpDddDomainModule),
     typeof(CmsDomainSharedModule),
-    typeof(AbpFieldCustomizingDomainSharedModule),
+    typeof(DigniteAbpFieldCustomizingDomainSharedModule),
     typeof(FileExplorerDomainModule),
     typeof(AbpAutoMapperModule),
     typeof(CmsKitDomainModule)

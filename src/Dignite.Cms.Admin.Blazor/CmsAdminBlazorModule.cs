@@ -16,10 +16,10 @@ namespace Dignite.Cms.Admin.Blazor
         typeof(CmsAdminApplicationContractsModule),
         typeof(AbpAspNetCoreComponentsWebThemingModule),
         typeof(AbpAutoMapperModule),
-        typeof(AbpBlazoriseUiModule),
-        typeof(AbpDynamicFormsComponentsBlazoriseUiModule),
-        typeof(AbpDynamicFormsComponentsFileExplorerModule),
-        typeof(AbpDynamicFormsComponentsCkEditorModule)
+        typeof(DigniteAbpBlazoriseUiModule),
+        typeof(DigniteAbpDynamicFormsComponentsBlazoriseUiModule),
+        typeof(DigniteAbpDynamicFormsComponentsFileExplorerModule),
+        typeof(DigniteAbpDynamicFormsComponentsCkEditorModule)
         )]
     public class CmsAdminBlazorModule : AbpModule
     {

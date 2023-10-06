@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\dignite-abp\modules\ckeditor-component\Dignite.Abp.AspNetCore.Components.CkEditor.WebAssembly\Dignite.Abp.AspNetCore.Components.CkEditor.WebAssembly.csproj" />
+        <ProjectReference Include="..\..\..\dignite-abp\modules\ckeditor-component\src\Dignite.Abp.AspNetCore.Components.CkEditor.WebAssembly\Dignite.Abp.AspNetCore.Components.CkEditor.WebAssembly.csproj" />
         <ProjectReference Include="..\Dignite.Cms.Admin.Blazor\Dignite.Cms.Admin.Blazor.csproj" />
         <ProjectReference Include="..\Dignite.Cms.Admin.HttpApi.Client\Dignite.Cms.Admin.HttpApi.Client.csproj" />
     </ItemGroup>

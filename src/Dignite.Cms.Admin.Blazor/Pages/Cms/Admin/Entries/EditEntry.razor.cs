@@ -70,7 +70,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                 if (validate)
                 {
                     await EntryAppService.UpdateAsync(Id, EditingEntity);
-                    Navigation.NavigateTo($"/cms/admin/entries?sectionId={Entry.SectionId}&culture={EditingEntity.Culture}");
+                    Navigation.NavigateTo($"cms/admin/entries?sectionId={Entry.SectionId}&culture={EditingEntity.Culture}");
                 }
             }
             catch (Exception ex)

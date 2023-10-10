@@ -61,7 +61,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
                 if (validate)
                 {
                     await AppService.CreateAsync(NewEntity);
-                    Navigation.NavigateTo("/cms/admin/sections");
+                    Navigation.NavigateTo("cms/admin/sections");
                 }
             }
             catch (Exception ex)

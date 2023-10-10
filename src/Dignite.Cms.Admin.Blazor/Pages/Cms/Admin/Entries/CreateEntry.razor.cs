@@ -83,7 +83,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                 if (validate)
                 {
                     await EntryAppService.CreateAsync(NewEntity);
-                    Navigation.NavigateTo($"/cms/admin/entries?sectionId={SectionId}&culture={NewEntity.Culture}");
+                    Navigation.NavigateTo($"cms/admin/entries?sectionId={SectionId}&culture={NewEntity.Culture}");
                 }
             }
             catch (Exception ex)

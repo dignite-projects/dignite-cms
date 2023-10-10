@@ -74,7 +74,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                         Text = L["Edit"],
                         Visible = (data) => HasUpdatePermission,
                         Clicked = async (data) => {
-                            Navigation.NavigateTo($"/cms/admin/entries/{data.As<EntryDto>().Id}/edit");
+                            Navigation.NavigateTo($"cms/admin/entries/{data.As<EntryDto>().Id}/edit");
                             await Task.CompletedTask;
                         }
                     },
@@ -234,7 +234,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
             {
                 if (CurrentSection.EntryTypes.Any())
                 {
-                    Navigation.NavigateTo($"/cms/admin/entries/create?sectionId={CurrentSection.Id}&culture={Culture}");
+                    Navigation.NavigateTo($"cms/admin/entries/create?sectionId={CurrentSection.Id}&culture={Culture}");
                 }
                 else
                 {

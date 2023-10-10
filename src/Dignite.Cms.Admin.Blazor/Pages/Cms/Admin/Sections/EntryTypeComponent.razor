@@ -57,11 +57,11 @@ else
 
     protected void Create()
     {
-        Navigation.NavigateTo($"/cms/admin/sections/{Section.Id}/entry-types/create");
+        Navigation.NavigateTo($"cms/admin/sections/{Section.Id}/entry-types/create");
     }
 
     protected void Edit(Guid entryTypeId)
     {
-        Navigation.NavigateTo($"/cms/admin/sections/{Section.Id}/entry-types/{entryTypeId}/edit");
+        Navigation.NavigateTo($"cms/admin/sections/{Section.Id}/entry-types/{entryTypeId}/edit");
     }
 }

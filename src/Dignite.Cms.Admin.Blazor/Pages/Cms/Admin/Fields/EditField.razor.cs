@@ -57,7 +57,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
                 if (validate)
                 {
                     await AppService.UpdateAsync(Id,EditingEntity);
-                    Navigation.NavigateTo("/cms/admin/fields");
+                    Navigation.NavigateTo("cms/admin/fields");
                 }
             }
             catch (Exception ex)

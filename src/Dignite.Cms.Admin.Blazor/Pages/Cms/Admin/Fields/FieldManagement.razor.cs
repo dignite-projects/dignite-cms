@@ -31,7 +31,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
         {
             Toolbar.AddButton(L["New"],
                 async () => { 
-                    Navigation.NavigateTo("/cms/admin/fields/create"); 
+                    Navigation.NavigateTo("cms/admin/fields/create"); 
                     await Task.CompletedTask; 
                 },
                 IconName.Add,
@@ -51,7 +51,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
                         Text = L["Edit"],
                         Visible = (data) => HasUpdatePermission,
                         Clicked = async (data) => {
-                            Navigation.NavigateTo($"/cms/admin/fields/{data.As<FieldDto>().Id}/edit");
+                            Navigation.NavigateTo($"cms/admin/fields/{data.As<FieldDto>().Id}/edit");
                             await Task.CompletedTask;
                         }
                     },

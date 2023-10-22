@@ -1,14 +1,13 @@
-﻿using Volo.Abp.Modularity;
-using Volo.Abp.Localization;
+﻿using Dignite.Abp.FieldCustomizing;
 using Dignite.Cms.Localization;
+using Dignite.FileExplorer;
+using Volo.Abp.Localization;
 using Volo.Abp.Localization.ExceptionHandling;
+using Volo.Abp.Modularity;
 using Volo.Abp.Validation;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
-using Dignite.Abp.FieldCustomizing;
 using Volo.CmsKit;
-using Volo.Abp.GlobalFeatures;
-using Dignite.FileExplorer;
 
 namespace Dignite.Cms;
 [DependsOn(
@@ -19,6 +18,11 @@ namespace Dignite.Cms;
 )]
 public class CmsDomainSharedModule : AbpModule
 {
+    public override void PreConfigureServices(ServiceConfigurationContext context)
+    {
+        CmsGlobalFeatureConfigurator.Configure();
+    }
+
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         Configure<AbpVirtualFileSystemOptions>(options =>
@@ -37,11 +41,6 @@ public class CmsDomainSharedModule : AbpModule
         Configure<AbpExceptionLocalizationOptions>(options =>
         {
             options.MapCodeNamespace("Cms", typeof(CmsResource));
-        });
-
-        GlobalFeatureManager.Instance.Modules.CmsKit(cmsKit =>
-        {
-            cmsKit.User.Enable();
         });
     }
 }

@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Http.Client" Version="7.3.1" />
-	  <PackageReference Include="Volo.CmsKit.Admin.HttpApi.Client" Version="7.3.1" />
+    <PackageReference Include="Volo.Abp.Http.Client" Version="7.4.0" />
+	  <PackageReference Include="Volo.CmsKit.Admin.HttpApi.Client" Version="7.4.0" />
     <ProjectReference Include="..\..\..\dignite-abp\modules\file-explorer\src\Dignite.FileExplorer.HttpApi.Client\Dignite.FileExplorer.HttpApi.Client.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Admin.Application.Contracts\Dignite.Cms.Admin.Application.Contracts.csproj" />
   </ItemGroup>

@@ -14,9 +14,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="7.4.0" />
-	<PackageReference Include="Volo.Abp.AutoMapper" Version="7.4.0" />
-	  <PackageReference Include="Volo.CmsKit.Domain" Version="7.4.0" />
+    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="7.4.5" />
+	<PackageReference Include="Volo.Abp.AutoMapper" Version="7.4.5" />
+	  <PackageReference Include="Volo.CmsKit.Domain" Version="7.4.5" />
 	<ProjectReference Include="..\..\..\dignite-abp\modules\field-customizing\src\Dignite.Abp.FieldCustomizing.Domain\Dignite.Abp.FieldCustomizing.Domain.csproj" />
 	<ProjectReference Include="..\..\..\dignite-abp\modules\file-explorer\src\Dignite.FileExplorer.Domain\Dignite.FileExplorer.Domain.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Domain.Shared\Dignite.Cms.Domain.Shared.csproj" />

@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Volo.CmsKit.Web" Version="7.4.0" />
+	  <PackageReference Include="Volo.CmsKit.Web" Version="7.4.5" />
     <ProjectReference Include="..\Dignite.Cms.Application.Contracts\Dignite.Cms.Application.Contracts.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Public.Web\Dignite.Cms.Public.Web.csproj" />
   </ItemGroup>

@@ -29,6 +29,15 @@
     "ParentEntry": "Parent Entry",
     "RevisionNotes": "Revision Notes",
     "{0}SectionHasNotCreatedAnEntryType": "{0} Section Has Not Created An Entry Type",
-    "FormControl:Matrix": "Matrix"
+    "FormControl:Matrix": "Matrix",
+    "MatrixBlockTypes": "Matrix Block Types",
+    "NewBlockType": "New Block Type",
+    "MatrixBlockType": "Matrix Block Type",
+    "FormControl:Table": "Table",
+    "TableColumns": "Table Columns",
+    "SelectFormControl": "Select Control",
+    "TableColumnName": "Column Name",
+    "TableColumnForm": "Column Form",
+    "ColumnNameAlreadyExist": "Column Name Already Exist."
   }
 }

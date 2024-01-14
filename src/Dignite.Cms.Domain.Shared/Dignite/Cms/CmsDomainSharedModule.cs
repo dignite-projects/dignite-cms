@@ -1,4 +1,5 @@
 ﻿using Dignite.Abp.DynamicForms;
+using Dignite.Abp.DynamicForms.Localization;
 using Dignite.Cms.Localization;
 using Dignite.FileExplorer;
 using Volo.Abp.Localization;
@@ -34,7 +35,7 @@ public class CmsDomainSharedModule : AbpModule
         {
             options.Resources
                 .Add<CmsResource>("en")
-                .AddBaseTypes(typeof(AbpValidationResource))
+                .AddBaseTypes(typeof(DigniteAbpDynamicFormsResource))
                 .AddVirtualJson("/Dignite/Cms/Localization/Resources");
         });
 

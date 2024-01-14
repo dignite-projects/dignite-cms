@@ -1,13 +1,13 @@
 ﻿@using Dignite.Abp.DynamicForms
 @using Dignite.Abp.DynamicForms.Components
-@using Dignite.Abp.DynamicForms.Localization;
 @using Dignite.Abp.DynamicForms.Matrix
 @using Dignite.Abp.DynamicForms.Textbox;
 @using System.Collections.Immutable;
 @using System.Text.Json;
 @using Dignite.Cms.Fields
+@using Dignite.Cms.Localization
 @using Volo.Abp.AspNetCore.Components.Web;
-@inject AbpBlazorMessageLocalizerHelper<DigniteAbpDynamicFormsResource> LH
+@inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
 @inject IFormConfigurationComponentSelector ConfigurationComponentSelector
 @inject IEnumerable<IFormControl> AllForms;
 @inherits FormConfigurationComponentBase<MatrixFormControl,MatrixConfiguration>
@@ -195,6 +195,13 @@
     protected FormField SelectedField = null;
     protected Type FieldFormConfigurationComponentType;
     protected Dictionary<string, object> FieldFormConfigurationComponentParameters = new();
+
+
+
+    public MatrixFormConfigurationComponent()
+    {
+        LocalizationResource = typeof(CmsResource);
+    }
 
 
     void ValidateAll(ValidatorEventArgs e)

@@ -29,6 +29,15 @@
     "ParentEntry": "上级条目",
     "RevisionNotes": "修订说明",
     "SamplePageMessage": "Cms模块的示例页面",
-    "FormControl:Matrix": "矩阵控件"
+    "FormControl:Matrix": "矩阵控件",
+    "MatrixBlockTypes": "矩阵块类型",
+    "NewBlockType": "新建矩阵块类型",
+    "MatrixBlockType": "矩阵块类型",
+    "FormControl:Table": "表格",
+    "TableColumns": "表格列",
+    "SelectFormControl": "选择控件",
+    "TableColumnName": "列标题",
+    "TableColumnForm": "列表单",
+    "ColumnNameAlreadyExist": "列名已存在."
   }
 }

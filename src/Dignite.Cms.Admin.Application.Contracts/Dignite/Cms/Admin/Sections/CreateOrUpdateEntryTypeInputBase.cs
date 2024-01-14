@@ -1,12 +1,11 @@
 ﻿using Dignite.Cms.Sections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Volo.Abp.ObjectExtending;
 using Volo.Abp.Validation;
 
 namespace Dignite.Cms.Admin.Sections
 {
-    public abstract class CreateOrUpdateEntryTypeInputBase: ExtensibleObject
+    public abstract class CreateOrUpdateEntryTypeInputBase
     {
         protected CreateOrUpdateEntryTypeInputBase()
         {

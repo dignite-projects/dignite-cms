@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.FieldCustomizing;
+﻿using Dignite.Abp.Data;
 using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
 using Dignite.Cms.Public.Sites;

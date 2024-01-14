@@ -1,4 +1,6 @@
-﻿using Dignite.Cms.Admin.Fields;
+﻿using Dignite.Abp.DynamicForms.Components;
+using Dignite.Cms.Admin.DynamicForms;
+using Dignite.Cms.Admin.Fields;
 using Dignite.Cms.Localization;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -10,11 +12,11 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
     public partial class CreateOrUpdateFieldComponent
     {
         [Parameter] public CreateOrUpdateFieldInputBase Entity { get; set; }
-        protected IReadOnlyList<FormDto> AllForms { get; set; } = new List<FormDto>();
+        protected IReadOnlyList<FormControlDto> AllFormControls { get; set; } = new List<FormControlDto>();
         protected IReadOnlyList<FieldGroupDto> AllGroups { get; set; } = new List<FieldGroupDto>();
 
-        protected Type FieldFormConfigurationComponentType;
-        protected Dictionary<string, object> FieldFormConfigurationComponentParameters = new();
+        protected Type FormConfigurationComponentType;
+        protected Dictionary<string, object> FormConfigurationComponentParameters = new();
 
         public CreateOrUpdateFieldComponent()
         {
@@ -24,24 +26,24 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            AllForms = (await FieldService.GetFormsAsync()).Items;
+            AllFormControls = (await FormService.GetFormControlsAsync()).Items;
             AllGroups = (await FieldGroupService.GetListAsync(new GetFieldGroupsInput())).Items;
-            await SetFieldFormConfigurationComponentAsync();
+            await SetFormConfigurationComponentAsync();
         }
 
-        protected async Task OnFormChangedAsync(string formName)
+        protected async Task OnFormChangedAsync(string value)
         {
-            Entity.FormName = formName;
-            await SetFieldFormConfigurationComponentAsync();
+            Entity.FormControlName = value;
+            await SetFormConfigurationComponentAsync();
         }
 
-        private async Task SetFieldFormConfigurationComponentAsync()
+        private async Task SetFormConfigurationComponentAsync()
         {
-            var configurationComponent = ConfigurationComponentSelector.Get(Entity.FormName);
-            FieldFormConfigurationComponentType = configurationComponent.GetType();
-            FieldFormConfigurationComponentParameters = new Dictionary<string, object>
+            var configurationComponent = ConfigurationComponentSelector.Get(Entity.FormControlName);
+            FormConfigurationComponentType = configurationComponent.GetType();
+            FormConfigurationComponentParameters = new Dictionary<string, object>
             {
-                { "Field", Entity }
+                { nameof(IFormConfigurationComponent.ConfigurationDictionary), Entity.FormConfiguration }
             };
             await Task.CompletedTask;
         }

@@ -1,17 +1,18 @@
 ﻿@using Dignite.Abp.DynamicForms.Select;
 @using Dignite.Cms.Public.Web.Models;
 @using Dignite.Abp.DynamicForms;
+@using Dignite.Abp.Data;
 @model EntryFieldViewModel
 @{
-    var categories = Model.Entry.GetField<IEnumerable<string>>(Model.Field.Name, null);
+    var items = Model.Entry.GetField<IEnumerable<string>>(Model.Field.Name, null);
     var configuration = new SelectConfiguration(Model.Field.FormConfiguration);
 }
-@if (categories != null)
+@if (items != null)
 {
     @if (configuration.Multiple)
     {
         <ul class="list-inline">
-            @foreach(var item in categories)
+            @foreach (var item in items)
             {
             <li class="list-inline-item">@item</li>
             }
@@ -19,9 +20,9 @@
     }
     else
     {
-        if (categories.Any())
+        if (items.Any())
         {
-            var option = configuration.Options.FirstOrDefault(o => o.Value == categories.First());
+            var option = configuration.Options.FirstOrDefault(o => o.Value == items.First());
             @option?.Text
         }
     }

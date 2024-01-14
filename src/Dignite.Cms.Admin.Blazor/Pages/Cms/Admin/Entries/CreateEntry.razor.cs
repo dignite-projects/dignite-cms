@@ -46,7 +46,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
             NewEntity = new CreateEntryInput(SectionId)
             {
-                Slug = Nanoid.Nanoid.Generate(size: 8),
+                Slug = Guid.NewGuid().ToString(),
                 PublishTime = Clock.Now,
                 EntryTypeId = Section.EntryTypes.First().Id,
                 Culture = Culture,

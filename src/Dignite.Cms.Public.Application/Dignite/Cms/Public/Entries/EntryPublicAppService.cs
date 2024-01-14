@@ -1,5 +1,5 @@
-﻿using Dignite.Abp.DynamicForms;
-using Dignite.Abp.FieldCustomizing;
+﻿using Dignite.Abp.Data;
+using Dignite.Abp.DynamicForms;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Public.Sections;
 using Dignite.Cms.Public.Sites;
@@ -112,14 +112,6 @@ namespace Dignite.Cms.Public.Entries
             foreach (var entry in dto)
             {
                 SetEntryUrl(entry, section);
-                entry.SetDefaultsForCustomizeFields(
-                    section.EntryTypes.First(et => et.Id == entry.EntryTypeId)
-                    .FieldTabs
-                    .SelectMany(ft => ft.Fields)
-                    .Select(f => f.Field)
-                    .ToList()
-                    .AsReadOnly()
-                );
             }
 
             return new PagedResultDto<EntryDto>(count, dto);
@@ -135,14 +127,6 @@ namespace Dignite.Cms.Public.Entries
 
             var dto = ObjectMapper.Map<Entry, EntryDto>(entry);
             SetEntryUrl(dto, section);
-            dto.SetDefaultsForCustomizeFields(
-                section.EntryTypes.First(et => et.Id == entry.EntryTypeId)
-                .FieldTabs
-                .SelectMany(ft => ft.Fields)
-                .Select(f => f.Field)
-                .ToList()
-                .AsReadOnly()
-            );
 
             return dto;
         }

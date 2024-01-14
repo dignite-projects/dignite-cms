@@ -5,7 +5,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Cms.Public.Sections
 {
-    public class EntryTypeDto: ExtensibleEntityDto<Guid>
+    public class EntryTypeDto: EntityDto<Guid>
     {
         /// <summary>
         /// Display Name of this entry type.

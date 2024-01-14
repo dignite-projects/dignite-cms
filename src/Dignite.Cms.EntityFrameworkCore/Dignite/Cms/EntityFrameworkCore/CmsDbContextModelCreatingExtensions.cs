@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.FieldCustomizing.EntityFrameworkCore;
+﻿using Dignite.Abp.DynamicForms;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Fields;
 using Dignite.Cms.Sections;
@@ -6,7 +6,6 @@ using Dignite.Cms.Sites;
 using Dignite.FileExplorer.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Reflection.Emit;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using Volo.Abp;
@@ -112,7 +111,17 @@ public static class CmsDbContextModelCreatingExtensions
             field.ToTable(CmsDbProperties.DbTablePrefix + "Fields", CmsDbProperties.DbSchema);
 
             field.ConfigureByConvention();
-            field.ConfigureCustomizableFieldDefinitions();
+
+            field.Property(f=>f.DisplayName).IsRequired().HasMaxLength(FieldConsts.MaxDisplayNameLength);
+            field.Property(f => f.Name).IsRequired().HasMaxLength(FieldConsts.MaxNameLength);
+            field.Property(f => f.FormControlName).IsRequired().HasMaxLength(FieldConsts.MaxFormControlNameLength);
+            field.Property(f => f.Description).HasMaxLength(FieldConsts.MaxDescriptionLength);
+            field.Property<FormConfigurationDictionary>(nameof(Field.FormConfiguration))
+                .HasColumnName(nameof(Field.FormConfiguration))
+                .HasConversion(
+                    new FormConfigurationValueConverter()
+                    )
+                .Metadata.SetValueComparer(new FormConfigurationDictionaryValueComparer());
         });
 
         builder.Entity<Entry>(entry =>
@@ -121,7 +130,6 @@ public static class CmsDbContextModelCreatingExtensions
             entry.ToTable(CmsDbProperties.DbTablePrefix + "Entries", CmsDbProperties.DbSchema);
 
             entry.ConfigureByConvention();
-            entry.ConfigureObjectCustomizedFields();
 
             entry.Property(e => e.Culture).IsRequired().HasMaxLength(SiteConsts.MaxCultureLength);
             entry.Property(e => e.Title).IsRequired().HasMaxLength(EntryConsts.MaxTitleLength);

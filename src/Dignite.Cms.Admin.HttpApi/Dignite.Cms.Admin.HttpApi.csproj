@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Dignite.Cms.Admin.Application.Contracts\Dignite.Cms.Admin.Application.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dignite\Abp\" />
+  </ItemGroup>
+
 </Project>

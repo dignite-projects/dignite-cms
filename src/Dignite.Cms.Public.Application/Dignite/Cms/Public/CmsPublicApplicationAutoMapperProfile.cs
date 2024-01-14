@@ -33,7 +33,7 @@ public class CmsPublicApplicationAutoMapperProfile : Profile
         CreateMap<Entry, EntryDto>()
             .Ignore(e => e.Author)
             .Ignore(e => e.Url)
-            .MapCustomizeFields();
+            .MapExtraProperties();
         CreateMap<EntryRevision, EntryRevisionDto>();
     }
 }

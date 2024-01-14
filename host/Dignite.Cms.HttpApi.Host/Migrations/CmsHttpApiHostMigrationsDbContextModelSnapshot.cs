@@ -19,7 +19,7 @@ namespace Dignite.Cms.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.SqlServer)
-                .HasAnnotation("ProductVersion", "7.0.1")
+                .HasAnnotation("ProductVersion", "7.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -32,6 +32,7 @@ namespace Dignite.Cms.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -44,9 +45,10 @@ namespace Dignite.Cms.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatorId");
 
-                    b.Property<string>("CustomFields")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("CustomFields");
+                    b.Property<string>("Culture")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<Guid?>("DeleterId")
                         .HasColumnType("uniqueidentifier")
@@ -60,6 +62,7 @@ namespace Dignite.Cms.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -86,11 +89,6 @@ namespace Dignite.Cms.Migrations
                     b.Property<DateTime>("PublishTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Region")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
                     b.Property<Guid>("SectionId")
                         .HasColumnType("uniqueidentifier");
 
@@ -113,11 +111,11 @@ namespace Dignite.Cms.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SectionId", "Region", "Slug");
+                    b.HasIndex("SectionId", "Culture", "Slug");
 
                     b.HasIndex("SectionId", "CreatorId", "PublishTime", "Status");
 
-                    b.HasIndex("SectionId", "Region", "PublishTime", "Status");
+                    b.HasIndex("SectionId", "Culture", "PublishTime", "Status");
 
                     b.ToTable("CmsEntries", (string)null);
                 });
@@ -130,6 +128,7 @@ namespace Dignite.Cms.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -142,9 +141,6 @@ namespace Dignite.Cms.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatorId");
 
-                    b.Property<string>("DefaultValue")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid?>("DeleterId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("DeleterId");
@@ -153,12 +149,16 @@ namespace Dignite.Cms.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("DeletionTime");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("DisplayName")
                         .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -212,11 +212,13 @@ namespace Dignite.Cms.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -242,6 +244,7 @@ namespace Dignite.Cms.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -268,6 +271,7 @@ namespace Dignite.Cms.Migrations
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -315,6 +319,7 @@ namespace Dignite.Cms.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -341,6 +346,7 @@ namespace Dignite.Cms.Migrations
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -404,6 +410,7 @@ namespace Dignite.Cms.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -415,6 +422,9 @@ namespace Dignite.Cms.Migrations
                     b.Property<Guid?>("CreatorId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatorId");
+
+                    b.Property<string>("Cultures")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("DeleterId")
                         .HasColumnType("uniqueidentifier")
@@ -430,6 +440,7 @@ namespace Dignite.Cms.Migrations
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -460,9 +471,6 @@ namespace Dignite.Cms.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("Regions")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid?>("TenantId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("TenantId");
@@ -482,6 +490,7 @@ namespace Dignite.Cms.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -500,6 +509,7 @@ namespace Dignite.Cms.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -545,8 +555,13 @@ namespace Dignite.Cms.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasColumnName("BlobName");
 
+                    b.Property<string>("CellName")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -581,6 +596,7 @@ namespace Dignite.Cms.Migrations
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -634,6 +650,7 @@ namespace Dignite.Cms.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -651,6 +668,7 @@ namespace Dignite.Cms.Migrations
                         .HasColumnName("EmailConfirmed");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 

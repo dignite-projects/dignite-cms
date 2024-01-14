@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.DynamicForms;
+﻿using Dignite.Abp.Data;
 using Dignite.Cms.Entries;
 using System;
 using System.Text.Json.Serialization;
@@ -44,11 +44,6 @@ namespace Dignite.Cms.Public.Entries
         /// 
         /// </summary>
         public DateTime PublishTime { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public CustomFieldDictionary CustomFields { get; set; }
 
 
         /// <summary>

@@ -1,9 +1,9 @@
-﻿using Dignite.Abp.DynamicForms;
+﻿using Dignite.Abp.Data;
+using Dignite.Abp.DynamicForms;
 using Dignite.Cms.Public.Web.Models;
 using Dignite.Cms.Public.Web.Razor;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Dignite.Cms.Public.Web.TagHelpers
@@ -12,7 +12,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
     {
         private const string partialFileFolder = "cms/fields";
 
-        public ICustomizeFieldInfo Field { get; set; }
+        public FormField Field { get; set; }
 
         public IHasCustomFields Entry { get; set; }
 
@@ -34,7 +34,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             var body = await _renderer.RenderAsync(
-                GetPartialName(Field.FormName), 
+                GetPartialName(Field.FormControlName), 
                 new EntryFieldViewModel(Field, Entry)
                 );
             output.TagName = null;

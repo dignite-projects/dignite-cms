@@ -1,5 +1,4 @@
-﻿using Dignite.Cms.Fields;
-using Dignite.Cms.Sections;
+﻿using Dignite.Cms.Sections;
 using System;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Validation;
@@ -17,6 +16,11 @@ namespace Dignite.Cms.Admin.Sections
         /// </summary>
         [DynamicMaxLength(typeof(EntryTypeConsts), nameof(EntryTypeConsts.MaxDisplayNameLength))]
         public virtual string DisplayName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual bool Required { get; set; }
 
         /// <summary>
         /// 

@@ -13,6 +13,7 @@ namespace Dignite.Cms.Sections
         /// Text to override field definition
         /// </summary>
         public string DisplayName { get; set; }
+        public virtual bool Required { get; set; }
 
         /// <summary>
         /// 

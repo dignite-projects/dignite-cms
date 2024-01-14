@@ -35,6 +35,7 @@ namespace Dignite.Cms.Admin.Sections
                             new EntryField(
                                 f.FieldId,
                                 f.DisplayName,
+                                f.Required,
                                 f.Searchable
                                 )).ToList()
                             )).ToList(), 
@@ -88,6 +89,7 @@ namespace Dignite.Cms.Admin.Sections
                         ft.Fields.Select(f => new EntryField(
                                 f.FieldId,
                                 f.DisplayName,
+                                f.Required,
                                 f.Searchable
                                 )).ToList())
                     );

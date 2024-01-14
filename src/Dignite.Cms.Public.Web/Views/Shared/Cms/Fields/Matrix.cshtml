@@ -1,6 +1,7 @@
 ﻿@using Dignite.Abp.DynamicForms.Matrix;
 @using Dignite.Cms.Public.Web.Models;
 @using Dignite.Abp.DynamicForms;
+@using Dignite.Abp.Data;
 @model EntryFieldViewModel
 @{
     var matrixBlocks = Model.Entry.GetField<List<MatrixBlock>>(Model.Field.Name, new List<MatrixBlock>());

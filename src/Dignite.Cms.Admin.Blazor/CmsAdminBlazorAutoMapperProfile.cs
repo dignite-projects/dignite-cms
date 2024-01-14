@@ -5,7 +5,6 @@ using Dignite.Cms.Admin.Sections;
 using Dignite.Cms.Admin.Sites;
 using Dignite.Cms.Sections;
 using Dignite.Cms.Sites;
-using Volo.Abp.AutoMapper;
 
 namespace Dignite.Cms.Admin.Blazor
 {
@@ -13,21 +12,17 @@ namespace Dignite.Cms.Admin.Blazor
     {
         public CmsAdminBlazorAutoMapperProfile()
         {
-            CreateMap<FieldGroupDto, CreateOrUpdateFieldGroupInput>()
-                .MapExtraProperties();
-            CreateMap<FieldDto, UpdateFieldInput>()
-                .MapExtraProperties();
+            CreateMap<FieldGroupDto, CreateOrUpdateFieldGroupInput>();
+            CreateMap<FieldDto, UpdateFieldInput>();
             CreateMap<SiteDto, UpdateSiteInput>()
                 .MapExtraProperties();
             CreateMap<SiteCultureDto, CreateOrUpdateCultureInput>(); 
             CreateMap<SectionDto, UpdateSectionInput>()
                 .MapExtraProperties();
-            CreateMap<EntryTypeDto, UpdateEntryTypeInput>()
-                .MapExtraProperties();
+            CreateMap<EntryTypeDto, UpdateEntryTypeInput>();
             CreateMap<EntryFieldTabDto, EntryFieldTabInput>();
             CreateMap<EntryFieldDto, EntryFieldInput>();
-            CreateMap<EntryDto, UpdateEntryInput>()
-                .Ignore(u => u.CustomizedFieldFiles);
+            CreateMap<EntryDto, UpdateEntryInput>();
         }
     }
 }

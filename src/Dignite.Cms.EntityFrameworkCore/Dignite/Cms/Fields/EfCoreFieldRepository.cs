@@ -35,7 +35,7 @@ namespace Dignite.Cms.Fields
         public async Task<List<Field>> GetListAsync(Guid? groupId, string filter, int maxResultCount = int.MaxValue, int skipCount = 0, string sorting = null, CancellationToken cancellationToken = default)
         {
             return await (await GetQueryableAsync(groupId, filter))
-                .OrderBy(sorting.IsNullOrEmpty() ? $"{nameof(Field.CreationTime)} desc" : sorting)                
+                .OrderBy(sorting.IsNullOrEmpty() ? $"{nameof(Field.CreationTime)} asc" : sorting)                
                 .PageBy(skipCount, maxResultCount)
                 .ToListAsync(GetCancellationToken(cancellationToken));
         }

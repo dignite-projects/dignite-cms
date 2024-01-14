@@ -1,5 +1,6 @@
-﻿using Dignite.Abp.DynamicForms;
+﻿using Dignite.Abp.Data;
 using System;
+using Volo.Abp.Data;
 using Volo.Abp.EventBus;
 using Volo.Abp.MultiTenancy;
 
@@ -48,7 +49,7 @@ namespace Dignite.Cms.Entries
         public virtual EntryStatus Status { get; protected set; }
 
 
-        public CustomFieldDictionary CustomFields { get; set; }
+        public ExtraPropertyDictionary ExtraProperties { get; set; }
 
 
         /// <summary>

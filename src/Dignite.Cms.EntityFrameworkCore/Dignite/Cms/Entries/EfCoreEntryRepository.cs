@@ -1,6 +1,5 @@
-﻿using Dignite.Abp.DynamicForms;
-using Dignite.Abp.FieldCustomizing;
-using Dignite.Abp.FieldCustomizing.EntityFrameworkCore.QueryingByFields;
+﻿using Dignite.Abp.Data;
+using Dignite.Abp.DynamicForms;
 using Dignite.Cms.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,17 +15,17 @@ namespace Dignite.Cms.Entries
 {
     public class EfCoreEntryRepository : EfCoreRepository<ICmsDbContext, Entry,Guid>, IEntryRepository
     {
-        private readonly IFormSelector _formSelector;
+        private readonly IFormControlSelector _formControlSelector;
         private readonly IEnumerable<IFieldQuerying> _fieldQueryings;
 
         public EfCoreEntryRepository(
-            IFormSelector formSelector,
+            IFormControlSelector formControlSelector,
             IEnumerable<IFieldQuerying> fieldQueryings,
             IDbContextProvider<ICmsDbContext> dbContextProvider
             )
             : base(dbContextProvider)
         {
-            _formSelector = formSelector;
+            _formControlSelector = formControlSelector;
             _fieldQueryings = fieldQueryings;
         }
 
@@ -212,7 +211,7 @@ namespace Dignite.Cms.Entries
                     if (field == null)
                         continue;
 
-                    var form = _formSelector.Get(field.FormName);
+                    var form = _formControlSelector.Get(field.FormControlName);
                     if (form.GetType() == querying.FormType)
                     {
                         source = querying.Query(source, param);

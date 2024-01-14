@@ -2,11 +2,10 @@
 using System;
 using System.Collections.Generic;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Domain.Entities;
 
 namespace Dignite.Cms.Admin.Sections
 {
-    public class EntryTypeDto: ExtensibleAuditedEntityDto<Guid>, IHasConcurrencyStamp
+    public class EntryTypeDto: AuditedEntityDto<Guid>
     {
         /// <summary>
         /// Display Name of this entry type.
@@ -21,9 +20,5 @@ namespace Dignite.Cms.Admin.Sections
 
         public IList<EntryFieldTabDto> FieldTabs { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public string ConcurrencyStamp { get; set; }
     }
 }

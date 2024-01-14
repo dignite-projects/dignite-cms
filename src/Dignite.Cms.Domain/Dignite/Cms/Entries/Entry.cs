@@ -1,5 +1,6 @@
-﻿using Dignite.Abp.DynamicForms;
+﻿using Dignite.Abp.Data;
 using System;
+using Volo.Abp.Data;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 
@@ -22,8 +23,8 @@ namespace Dignite.Cms.Entries
             string title, 
             string slug, 
             DateTime publishTime, 
-            EntryStatus status, 
-            CustomFieldDictionary customFields, 
+            EntryStatus status,
+            ExtraPropertyDictionary extraProperties,
             Guid? parentId, 
             int order, 
             EntryRevision revision, 
@@ -37,7 +38,7 @@ namespace Dignite.Cms.Entries
             Slug = slug;
             PublishTime = publishTime;
             Status = status;
-            CustomFields = customFields;
+            ExtraProperties= extraProperties;
             ParentId = parentId;
             Order = order;
             Revision = revision;
@@ -75,11 +76,6 @@ namespace Dignite.Cms.Entries
         /// 
         /// </summary>
         public virtual EntryStatus Status { get; protected set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public virtual CustomFieldDictionary CustomFields { get; set; }
 
         /// <summary>
         /// 

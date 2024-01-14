@@ -1,16 +1,19 @@
 ﻿@using Dignite.Abp.DynamicForms.Select;
 @using Dignite.Cms.Public.Web.Models;
 @using Dignite.Abp.DynamicForms;
+@using Dignite.Abp.Data;
 @using Dignite.FileExplorer.Files;
 @using Dignite.Cms.Public.Web.TagHelpers
 @model MatrixBlockViewModel
 @{
-    var titleField = Model.Type.FieldDefinitions.First(fd => fd.Name == "title");
-    var descriptionField = Model.Type.FieldDefinitions.First(fd => fd.Name == "description");
+    var titleField = Model.Type.Fields.First(fd => fd.Name == "title");
+    var descriptionField = Model.Type.Fields.First(fd => fd.Name == "description");
     var layouts = Model.Block.GetField<IEnumerable<string>>("layout");
     var files = Model.Block.GetField<List<FileDescriptorDto>>("illustration");
     var linkText = Model.Block.GetField<string>("link-text", null);
     var linkUrl = Model.Block.GetField<string>("link-url", null);
+    titleField.Value = @Model.Block.GetField("title");
+    descriptionField.Value = @Model.Block.GetField("description");
     FileDescriptorDto illustration = (files != null && files.Any()) ? files[0] : null;
 }
 

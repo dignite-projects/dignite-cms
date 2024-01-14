@@ -1,5 +1,4 @@
-﻿using Dignite.Abp.FieldCustomizing;
-using Dignite.FileExplorer;
+﻿using Dignite.FileExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Domain;
@@ -12,7 +11,6 @@ namespace Dignite.Cms;
 [DependsOn(
     typeof(AbpDddDomainModule),
     typeof(CmsDomainSharedModule),
-    typeof(DigniteAbpFieldCustomizingDomainSharedModule),
     typeof(FileExplorerDomainModule),
     typeof(AbpAutoMapperModule),
     typeof(CmsKitDomainModule)

@@ -1,9 +1,6 @@
-﻿using Volo.Abp.Domain.Entities;
-
-namespace Dignite.Cms.Admin.Sections
+﻿namespace Dignite.Cms.Admin.Sections
 {
-    public class UpdateEntryTypeInput : CreateOrUpdateEntryTypeInputBase, IHasConcurrencyStamp
+    public class UpdateEntryTypeInput : CreateOrUpdateEntryTypeInputBase
     {
-        public string ConcurrencyStamp { get; set; }
     }
 }

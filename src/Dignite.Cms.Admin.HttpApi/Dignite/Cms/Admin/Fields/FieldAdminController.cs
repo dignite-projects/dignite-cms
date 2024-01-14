@@ -61,12 +61,5 @@ namespace Dignite.Cms.Admin.Fields
         {
             return await _fieldAppService.GetAsync(id);
         }
-
-        [HttpGet]
-        [Route("forms")]
-        public async Task<ListResultDto<FormDto>> GetFormsAsync()
-        {
-            return await _fieldAppService.GetFormsAsync();
-        }
     }
 }

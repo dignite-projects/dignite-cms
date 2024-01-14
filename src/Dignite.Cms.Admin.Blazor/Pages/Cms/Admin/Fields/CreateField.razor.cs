@@ -1,4 +1,5 @@
 ﻿using Blazorise;
+using Dignite.Abp.DynamicForms.Textbox;
 using Dignite.Cms.Admin.Fields;
 using Dignite.Cms.Localization;
 using System;
@@ -10,7 +11,10 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
     public partial class CreateField
     {
         protected PageToolbar Toolbar { get; } = new();
-        protected CreateFieldInput NewEntity=new ();
+        protected CreateFieldInput NewEntity = new CreateFieldInput 
+        { 
+            FormControlName = TextEditFormControl.ControlName 
+        };
         protected Validations CreateValidationsRef;
 
         public CreateField()

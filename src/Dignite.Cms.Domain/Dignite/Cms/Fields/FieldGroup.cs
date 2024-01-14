@@ -6,7 +6,7 @@ using Volo.Abp.MultiTenancy;
 
 namespace Dignite.Cms.Fields
 {
-    public class FieldGroup: AggregateRoot<Guid>, IMultiTenant
+    public class FieldGroup: Entity<Guid>, IMultiTenant
     {
         public FieldGroup(Guid id, string name, Guid? tenantId):base(id)
         {

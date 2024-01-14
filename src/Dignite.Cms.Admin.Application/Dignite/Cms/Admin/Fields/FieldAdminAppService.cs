@@ -1,8 +1,6 @@
-﻿using Dignite.Abp.DynamicForms;
-using Dignite.Cms.Fields;
+﻿using Dignite.Cms.Fields;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 
@@ -11,23 +9,22 @@ namespace Dignite.Cms.Admin.Fields
     public class FieldAdminAppService : CmsAdminAppServiceBase, IFieldAdminAppService
     {
         private readonly IFieldRepository  _fieldRepository;
-        private readonly IEnumerable<IForm> _forms;
 
-        public FieldAdminAppService(IFieldRepository fieldRepository, IEnumerable<IForm> forms)
+        public FieldAdminAppService(IFieldRepository fieldRepository)
         {
             _fieldRepository = fieldRepository;
-            _forms = forms;
         }
 
         public async Task<FieldDto> CreateAsync(CreateFieldInput input)
         {
-            var entity = new Field(GuidGenerator.Create(),
-                input.DisplayName,
-                input.Name,
-                input.DefaultValue,
-                input.FormName,
-                input.FormConfiguration,
+            var entity = new Field(
+                GuidGenerator.Create(),
                 input.GroupId.HasValue ? (input.GroupId.Value == Guid.Empty ? null : input.GroupId.Value) : null,
+                input.Name,
+                input.DisplayName,
+                input.Description,
+                input.FormControlName,
+                input.FormConfiguration,
                 CurrentTenant.Id);
             await _fieldRepository.InsertAsync(entity);
 
@@ -51,16 +48,6 @@ namespace Dignite.Cms.Admin.Fields
             );
         }
 
-        public async Task<ListResultDto<FormDto>> GetFormsAsync()
-        {
-            return await Task.FromResult(
-                new ListResultDto<FormDto>(
-                _forms.Select(
-                    f=>new FormDto(f.Name,f.DisplayName,f.FormType)
-                    ).ToList()
-                    ));
-        }
-
         public async Task<PagedResultDto<FieldDto>> GetListAsync(GetFieldsInput input)
         {
             var count = await _fieldRepository.GetCountAsync(input.GroupId, input.Filter);
@@ -78,8 +65,8 @@ namespace Dignite.Cms.Admin.Fields
             var entity = await _fieldRepository.GetAsync(id,false);
             entity.SetDisplayName(input.DisplayName);
             entity.SetName(input.Name);
-            entity.SetDefaultValue(input.DefaultValue);
-            entity.SetFormName(input.FormName);
+            entity.SetDescription(input.Description);
+            entity.SetFormControlName(input.FormControlName);
             entity.SetGroupId(input.GroupId.HasValue ? (input.GroupId.Value == Guid.Empty ? null : input.GroupId.Value) : null);
             entity.SetFormConfigurationDictionary(input.FormConfiguration);
             await _fieldRepository.UpdateAsync(entity);

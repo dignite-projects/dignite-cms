@@ -1,10 +1,11 @@
 ﻿@using Dignite.Abp.DynamicForms.Select;
 @using Dignite.Cms.Public.Web.Models;
 @using Dignite.Abp.DynamicForms;
+@using Dignite.Abp.Data;
 @using Dignite.FileExplorer.Files;
 @model MatrixBlockViewModel
 @{
-    var layoutField = Model.Type.FieldDefinitions.First(fd => fd.Name == "layout");
+    var layoutField = Model.Type.Fields.First(fd => fd.Name == "layout");
     var layoutConfiguration = new SelectConfiguration(layoutField.FormConfiguration);
     var layouts = Model.Block.GetField<IEnumerable<string>>("layout");
     var photos = Model.Block.GetField<List<FileDescriptorDto>>("photos");

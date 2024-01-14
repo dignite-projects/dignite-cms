@@ -6,7 +6,7 @@
     "FieldGroup": "字段分组",
     "DisplayName": "显示名称",
     "Name": "名称",
-    "FormName": "表单名称",
+    "FormControlName": "表单控件名称",
     "CreationTime": "创建时间",
     "New": "新建",
     "AllFields": "所有字段",
@@ -28,6 +28,7 @@
     "Slug": "别名",
     "ParentEntry": "上级条目",
     "RevisionNotes": "修订说明",
-    "SamplePageMessage": "Cms模块的示例页面"
+    "SamplePageMessage": "Cms模块的示例页面",
+    "FormControl:Matrix": "矩阵控件"
   }
 }

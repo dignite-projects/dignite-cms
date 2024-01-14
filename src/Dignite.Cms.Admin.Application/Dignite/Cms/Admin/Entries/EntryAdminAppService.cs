@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
+using Dignite.Abp.Data;
 
 namespace Dignite.Cms.Admin.Entries
 {
@@ -50,7 +51,7 @@ namespace Dignite.Cms.Admin.Entries
                 input.Slug, 
                 input.PublishTime,
                 input.Draft? EntryStatus.Draft: EntryStatus.Published,
-                input.CustomFields,
+                input.ExtraProperties,
                 input.ParentId,
                 order,
                 revision,
@@ -88,9 +89,13 @@ namespace Dignite.Cms.Admin.Entries
             entry.Title=input.Title;
             entry.Slug = input.Slug;
             entry.PublishTime = input.PublishTime;
-            entry.Culture = input.Culture;
-            entry.CustomFields = input.CustomFields;
+            entry.Culture = input.Culture;            
             entry.Revision.Notes = input.RevisionNotes;
+
+            foreach (var item in input.ExtraProperties)
+            {
+                entry.SetField(item.Key, item.Value);
+            }
 
             //
             await _entryRepository.UpdateAsync(entry);

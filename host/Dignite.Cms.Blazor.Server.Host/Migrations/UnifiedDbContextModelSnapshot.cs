@@ -19,7 +19,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.SqlServer)
-                .HasAnnotation("ProductVersion", "7.0.1")
+                .HasAnnotation("ProductVersion", "7.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -32,6 +32,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -49,10 +50,6 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasMaxLength(16)
                         .HasColumnType("nvarchar(16)");
 
-                    b.Property<string>("CustomFields")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("CustomFields");
-
                     b.Property<Guid?>("DeleterId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("DeleterId");
@@ -65,6 +62,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -128,12 +126,6 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
-                        .HasColumnName("ConcurrencyStamp");
-
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2")
                         .HasColumnName("CreationTime");
@@ -141,9 +133,6 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                     b.Property<Guid?>("CreatorId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatorId");
-
-                    b.Property<string>("DefaultValue")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("DeleterId")
                         .HasColumnType("uniqueidentifier")
@@ -153,20 +142,19 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("DeletionTime");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("DisplayName")
                         .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("ExtraProperties")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ExtraProperties");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("FormConfiguration")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("FormConfiguration");
 
-                    b.Property<string>("FormName")
+                    b.Property<string>("FormControlName")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
@@ -210,16 +198,6 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
-                        .HasColumnName("ConcurrencyStamp");
-
-                    b.Property<string>("ExtraProperties")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ExtraProperties");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -239,12 +217,6 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
-                        .HasColumnName("ConcurrencyStamp");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2")
@@ -266,10 +238,6 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("ExtraProperties")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ExtraProperties");
 
                     b.Property<string>("FieldTabs")
                         .HasColumnType("nvarchar(max)");
@@ -315,6 +283,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -341,6 +310,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -404,6 +374,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -433,6 +404,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -482,6 +454,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -500,6 +473,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -545,8 +519,13 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasColumnName("BlobName");
 
+                    b.Property<string>("CellName")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -581,6 +560,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -664,6 +644,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -684,6 +665,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -1018,6 +1000,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -1027,6 +1010,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -1092,6 +1076,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -1100,6 +1085,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -1192,6 +1178,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -1204,6 +1191,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -1253,6 +1241,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -1289,6 +1278,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -1573,6 +1563,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -1603,6 +1594,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -1811,6 +1803,55 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                     b.ToTable("AbpSettings", (string)null);
                 });
 
+            modelBuilder.Entity("Volo.Abp.SettingManagement.SettingDefinitionRecord", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DefaultValue")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<bool>("IsEncrypted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsInherited")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsVisibleToClients")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Providers")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("AbpSettingDefinitions", (string)null);
+                });
+
             modelBuilder.Entity("Volo.Abp.TenantManagement.Tenant", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1819,6 +1860,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -1843,6 +1885,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -1899,6 +1942,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -1916,6 +1960,7 @@ namespace Dignite.Cms.Blazor.Server.Host.Migrations
                         .HasColumnName("EmailConfirmed");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 

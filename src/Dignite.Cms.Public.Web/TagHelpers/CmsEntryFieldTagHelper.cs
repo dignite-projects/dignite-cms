@@ -4,6 +4,7 @@ using Dignite.Cms.Public.Web.Models;
 using Dignite.Cms.Public.Web.Razor;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Threading.Tasks;
+using Dignite.Abp.Data;
 
 namespace Dignite.Cms.Public.Web.TagHelpers
 {
@@ -41,7 +42,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             else
             {
                 var tagHelper = new CmsFieldTagHelper(_renderer);
-                tagHelper.Field = field;
+                tagHelper.Field = new FormField(field.Name,field.DisplayName,field.Description,field.FormControlName,field.FormConfiguration,null,Entry.Entry.GetField(field.Name));
                 tagHelper.Entry = Entry.Entry;
                 tagHelper.PartialName = PartialName;
                 await tagHelper.ProcessAsync(context, output);

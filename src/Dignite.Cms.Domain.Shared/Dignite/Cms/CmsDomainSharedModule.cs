@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.FieldCustomizing;
+﻿using Dignite.Abp.DynamicForms;
 using Dignite.Cms.Localization;
 using Dignite.FileExplorer;
 using Volo.Abp.Localization;
@@ -12,7 +12,7 @@ using Volo.CmsKit;
 namespace Dignite.Cms;
 [DependsOn(
     typeof(AbpValidationModule),
-    typeof(DigniteAbpFieldCustomizingDomainSharedModule),
+    typeof(DigniteAbpDynamicFormsModule),
     typeof(FileExplorerDomainSharedModule),
     typeof(CmsKitDomainSharedModule)
 )]

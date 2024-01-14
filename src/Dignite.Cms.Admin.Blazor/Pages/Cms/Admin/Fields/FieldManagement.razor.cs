@@ -86,9 +86,9 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
                     },
                     new TableColumn
                     {
-                        Title = L["FormName"],
+                        Title = L["FormControlName"],
                         Sortable = true,
-                        Data = nameof(FieldDto.FormName)
+                        Data = nameof(FieldDto.FormControlName)
                     },
                     new TableColumn
                     {

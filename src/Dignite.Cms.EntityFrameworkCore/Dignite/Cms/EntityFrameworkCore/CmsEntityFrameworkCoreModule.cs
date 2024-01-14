@@ -1,5 +1,4 @@
-﻿using Dignite.Abp.FieldCustomizing.EntityFrameworkCore;
-using Dignite.FileExplorer.EntityFrameworkCore;
+﻿using Dignite.FileExplorer.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Modularity;
@@ -10,7 +9,6 @@ namespace Dignite.Cms.EntityFrameworkCore;
 [DependsOn(
     typeof(CmsDomainModule),
     typeof(AbpEntityFrameworkCoreModule),
-    typeof(DigniteAbpFieldCustomizingEntityFrameworkCoreModule),
     typeof(FileExplorerEntityFrameworkCoreModule),
     typeof(CmsKitEntityFrameworkCoreModule)
 )]

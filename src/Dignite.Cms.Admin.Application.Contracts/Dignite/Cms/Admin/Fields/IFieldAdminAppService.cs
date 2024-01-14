@@ -1,7 +1,4 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Threading.Tasks;
-using Volo.Abp.Application.Dtos;
+﻿using System;
 using Volo.Abp.Application.Services;
 
 namespace Dignite.Cms.Admin.Fields
@@ -14,6 +11,5 @@ namespace Dignite.Cms.Admin.Fields
         CreateFieldInput,
         UpdateFieldInput>
     {
-        Task<ListResultDto<FormDto>> GetFormsAsync();
     }
 }

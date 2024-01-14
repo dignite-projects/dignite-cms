@@ -1,20 +1,14 @@
 ﻿using System;
 using Volo.Abp.Auditing;
-using Volo.Abp.Domain.Entities;
 
 namespace Dignite.Cms.Admin.Fields
 {
-    public class FieldDto: Cms.Fields.FieldDto, IAuditedObject, IHasConcurrencyStamp
+    public class FieldDto: Cms.Fields.FieldDto, IAuditedObject
     {
         /// <summary>
         /// 
         /// </summary>
         public virtual Guid? GroupId { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string ConcurrencyStamp { get; set; }
 
         public DateTime CreationTime { get; set; }
 

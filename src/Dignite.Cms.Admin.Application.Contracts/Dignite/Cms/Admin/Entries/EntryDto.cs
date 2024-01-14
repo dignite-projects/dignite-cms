@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.DynamicForms;
+﻿using Dignite.Abp.Data;
 using Dignite.Cms.Entries;
 using System;
 using System.Text.Json.Serialization;
@@ -11,7 +11,7 @@ namespace Dignite.Cms.Admin.Entries
     /// <summary>
     /// Entry
     /// </summary>
-    public class EntryDto: ExtensibleAuditedEntityDto<Guid>, IHasCustomFields, IHasConcurrencyStamp
+    public class EntryDto: ExtensibleAuditedEntityDto<Guid>, IHasCustomFields
     {
         /// <summary>
         /// 
@@ -48,11 +48,6 @@ namespace Dignite.Cms.Admin.Entries
         /// <summary>
         /// 
         /// </summary>
-        public CustomFieldDictionary CustomFields { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public EntryRevisionDto Revision { get; set; }
 
         #region Section type is a exclusive property of Structure type
@@ -79,9 +74,5 @@ namespace Dignite.Cms.Admin.Entries
         public CmsUserDto Author { get; set; }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public string ConcurrencyStamp { get; set; }
     }
 }

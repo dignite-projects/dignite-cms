@@ -1,11 +1,15 @@
-﻿@using Dignite.Abp.DynamicForms.Components;
+﻿@using Dignite.Abp.DynamicForms
+@using Dignite.Abp.DynamicForms.Components;
 @using Dignite.Cms.Admin.Fields;
+@using Dignite.Cms.Fields
 @using Dignite.Cms.Localization
 @using Volo.Abp.BlazoriseUI.Components.ObjectExtending
 @using Volo.Abp.Localization;
+@using Dignite.Cms.Admin.DynamicForms;
+@inject IFormAdminAppService FormService
 @inject IFieldAdminAppService FieldService
 @inject IFieldGroupAdminAppService FieldGroupService
-@inject IConfigurationComponentSelector ConfigurationComponentSelector
+@inject IFormConfigurationComponentSelector ConfigurationComponentSelector
 @inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
 @inherits AbpComponentBase
 
@@ -24,11 +28,35 @@
         </Field>
     </Validation>
 }
+
+
+<Validation>
+    <Field>
+        <FieldLabel>@L["FieldDisplayName"]</FieldLabel>
+            <TextEdit MaxLength="FieldConsts.MaxDisplayNameLength" @bind-Text="@Entity.DisplayName" />
+    </Field>
+</Validation>
+<Validation>
+    <Field>
+        <FieldLabel>@L["FieldName"]</FieldLabel>
+            <TextEdit Pattern="@FieldConsts.NameRegularExpression" MaxLength="FieldConsts.MaxNameLength" @bind-Text="@Entity.Name">
+            <FieldHelp>@L["FieldNameHelpText"]</FieldHelp>
+        </TextEdit>
+    </Field>
+</Validation>
+<Validation>
+    <Field>
+        <FieldLabel>@L["Description"]</FieldLabel>
+            <TextEdit MaxLength="FieldConsts.MaxDescriptionLength" @bind-Text="@Entity.Description">
+        </TextEdit>
+    </Field>
+</Validation>
+
 <Validation MessageLocalizer="@LH.Localize" Validator="@ValidationRule.None">
     <Field>
         <FieldLabel>@L["FieldType"]</FieldLabel>
-        <Select TValue="string" SelectedValue="@Entity.FormName" SelectedValueChanged="OnFormChangedAsync">
-            @foreach (var item in AllForms)
+        <Select TValue="string" SelectedValue="@Entity.FormControlName" SelectedValueChanged="OnFormChangedAsync">
+            @foreach (var item in AllFormControls)
             {
                 <SelectItem TValue="string" Value="@item.Name">@item.DisplayName</SelectItem>
             }
@@ -36,10 +64,8 @@
     </Field>
 </Validation>
 
-<Divider />
 
-
-@if (FieldFormConfigurationComponentType is not null)
+@if (FormConfigurationComponentType is not null)
 {
-    <DynamicComponent Type="@FieldFormConfigurationComponentType" Parameters='@FieldFormConfigurationComponentParameters' />
+    <DynamicComponent Type="@FormConfigurationComponentType" Parameters='@FormConfigurationComponentParameters' />
 }

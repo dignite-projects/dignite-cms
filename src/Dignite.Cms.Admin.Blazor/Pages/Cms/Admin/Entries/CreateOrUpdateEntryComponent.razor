@@ -1,4 +1,6 @@
-﻿@using Dignite.Abp.DynamicForms.Components;
+﻿@using Dignite.Abp.DynamicForms;
+@using Dignite.Abp.DynamicForms.Components;
+@using Dignite.Abp.Data;
 @using Dignite.Cms.Admin.Entries;
 @using Dignite.Cms.Admin.Sections;
 @using Dignite.Cms.Localization;
@@ -6,7 +8,7 @@
 @using Volo.Abp.Localization;
 @inject IEntryAdminAppService AppService
 @inject ISectionAdminAppService SectionAppService
-@inject IFormComponentSelector FormComponentSelector
+@inject IFormControlComponentSelector FormControlComponentSelector
 @inject ILanguageProvider LanguageProvider
 @inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
 @inherits AbpComponentBase
@@ -34,15 +36,20 @@
                         {
                             if (ef.Field != null)
                             {
-                                var component = FormComponentSelector.Get(ef.Field.FormName);
+                                var formField = new FormField(ef.Field.Name, ef.DisplayName, ef.Field.Description, ef.Field.FormControlName,ef.Field.FormConfiguration, ef.Required, Entry.GetField(ef.Field.Name));
+                                var component = FormControlComponentSelector.Get(ef.Field.FormControlName);
                                 var parameters = new Dictionary<string, object>();
-                                parameters.Add("CustomizableObject", Entry);
-                                parameters.Add("Field", ef.Field);
-                                <DynamicComponent Type="@component.GetType()" Parameters="@parameters"></DynamicComponent>                                    
+                                parameters.Add(nameof(IFormControlComponent.Field), formField);
+                                parameters.Add(
+                                    nameof(IFormControlComponent.OnFormControlValueChanged),
+                                    EventCallback.Factory.Create<FormField>(this, OnFieldValueChanged)
+                                    );
+                                <DynamicComponent Type="@component.GetType()" Parameters="@parameters"></DynamicComponent>         
                             }
                         }
                     }   
                 }
+                @(System.Text.Json.JsonSerializer.Serialize(Entry))
             </CardBody>
         </Card>
     </Column>

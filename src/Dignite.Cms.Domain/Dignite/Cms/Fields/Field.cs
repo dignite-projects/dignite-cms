@@ -1,25 +1,23 @@
 ﻿using Dignite.Abp.DynamicForms;
-using Dignite.Abp.FieldCustomizing;
 using System;
-using Volo.Abp.Auditing;
+using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 
 namespace Dignite.Cms.Fields
 {
-    public class Field: CustomizeFieldDefinitionBase, IFullAuditedObject,IMultiTenant
+    public class Field: FullAuditedEntity<Guid>, IMultiTenant
     {
-        public Field(
-            Guid id,
-            string displayName,
-            string name,
-            string defaultValue,
-            string formName, 
-            FormConfigurationDictionary formConfiguration, 
-            Guid? groupId, 
-            Guid? tenantId)
-            :base( id, displayName,name,defaultValue,formName,formConfiguration)
+        protected Field() { }
+
+        public Field(Guid id, Guid? groupId, string name, string displayName, string description, string formControlName, FormConfigurationDictionary formConfiguration, Guid? tenantId)
+            :base(id)
         {
             GroupId = groupId;
+            Name = name;
+            DisplayName = displayName;
+            Description = description;
+            FormControlName = formControlName;
+            FormConfiguration = formConfiguration;
             TenantId = tenantId;
         }
 
@@ -28,21 +26,55 @@ namespace Dignite.Cms.Fields
         /// </summary>
         public virtual Guid? GroupId { get; protected set; }
 
-        public DateTime CreationTime { get; set; }
+        /// <summary>
+        /// Field Unique Name
+        /// </summary>
+        public virtual string Name { get; protected set; }
 
-        public Guid? CreatorId { get; set; }
 
-        public Guid? LastModifierId { get; set; }
-        public DateTime? LastModificationTime { get; set; }
-        public Guid? DeleterId { get; set; }
-        public DateTime? DeletionTime { get; set; }
-        public bool IsDeleted { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual string DisplayName { get; protected set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual string Description { get; protected set; }
+
+        /// <summary>
+        /// Field <see cref="IFormControl.Name"/>
+        /// </summary>
+        public virtual string FormControlName { get; protected set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual FormConfigurationDictionary FormConfiguration { get; set; }
         public Guid? TenantId { get; set; }
-
         public virtual void SetGroupId(Guid? groupId)
         {
             this.GroupId= groupId;
+        }
+        public virtual void SetName(string name)
+        {
+            this.Name = name;
+        }
+        public virtual void SetDisplayName(string displayName)
+        {
+            this.DisplayName = displayName;
+        }
+        public virtual void SetDescription(string description)
+        {
+            this.Description = description;
+        }
+        public virtual void SetFormControlName(string formControlName)
+        {
+            this.FormControlName = formControlName;
+        }
+        public virtual void SetFormConfigurationDictionary(FormConfigurationDictionary formConfiguration)
+        {
+            this.FormConfiguration = formConfiguration;
         }
     }
 }

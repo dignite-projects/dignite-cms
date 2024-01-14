@@ -21,4 +21,8 @@
 	<ProjectReference Include="..\..\..\dignite-abp\modules\file-explorer\src\Dignite.Abp.DynamicForms.FileExplorer\Dignite.Abp.DynamicForms.FileExplorer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dignite\Abp\" />
+  </ItemGroup>
+
 </Project>

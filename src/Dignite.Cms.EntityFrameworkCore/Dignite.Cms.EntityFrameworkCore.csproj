@@ -16,7 +16,6 @@
   <ItemGroup>
     <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="7.4.5" />
 	<PackageReference Include="Volo.CmsKit.EntityFrameworkCore" Version="7.4.5" />
-	<ProjectReference Include="..\..\..\dignite-abp\modules\field-customizing\src\Dignite.Abp.FieldCustomizing.EntityFrameworkCore\Dignite.Abp.FieldCustomizing.EntityFrameworkCore.csproj" />
 	<ProjectReference Include="..\..\..\dignite-abp\modules\file-explorer\src\Dignite.FileExplorer.EntityFrameworkCore\Dignite.FileExplorer.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Domain\Dignite.Cms.Domain.csproj" />
   </ItemGroup>

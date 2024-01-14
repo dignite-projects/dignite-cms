@@ -34,7 +34,7 @@ namespace Dignite.Cms.Admin
             /**** entity *****************************************/
             CreateMap<Entry, EntryDto>()
                 .Ignore(u => u.Author)
-                .MapCustomizeFields();
+                .MapExtraProperties(Volo.Abp.ObjectExtending.MappingPropertyDefinitionChecks.None);
             CreateMap<EntryRevision, EntryRevisionDto>();
 
         }

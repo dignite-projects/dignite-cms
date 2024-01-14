@@ -1,19 +1,16 @@
 ﻿using Dignite.Abp.DynamicForms;
-using Dignite.Abp.DynamicForms.Textbox;
 using Dignite.Cms.Fields;
 using JetBrains.Annotations;
 using System;
 using System.ComponentModel.DataAnnotations;
-using Volo.Abp.ObjectExtending;
 using Volo.Abp.Validation;
 
 namespace Dignite.Cms.Admin.Fields
 {
-    public abstract class CreateOrUpdateFieldInputBase:ExtensibleObject, ICustomizeFieldInfo
+    public abstract class CreateOrUpdateFieldInputBase
     {
-        protected CreateOrUpdateFieldInputBase() : base(false)
+        protected CreateOrUpdateFieldInputBase()
         {
-            FormName = TextboxForm.TextboxFormName;
             FormConfiguration=new FormConfigurationDictionary();
         }
 
@@ -23,28 +20,30 @@ namespace Dignite.Cms.Admin.Fields
         /// Display name of this field.
         /// </summary>
         [Required]
-        [DynamicMaxLength(typeof(CustomizeFieldInfoConsts), nameof(CustomizeFieldInfoConsts.MaxDisplayNameLength))]
+        [DynamicMaxLength(typeof(FieldConsts), nameof(FieldConsts.MaxDisplayNameLength))]
         public string DisplayName { get; set; }
 
         /// <summary>
         /// Unique Name
         /// </summary>
         [Required]
-        [DynamicMaxLength(typeof(CustomizeFieldInfoConsts), nameof(CustomizeFieldInfoConsts.MaxNameLength))]
-        [RegularExpression(CustomizeFieldInfoConsts.NameRegularExpression)]
+        [DynamicMaxLength(typeof(FieldConsts), nameof(FieldConsts.MaxNameLength))]
+        [RegularExpression(FieldConsts.NameRegularExpression)]
         public string Name { get; set; }
 
         /// <summary>
-        /// Default value of the field.
+        /// Description of the field.
         /// </summary>
         [CanBeNull]
-        public string DefaultValue { get; set; }
+        [DynamicMaxLength(typeof(FieldConsts), nameof(FieldConsts.MaxDescriptionLength))]
+        public string Description { get; set; }
 
         [Required]
-        [DynamicMaxLength(typeof(CustomizeFieldInfoConsts), nameof(CustomizeFieldInfoConsts.MaxFormNameLength))]
-        public string FormName { get; set; }
+        [DynamicMaxLength(typeof(FieldConsts), nameof(FieldConsts.MaxFormControlNameLength))]
+        public string FormControlName { get; set; }
 
         [Required]
-        public virtual FormConfigurationDictionary FormConfiguration { get; set; }
+        public FormConfigurationDictionary FormConfiguration { get; set; }
+
     }
 }

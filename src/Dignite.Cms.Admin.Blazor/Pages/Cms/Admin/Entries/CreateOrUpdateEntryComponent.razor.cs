@@ -1,4 +1,5 @@
-﻿using Dignite.Cms.Admin.Entries;
+﻿using Dignite.Abp.DynamicForms;
+using Dignite.Cms.Admin.Entries;
 using Dignite.Cms.Admin.Sections;
 using Dignite.Cms.Localization;
 using Microsoft.AspNetCore.Components;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Localization;
+using Dignite.Abp.Data;
 
 namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 {
@@ -59,6 +61,10 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                     MaxResultCount=1000
                 })).Items;
             }
+        }
+        private void OnFieldValueChanged(FormField field)
+        { 
+            Entry.SetField(field.Name, field.Value);
         }
     }
 }

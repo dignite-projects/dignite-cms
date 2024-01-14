@@ -5,7 +5,7 @@ using Volo.Abp.MultiTenancy;
 
 namespace Dignite.Cms.Sections
 {
-    public class EntryType: FullAuditedAggregateRoot<Guid>, IMultiTenant
+    public class EntryType: FullAuditedEntity<Guid>, IMultiTenant
     {
         public EntryType(Guid id, Guid sectionId, string displayName, string name, IList<EntryFieldTab> fieldTabs, Guid? tenantId)
             :base(id)

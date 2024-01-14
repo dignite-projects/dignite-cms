@@ -16,11 +16,11 @@ namespace Dignite.Cms.Entries
     public class EfCoreEntryRepository : EfCoreRepository<ICmsDbContext, Entry,Guid>, IEntryRepository
     {
         private readonly IFormControlSelector _formControlSelector;
-        private readonly IEnumerable<IFieldQuerying> _fieldQueryings;
+        private readonly IEnumerable<ICustomFieldQuerying> _fieldQueryings;
 
         public EfCoreEntryRepository(
             IFormControlSelector formControlSelector,
-            IEnumerable<IFieldQuerying> fieldQueryings,
+            IEnumerable<ICustomFieldQuerying> fieldQueryings,
             IDbContextProvider<ICmsDbContext> dbContextProvider
             )
             : base(dbContextProvider)
@@ -52,13 +52,13 @@ namespace Dignite.Cms.Entries
             string filter = null,
             DateTime? start = null,
             DateTime? end = null,
-            IList<QueryingByFieldParameter> queryingByFieldParameters = null,
+            IList<QueryingByCustomField> queryingByCustomFields = null,
             int maxResultCount = int.MaxValue,
             int skipCount = 0,
             string sorting = null,
             CancellationToken cancellationToken = default)
         {
-            if (queryingByFieldParameters == null || !queryingByFieldParameters.Any())
+            if (queryingByCustomFields == null || !queryingByCustomFields.Any())
             {
                 return await (await GetQueryableAsync(sectionId, culture, creatorId, status, filter, start, end))
                     .OrderBy(sorting.IsNullOrEmpty() ? $"{nameof(Entry.PublishTime)} desc" : sorting)
@@ -69,7 +69,7 @@ namespace Dignite.Cms.Entries
             {                
                 var enumerable = (await GetQueryableAsync(sectionId, culture, creatorId, status, filter, start, end))
                     .OrderByDescending(e => e.PublishTime).AsEnumerable<Entry>();
-                enumerable = await QueryingByFieldParameters(enumerable, queryingByFieldParameters);
+                enumerable = await QueryingByFields(enumerable, queryingByCustomFields);
 
                 return enumerable.Skip(skipCount).Take(maxResultCount).ToList();
             }
@@ -84,11 +84,11 @@ namespace Dignite.Cms.Entries
             string filter = null,
             DateTime? start = null,
             DateTime? end = null,
-            IList<QueryingByFieldParameter> queryingByFieldParameters = null,
+            IList<QueryingByCustomField> queryingByCustomFields = null,
             CancellationToken cancellationToken = default
             )
         {
-            if (queryingByFieldParameters == null || !queryingByFieldParameters.Any())
+            if (queryingByCustomFields == null || !queryingByCustomFields.Any())
             {
                 return await (await GetQueryableAsync(sectionId, culture, creatorId, status, filter, start, end))
                 .CountAsync(GetCancellationToken(cancellationToken));
@@ -97,7 +97,7 @@ namespace Dignite.Cms.Entries
             {
                 var enumerable = (await GetQueryableAsync(sectionId, culture, creatorId, status, filter, start, end))
                     .AsEnumerable<Entry>();
-                enumerable = await QueryingByFieldParameters(enumerable, queryingByFieldParameters);
+                enumerable = await QueryingByFields(enumerable, queryingByCustomFields);
 
                 return enumerable.Count();
             }
@@ -196,23 +196,23 @@ namespace Dignite.Cms.Entries
                 .WhereIf(end.HasValue, e => e.PublishTime<end.Value);
         }
 
-        protected virtual async Task<IEnumerable<Entry>> QueryingByFieldParameters(IEnumerable<Entry> source, IList<QueryingByFieldParameter> queryingByFieldParameters)
+        protected virtual async Task<IEnumerable<Entry>> QueryingByFields(IEnumerable<Entry> source, IList<QueryingByCustomField> queryingByCustomFields)
         {
             var dbContext = await GetDbContextAsync();
             var fields = await dbContext.Fields
-                .Where(f => queryingByFieldParameters.Select(p => p.FieldName).Contains(f.Name))
+                .Where(f => queryingByCustomFields.Select(p => p.Name).Contains(f.Name))
                 .ToListAsync();
 
-            foreach (var param in queryingByFieldParameters)
+            foreach (var param in queryingByCustomFields)
             {
                 foreach (var querying in _fieldQueryings)
                 {
-                    var field = fields.FirstOrDefault(f => f.Name == param.FieldName);
+                    var field = fields.FirstOrDefault(f => f.Name == param.Name);
                     if (field == null)
                         continue;
 
                     var form = _formControlSelector.Get(field.FormControlName);
-                    if (form.GetType() == querying.FormType)
+                    if (form.GetType() == querying.FormControlType)
                     {
                         source = querying.Query(source, param);
                         continue;

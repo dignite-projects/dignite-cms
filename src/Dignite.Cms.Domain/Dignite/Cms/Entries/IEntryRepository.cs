@@ -21,7 +21,7 @@ namespace Dignite.Cms.Entries
             string filter=null,
             DateTime? start=null,
             DateTime? end = null,
-            IList<QueryingByFieldParameter> queryingByFieldParameters = null,
+            IList<QueryingByCustomField> queryingByCustomFields = null,
             int maxResultCount = int.MaxValue,
             int skipCount = 0,
             string sorting = null,
@@ -34,7 +34,7 @@ namespace Dignite.Cms.Entries
              string filter = null,
             DateTime? start = null,
             DateTime? end = null,
-            IList<QueryingByFieldParameter> queryingByFieldParameters = null,
+            IList<QueryingByCustomField> queryingByCustomFields = null,
             CancellationToken cancellationToken = default
             );
 

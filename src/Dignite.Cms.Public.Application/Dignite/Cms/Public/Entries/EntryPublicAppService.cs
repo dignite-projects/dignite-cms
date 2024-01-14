@@ -88,8 +88,8 @@ namespace Dignite.Cms.Public.Entries
             }
             else
             {
-                List<QueryingByFieldParameter> queryingByFieldParameters = input.QueryingByFieldParameters.IsNullOrEmpty() ? null : JsonSerializer.Deserialize<List<QueryingByFieldParameter>>(input.QueryingByFieldParameters);
-                count = await _entryRepository.GetCountAsync(input.SectionId, input.Culture, input.CreatorId, EntryStatus.Published, input.Filter, input.StartPublishDate, input.ExpiryPublishDate, queryingByFieldParameters);
+                List<QueryingByCustomField> queryingByCustomFields = input.QueryingByCustomFieldsJson.IsNullOrEmpty() ? null : JsonSerializer.Deserialize<List<QueryingByCustomField>>(input.QueryingByCustomFieldsJson);
+                count = await _entryRepository.GetCountAsync(input.SectionId, input.Culture, input.CreatorId, EntryStatus.Published, input.Filter, input.StartPublishDate, input.ExpiryPublishDate, queryingByCustomFields);
                 if (count == 0)
                 {
                     return new PagedResultDto<EntryDto>(0, new List<EntryDto>());
@@ -102,7 +102,7 @@ namespace Dignite.Cms.Public.Entries
                         input.Filter,
                         input.StartPublishDate,
                         input.ExpiryPublishDate,
-                        queryingByFieldParameters,
+                        queryingByCustomFields,
                         input.MaxResultCount,
                         input.SkipCount
                         );

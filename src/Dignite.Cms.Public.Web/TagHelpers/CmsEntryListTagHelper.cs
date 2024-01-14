@@ -45,7 +45,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         /// <summary>
         /// 
         /// </summary>
-        public IList<QueryingByFieldParameter> QueryingByFieldParameters { get; set; }
+        public IList<QueryingByCustomField> QueryingByCustomFields { get; set; }
 
         /// <summary>
         /// The name or path of the view that is rendered to the response.
@@ -130,7 +130,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             {
                 SectionId = Section.Id,
                 Culture = Culture,
-                QueryingByFieldParameters = QueryingByFieldParameters == null ? null : JsonSerializer.Serialize(QueryingByFieldParameters),
+                QueryingByCustomFieldsJson = QueryingByCustomFields == null ? null : JsonSerializer.Serialize(QueryingByCustomFields),
                 MaxResultCount = this.ResultCount.Value,
                 SkipCount = (this.CurrentPage - 1) * ResultCount.Value
             });

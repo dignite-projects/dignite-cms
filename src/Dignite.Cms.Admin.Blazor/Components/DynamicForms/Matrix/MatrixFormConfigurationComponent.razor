@@ -6,6 +6,7 @@
 @using System.Text.Json;
 @using Dignite.Cms.Fields
 @using Dignite.Cms.Localization
+@using System.Threading
 @using Volo.Abp.AspNetCore.Components.Web;
 @inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
 @inject IFormConfigurationComponentSelector ConfigurationComponentSelector
@@ -69,19 +70,22 @@
             <Column ColumnSize="ColumnSize.Is8">
                 @if (SelectedField != null)
                 {
-                    <Validations @ref="@FieldValidationsRef" Model="@SelectedField" ValidateOnLoad="false">
-                        <Validation>
+                    <Validations @ref="@FieldValidationsRef" Model="@SelectedField">
+                        <Validation Validator="ValidationRule.IsNotEmpty">
                             <Field>
                                 <FieldLabel>@L["FieldDisplayName"]</FieldLabel>
                                 <TextEdit MaxLength="FieldConsts.MaxDisplayNameLength" @bind-Text="@SelectedField.DisplayName" />
                             </Field>
                         </Validation>
-                        <Validation>
+                            <Validation UsePattern Validator="ValidationFieldName">
                             <Field>
                                 <FieldLabel>@L["FieldName"]</FieldLabel>
                                     <TextEdit Pattern="@FieldConsts.NameRegularExpression" MaxLength="FieldConsts.MaxNameLength" @bind-Text="@SelectedField.Name">
+                                        <Feedback>
+                                            <Blazorise.ValidationError />
+                                        </Feedback>
+                                    </TextEdit>
                                     <FieldHelp>@L["FieldNameHelpText"]</FieldHelp>
-                                </TextEdit>
                             </Field>
                         </Validation>
                         <Validation>
@@ -308,9 +312,12 @@
 
     protected virtual async Task AddFieldAsync()
     {
-        SelectedField = new FormField("", "", "", TextEditFormControl.ControlName, new FormConfigurationDictionary(), null, null);
-        SelectedBlockType.Fields.Add(SelectedField);
-        await SetFieldFormConfigurationComponentAsync();
+        if (SelectedField == null || await FieldValidationsRef.ValidateAll())
+        {
+            SelectedField = new FormField("", "", "", TextEditFormControl.ControlName, new FormConfigurationDictionary(), null, null);
+            SelectedBlockType.Fields.Add(SelectedField);
+            await SetFieldFormConfigurationComponentAsync();
+        }
     }
 
     private async Task FormTypeChangedAsync(string formName)
@@ -329,5 +336,28 @@
             };
 
         await Task.CompletedTask;
+    }
+
+    private void ValidationFieldName(ValidatorEventArgs e)
+    {
+        var fieldName = Convert.ToString(e.Value);
+        if (!fieldName.IsNullOrEmpty())
+        {
+            if (
+                SelectedBlockType.Fields.Count(f =>f.Name.Equals(fieldName, StringComparison.InvariantCultureIgnoreCase))==2
+            )
+            {
+                e.Status = ValidationStatus.Error;
+                e.ErrorText = L["FieldName{0}AlreadyExist", fieldName];
+            }
+            else
+            {
+                e.Status = ValidationStatus.Success;
+            }
+        }
+        else
+        {
+            e.Status = ValidationStatus.Error;            
+        }
     }
 }

@@ -168,22 +168,8 @@
     {
         try
         {
-            var validate = true;
-            if (ValidationsRef != null)
-            {
-                validate = await ValidationsRef.ValidateAll();
-
-                if (TableColumns.Select(tc => tc.Name).Distinct().Count() != TableColumns.Count)
-                {
-                    validate = false;
-                    await Notify.Error(L["ColumnNameAlreadyExist"]);
-                }
-            }
-            if (validate)
-            {
-                FormConfiguration.TableColumns = TableColumns;
-                await InvokeAsync(FormConfigModal.Hide);
-            }
+            FormConfiguration.TableColumns = TableColumns;
+            await InvokeAsync(FormConfigModal.Hide);
         }
         catch (Exception ex)
         {

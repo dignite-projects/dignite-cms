@@ -61,5 +61,12 @@ namespace Dignite.Cms.Admin.Fields
         {
             return await _fieldAppService.GetAsync(id);
         }
+
+        [HttpGet]
+        [Route("find-by-name/{name}")]
+        public async Task<FieldDto> FindByNameAsync(string name)
+        {
+            return await _fieldAppService.FindByNameAsync(name);
+        }
     }
 }

@@ -38,6 +38,7 @@
     "SelectFormControl": "コントロールの選択",
     "TableColumnName": "列タイトル",
     "TableColumnForm": "リストフォーム",
-    "ColumnNameAlreadyExist": "列名は既に存在しています"
+    "ColumnNameAlreadyExist": "列名は既に存在しています",
+    "FieldName{0}AlreadyExist": "フィールド名 \"{0}\" は既に存在します"
   }
 }

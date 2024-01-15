@@ -5,7 +5,11 @@
 @using System.Text.Json;
 @inject IFormControlComponentSelector fieldControlComponentSelector
 @inherits FormControlComponentBase<TableFormControl,TableConfiguration,List<Dignite.Abp.DynamicForms.Table.TableRow>>
-
+<style>
+    .table-form-control-row .form-label {
+        display: none;
+    }
+</style>
 <Field>
     <FieldLabel>@Field.DisplayName</FieldLabel>
     <FieldBody>
@@ -40,7 +44,7 @@
                                         nameof(IFormControlComponent.OnChangedValueAsync),
                                     EventCallback.Factory.Create<FormField>(this, ff => OnFieldValueChangedAsync(ff, tableRowIndex))
                                     );
-                                    <TableRowCell>
+                                    <TableRowCell Class="table-form-control-row">
                                         <DynamicComponent Type="@component.GetType()" Parameters="@parameters"></DynamicComponent>
                                     </TableRowCell>
                                 }

@@ -9,7 +9,7 @@
 
         /// <summary>
         /// </summary>
-        public const string NameRegularExpression = "^[a-zA-Z][A-Za-z0-9_-]+$";
+        public const string NameRegularExpression = "[A-Za-z0-9_]{1}";
 
         /// <summary>
         /// Default value: 128

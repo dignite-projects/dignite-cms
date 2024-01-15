@@ -1,10 +1,12 @@
-﻿using Dignite.Abp.DynamicForms.Components;
+﻿using Blazorise;
+using Dignite.Abp.DynamicForms.Components;
 using Dignite.Cms.Admin.DynamicForms;
 using Dignite.Cms.Admin.Fields;
 using Dignite.Cms.Localization;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
@@ -46,6 +48,25 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
                 { nameof(IFormConfigurationComponent.ConfigurationDictionary), Entity.FormConfiguration }
             };
             await Task.CompletedTask;
+        }
+
+        private async Task ValidateNameExistsAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            var fieldName = Convert.ToString(e.Value);
+            if (!fieldName.IsNullOrEmpty())
+            {
+                if ((Entity.GetType() == typeof(CreateFieldInput)) ||
+                    (Entity.GetType() == typeof(UpdateFieldInput) && !fieldName.Equals(Entity.Name, StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    var field = await FieldService.FindByNameAsync(fieldName);
+                    e.Status = field != null
+                        ? ValidationStatus.Error
+                        : ValidationStatus.Success;
+
+                    e.ErrorText = L["FieldName{0}AlreadyExist", fieldName];
+                }
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Dignite.Cms.Fields;
+using Dignite.Cms.Sections;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Dignite.Cms.Admin.Fields
 
         public async Task<FieldDto> CreateAsync(CreateFieldInput input)
         {
+            await CheckNameExistenceAsync(input.Name);
             var entity = new Field(
                 GuidGenerator.Create(),
                 input.GroupId.HasValue ? (input.GroupId.Value == Guid.Empty ? null : input.GroupId.Value) : null,
@@ -63,6 +65,10 @@ namespace Dignite.Cms.Admin.Fields
         public async Task<FieldDto> UpdateAsync(Guid id, UpdateFieldInput input)
         {
             var entity = await _fieldRepository.GetAsync(id,false);
+            if (!entity.Name.Equals(input.Name, StringComparison.OrdinalIgnoreCase))
+            {
+                await CheckNameExistenceAsync(input.Name, id);
+            }
             entity.SetDisplayName(input.DisplayName);
             entity.SetName(input.Name);
             entity.SetDescription(input.Description);
@@ -77,6 +83,19 @@ namespace Dignite.Cms.Admin.Fields
                     );
 
             return dto;
+        }
+        public async Task<FieldDto> FindByNameAsync(string name)
+        {
+            var result = await _fieldRepository.FindByNameAsync(name);
+            return ObjectMapper.Map<Field, FieldDto>(result);
+        }
+
+        protected virtual async Task CheckNameExistenceAsync(string name, Guid? ignoredId = null)
+        {
+            if (await _fieldRepository.NameExistsAsync(name, ignoredId))
+            {
+                throw new FieldNameAlreadyExistException(name);
+            }
         }
     }
 }

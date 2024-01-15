@@ -38,6 +38,7 @@
     "SelectFormControl": "Select Control",
     "TableColumnName": "Column Name",
     "TableColumnForm": "Column Form",
-    "ColumnNameAlreadyExist": "Column Name Already Exist."
+    "ColumnNameAlreadyExist": "Column Name Already Exist.",
+    "FieldName{0}AlreadyExist": "Field Name \"{0}\" Already Exist."
   }
 }

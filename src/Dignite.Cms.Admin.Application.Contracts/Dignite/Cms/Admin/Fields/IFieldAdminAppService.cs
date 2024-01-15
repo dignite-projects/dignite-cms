@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
 
 namespace Dignite.Cms.Admin.Fields
@@ -11,5 +12,6 @@ namespace Dignite.Cms.Admin.Fields
         CreateFieldInput,
         UpdateFieldInput>
     {
+        Task<FieldDto> FindByNameAsync(string name);
     }
 }

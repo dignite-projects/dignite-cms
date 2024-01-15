@@ -26,7 +26,7 @@
                 <TableBody>
                     @foreach (var row in TableRows)
                     {
-                        var index = TableRows.IndexOf(row);
+                        var tableRowIndex = TableRows.IndexOf(row);
                         <Blazorise.TableRow>
                             @foreach (var column in FormConfiguration.TableColumns)
                             {
@@ -37,8 +37,8 @@
                                     var parameters = new Dictionary<string, object>();
                                     parameters.Add(nameof(IFormViewComponent.Field), column);
                                     parameters.Add(
-                                        nameof(IFormControlComponent.OnFormControlValueChanged),
-                                        EventCallback.Factory.Create<FormField>(this, ff => OnFieldValueChangedAsync(ff, index))
+                                        nameof(IFormControlComponent.OnChangedValueAsync),
+                                    EventCallback.Factory.Create<FormField>(this, ff => OnFieldValueChangedAsync(ff, tableRowIndex))
                                     );
                                     <TableRowCell>
                                         <DynamicComponent Type="@component.GetType()" Parameters="@parameters"></DynamicComponent>
@@ -56,22 +56,21 @@
         <FieldHelp>@Field.Description</FieldHelp>
     </FieldBody>
 </Field>
-@code {
-    public List<Dignite.Abp.DynamicForms.Table.TableRow> TableRows = new List<Dignite.Abp.DynamicForms.Table.TableRow>();
-    protected override void OnInitialized()
+    @code {
+    List<Dignite.Abp.DynamicForms.Table.TableRow> TableRows = new List<Dignite.Abp.DynamicForms.Table.TableRow>();
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
+        await base.OnInitializedAsync();
 
-        var value = Field.Value;
-        if (value != null)
+        if (Field.Value != null)
         {
-            try
-            {
-                TableRows = JsonSerializer.Deserialize<List<Dignite.Abp.DynamicForms.Table.TableRow>>(value.ToString());
-            }
-            catch
-            {
-            }
+            TableRows = JsonSerializer.Deserialize<List<Dignite.Abp.DynamicForms.Table.TableRow>>(Field.Value.ToString());
+            await ChangeValueAsync(TableRows);
+        }
+        else
+        {
+            //Initialization data
+            AddTableRow();
         }
     }
     private void AddTableRow()
@@ -87,9 +86,9 @@
     {
         TableRows.Remove(row);
     }
-    private async Task OnFieldValueChangedAsync(FormField field, int index)
+    private async Task OnFieldValueChangedAsync(FormField field, int tableRowIndex)
     {
-        TableRows[index].SetField(field.Name, field.Value);
-        await OnValueChanged(TableRows);
+        TableRows[tableRowIndex].SetField(field.Name, field.Value);
+        await ChangeValueAsync(TableRows);
     }
 }

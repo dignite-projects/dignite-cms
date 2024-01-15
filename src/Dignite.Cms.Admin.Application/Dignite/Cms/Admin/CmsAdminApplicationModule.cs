@@ -52,7 +52,7 @@ namespace Dignite.Cms.Admin
                         });
                         container.AddFileTypeCheckHandler(handler =>
                         {
-                            handler.AllowedFileTypeNames = new string[] { ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".zip", ".7z", ".rar", ".mp4", ".mp3", ".pdf", ".jpg", ".jpeg", ".png" };
+                            handler.AllowedFileTypeNames = new string[] { ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".zip", ".7z", ".rar", ".mp4", ".mp3", ".pdf", ".jpg", ".jpeg", ".png", ".webp" };
                         });
                         container.AddImageResizeHandler(handler =>
                         {
@@ -77,7 +77,7 @@ namespace Dignite.Cms.Admin
                         });
                         container.AddFileTypeCheckHandler(handler =>
                         {
-                            handler.AllowedFileTypeNames = new string[] { ".jpg", ".jpeg", ".png" };
+                            handler.AllowedFileTypeNames = new string[] { ".jpg", ".jpeg", ".png",".webp" };
                         });
                         container.AddImageResizeHandler(handler =>
                         {

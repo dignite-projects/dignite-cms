@@ -182,6 +182,7 @@ public class CmsBlazorHostModule : AbpModule
         Configure<AbpLocalizationOptions>(options =>
         {
             options.Languages.Add(new LanguageInfo("en", "en", "English"));
+            options.Languages.Add(new LanguageInfo("ja", "ja", "日本語"));
             options.Languages.Add(new LanguageInfo("zh-hans", "zh-Hans", "简体中文"));
             options.Languages.Add(new LanguageInfo("zh-hant", "zh-Hant", "繁體中文"));
 

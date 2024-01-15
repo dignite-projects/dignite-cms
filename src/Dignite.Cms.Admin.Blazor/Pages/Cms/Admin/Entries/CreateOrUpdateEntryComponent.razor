@@ -41,14 +41,14 @@
                                 var parameters = new Dictionary<string, object>();
                                 parameters.Add(nameof(IFormControlComponent.Field), formField);
                                 parameters.Add(
-                                    nameof(IFormControlComponent.OnFormControlValueChanged),
+                                    nameof(IFormControlComponent.OnChangedValueAsync),
                                     EventCallback.Factory.Create<FormField>(this, OnFieldValueChanged)
                                     );
-                                <DynamicComponent Type="@component.GetType()" Parameters="@parameters"></DynamicComponent>         
+                                <DynamicComponent Type="@component.GetType()" Parameters="@parameters"></DynamicComponent>
                             }
                         }
                     }   
-                }                
+                }
             </CardBody>
         </Card>
     </Column>

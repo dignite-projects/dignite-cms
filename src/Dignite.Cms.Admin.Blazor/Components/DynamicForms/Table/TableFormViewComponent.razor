@@ -2,7 +2,7 @@
 @using Dignite.Abp.DynamicForms.Table
 @using Dignite.Abp.Data;
 @using System.Text.Json;
-@inject IFormViewComponentSelector fieldComponentSelector
+@inject IFormViewComponentSelector formViewComponentSelector
 @inherits FormViewComponentBase<TableFormControl,TableConfiguration>
 
 <Field>
@@ -30,7 +30,7 @@
                                     if (!column.FormControlName.IsNullOrEmpty())
                                     {
                                         column.Value = row.GetField(column.Name);
-                                        var component = fieldComponentSelector.Get(column.FormControlName);
+                                        var component = formViewComponentSelector.Get(column.FormControlName);
                                         var parameters = new Dictionary<string, object>();
                                         parameters.Add(nameof(IFormViewComponent.Field), column);
                                         <TableRowCell>

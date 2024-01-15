@@ -9,7 +9,7 @@
 @using Volo.Abp.AspNetCore.Components.Web;
 @inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
 @inject IFormConfigurationComponentSelector ConfigurationComponentSelector
-@inject IEnumerable<IFormControl> AllForms;
+@inject IEnumerable<IFormControl> AllFormControls;
 @inherits FormConfigurationComponentBase<MatrixFormControl,MatrixConfiguration>
 
 
@@ -95,7 +95,7 @@
                             <Field>
                                 <FieldLabel>@L["FieldType"]</FieldLabel>
                                 <Select TValue="string" SelectedValue="@SelectedField.FormControlName" SelectedValueChanged="FormTypeChangedAsync">
-                                    @foreach (var item in AvailableForms)
+                                    @foreach (var item in AvailableFormControls)
                                     {
                                         <SelectItem TValue="string" Value="@item.Name">@item.DisplayName</SelectItem>
                                     }
@@ -179,7 +179,7 @@
 
     @code {
     protected List<MatrixBlockType> MatrixBlockTypes = new();
-    protected ImmutableList<IFormControl> AvailableForms;
+    protected ImmutableList<IFormControl> AvailableFormControls;
 
     protected Modal CreateBlockTypeModal;
     protected Validations CreateBlockTypeValidationsRef;
@@ -212,7 +212,7 @@
 
     protected override Task OnInitializedAsync()
     {
-        AvailableForms = AllForms.Where(p => p.Name!=MatrixFormControl.ControlName).ToImmutableList();
+        AvailableFormControls = AllFormControls.Where(p => p.Name != MatrixFormControl.ControlName).ToImmutableList();
         return base.OnInitializedAsync();
     }
 

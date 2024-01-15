@@ -1,7 +1,7 @@
 ﻿@using Dignite.Abp.DynamicForms.Components
 @using Dignite.Abp.DynamicForms.Matrix
 @using System.Text.Json
-@inject IFormViewComponentSelector fieldComponentSelector
+@inject IFormViewComponentSelector formViewComponentSelector
 @inherits FormViewComponentBase<MatrixFormControl,MatrixConfiguration>
 
 <Field>
@@ -17,7 +17,7 @@
                         @foreach (var field in blockType.Fields)
                         {
                             field.Value = block;
-                            var component = fieldComponentSelector.Get(field.FormControlName);
+                            var component = formViewComponentSelector.Get(field.FormControlName);
                             var parameters = new Dictionary<string, object>();
                             parameters.Add(nameof(IFormViewComponent.Field), field);
                             <DynamicComponent Type="@component.GetType()" Parameters="@parameters"></DynamicComponent>                                       

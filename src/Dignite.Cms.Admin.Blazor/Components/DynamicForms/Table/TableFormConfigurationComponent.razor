@@ -5,7 +5,7 @@
 @using System.Collections.Immutable
 @using Dignite.Cms.Localization
 @using Volo.Abp.AspNetCore.Components.Web
-@inject IEnumerable<IFormControl> AllForms
+@inject IEnumerable<IFormControl> AllFormControls
 @inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
 @inject IFormConfigurationComponentSelector configurationComponentSelector
 @inherits FormConfigurationComponentBase<TableFormControl,TableConfiguration>
@@ -37,9 +37,9 @@
                         <Validation Validator="((e)=>ValidateColumnFieldControl(e))">
                         <Select TValue="string" SelectedValue="@column.FormControlName" SelectedValueChanged="(val => OnSelectedValueChanged((string)val, column))">
                             <SelectItem TValue="string" Value="null">@L["SelectForm"]</SelectItem>
-                            @if (AvailableForms != null)
+                            @if (AvailableFormControls != null)
                             {
-                                foreach (var p in AvailableForms)
+                                foreach (var p in AvailableFormControls)
                                 {
                                     <SelectItem TValue="string" Value="@p.Name">@p.DisplayName</SelectItem>
                                 }
@@ -91,7 +91,7 @@
 </Blazorise.Modal>
     @code{
 
-    protected ImmutableList<IFormControl> AvailableForms;
+    protected ImmutableList<IFormControl> AvailableFormControls;
     protected List<FormField> TableColumns;
 
     protected Type SelectedConfigurationType;
@@ -106,7 +106,7 @@
 
     protected override Task OnInitializedAsync()
     {
-        AvailableForms = AllForms.Where(p => p.Name != TableFormControl.ControlName).ToImmutableList();
+        AvailableFormControls = AllFormControls.Where(p => p.Name != TableFormControl.ControlName).ToImmutableList();
         return base.OnInitializedAsync();
     }
 

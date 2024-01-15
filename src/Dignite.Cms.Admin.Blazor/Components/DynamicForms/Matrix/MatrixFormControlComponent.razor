@@ -11,7 +11,7 @@
     <FieldBody>
         @foreach(var block in MatrixBlocks)
         {
-            var index = MatrixBlocks.IndexOf(block);
+            var matrixBlockIndex = MatrixBlocks.IndexOf(block);
             var blockType = FormConfiguration.MatrixBlockTypes.FirstOrDefault(t => t.Name == block.MatrixBlockTypeName);
             if (blockType!=null)
             {
@@ -34,8 +34,8 @@
                             var parameters = new Dictionary<string, object>();
                             parameters.Add(nameof(IFormControlComponent.Field), field);
                             parameters.Add(
-                                nameof(IFormControlComponent.OnFormControlValueChanged),
-                                EventCallback.Factory.Create<FormField>(this, ff=> OnFieldValueChangedAsync(ff,index))
+                                nameof(IFormControlComponent.OnChangedValueAsync),
+                                EventCallback.Factory.Create<FormField>(this, ff => MatrixBlockFieldValueChangedAsync(ff, matrixBlockIndex))
                             );
                             <DynamicComponent Type="@component.GetType()" Parameters="@parameters"></DynamicComponent>           
                         }
@@ -55,32 +55,30 @@
 
 @code {
     List<MatrixBlock> MatrixBlocks = new List<MatrixBlock>();
-
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
+        await base.OnInitializedAsync();
 
         var value = Field.Value == null ? new List<MatrixBlock>() : JsonSerializer.Deserialize<List<MatrixBlock>>(Field.Value.ToString(), new JsonSerializerOptions(JsonSerializerDefaults.Web));
         if (value != null)
         {
             MatrixBlocks = value;
+            await ChangeValueAsync(MatrixBlocks);
         }
     }
     private Task AddMatrixBlockAsync(MatrixBlockType blockType)
     {
         MatrixBlocks.Add(new MatrixBlock(blockType.Name));
-        Field.Value = MatrixBlocks;
         return Task.CompletedTask;
     }
     private Task RemoveMatrixBlockAsync(MatrixBlock block)
     {
         MatrixBlocks.Remove(block);
-        Field.Value = MatrixBlocks;
         return Task.CompletedTask;
     }
-    private async Task OnFieldValueChangedAsync(FormField field,int index)
+    private async Task MatrixBlockFieldValueChangedAsync(FormField field, int matrixBlockIndex)
     {
-        MatrixBlocks[index].SetField(field.Name, field.Value);
-        await OnValueChanged(MatrixBlocks);
+        MatrixBlocks[matrixBlockIndex].SetField(field.Name, field.Value);
+        await ChangeValueAsync(MatrixBlocks);
     }
 }

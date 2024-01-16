@@ -8,6 +8,7 @@ namespace Dignite.Cms.Admin.Sites
         public CreateSiteInput():base()
         {
             IsActive= true;
+            HostUrl = "https://";
             Cultures.Add(new CreateOrUpdateCultureInput(true,"en"));
         }
     }

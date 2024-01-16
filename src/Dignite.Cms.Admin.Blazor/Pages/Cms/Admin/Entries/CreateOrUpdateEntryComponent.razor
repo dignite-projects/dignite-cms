@@ -20,7 +20,7 @@
                 <Validation MessageLocalizer="@LH.Localize">
                     <Field>
                         <FieldLabel>@L["Title"]</FieldLabel>
-                        <TextEdit @bind-Text="@Entry.Title">
+                            <TextEdit @bind-Text="@Entry.Title" Blur="TitleTextboxBlur">
                             <Feedback>
                                 <Blazorise.ValidationError/>
                             </Feedback>

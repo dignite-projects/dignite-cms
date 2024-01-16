@@ -5,6 +5,7 @@
 @using System.Collections.Immutable
 @using Dignite.Cms.Localization
 @using Volo.Abp.AspNetCore.Components.Web
+@using Dignite.Cms.Fields
 @inject IEnumerable<IFormControl> AllFormControls
 @inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
 @inject IFormConfigurationComponentSelector configurationComponentSelector
@@ -16,6 +17,7 @@
     <Table>
         <TableHeader>
             <Blazorise.TableRow>
+                <TableHeaderCell>@L["DisplayName"]</TableHeaderCell>
                 <TableHeaderCell>@L["TableColumnName"]</TableHeaderCell>
                 <TableHeaderCell>@L["TableColumnForm"]</TableHeaderCell>
                 <TableHeaderCell>
@@ -30,21 +32,26 @@
                 <Blazorise.TableRow>
                     <TableRowCell>
                         <Validation Validator="((e)=>ValidateColumnDisplayName(e))">
-                            <TextEdit @bind-Text="@column.DisplayName" />
+                            <TextEdit MaxLength="FieldConsts.MaxDisplayNameLength" @bind-Text="@column.DisplayName" Blur="@((args)=>ColumnDisplayNameTextboxBlur(column))" />
+                        </Validation>
+                    </TableRowCell>
+                    <TableRowCell>
+                        <Validation Validator="((e)=>ValidateColumnName(e))">
+                             <TextEdit MaxLength="FieldConsts.MaxNameLength" @bind-Text="@column.Name" />
                         </Validation>
                     </TableRowCell>
                     <TableRowCell>
                         <Validation Validator="((e)=>ValidateColumnFieldControl(e))">
-                        <Select TValue="string" SelectedValue="@column.FormControlName" SelectedValueChanged="(val => OnSelectedValueChanged((string)val, column))">
-                            <SelectItem TValue="string" Value="null">@L["SelectForm"]</SelectItem>
-                            @if (AvailableFormControls != null)
-                            {
-                                foreach (var p in AvailableFormControls)
+                            <Select TValue="string" SelectedValue="@column.FormControlName" SelectedValueChanged="(val => OnSelectedValueChanged((string)val, column))">
+                                <SelectItem TValue="string" Value="null">@L["SelectForm"]</SelectItem>
+                                @if (AvailableFormControls != null)
                                 {
-                                    <SelectItem TValue="string" Value="@p.Name">@p.DisplayName</SelectItem>
-                                }
-                            }                            
-                        </Select>
+                                    foreach (var p in AvailableFormControls)
+                                    {
+                                        <SelectItem TValue="string" Value="@p.Name">@p.DisplayName</SelectItem>
+                                    }
+                                }                            
+                            </Select>
                         </Validation>
                     </TableRowCell>
                     <TableRowCell>
@@ -122,7 +129,6 @@
     private void AddTableColumn()
     {
         var column = new FormField();
-        column.Name = Guid.NewGuid().ToString();
         TableColumns.Add(column);            
         FormConfiguration.TableColumns=TableColumns;
     }
@@ -198,7 +204,22 @@
             : ValidationStatus.Success;
     }
 
+    void ColumnDisplayNameTextboxBlur(FormField column)
+    {
+        if (!column.DisplayName.IsNullOrEmpty() && column.Name.IsNullOrEmpty())
+        {
+            column.Name = SlugNormalizer.Normalize(column.DisplayName);
+        }
+    }
+
     void ValidateColumnDisplayName(ValidatorEventArgs e)
+    {
+        e.Status = Convert.ToString(e.Value).IsNullOrWhiteSpace()
+            ? ValidationStatus.Error
+            : ValidationStatus.Success;
+    }
+
+    void ValidateColumnName(ValidatorEventArgs e)
     {
         e.Status = Convert.ToString(e.Value).IsNullOrWhiteSpace()
             ? ValidationStatus.Error

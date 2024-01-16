@@ -1,9 +1,12 @@
-﻿using Blazorise;
+﻿using AutoMapper.Execution;
+using Blazorise;
 using Dignite.Cms.Admin.Sites;
 using Dignite.Cms.Localization;
 using Dignite.Cms.Permissions;
+using Dignite.Cms.Sites;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Components.Web.Extensibility.EntityActions;
 using Volo.Abp.AspNetCore.Components.Web.Extensibility.TableColumns;
@@ -105,11 +108,6 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sites
                     {
                         Title = L["Host"],
                         Data = nameof(SiteDto.HostUrl)
-                    },
-                    new TableColumn
-                    {
-                        Title = L["Cultures"],
-                        Data = nameof(SiteDto.Cultures)
                     },
                     new TableColumn
                     {

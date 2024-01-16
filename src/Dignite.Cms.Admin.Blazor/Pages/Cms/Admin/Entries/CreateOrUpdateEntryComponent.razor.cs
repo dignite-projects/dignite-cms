@@ -66,5 +66,12 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         { 
             Entry.SetField(field.Name, field.Value);
         }
+        void TitleTextboxBlur()
+        {
+            if (!Entry.Title.IsNullOrEmpty() && Entry.Slug.IsNullOrEmpty())
+            {
+                Entry.Slug = SlugNormalizer.Normalize(Entry.Title);
+            }
+        }
     }
 }

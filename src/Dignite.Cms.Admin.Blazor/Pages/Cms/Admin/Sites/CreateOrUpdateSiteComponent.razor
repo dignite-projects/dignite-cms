@@ -8,7 +8,7 @@
 <Validation MessageLocalizer="@LH.Localize">
     <Field>
         <FieldLabel>@L["DisplayName"]</FieldLabel>
-        <TextEdit @bind-Text="Entity.DisplayName" Autofocus="true">
+            <TextEdit @bind-Text="Entity.DisplayName" Blur="DisplayNameTextboxBlur" Autofocus="true">
             <Feedback>
                 <ValidationError />
             </Feedback>
@@ -27,7 +27,7 @@
 </Validation>
 <Validation MessageLocalizer="@LH.Localize">
     <Field>
-        <FieldLabel>@L["HostUrl"]</FieldLabel>
+        <FieldLabel>@L["Host"]</FieldLabel>
         <TextEdit @bind-Text="Entity.HostUrl">
             <Feedback>
                 <ValidationError />
@@ -53,13 +53,20 @@
 </Field>
 
 
-@code {
+    @code {
     [Parameter] public CreateOrUpdateSiteInputBase Entity { get; set; }
     [Parameter] public IReadOnlyList<LanguageInfo> AllCultures { get; set; }
 
     public CreateOrUpdateSiteComponent()
     {
         LocalizationResource = typeof(CmsResource);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        Entity.HostUrl = Entity.HostUrl.IsNullOrEmpty() ? "https://" : Entity.HostUrl;
     }
 
     void OnCultureChanged(string cultureName, bool value, bool defaultCulture = false)
@@ -86,6 +93,13 @@
             {
                 sl.IsDefault = false;
             }
+        }
+    }
+    void DisplayNameTextboxBlur()
+    {
+        if (!Entity.DisplayName.IsNullOrEmpty() && Entity.Name.IsNullOrEmpty())
+        {
+            Entity.Name = SlugNormalizer.Normalize(Entity.DisplayName);
         }
     }
 }

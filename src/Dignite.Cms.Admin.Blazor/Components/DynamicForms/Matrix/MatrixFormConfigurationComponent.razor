@@ -74,13 +74,13 @@
                         <Validation Validator="ValidationRule.IsNotEmpty">
                             <Field>
                                 <FieldLabel>@L["FieldDisplayName"]</FieldLabel>
-                                <TextEdit MaxLength="FieldConsts.MaxDisplayNameLength" @bind-Text="@SelectedField.DisplayName" />
+                                    <TextEdit MaxLength="FieldConsts.MaxDisplayNameLength" @bind-Text="@SelectedField.DisplayName" Blur="@DisplayNameTextboxBlur" />
                             </Field>
                         </Validation>
-                            <Validation UsePattern Validator="ValidationFieldName">
+                            <Validation Validator="ValidationFieldName">
                             <Field>
                                 <FieldLabel>@L["FieldName"]</FieldLabel>
-                                    <TextEdit Pattern="@FieldConsts.NameRegularExpression" MaxLength="FieldConsts.MaxNameLength" @bind-Text="@SelectedField.Name">
+                                    <TextEdit MaxLength="FieldConsts.MaxNameLength" @bind-Text="@SelectedField.Name">
                                         <Feedback>
                                             <Blazorise.ValidationError />
                                         </Feedback>
@@ -358,6 +358,13 @@
         else
         {
             e.Status = ValidationStatus.Error;            
+        }
+    }
+    void DisplayNameTextboxBlur()
+    {
+        if (!SelectedField.DisplayName.IsNullOrEmpty() && SelectedField.Name.IsNullOrEmpty())
+        {
+            SelectedField.Name = SlugNormalizer.Normalize(SelectedField.DisplayName);
         }
     }
 }

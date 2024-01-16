@@ -67,6 +67,17 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
                     e.ErrorText = L["FieldName{0}AlreadyExist", fieldName];
                 }
             }
+            else
+            {
+                e.Status = ValidationStatus.Error;
+            }
+        }
+        void DisplayNameTextboxBlur()
+        {
+            if (!Entity.DisplayName.IsNullOrEmpty() && Entity.Name.IsNullOrEmpty())
+            {
+                Entity.Name = SlugNormalizer.Normalize(Entity.DisplayName);
+            }
         }
     }
 }

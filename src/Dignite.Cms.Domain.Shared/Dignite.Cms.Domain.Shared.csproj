@@ -8,6 +8,11 @@
 	<RootNamespace />
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Slugify.Core" Version="2.1.0" />
+		<PackageReference Include="Unidecode.NET" Version="1.0.0" />
+	</ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Validation" Version="7.4.5" />
 	<PackageReference Include="Volo.CmsKit.Domain.Shared" Version="7.4.5" />

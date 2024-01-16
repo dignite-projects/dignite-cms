@@ -39,6 +39,9 @@
     "TableColumnName": "列标题",
     "TableColumnForm": "表单控件",
     "ColumnNameAlreadyExist": "列名已存在.",
-    "FieldName{0}AlreadyExist": "字段名 \"{0}\" 已存在."
+    "FieldName{0}AlreadyExist": "字段名 \"{0}\" 已存在.",
+    "Enum:SectionType:Single": "单页",
+    "Enum:SectionType:Structure": "结构",
+    "Enum:SectionType:Channel": "频道"
   }
 }

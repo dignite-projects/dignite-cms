@@ -39,6 +39,9 @@
     "TableColumnName": "Column Name",
     "TableColumnForm": "Form Control",
     "ColumnNameAlreadyExist": "Column Name Already Exist.",
-    "FieldName{0}AlreadyExist": "Field Name \"{0}\" Already Exist."
+    "FieldName{0}AlreadyExist": "Field Name \"{0}\" Already Exist.",
+    "Enum:SectionType:Single": "Single Page",
+    "Enum:SectionType:Structure": "Structure",
+    "Enum:SectionType:Channel": "Channel"
   }
 }

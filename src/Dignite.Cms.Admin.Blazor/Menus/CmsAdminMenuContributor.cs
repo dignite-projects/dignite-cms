@@ -24,34 +24,40 @@ namespace Dignite.Cms.Admin.Blazor.Menus
             var cmsAdminMenuItem = new ApplicationMenuItem(
                 CmsAdminMenus.GroupName, 
                 l["Menu:Cms"],
-                icon: "far fa-id-card",
+                icon: "fa fa-newspaper-o",
                 requiredPermissionName:CmsAdminPermissions.Entry.Default);
             context.Menu.AddItem(cmsAdminMenuItem);
 
 
             cmsAdminMenuItem.AddItem(new ApplicationMenuItem(
-                    CmsAdminMenus.Fields,
-                    l["Fields"],
-                    url: "~/cms/admin/fields",
-                    icon: "fa fa-file-alt").RequirePermissions(CmsAdminPermissions.Field.Default));
-
-            cmsAdminMenuItem.AddItem(new ApplicationMenuItem(
-                    CmsAdminMenus.Sites,
-                    l["Sites"],
-                    url: "~/cms/admin/sites",
-                    icon: "fa fa-file").RequirePermissions(CmsAdminPermissions.Site.Default));
-
-            cmsAdminMenuItem.AddItem(new ApplicationMenuItem(
-                    CmsAdminMenus.Sections,
-                    l["Sections"],
-                    url: "~/cms/admin/sections",
-                    icon: "fa fa-file-alt").RequirePermissions(CmsAdminPermissions.Section.Default));
-
-            cmsAdminMenuItem.AddItem(new ApplicationMenuItem(
                     CmsAdminMenus.Entries,
                     l["Entries"],
                     url: "~/cms/admin/entries",
-                    icon: "fa fa-file-alt").RequirePermissions(CmsAdminPermissions.Entry.Default));
+                    icon: "fa fa-file-text-o").RequirePermissions(CmsAdminPermissions.Entry.Default));
+
+            var settingsMenuItem = new ApplicationMenuItem(
+                    CmsAdminMenus.Settings,
+                    l["Settings"],
+                    icon: "fas fa fa-cog").RequirePermissions(CmsAdminPermissions.Site.Default);
+            cmsAdminMenuItem.AddItem(settingsMenuItem);
+
+            settingsMenuItem.AddItem(new ApplicationMenuItem(
+                    CmsAdminMenus.Fields,
+                    l["Fields"],
+                    url: "~/cms/admin/fields",
+                    icon: "fa fa-pencil-square-o").RequirePermissions(CmsAdminPermissions.Field.Default));
+
+            settingsMenuItem.AddItem(new ApplicationMenuItem(
+                    CmsAdminMenus.Sites,
+                    l["Sites"],
+                    url: "~/cms/admin/sites",
+                    icon: "fa fa-globe").RequirePermissions(CmsAdminPermissions.Site.Default));
+
+            settingsMenuItem.AddItem(new ApplicationMenuItem(
+                    CmsAdminMenus.Sections,
+                    l["Sections"],
+                    url: "~/cms/admin/sections",
+                    icon: "fa fa-newspaper-o").RequirePermissions(CmsAdminPermissions.Section.Default));
 
             return Task.CompletedTask;
         }

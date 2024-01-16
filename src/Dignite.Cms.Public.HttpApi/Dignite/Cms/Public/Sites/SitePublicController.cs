@@ -24,10 +24,10 @@ namespace Dignite.Cms.Public.Sites
         }
 
         [HttpGet]
-        [Route("find-by-host-url")]
-        public async Task<SiteDto> FindByHostUrlAsync(string hostUrl)
+        [Route("find-by-host")]
+        public async Task<SiteDto> FindByHostAsync(string host)
         {
-            return await _siteAppService.FindByHostUrlAsync(hostUrl);
+            return await _siteAppService.FindByHostAsync(host);
         }
     }
 }

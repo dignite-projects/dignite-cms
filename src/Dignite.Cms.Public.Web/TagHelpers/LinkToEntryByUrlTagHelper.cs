@@ -27,7 +27,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         /// <summary>
         /// The site's host url
         /// </summary>
-        public string HostUrl { get; set; }
+        public string Host { get; set; }
 
 
         [ViewContext, HtmlAttributeNotBound]
@@ -46,9 +46,9 @@ namespace Dignite.Cms.Public.Web.TagHelpers
 
                 EntryUrl = ("~/" + Culture).EnsureEndsWith('/') + EntryUrl.RemovePreFix("~").RemovePreFix("/");
 
-                if (!HostUrl.IsNullOrEmpty())
+                if (!Host.IsNullOrEmpty())
                 {
-                    EntryUrl = HostUrl + urlHelper.Content(EntryUrl);
+                    EntryUrl = Host + urlHelper.Content(EntryUrl);
                 }
             }
 

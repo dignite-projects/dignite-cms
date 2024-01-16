@@ -54,8 +54,8 @@ public partial class FieldAdminClientProxy : ClientProxyBase<IFieldAdminAppServi
         });
     }
 
-    public virtual async Task<ListResultDto<FormControlDto>> GetFormsAsync()
+    public Task<FieldDto> FindByNameAsync(string name)
     {
-        return await RequestAsync<ListResultDto<FormControlDto>>(nameof(GetFormsAsync));
+        throw new NotImplementedException();
     }
 }

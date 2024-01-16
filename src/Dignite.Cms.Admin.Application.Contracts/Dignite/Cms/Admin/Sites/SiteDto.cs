@@ -26,9 +26,9 @@ namespace Dignite.Cms.Admin.Sites
         public ICollection<SiteCultureDto> Cultures { get; set; }
 
         /// <summary>
-        /// Host Url of this site
+        /// Host of this site
         /// </summary>
-        public virtual string HostUrl { get; set; }
+        public virtual string Host { get; set; }
 
 
         /// <summary>

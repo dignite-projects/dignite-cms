@@ -27,7 +27,7 @@ namespace Dignite.Cms.Public.Sites
         /// <summary>
         /// Host of this site
         /// </summary>
-        public string HostUrl { get; set; }
+        public string Host { get; set; }
 
         /// <summary>
         /// Is this site a active

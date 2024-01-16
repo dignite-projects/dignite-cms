@@ -140,8 +140,8 @@ namespace Dignite.Cms.Public.Web.Controllers
 
         protected async Task<SectionDto> GetSection(string url = null)
         {
-            var hostUrl= $"{Request.Scheme}://{Request.Host.Value}";
-            var site = await _sitePublicAppService.FindByHostUrlAsync(hostUrl);
+            var host = $"{Request.Scheme}://{Request.Host.Value}";
+            var site = await _sitePublicAppService.FindByHostAsync(host);
 
             if (site == null)
                 return null;
@@ -204,10 +204,10 @@ namespace Dignite.Cms.Public.Web.Controllers
 
         protected void SetEntryUrl(EntryDto entry)
         {
-            var hostAddress = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
-            if (entry.Url.StartsWith(hostAddress, StringComparison.OrdinalIgnoreCase))
+            var host = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
+            if (entry.Url.StartsWith(host, StringComparison.OrdinalIgnoreCase))
             {
-                entry.Url = entry.Url.RemovePreFix(StringComparison.OrdinalIgnoreCase, hostAddress);
+                entry.Url = entry.Url.RemovePreFix(StringComparison.OrdinalIgnoreCase, host);
             }
         }
     }

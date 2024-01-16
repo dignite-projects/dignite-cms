@@ -34,7 +34,7 @@ public static class CmsDbContextModelCreatingExtensions
             //Properties
             site.Property(s => s.DisplayName).IsRequired().HasMaxLength(SiteConsts.MaxDisplayNameLength);
             site.Property(s => s.Name).IsRequired().HasMaxLength(SiteConsts.MaxNameLength);
-            site.Property(s => s.HostUrl).IsRequired().HasMaxLength(SiteConsts.MaxHostUrlLength);
+            site.Property(s => s.Host).IsRequired().HasMaxLength(SiteConsts.MaxHostLength);
             site.Property(s => s.Cultures).HasConversion(
                 config => JsonSerializer.Serialize(config, new JsonSerializerOptions
                     {

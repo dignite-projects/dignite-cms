@@ -25,9 +25,9 @@ public partial class SitePublicClientProxy : ClientProxyBase<ISitePublicAppServi
         });
     }
 
-    public virtual async Task<SiteDto> FindByHostUrlAsync(string hostUrl)
+    public virtual async Task<SiteDto> FindByHostAsync(string hostUrl)
     {
-        return await RequestAsync<SiteDto>(nameof(FindByHostUrlAsync), new ClientProxyRequestTypeValue
+        return await RequestAsync<SiteDto>(nameof(FindByHostAsync), new ClientProxyRequestTypeValue
         {
             { typeof(string), hostUrl }
         });

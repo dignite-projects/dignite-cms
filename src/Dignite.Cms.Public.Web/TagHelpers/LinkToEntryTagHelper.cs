@@ -86,8 +86,8 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             //Since the URL is encoded in the ActionLink method, it is decoded here
             url = HttpUtility.UrlDecode(url).RemovePreFix(hostAddress);
 
-            //Splicing the site's hosturl
-            if (!section.Site.HostUrl.Equals(hostAddress, StringComparison.OrdinalIgnoreCase))
+            //Splicing the site's host
+            if (!section.Site.Host.Equals(hostAddress, StringComparison.OrdinalIgnoreCase))
             {
                 url = hostAddress + url.StartsWith('/');
             }

@@ -43,8 +43,8 @@ namespace Dignite.Cms.Admin.Sites
         /// The host of the site must be a domain name
         /// </summary>
         [Required]
-        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxHostUrlLength))]
-        public virtual string HostUrl { get;  set; }
+        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxHostLength))]
+        public virtual string Host { get;  set; }
 
 
         /// <summary>
@@ -54,11 +54,11 @@ namespace Dignite.Cms.Admin.Sites
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (!IsHostURL())
+            if (!IsHost())
             {
                 yield return new ValidationResult(
                 "The host of the site must be a domain name or IP",
-                new[] { nameof(HostUrl) });
+                new[] { nameof(Host) });
             }
 
             if (Cultures.Count(l => l.IsDefault) != 1)
@@ -71,15 +71,15 @@ namespace Dignite.Cms.Admin.Sites
             base.Validate(validationContext);
         }
 
-        protected bool IsHostURL()
+        protected bool IsHost()
         {
-            HostUrl = HostUrl.RemovePostFix("/");
-            HostUrl = HostUrl.RemovePostFix("\\");
+            Host = Host.RemovePostFix("/");
+            Host = Host.RemovePostFix("\\");
 
             // Regular expression that matches a host URL with an IP address containing a port number
-            string hostURLPattern = @"^(http|https)://((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|([a-zA-Z0-9\-]{1,63}(\.[a-zA-Z0-9\-]{1,63})*))(:\d+)?$";
+            string hostPattern = @"^(http|https)://((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|([a-zA-Z0-9\-]{1,63}(\.[a-zA-Z0-9\-]{1,63})*))(:\d+)?$";
 
-            return Regex.IsMatch(HostUrl, hostURLPattern);
+            return Regex.IsMatch(Host, hostPattern);
         }
     }
 }

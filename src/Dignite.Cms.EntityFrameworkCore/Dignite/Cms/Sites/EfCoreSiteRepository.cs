@@ -33,7 +33,7 @@ namespace Dignite.Cms.Sites
         }
         public async Task<Site> FindByHostAsync(string host, CancellationToken cancellationToken = default)
         {
-            return await (await GetDbSetAsync()).FirstOrDefaultAsync(s => s.HostUrl == host, GetCancellationToken(cancellationToken));
+            return await (await GetDbSetAsync()).FirstOrDefaultAsync(s => s.Host == host, GetCancellationToken(cancellationToken));
         }
 
         public async Task<List<Site>> GetListAsync(string filter = null, bool? isActive = null, CancellationToken cancellationToken = default)

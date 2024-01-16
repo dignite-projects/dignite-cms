@@ -24,7 +24,7 @@ namespace Dignite.Cms.Admin.Pages
                 input.DisplayName, 
                 input.Name,
                 input.Cultures.Select(l=>new SiteCulture(l.IsDefault,l.CultureName)).ToList(),
-                input.HostUrl,
+                input.Host,
                 input.IsActive, 
                 CurrentTenant.Id);
 
@@ -68,7 +68,7 @@ namespace Dignite.Cms.Admin.Pages
             //
             entity.SetDisplayName(input.DisplayName);
             entity.SetName(input.Name);
-            entity.SetHostUrl(input.HostUrl);
+            entity.SetHost(input.Host);
             entity.SetActive(input.IsActive);
             entity.SetCultures(input.Cultures.Select(l => new SiteCulture(l.IsDefault, l.CultureName)).ToList());
             await _siteRepository.UpdateAsync(entity);

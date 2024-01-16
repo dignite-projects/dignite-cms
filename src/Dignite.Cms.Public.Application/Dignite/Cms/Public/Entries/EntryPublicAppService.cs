@@ -169,7 +169,7 @@ namespace Dignite.Cms.Public.Entries
                 entry.Url = entry.Culture + entry.Url.EnsureStartsWith('/');
             }
 
-            entry.Url = section.Site.HostUrl.EnsureEndsWith('/') + entry.Url.RemovePreFix("/");
+            entry.Url = section.Site.Host.EnsureEndsWith('/') + entry.Url.RemovePreFix("/");
         }
 
         /// <summary>

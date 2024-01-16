@@ -26,9 +26,9 @@
         public static int MaxCultureLength { get; set; } = 16;
 
         /// <summary>
-        /// Maximum length of the site hostUrl property.
+        /// Maximum length of the site host property.
         /// Default value: 128
         /// </summary>
-        public static int MaxHostUrlLength { get; set; } = 128;
+        public static int MaxHostLength { get; set; } = 128;
     }
 }

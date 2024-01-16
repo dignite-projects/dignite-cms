@@ -51,8 +51,8 @@ public class CmsRouteRequestCultureProvider : RequestCultureProvider
             {
                 //Getting the default Culture from the Cms site
                 var _siteAppService = httpContext.RequestServices.GetRequiredService<ISitePublicAppService>();
-                var hostUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host.Value}";
-                var site = await _siteAppService.FindByHostUrlAsync(hostUrl);
+                var host = $"{httpContext.Request.Scheme}://{httpContext.Request.Host.Value}";
+                var site = await _siteAppService.FindByHostAsync(host);
                 culture = site.GetDefaultCulture();
             }
         }

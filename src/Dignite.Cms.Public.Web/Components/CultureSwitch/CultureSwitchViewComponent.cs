@@ -25,8 +25,8 @@ public class CultureSwitchViewComponent : AbpViewComponent
 
     public virtual async Task<IViewComponentResult> InvokeAsync()
     {
-        var hostUrl = $"{Request.Scheme}://{Request.Host.Value}";
-        var site = await _sitePublicAppService.FindByHostUrlAsync(hostUrl);
+        var host = $"{Request.Scheme}://{Request.Host.Value}";
+        var site = await _sitePublicAppService.FindByHostAsync(host);
         var languages = _localizationOptions.Value.Languages
             .Where(l=>site.Cultures.Any(r=>r.CultureName.Equals(l.CultureName,System.StringComparison.OrdinalIgnoreCase)))
             .ToList();

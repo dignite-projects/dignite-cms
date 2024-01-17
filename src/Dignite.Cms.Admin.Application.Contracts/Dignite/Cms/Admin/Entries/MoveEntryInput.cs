@@ -5,10 +5,9 @@ namespace Dignite.Cms.Admin.Entries
 {
     public class MoveEntryInput
     {
-        [Required]
-        public Guid TargetId { get; set; }
+        public Guid? ParentId { get; set; }
 
         [Required]
-        public MoveEntryPosition Position { get; set; }
+        public int Order { get; set; }
     }
 }

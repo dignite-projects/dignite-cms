@@ -47,7 +47,7 @@ namespace Dignite.Cms.Entries
         public async Task<List<Entry>> GetListAsync(
             Guid sectionId,
             string culture,
-            Guid? creatorId = null,
+            Guid? creatorId = null, 
             EntryStatus? status = null,
             string filter = null,
             DateTime? start = null,
@@ -117,25 +117,11 @@ namespace Dignite.Cms.Entries
         /// <param name="entry"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<List<Entry>> GetAllVisionListAsync(Entry entry, CancellationToken cancellationToken = default)
+        public async Task<List<Entry>> GetVisionListAsync(Entry entry, CancellationToken cancellationToken = default)
         {
-            var result = await (await GetDbSetAsync())
+            return await (await GetDbSetAsync())
                 .Where(e => e.InitialVersionId== (entry.InitialVersionId.HasValue ? entry.InitialVersionId.Value : entry.Id))
                 .ToListAsync(GetCancellationToken(cancellationToken));
-
-            if (entry.InitialVersionId.HasValue)
-            {
-                var initialVersionEntry = await (await GetDbSetAsync()).FirstOrDefaultAsync(e => e.Id == entry.InitialVersionId.Value, cancellationToken);
-                if (initialVersionEntry != null)
-                {
-                    result.Add(initialVersionEntry);
-                }
-            }
-            else
-            {
-                result.Add(entry);
-            }
-            return result;
         }
 
 

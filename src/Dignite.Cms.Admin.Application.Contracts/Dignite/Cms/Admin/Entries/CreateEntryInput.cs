@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace Dignite.Cms.Admin.Entries
 {
@@ -8,23 +7,6 @@ namespace Dignite.Cms.Admin.Entries
         public CreateEntryInput():base()
         {
         }
-
-        public CreateEntryInput(Guid sectionId) : base() 
-        {
-            this.SectionId = sectionId;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Required]
-        public Guid SectionId { get; set; }
-
-        /// <summary>
-        /// Is draft
-        /// </summary>
-        public bool Draft { get; set; }
-
 
         /// <summary>
         /// Parent entry id of the entry;

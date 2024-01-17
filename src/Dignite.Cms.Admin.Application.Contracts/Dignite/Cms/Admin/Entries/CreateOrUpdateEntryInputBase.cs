@@ -17,7 +17,6 @@ namespace Dignite.Cms.Admin.Entries
     {
         protected CreateOrUpdateEntryInputBase():base()
         {
-            IsActivatedVersion = true;
         }
 
         /// <summary>
@@ -50,6 +49,11 @@ namespace Dignite.Cms.Admin.Entries
         public string Slug { get; set; }
 
 
+        /// <summary>
+        /// Is draft
+        /// </summary>
+        public bool Draft { get; set; }
+
 
         /// <summary>
         /// 
@@ -57,11 +61,6 @@ namespace Dignite.Cms.Admin.Entries
         [Required]
         public DateTime PublishTime { get; set; }
 
-
-        /// <summary>
-        /// Whether it is an activated version
-        /// </summary>
-        public virtual bool IsActivatedVersion { get; set; }
 
         /// <summary>
         /// Notes on changes to this version
@@ -74,7 +73,7 @@ namespace Dignite.Cms.Admin.Entries
         /// </summary>
         /// <param name="validationContext"></param>
         /// <returns></returns>
-        public override IReadOnlyList<FormField> GetFieldDefinitions(ValidationContext validationContext)
+        public override IReadOnlyList<FormField> GetCustomizeFields(ValidationContext validationContext)
         {
             var _entryTypeAppService = validationContext.GetRequiredService<IEntryTypeAdminAppService>();
             var entryType = AsyncHelper.RunSync(()=> _entryTypeAppService.GetAsync(this.EntryTypeId));

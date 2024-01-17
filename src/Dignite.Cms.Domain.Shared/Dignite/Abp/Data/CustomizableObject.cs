@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using Volo.Abp.Content;
 using Volo.Abp.Data;
 
 namespace Dignite.Abp.Data;
@@ -26,10 +25,10 @@ public abstract class CustomizableObject : IHasCustomFields, IValidatableObject
     public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         var validationErrors = new List<ValidationResult>();
-        var fieldDefinitions = GetFieldDefinitions(validationContext);
+        var customizeFields = GetCustomizeFields(validationContext);
         var formSelector = validationContext.GetRequiredService<IFormControlSelector>();
 
-        foreach (var field in fieldDefinitions)
+        foreach (var field in customizeFields)
         {
             var form = formSelector.Get(field.FormControlName);
             form.Validate(
@@ -47,5 +46,5 @@ public abstract class CustomizableObject : IHasCustomFields, IValidatableObject
     ///
     /// </summary>
     /// <returns></returns>
-    public abstract IReadOnlyList<FormField> GetFieldDefinitions(ValidationContext validationContext);
+    public abstract IReadOnlyList<FormField> GetCustomizeFields(ValidationContext validationContext);
 }

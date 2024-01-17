@@ -14,12 +14,12 @@ namespace Dignite.Cms.Entries
         Task<bool> AnyAsync(Guid sectionId, string culture, CancellationToken cancellationToken = default);
 
         Task<List<Entry>> GetListAsync(
-            Guid sectionId, 
+            Guid sectionId,
             string culture,
-            Guid? creatorId = null, 
-            EntryStatus? auditedStatus = null,  
-            string filter=null,
-            DateTime? start=null,
+            Guid? creatorId = null,
+            EntryStatus? status = null,
+            string filter = null,
+            DateTime? start = null,
             DateTime? end = null,
             IList<QueryingByCustomField> queryingByCustomFields = null,
             int maxResultCount = int.MaxValue,
@@ -30,7 +30,7 @@ namespace Dignite.Cms.Entries
              Guid sectionId,
              string culture,
              Guid? creatorId = null,
-             EntryStatus? auditedStatus = null,
+             EntryStatus? status = null,
              string filter = null,
             DateTime? start = null,
             DateTime? end = null,
@@ -46,7 +46,7 @@ namespace Dignite.Cms.Entries
         /// <param name="entry"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<List<Entry>> GetAllVisionListAsync(Entry entry, CancellationToken cancellationToken = default);
+        Task<List<Entry>> GetVisionListAsync(Entry entry, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get entries using slug

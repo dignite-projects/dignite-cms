@@ -16,7 +16,7 @@ namespace Dignite.Cms.Entries
 
         public Entry(Guid id, Guid sectionId, Guid entryTypeId, string culture, string title, string slug, 
             DateTime publishTime, EntryStatus status, Guid? parentId, int order, 
-            Guid? initialVersionId, bool isActivatedVersion, string versionNotes, Guid? tenantId)
+            Guid? initialVersionId, string versionNotes, Guid? tenantId)
             :base(id)
         {
             SectionId = sectionId;
@@ -29,7 +29,7 @@ namespace Dignite.Cms.Entries
             ParentId = parentId;
             Order = order;
             InitialVersionId = initialVersionId;
-            IsActivatedVersion = isActivatedVersion;
+            IsActivatedVersion = initialVersionId.HasValue ? false : true;
             VersionNotes = versionNotes;
             TenantId = tenantId;
         }
@@ -111,21 +111,14 @@ namespace Dignite.Cms.Entries
         public virtual Guid? TenantId { get; protected set; }
 
 
-        public virtual void SetEntryTypeId(Guid entryTypeId)
-        {
-            this.EntryTypeId = entryTypeId;
-        }
-        public virtual void SetParentId(Guid? parentId)
-        {
-            this.ParentId = parentId;
-        }
         public virtual void SetStatus(EntryStatus status)
         {
             this.Status = status;
         }
 
-        public virtual void SetOrder(int order)
+        public virtual void SetOrder(Guid? parentId,int order)
         {
+            this.ParentId = parentId;
             this.Order = order;
         }
 

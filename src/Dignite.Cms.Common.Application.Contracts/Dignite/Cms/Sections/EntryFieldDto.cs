@@ -18,6 +18,6 @@ namespace Dignite.Cms.Sections
         /// <summary>
         /// 
         /// </summary>
-        public bool Searchable { get; set; }
+        public bool ShowOnList { get; set; }
     }
 }

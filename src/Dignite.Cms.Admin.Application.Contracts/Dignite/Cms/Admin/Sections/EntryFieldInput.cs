@@ -25,6 +25,6 @@ namespace Dignite.Cms.Admin.Sections
         /// <summary>
         /// 
         /// </summary>
-        public virtual bool Searchable { get; set; }
+        public virtual bool ShowOnList { get; set; }
     }
 }

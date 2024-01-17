@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Dignite.Cms.Admin.Entries
 {
@@ -6,6 +7,11 @@ namespace Dignite.Cms.Admin.Entries
     {
         public CreateEntryInput():base()
         {
+        }
+
+        public CreateEntryInput(Guid entryTypeId) : base() 
+        {
+            this.EntryTypeId = entryTypeId;
         }
 
         /// <summary>

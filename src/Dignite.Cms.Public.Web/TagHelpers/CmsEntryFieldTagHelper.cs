@@ -42,7 +42,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             else
             {
                 var tagHelper = new CmsFieldTagHelper(_renderer);
-                tagHelper.Field = new FormField(field.Name,field.DisplayName,field.Description,field.FormControlName,field.FormConfiguration,null,Entry.Entry.GetField(field.Name));
+                tagHelper.Field = new FormField(field.Name,field.DisplayName,field.Description,field.FormControlName,field.FormConfiguration,false,Entry.Entry.GetField(field.Name));
                 tagHelper.Entry = Entry.Entry;
                 tagHelper.PartialName = PartialName;
                 await tagHelper.ProcessAsync(context, output);

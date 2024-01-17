@@ -314,7 +314,7 @@
     {
         if (SelectedField == null || await FieldValidationsRef.ValidateAll())
         {
-            SelectedField = new FormField("", "", "", TextEditFormControl.ControlName, new FormConfigurationDictionary(), null, null);
+            SelectedField = new FormField("", "", "", TextEditFormControl.ControlName, new FormConfigurationDictionary(), false, null);
             SelectedBlockType.Fields.Add(SelectedField);
             await SetFieldFormConfigurationComponentAsync();
         }

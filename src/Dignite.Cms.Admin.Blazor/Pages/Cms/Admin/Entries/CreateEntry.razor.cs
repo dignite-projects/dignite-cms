@@ -45,7 +45,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
             if (!Section.EntryTypes.Any())
             {
-                throw new AbpException(L["{0}SectionHasNotCreatedAnEntryType", Section.DisplayName]);
+                throw new UserFriendlyException(L["{0}SectionHasNotCreatedAnEntryType", Section.DisplayName]);
             }
 
 
@@ -56,10 +56,9 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
             }
             else 
             {
-                NewEntity = new CreateEntryInput(SectionId)
+                NewEntity = new CreateEntryInput(Section.EntryTypes.First().Id)
                 {
                     PublishTime = Clock.Now,
-                    EntryTypeId = Section.EntryTypes.First().Id,
                     Culture = Culture,
                 };
             }

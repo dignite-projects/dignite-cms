@@ -7,7 +7,6 @@ using Volo.Abp.Domain.Services;
 using Dignite.Abp.Data;
 using Dignite.Cms.Sections;
 using Dignite.Cms.Fields;
-using static Dignite.Cms.CmsErrorCodes;
 
 namespace Dignite.Cms.Entries
 {
@@ -57,7 +56,8 @@ namespace Dignite.Cms.Entries
             return await _entryRepository.InsertAsync(entry);
         }
 
-        public virtual async Task<Entry> UpdateAsync(Guid id, string culture, string title, string slug,
+        public virtual async Task<Entry> UpdateAsync(
+            Guid id, string culture, string title, string slug,
             DateTime publishTime, EntryStatus status, ExtraPropertyDictionary extraProperties,
             string versionNotes)
         {
@@ -148,7 +148,11 @@ namespace Dignite.Cms.Entries
         }
         protected virtual async Task CheckExtraPropertiesAsync(EntryType entryype, ExtraPropertyDictionary extraProperties)
         {
-            var fields = await _fieldRepository.GetListAsync( entryype.FieldTabs.SelectMany(ft => ft.Fields).Select(ef => ef.FieldId));
+            var fields = await _fieldRepository.GetListAsync( 
+                entryype.FieldTabs
+                        .SelectMany(ft => ft.Fields)
+                        .Select(ef => ef.FieldId)
+                );
             if (extraProperties.Keys.Except(fields.Select(f=>f.Name)).Any())
             {
                 throw new Volo.Abp.AbpException("Custom field values do not match custom fields of the entry type!");

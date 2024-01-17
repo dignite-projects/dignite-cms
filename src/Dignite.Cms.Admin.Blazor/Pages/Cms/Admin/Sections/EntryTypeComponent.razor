@@ -6,43 +6,25 @@
 
 @inject IStringLocalizer<CmsResource> L
 
-@if (Section.Type == Dignite.Cms.Sections.SectionType.Single)
-{
-    if (Section.EntryTypes == null || !Section.EntryTypes.Any())
-    {
-        <Button Color="Color.Link" Clicked="Create">
-            @L["CreateEntryType"]
-        </Button>
-    }
-    else
-    {
-        <Button Color="Color.Link" Clicked="()=>Edit(Section.EntryTypes.First().Id)">
-            @L["EntryType"]
-        </Button>
-    }
-}
-else
-{
-    <Dropdown>
-        <DropdownToggle Color="Color.Link">
-            @L["EntryType"]
-        </DropdownToggle>
-        <DropdownMenu>
-            @if (Section.EntryTypes != null && Section.EntryTypes.Any())
+<Dropdown>
+    <DropdownToggle Color="Color.Link">
+        @L["EntryType"]
+    </DropdownToggle>
+    <DropdownMenu>
+        @if (Section.EntryTypes != null && Section.EntryTypes.Any())
+        {
+            @foreach (var item in Section.EntryTypes)
             {
-                @foreach (var item in Section.EntryTypes)
-                {
-                    <DropdownItem Clicked="()=>Edit(item.Id)">@item.DisplayName</DropdownItem>
-                }
-                <DropdownDivider />
+                <DropdownItem Clicked="()=>Edit(item.Id)">@item.DisplayName</DropdownItem>
             }
-            <DropdownItem Clicked="Create">
-                <Icon Name="IconName.PlusCircle"></Icon>
-                @L["CreateEntryType"]
-            </DropdownItem>
-        </DropdownMenu>
-    </Dropdown>
-}
+            <DropdownDivider />
+        }
+        <DropdownItem Clicked="Create">
+            <Icon Name="IconName.PlusCircle"></Icon>
+            @L["CreateEntryType"]
+        </DropdownItem>
+    </DropdownMenu>
+</Dropdown>
 
 @code{
     [Parameter] public object Data { get; set; }

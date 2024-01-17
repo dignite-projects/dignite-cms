@@ -134,15 +134,7 @@ public static class CmsDbContextModelCreatingExtensions
             entry.Property(e => e.Culture).IsRequired().HasMaxLength(SiteConsts.MaxCultureLength);
             entry.Property(e => e.Title).IsRequired().HasMaxLength(EntryConsts.MaxTitleLength);
             entry.Property(e => e.Slug).IsRequired().HasMaxLength(EntryConsts.MaxSlugLength);
-            entry.OwnsOne(
-                    e => e.Revision,
-                    e =>
-                    {
-                        e.Property(r => r.InitialId).IsRequired().HasColumnName("Revision_InitialId");
-                        e.Property(r => r.Version).IsRequired().HasColumnName("Revision_Version");
-                        e.Property(r => r.IsActive).IsRequired().HasColumnName("Revision_IsActive");
-                        e.Property(r => r.Notes).HasMaxLength(EntryConsts.MaxRevisionNotesLength).HasColumnName("Revision_Notes");
-                    });
+            entry.Property(e => e.VersionNotes).HasMaxLength(EntryConsts.MaxRevisionNotesLength);
 
             //Indexes
             entry.HasIndex(e => new { e.SectionId, e.Culture, e.PublishTime, e.Status });

@@ -38,12 +38,18 @@ namespace Dignite.Cms.Public.Entries
         /// <summary>
         /// 
         /// </summary>
-        public EntryStatus Status { get; protected set; }
+        public EntryStatus Status { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         public DateTime PublishTime { get; set; }
+
+
+        /// <summary>
+        /// Whether it is an activated version
+        /// </summary>
+        public virtual bool IsActivatedVersion { get; set; }
 
 
         /// <summary>

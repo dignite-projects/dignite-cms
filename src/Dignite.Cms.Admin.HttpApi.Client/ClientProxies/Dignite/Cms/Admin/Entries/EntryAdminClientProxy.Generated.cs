@@ -58,31 +58,22 @@ public partial class EntryAdminClientProxy : ClientProxyBase<IEntryAdminAppServi
         });
     }
 
-    public virtual async Task<ListResultDto<EntryDto>> GetVersionListAsync(Guid id)
+    public virtual async Task<ListResultDto<EntryDto>> GetAllVersionsAsync(Guid id)
     {
-        return await RequestAsync<ListResultDto<EntryDto>>(nameof(GetVersionListAsync), new ClientProxyRequestTypeValue
+        return await RequestAsync<ListResultDto<EntryDto>>(nameof(GetAllVersionsAsync), new ClientProxyRequestTypeValue
         {
             { typeof(Guid), id }
         });
     }
 
-    public virtual async Task ActivateAsync(Guid id, int version)
+    public virtual async Task ActivateAsync(Guid id)
     {
         await RequestAsync(nameof(ActivateAsync), new ClientProxyRequestTypeValue
         {
-            { typeof(Guid), id },
-            { typeof(int), version }
+            { typeof(Guid), id }
         });
     }
 
-    public virtual async Task<EntryDto> GetByVersionAsync(Guid id, int version)
-    {
-        return await RequestAsync<EntryDto>(nameof(GetByVersionAsync), new ClientProxyRequestTypeValue
-        {
-            { typeof(Guid), id },
-            { typeof(int), version }
-        });
-    }
 
     public virtual async Task MoveAsync(Guid id, MoveEntryInput input)
     {

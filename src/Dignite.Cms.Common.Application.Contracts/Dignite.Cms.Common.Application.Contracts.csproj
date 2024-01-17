@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Dignite.Cms.Domain.Shared\Dignite.Cms.Domain.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dignite\Cms\Ertries\" />
+  </ItemGroup>
+
 </Project>

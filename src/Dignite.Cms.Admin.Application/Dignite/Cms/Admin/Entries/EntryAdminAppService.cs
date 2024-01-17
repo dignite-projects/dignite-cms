@@ -36,11 +36,6 @@ namespace Dignite.Cms.Admin.Entries
             await CheckSlugExistenceAsync(input.SectionId,input.Culture, input.Slug);
 
             var id = GuidGenerator.Create();
-            var revision = await CreateRevisionVersionAsync(
-                id,
-                input.InitialId.HasValue ? input.InitialId.Value : id,
-                input.RevisionNotes
-                );
             var order = (await _entryRepository.GetMaxOrderAsync(input.SectionId,input.Culture, input.ParentId))+1;
             var entry = new Entry(
                 id, 
@@ -51,11 +46,17 @@ namespace Dignite.Cms.Admin.Entries
                 input.Slug, 
                 input.PublishTime,
                 input.Draft? EntryStatus.Draft: EntryStatus.Published,
-                input.ExtraProperties,
                 input.ParentId,
                 order,
-                revision,
+                input.InitialVersionId,
+                input.IsActivatedVersion,
+                input.VersionNotes,
                 CurrentTenant.Id);
+
+            foreach (var item in input.ExtraProperties)
+            {
+                entry.SetField(item.Key, item.Value);
+            }
 
             //          
             await _entryRepository.InsertAsync(entry);
@@ -71,11 +72,10 @@ namespace Dignite.Cms.Admin.Entries
         public async Task<EntryDto> UpdateAsync(Guid id, UpdateEntryInput input)
         {
             var entry = await _entryRepository.GetAsync(id, false);
-            var section = await _sectionRepository.GetAsync(entry.SectionId, true);
 
             if (input.EntryTypeId != entry.EntryTypeId)
             {
-                CheckEntryType(section, input.EntryTypeId);
+                throw new Volo.Abp.AbpException("The system does not allow modification of the entry type!");
             }
 
             if (!input.Culture.Equals(entry.Culture, StringComparison.OrdinalIgnoreCase) || 
@@ -85,12 +85,12 @@ namespace Dignite.Cms.Admin.Entries
             }
 
             //
-            entry.SetEntryTypeId( input.EntryTypeId);
             entry.Title=input.Title;
             entry.Slug = input.Slug;
             entry.PublishTime = input.PublishTime;
             entry.Culture = input.Culture;            
-            entry.Revision.Notes = input.RevisionNotes;
+            entry.SetIsActivatedVersion(input.IsActivatedVersion);
+            entry.VersionNotes = input.VersionNotes;
 
             foreach (var item in input.ExtraProperties)
             {
@@ -112,9 +112,8 @@ namespace Dignite.Cms.Admin.Entries
         public async Task DeleteAsync(Guid id)
         {
             var entry = await _entryRepository.GetAsync(id, false);
-            var revisionList = await _entryRepository.GetRevisionListAsync(entry.Revision.InitialId); //get all versions 
 
-            await _entryRepository.DeleteManyAsync(revisionList);
+            await _entryRepository.DeleteAsync(entry);
         }
 
 
@@ -156,10 +155,10 @@ namespace Dignite.Cms.Admin.Entries
 
 
         [Authorize(Permissions.CmsAdminPermissions.Entry.Default)]
-        public async Task<ListResultDto<EntryDto>> GetVersionListAsync(Guid id)
+        public async Task<ListResultDto<EntryDto>> GetAllVersionsAsync(Guid id)
         {
             var entry = await _entryRepository.GetAsync(id, false);
-            var result = await _entryRepository.GetRevisionListAsync(entry.Revision.InitialId);
+            var result = await _entryRepository.GetAllVisionListAsync(entry);
 
             return new ListResultDto<EntryDto>(
                 ObjectMapper.Map<List<Entry>, List<EntryDto>>(result)
@@ -170,43 +169,23 @@ namespace Dignite.Cms.Admin.Entries
         /// 
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="version"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         [Authorize(Permissions.CmsAdminPermissions.Entry.Create)]
-        public async Task ActivateAsync(Guid id, int version)
+        public async Task ActivateAsync(Guid id)
         {
             var entry = await _entryRepository.GetAsync(id, false);
-            if (!entry.Revision.IsActive)
+            if (!entry.IsActivatedVersion)
             {
-                var result = await _entryRepository.GetRevisionListAsync(entry.Revision.InitialId);
+                var result = await _entryRepository.GetAllVisionListAsync(entry);
                 foreach (var item in result)
                 {
-                    if (item.Revision.IsActive)
+                    if (item.IsActivatedVersion)
                     {
-                        item.Revision.SetIsActive(false);
+                        item.SetIsActivatedVersion(false);
                     }
                 }
-                entry.Revision.SetIsActive(true);
-                entry.SetOrder(result.First(e=>e.Revision.IsActive).Order);
+                entry.SetIsActivatedVersion(true);
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="version"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        [Authorize(Permissions.CmsAdminPermissions.Entry.Default)]
-        public async Task<EntryDto> GetByVersionAsync(Guid id, int version)
-        {
-            var entry = await _entryRepository.GetAsync(id, false);
-            var result = await _entryRepository.FindByVersionAsync(entry.Revision.InitialId, version);
-            return ObjectMapper.Map<Entry, EntryDto>(
-                result
-                );
         }
 
 
@@ -230,24 +209,6 @@ namespace Dignite.Cms.Admin.Entries
             }
         }
 
-        protected virtual async Task<EntryRevision> CreateRevisionVersionAsync(Guid newEntityId, Guid initialId, string notes)
-        {
-            var revisionList = await _entryRepository.GetRevisionListAsync(initialId);
-            if (revisionList.Any())
-            {
-                var activeVersion = revisionList.First(r => r.Revision.IsActive);
-                //A new revision is created, deactivating the previous active revision
-                activeVersion.Revision.SetIsActive(false);
-                await _entryRepository.UpdateAsync(activeVersion);
-            }
-            return new EntryRevision(
-                initialId,
-                revisionList.Select(r => r.Revision.Version).DefaultIfEmpty(0).Max() + 1,
-                true,
-                notes
-                );
-        }
-
 
         protected virtual async Task CheckSlugExistenceAsync(Guid sectionId,string culture, string slug)
         {
@@ -256,17 +217,10 @@ namespace Dignite.Cms.Admin.Entries
                 throw new EntrySlugAlreadyExistException( culture, slug);
             }
         }
-        protected virtual void CheckEntryType(Section section, Guid entryTypeId)
-        {
-            if (!section.EntryTypes.Any(et=>et.Id==entryTypeId))
-            {
-                throw new Volo.Abp.AbpException($"id:{entryTypeId} entry type does not exist.");
-            }
-        }
 
         protected virtual async Task MoveAsync(Entry entry, Guid targetId, MoveEntryPosition position)
         {
-            var result = await _entryRepository.GetRevisionListAsync(entry.Revision.InitialId);
+            var result = await _entryRepository.GetAllVisionListAsync(entry);
             var newOrder = 0;
             Guid? parentId = null;
 

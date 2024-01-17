@@ -45,11 +45,6 @@ namespace Dignite.Cms.Admin.Entries
         /// </summary>
         public virtual EntryStatus Status { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public EntryRevisionDto Revision { get; set; }
-
         #region Section type is a exclusive property of Structure type
 
         /// <summary>
@@ -66,13 +61,34 @@ namespace Dignite.Cms.Admin.Entries
 
         #endregion
 
+        #region Version control information for entry
+
+
+        /// <summary>
+        /// The id of the initial entry id;
+        /// </summary>
+        /// <remarks>
+        /// The Id of the initial version is null;
+        /// </remarks>
+        public virtual Guid? InitialVersionId { get; set; }
+
+        /// <summary>
+        /// Whether it is an activated version
+        /// </summary>
+        public virtual bool IsActivatedVersion { get; set; }
+
+        /// <summary>
+        /// Notes on changes to this version
+        /// </summary>
+        public virtual string VersionNotes { get; set; }
+
+        #endregion
+
 
         /// <summary>
         /// 
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public CmsUserDto Author { get; set; }
-
-
     }
 }

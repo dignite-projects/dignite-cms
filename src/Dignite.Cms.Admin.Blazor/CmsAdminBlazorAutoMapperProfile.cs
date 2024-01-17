@@ -22,6 +22,7 @@ namespace Dignite.Cms.Admin.Blazor
             CreateMap<EntryTypeDto, UpdateEntryTypeInput>();
             CreateMap<EntryFieldTabDto, EntryFieldTabInput>();
             CreateMap<EntryFieldDto, EntryFieldInput>();
+            CreateMap<EntryDto, CreateEntryInput>();
             CreateMap<EntryDto, UpdateEntryInput>();
         }
     }

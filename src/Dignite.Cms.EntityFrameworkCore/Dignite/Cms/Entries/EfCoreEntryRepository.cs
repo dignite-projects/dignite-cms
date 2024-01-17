@@ -34,7 +34,7 @@ namespace Dignite.Cms.Entries
         {
             return await (await GetDbSetAsync())
                        .WhereIf(ignoredId != null, ct => ct.Id != ignoredId)
-                       .AnyAsync(e => e.SectionId== sectionId && e.Culture==culture && e.Slug == slug && e.Revision.IsActive, GetCancellationToken(cancellationToken));
+                       .AnyAsync(e => e.SectionId== sectionId && e.Culture==culture && e.Slug == slug && e.IsActivatedVersion, GetCancellationToken(cancellationToken));
         }
 
         public async Task<bool> AnyAsync(Guid sectionId, string culture, CancellationToken cancellationToken = default)
@@ -114,36 +114,35 @@ namespace Dignite.Cms.Entries
         /// <summary>
         /// Get a list of revisions
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="entry"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<List<Entry>> GetRevisionListAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<List<Entry>> GetAllVisionListAsync(Entry entry, CancellationToken cancellationToken = default)
         {
-            return await (await GetDbSetAsync())
-                .Where(e => e.Revision.InitialId==id)
+            var result = await (await GetDbSetAsync())
+                .Where(e => e.InitialVersionId== (entry.InitialVersionId.HasValue ? entry.InitialVersionId.Value : entry.Id))
                 .ToListAsync(GetCancellationToken(cancellationToken));
+
+            if (entry.InitialVersionId.HasValue)
+            {
+                var initialVersionEntry = await (await GetDbSetAsync()).FirstOrDefaultAsync(e => e.Id == entry.InitialVersionId.Value, cancellationToken);
+                if (initialVersionEntry != null)
+                {
+                    result.Add(initialVersionEntry);
+                }
+            }
+            else
+            {
+                result.Add(entry);
+            }
+            return result;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="version"></param>
-        /// <param name="includeDetails"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task<Entry> FindByVersionAsync(Guid id, int version, bool includeDetails = false, CancellationToken cancellationToken = default)
-        {
-            return await (await GetDbSetAsync())
-                .IncludeDetails(includeDetails)
-                .Where(e => e.Revision.InitialId == id && e.Revision.Version==version)
-                .FirstOrDefaultAsync(GetCancellationToken(cancellationToken));
-        }
 
         public async Task<Entry> FindBySlugAsync(Guid sectionId, string culture, string slug, bool includeDetails = true, CancellationToken cancellationToken = default)
         {
             return await (await GetDbSetAsync())
-                .FirstOrDefaultAsync(e => e.SectionId == sectionId && e.Culture==culture && e.Status== EntryStatus.Published && e.Slug == slug && e.Revision.IsActive, GetCancellationToken(cancellationToken));
+                .FirstOrDefaultAsync(e => e.SectionId == sectionId && e.Culture==culture && e.Status== EntryStatus.Published && e.Slug == slug && e.IsActivatedVersion, GetCancellationToken(cancellationToken));
         }
 
         public async Task<Entry> FindPrevAsync(Guid id, bool includeDetails = false, CancellationToken cancellationToken = default)
@@ -151,7 +150,7 @@ namespace Dignite.Cms.Entries
             var dbSet = await GetDbSetAsync();
             var currentEntry = await dbSet.FirstAsync(e => e.Id == id, GetCancellationToken(cancellationToken));
             return await dbSet
-                    .Where(e => e.SectionId == currentEntry.SectionId && e.Culture==currentEntry.Culture && e.PublishTime < currentEntry.PublishTime && e.Status == EntryStatus.Published && e.Revision.IsActive)
+                    .Where(e => e.SectionId == currentEntry.SectionId && e.Culture==currentEntry.Culture && e.PublishTime < currentEntry.PublishTime && e.Status == EntryStatus.Published && e.IsActivatedVersion)
                     .OrderByDescending(e => e.CreationTime)
                     .FirstOrDefaultAsync(GetCancellationToken(cancellationToken));           
 
@@ -162,7 +161,7 @@ namespace Dignite.Cms.Entries
             var dbSet = await GetDbSetAsync();
             var currentEntry = await dbSet.FirstAsync(e => e.Id == id, GetCancellationToken(cancellationToken));
             return await dbSet
-                    .Where(e => e.SectionId == currentEntry.SectionId && e.Culture == currentEntry.Culture && e.PublishTime > currentEntry.PublishTime && e.Status == EntryStatus.Published && e.Revision.IsActive)
+                    .Where(e => e.SectionId == currentEntry.SectionId && e.Culture == currentEntry.Culture && e.PublishTime > currentEntry.PublishTime && e.Status == EntryStatus.Published && e.IsActivatedVersion)
                     .OrderBy(e => e.CreationTime)
                     .FirstOrDefaultAsync(GetCancellationToken(cancellationToken));
         }
@@ -188,7 +187,7 @@ namespace Dignite.Cms.Entries
             DateTime? start = null,
             DateTime? end = null)
         {
-            return (await GetDbSetAsync()).Where(e => e.SectionId == sectionId && e.Culture == culture && e.Revision.IsActive)
+            return (await GetDbSetAsync()).Where(e => e.SectionId == sectionId && e.Culture == culture && e.IsActivatedVersion)
                 .WhereIf(creatorId.HasValue, e => e.CreatorId == creatorId.Value)
                 .WhereIf(status.HasValue, e => e.Status == status.Value)
                 .WhereIf(!filter.IsNullOrEmpty(), e => e.Title.Contains(filter))

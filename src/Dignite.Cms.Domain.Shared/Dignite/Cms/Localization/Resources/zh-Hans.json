@@ -42,6 +42,8 @@
     "FieldName{0}AlreadyExist": "字段名 \"{0}\" 已存在.",
     "Enum:SectionType:Single": "单页",
     "Enum:SectionType:Structure": "结构",
-    "Enum:SectionType:Channel": "频道"
+    "Enum:SectionType:Channel": "频道",
+    "PleaseSelectSection": "请选择版块。",
+    "{0}NoAvailableEntryTypes": "{0}版块中没有可用的条目类型."
   }
 }

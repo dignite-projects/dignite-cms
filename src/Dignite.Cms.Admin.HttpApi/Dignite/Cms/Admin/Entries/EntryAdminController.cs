@@ -91,10 +91,10 @@ namespace Dignite.Cms.Admin.Entries
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("{id:Guid}/versions")]
-        public async Task<ListResultDto<EntryDto>> GetVersionListAsync(Guid id)
+        [Route("{id:Guid}/all-versions")]
+        public async Task<ListResultDto<EntryDto>> GetAllVersionsAsync(Guid id)
         {
-            return await _entryAppService.GetVersionListAsync(id);
+            return await _entryAppService.GetAllVersionsAsync(id);
         }
 
         /// <summary>
@@ -103,23 +103,10 @@ namespace Dignite.Cms.Admin.Entries
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("activate/{id:Guid}/{version:int}")]
-        public async Task ActivateAsync(Guid id, int version)
+        [Route("activate/{id:Guid}")]
+        public async Task ActivateAsync(Guid id)
         {
-            await _entryAppService.ActivateAsync(id, version);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="version"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("{id:Guid}/{version:int}")]
-        public async Task<EntryDto> GetByVersionAsync(Guid id, int version)
-        {
-            return await _entryAppService.GetByVersionAsync(id,version);
+            await _entryAppService.ActivateAsync(id);
         }
 
         /// <summary>

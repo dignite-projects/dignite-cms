@@ -234,11 +234,18 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
             {
                 if (CurrentSection.EntryTypes.Any())
                 {
-                    Navigation.NavigateTo($"cms/admin/entries/create?sectionId={CurrentSection.Id}&culture={Culture}");
+                    if (CurrentSection.EntryTypes.Select(et => et.Id).Except(Entities.Select(e => e.EntryTypeId)).Any())
+                    {
+                        Navigation.NavigateTo($"cms/admin/entries/create?sectionId={CurrentSection.Id}&culture={Culture}");
+                    }
+                    else
+                    {
+                        await Notify.Error(L["{0}NoAvailableEntryTypes", CurrentSection.DisplayName]);
+                    }
                 }
                 else
                 {
-                    await Notify.Error(L["{0}SectionHasNotCreatedAnEntryType", CurrentSection.DisplayName]);
+                    await Notify.Error(L["{0}NoAvailableEntryTypes", CurrentSection.DisplayName]);
                 }
             }
         }

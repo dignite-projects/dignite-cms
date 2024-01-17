@@ -18,22 +18,14 @@ namespace Dignite.Cms.Admin.Entries
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<ListResultDto<EntryDto>> GetVersionListAsync(Guid id);
+        Task<ListResultDto<EntryDto>> GetAllVersionsAsync(Guid id);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task ActivateAsync(Guid id,int version);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="version"></param>
-        /// <returns></returns>
-        Task<EntryDto> GetByVersionAsync(Guid id, int version);
+        Task ActivateAsync(Guid id);
 
         /// <summary>
         /// 

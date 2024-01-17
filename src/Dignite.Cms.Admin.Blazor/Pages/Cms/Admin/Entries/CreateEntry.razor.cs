@@ -21,6 +21,10 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         [Parameter]
         [SupplyParameterFromQuery]
         public string Culture { get; set; }
+
+        [Parameter]
+        [SupplyParameterFromQuery]
+        public Guid? RevisionEntryId { get; set; }
         protected CreateEntryInput NewEntity { get; set; }
         protected SectionDto Section { get; set; }
         protected PageToolbar Toolbar { get; } = new();
@@ -44,12 +48,21 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                 throw new AbpException(L["{0}SectionHasNotCreatedAnEntryType", Section.DisplayName]);
             }
 
-            NewEntity = new CreateEntryInput(SectionId)
+
+            if (RevisionEntryId.HasValue && RevisionEntryId.Value != default)
             {
-                PublishTime = Clock.Now,
-                EntryTypeId = Section.EntryTypes.First().Id,
-                Culture = Culture,
-            };
+                var revisionEntry = await EntryAppService.GetAsync(RevisionEntryId.Value);
+                NewEntity = ObjectMapper.Map<EntryDto, CreateEntryInput>(revisionEntry);
+            }
+            else 
+            {
+                NewEntity = new CreateEntryInput(SectionId)
+                {
+                    PublishTime = Clock.Now,
+                    EntryTypeId = Section.EntryTypes.First().Id,
+                    Culture = Culture,
+                };
+            }
         }
 
 

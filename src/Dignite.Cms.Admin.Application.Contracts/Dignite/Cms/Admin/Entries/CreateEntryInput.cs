@@ -32,11 +32,6 @@ namespace Dignite.Cms.Admin.Entries
         /// </summary>
         public Guid? ParentId { get; set; }
 
-
-        /// <summary>
-        /// The id of the initial entry id
-        /// If no parameter value is set, the id of the entry is the initial entry id
-        /// </summary>
-        public Guid? InitialId { get; set; }
+        public virtual Guid? InitialVersionId { get; set; }
     }
 }

@@ -43,20 +43,10 @@ namespace Dignite.Cms.Entries
         /// <summary>
         /// Get a list of revisions
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="entry"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<List<Entry>> GetRevisionListAsync(Guid id, CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="version"></param>
-        /// <param name="includeDetails"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        Task<Entry> FindByVersionAsync(Guid id, int version, bool includeDetails = true, CancellationToken cancellationToken = default);
+        Task<List<Entry>> GetAllVisionListAsync(Entry entry, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get entries using slug

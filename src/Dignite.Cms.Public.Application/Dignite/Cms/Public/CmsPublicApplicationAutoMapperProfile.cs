@@ -34,6 +34,5 @@ public class CmsPublicApplicationAutoMapperProfile : Profile
             .Ignore(e => e.Author)
             .Ignore(e => e.Url)
             .MapExtraProperties();
-        CreateMap<EntryRevision, EntryRevisionDto>();
     }
 }

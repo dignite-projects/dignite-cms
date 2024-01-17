@@ -64,20 +64,17 @@
             </Field>
         </Validation>
 
-        @if (Section.EntryTypes.Count > 1)
-        {
-            <Validation MessageLocalizer="@LH.Localize" Validator="@ValidationRule.None">
-                <Field>
-                    <FieldLabel>@L["EntryType"]</FieldLabel>
-                    <Select TValue="Guid" SelectedValue="@Entry.EntryTypeId" SelectedValueChanged="@OnEntryTypeSelectedValueChanged">
-                        @foreach (var item in Section.EntryTypes)
-                        {
-                            <SelectItem Value="@item.Id">@item.DisplayName</SelectItem>
-                        }
-                    </Select>
-                </Field>
-            </Validation>
-        }
+        <Validation MessageLocalizer="@LH.Localize" Validator="@ValidationRule.None">
+            <Field>
+                <FieldLabel>@L["EntryType"]</FieldLabel>
+                <Select TValue="Guid" SelectedValue="@Entry.EntryTypeId" Disabled="@(Entry.GetType()==typeof(UpdateEntryInput))" SelectedValueChanged="@OnEntryTypeSelectedValueChanged">
+                    @foreach (var item in Section.EntryTypes)
+                    {
+                        <SelectItem Value="@item.Id">@item.DisplayName</SelectItem>
+                    }
+                </Select>
+            </Field>
+        </Validation>
         <Validation MessageLocalizer="@LH.Localize" Validator="@ValidationRule.None">
             <Field>
                 <Blazorise.FieldLabel>@L["Culture"]</Blazorise.FieldLabel>
@@ -117,7 +114,7 @@
         <Validation MessageLocalizer="@LH.Localize">
             <Field>
                 <FieldLabel>@L["RevisionNotes"]</FieldLabel>
-                <MemoEdit @bind-Text="@Entry.RevisionNotes" AutoSize>
+                <MemoEdit @bind-Text="@Entry.VersionNotes" AutoSize>
                     <Feedback>
                         <ValidationError />
                     </Feedback>

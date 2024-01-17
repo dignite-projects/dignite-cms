@@ -17,6 +17,7 @@ namespace Dignite.Cms.Admin.Entries
     {
         protected CreateOrUpdateEntryInputBase():base()
         {
+            IsActivatedVersion = true;
         }
 
         /// <summary>
@@ -58,10 +59,14 @@ namespace Dignite.Cms.Admin.Entries
 
 
         /// <summary>
-        /// Notes on this modification operation
+        /// Whether it is an activated version
         /// </summary>
-        [DynamicMaxLength(typeof(EntryConsts), nameof(EntryConsts.MaxRevisionNotesLength))]
-        public string RevisionNotes { get; set; }
+        public virtual bool IsActivatedVersion { get; set; }
+
+        /// <summary>
+        /// Notes on changes to this version
+        /// </summary>
+        public virtual string VersionNotes { get; set; }
 
 
         /// <summary>

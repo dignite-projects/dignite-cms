@@ -15,7 +15,6 @@ namespace Dignite.Cms.Sections
             Name = name;
             FieldTabs = fieldTabs;
             TenantId = tenantId;
-            FieldTabs= fieldTabs;
         }
 
         protected EntryType()

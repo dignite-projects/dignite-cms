@@ -1,5 +1,4 @@
 ﻿using Dignite.Abp.Data;
-using Dignite.Abp.DynamicForms;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Public.Sections;
 using Dignite.Cms.Public.Sites;
@@ -79,7 +78,7 @@ namespace Dignite.Cms.Public.Entries
 
             if (section.Type == Cms.Sections.SectionType.Single)
             {
-                result = await _entryRepository.GetListAsync(input.SectionId, input.Culture, null, EntryStatus.Published, null, null, null, null, 1, 0);
+                result = await _entryRepository.GetListAsync(input.SectionId, input.Culture, null, EntryStatus.Published, null, null, null, null, 100, 0);
             }
             else if (section.Type == Cms.Sections.SectionType.Structure)
             {

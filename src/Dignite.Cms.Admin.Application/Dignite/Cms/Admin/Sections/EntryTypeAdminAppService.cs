@@ -11,36 +11,36 @@ namespace Dignite.Cms.Admin.Sections
     {
         private readonly IEntryTypeRepository _entryTypeRepository;
         private readonly IFieldRepository _fieldRepository;
+        private readonly EntryTypeManager _entryTypeManager;
 
-        public EntryTypeAdminAppService(IEntryTypeRepository entryTypeRepository, IFieldRepository fieldRepository)
+        public EntryTypeAdminAppService(IEntryTypeRepository entryTypeRepository, IFieldRepository fieldRepository, EntryTypeManager entryTypeManager)
         {
             _entryTypeRepository = entryTypeRepository;
             _fieldRepository= fieldRepository;
+            _entryTypeManager = entryTypeManager;
         }
 
         [Authorize(Permissions.CmsAdminPermissions.Section.Create)]
         public async Task<EntryTypeDto> CreateAsync(CreateEntryTypeInput input)
         {
-            await CheckNameExistenceAsync(input.SectionId, input.Name);
-
-            var entity = new EntryType(
-                GuidGenerator.Create(), 
+            var entity = await _entryTypeManager.CreateAsync(
                 input.SectionId, 
                 input.DisplayName, 
                 input.Name, 
-                input.FieldTabs.Select(ft=>
+                input.FieldTabs.Select(ft =>
                     new EntryFieldTab(
                         ft.Name,
-                        ft.Fields.Select(f=>
+                        ft.Fields.Select(f =>
                             new EntryField(
                                 f.FieldId,
                                 f.DisplayName,
                                 f.Required,
-                                f.Searchable
-                                )).ToList()
-                            )).ToList(), 
-                CurrentTenant.Id);
-            await _entryTypeRepository.InsertAsync(entity);
+                                f.ShowOnList
+                                )
+                            ).ToList()
+                        )
+                    ).ToList()
+                );
 
             return ObjectMapper.Map<EntryType, EntryTypeDto>(entity);
         }
@@ -73,39 +73,25 @@ namespace Dignite.Cms.Admin.Sections
         [Authorize(Permissions.CmsAdminPermissions.Section.Update)]
         public async Task<EntryTypeDto> UpdateAsync(Guid id, UpdateEntryTypeInput input)
         {
-            var entity = await _entryTypeRepository.GetAsync(id,false);
-            if (!entity.Name.Equals(input.Name, StringComparison.OrdinalIgnoreCase))
-            {
-                await CheckNameExistenceAsync(entity.Id, input.Name, id);
-            }
-            entity.SetDisplayName(input.DisplayName);
-            entity.SetName(input.Name);
-            entity.FieldTabs.Clear();
-            foreach (var ft in input.FieldTabs)
-            {
-                entity.FieldTabs.Add(
+            var entity = await _entryTypeManager.UpdateAsync(
+                id,
+                input.DisplayName,
+                input.Name,
+                input.FieldTabs.Select(ft =>
                     new EntryFieldTab(
-                        ft.Name, 
-                        ft.Fields.Select(f => new EntryField(
+                        ft.Name,
+                        ft.Fields.Select(f =>
+                            new EntryField(
                                 f.FieldId,
                                 f.DisplayName,
                                 f.Required,
-                                f.Searchable
-                                )).ToList())
-                    );
-            }
-
-            //
-            await _entryTypeRepository.UpdateAsync(entity);
+                                f.ShowOnList
+                                )
+                            ).ToList()
+                        )
+                    ).ToList()
+                );
             return ObjectMapper.Map<EntryType, EntryTypeDto>(entity);
-        }
-
-        protected virtual async Task CheckNameExistenceAsync(Guid sectionId, string name, Guid? ignoredId = null)
-        {
-            if (await _entryTypeRepository.NameExistsAsync(sectionId, name, ignoredId))
-            {
-                throw new EntryTypeNameAlreadyExistException(name);
-            }
         }
     }
 }

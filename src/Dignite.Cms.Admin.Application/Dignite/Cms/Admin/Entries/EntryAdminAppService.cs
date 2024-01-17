@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
-using static Dignite.Cms.CmsErrorCodes;
 
 namespace Dignite.Cms.Admin.Entries
 {
@@ -14,18 +13,15 @@ namespace Dignite.Cms.Admin.Entries
         private readonly IEntryRepository _entryRepository;        
         private readonly ISectionRepository _sectionRepository;
         private readonly EntryManager _entryManager;
-        private readonly IEntryTypeRepository _entryTypeRepository;
 
         public EntryAdminAppService(
             IEntryRepository entryRepository, 
             ISectionRepository sectionRepository,
-            EntryManager entryManager, 
-            IEntryTypeRepository entryTypeRepository)
+            EntryManager entryManager)
         {
             _entryRepository = entryRepository;
             _sectionRepository = sectionRepository;
             _entryManager = entryManager;
-            _entryTypeRepository = entryTypeRepository;
         }
 
 

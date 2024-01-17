@@ -7,6 +7,6 @@ namespace Dignite.Cms.Sections
 {
     public interface IEntryTypeRepository : IBasicRepository<EntryType, Guid>
     {
-        Task<bool> NameExistsAsync(Guid sectionId, string name, Guid? ignoredId = null, CancellationToken cancellationToken = default);
+        Task<bool> NameExistsAsync(Guid sectionId, string name, CancellationToken cancellationToken = default);
     }
 }

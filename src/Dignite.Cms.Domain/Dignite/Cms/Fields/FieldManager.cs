@@ -18,7 +18,7 @@ namespace Dignite.Cms.Fields
             await CheckNameExistenceAsync(name);
             var entity = new Field(
                 GuidGenerator.Create(),
-                groupId.HasValue ? (groupId.Value == Guid.Empty ? null : groupId.Value) : null,
+                groupId,
                 name,
                 displayName,
                 description,
@@ -38,7 +38,7 @@ namespace Dignite.Cms.Fields
             entity.SetName(name);
             entity.SetDescription(description);
             entity.SetFormControlName(formControlName);
-            entity.SetGroupId(groupId.HasValue ? (groupId.Value == Guid.Empty ? null : groupId.Value) : null);
+            entity.SetGroupId(groupId);
             entity.SetFormConfigurationDictionary(formConfiguration);
             return await _fieldRepository.UpdateAsync(entity);
         }

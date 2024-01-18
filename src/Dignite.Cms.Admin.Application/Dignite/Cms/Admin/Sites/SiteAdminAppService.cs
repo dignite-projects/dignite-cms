@@ -11,25 +11,27 @@ namespace Dignite.Cms.Admin.Pages
     public class SiteAdminAppService : CmsAdminAppServiceBase, ISiteAdminAppService
     {
         private readonly ISiteRepository _siteRepository;
+        private readonly SiteManager _siteManager;
 
-        public SiteAdminAppService(ISiteRepository siteRepository)
+        public SiteAdminAppService(ISiteRepository siteRepository, SiteManager siteManager)
         {
             _siteRepository = siteRepository;
+            _siteManager = siteManager;
         }
 
         public async Task<SiteDto> CreateAsync(CreateSiteInput input)
         {
-            var entity = new Site(
-                GuidGenerator.Create(), 
-                input.DisplayName, 
+            var entity = await _siteManager.CreateAsync(
+                input.DisplayName,
                 input.Name,
-                input.Cultures.Select(l=>new SiteCulture(l.IsDefault,l.CultureName)).ToList(),
+                input.Cultures.Select(
+                    l => new SiteCulture(
+                        l.IsDefault,
+                        l.CultureName)
+                    ).ToList(),
                 input.Host,
-                input.IsActive, 
+                input.IsActive,
                 CurrentTenant.Id);
-
-
-            await _siteRepository.InsertAsync(entity);
 
             var dto = ObjectMapper.Map<Site, SiteDto>(entity);
 
@@ -61,17 +63,17 @@ namespace Dignite.Cms.Admin.Pages
 
         public async Task<SiteDto> UpdateAsync(Guid id, UpdateSiteInput input)
         {
-            var entity = await _siteRepository.GetAsync(id, false);
-
-
-
-            //
-            entity.SetDisplayName(input.DisplayName);
-            entity.SetName(input.Name);
-            entity.SetHost(input.Host);
-            entity.SetActive(input.IsActive);
-            entity.SetCultures(input.Cultures.Select(l => new SiteCulture(l.IsDefault, l.CultureName)).ToList());
-            await _siteRepository.UpdateAsync(entity);
+            var entity = await _siteManager.UpdateAsync(
+                id, 
+                input.DisplayName, 
+                input.Name, 
+                input.Cultures.Select(
+                    l => new SiteCulture(
+                        l.IsDefault, 
+                        l.CultureName)
+                    ).ToList(), 
+                input.Host, 
+                input.IsActive);
 
             var dto =
                 ObjectMapper.Map<Site, SiteDto>(

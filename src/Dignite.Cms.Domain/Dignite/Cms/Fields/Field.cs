@@ -12,7 +12,7 @@ namespace Dignite.Cms.Fields
         public Field(Guid id, Guid? groupId, string name, string displayName, string description, string formControlName, FormConfigurationDictionary formConfiguration, Guid? tenantId)
             :base(id)
         {
-            GroupId = groupId;
+            SetGroupId(groupId);
             Name = name;
             DisplayName = displayName;
             Description = description;
@@ -54,7 +54,7 @@ namespace Dignite.Cms.Fields
         public Guid? TenantId { get; set; }
         public virtual void SetGroupId(Guid? groupId)
         {
-            this.GroupId= groupId;
+            this.GroupId= groupId.HasValue ? (groupId.Value == Guid.Empty ? null : groupId.Value) : null;
         }
         public virtual void SetName(string name)
         {

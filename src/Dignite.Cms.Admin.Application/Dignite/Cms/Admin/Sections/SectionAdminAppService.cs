@@ -1,5 +1,4 @@
-﻿using Dignite.Cms.Entries;
-using Dignite.Cms.Fields;
+﻿using Dignite.Cms.Fields;
 using Dignite.Cms.Sections;
 using Microsoft.AspNetCore.Authorization;
 using System;
@@ -14,11 +13,13 @@ namespace Dignite.Cms.Admin.Sections
     {
         private readonly ISectionRepository _sectionRepository;
         private readonly IFieldRepository _fieldRepository;
+        private readonly SectionManager _sectionManager;
 
-        public SectionAdminAppService(ISectionRepository sectionRepository, IFieldRepository fieldRepository)
+        public SectionAdminAppService(ISectionRepository sectionRepository, IFieldRepository fieldRepository, SectionManager sectionManager)
         {
             _sectionRepository = sectionRepository;
             _fieldRepository = fieldRepository;
+            _sectionManager = sectionManager;
         }
 
 
@@ -31,37 +32,7 @@ namespace Dignite.Cms.Admin.Sections
         [Authorize(Permissions.CmsAdminPermissions.Section.Create)]
         public async Task<SectionDto> CreateAsync(CreateSectionInput input)
         {
-            await CheckNameExistenceAsync(input.SiteId, input.Name);
-            await CheckRouteExistenceAsync(input.SiteId, input.Route);
-
-            //
-            var section = new Section(
-                GuidGenerator.Create(),
-                input.SiteId,
-                input.Type,
-                input.DisplayName, input.Name,
-                input.IsDefault,
-                input.IsActive,
-                input.Route,
-                input.Template,
-                CurrentTenant.Id);
-
-            //
-            CheckSectionType(section);
-            CheckSlugRoutingParameter(section);
-
-            //
-            if (section.IsDefault)
-            {
-                var sections = await _sectionRepository.GetListAsync(section.SiteId);
-                foreach (var item in sections)
-                {
-                    section.SetDefault(false);
-                }
-            }
-
-            //
-            await _sectionRepository.InsertAsync(section);
+            var section = await _sectionManager.CreateAsync(input.SiteId, input.Type, input.DisplayName, input.Name, input.IsDefault, input.IsActive, input.Route, input.Template, CurrentTenant.Id);
             return ObjectMapper.Map<Section, SectionDto>(section);
         }
 
@@ -73,41 +44,7 @@ namespace Dignite.Cms.Admin.Sections
         [Authorize(Permissions.CmsAdminPermissions.Section.Update)]
         public async Task<SectionDto> UpdateAsync(Guid id, UpdateSectionInput input)
         {
-            var section = await _sectionRepository.GetAsync(id);
-            if (!section.Name.Equals(input.Name,StringComparison.OrdinalIgnoreCase))
-            {
-                await CheckNameExistenceAsync(section.SiteId, input.Name);
-            }
-            if (!section.Route.Equals(input.Route, StringComparison.OrdinalIgnoreCase))
-            {
-                await CheckRouteExistenceAsync(section.SiteId, input.Route);
-            }
-
-            //
-            if (input.IsDefault && !section.IsDefault)
-            {
-                var sections = await _sectionRepository.GetListAsync(section.SiteId);
-                foreach (var item in sections)
-                {
-                    item.SetDefault(false);
-                }
-            }
-
-            //
-            section.SetActive(input.IsActive);
-            section.SetDefault(input.IsDefault); 
-            section.SetDisplayName(input.DisplayName);
-            section.Route = input.Route;
-            section.Template = input.Template;
-            section.SetName(input.Name);
-            section.SetType(input.Type);
-
-            //
-            CheckSectionType(section);
-            CheckSlugRoutingParameter(section);
-
-            //
-            await _sectionRepository.UpdateAsync(section);
+            var section = await _sectionManager.UpdateAsync(id, input.Type, input.DisplayName, input.Name, input.IsDefault, input.IsActive, input.Route, input.Template);
             return ObjectMapper.Map<Section, SectionDto>(section);
         }
 
@@ -153,38 +90,6 @@ namespace Dignite.Cms.Admin.Sections
         }
 
 
-        protected virtual async Task CheckNameExistenceAsync(Guid siteId, string name)
-        {
-            if (await _sectionRepository.NameExistsAsync(siteId,name))
-            {
-                throw new SectionNameAlreadyExistException( name);
-            }
-        }
-        protected virtual async Task CheckRouteExistenceAsync(Guid siteId, string route)
-        {
-            if (await _sectionRepository.RouteExistsAsync(siteId, route))
-            {
-                throw new SectionRouteAlreadyExistException(route);
-            }
-        }
-
-
-        protected virtual void CheckSectionType(Section section)
-        {
-            if (section.IsDefault && section.Type!= SectionType.Single)
-            {
-                throw new DefaultSectionMustBeSingleTypeException(section.Name);
-            }
-        }
-
-
-        protected virtual void CheckSlugRoutingParameter(Section section)
-        {
-            if (section.Type != SectionType.Single && !section.Route.Contains($"{{{nameof(Entry.Slug)}}}", StringComparison.OrdinalIgnoreCase))
-            {
-                throw new MissingSlugRoutingParameterException(section.Type, section.Route);
-            }
-        }
 
         protected async Task FillSectionFields(SectionDto dto)
         {

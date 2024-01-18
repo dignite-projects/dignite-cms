@@ -20,9 +20,17 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
         protected Type FormConfigurationComponentType;
         protected Dictionary<string, object> FormConfigurationComponentParameters = new();
 
+        //Will not change again after assignment, used to verify that the field name already exists
+        private string fieldNameForValidation;
         public CreateOrUpdateFieldComponent()
         {
             LocalizationResource = typeof(CmsResource);
+        }
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+            fieldNameForValidation = Entity.Name;
         }
 
         protected override async Task OnInitializedAsync()
@@ -50,21 +58,19 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
             await Task.CompletedTask;
         }
 
-        private async Task ValidateNameExistsAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
+        private async Task NameExistsValidatorAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var fieldName = Convert.ToString(e.Value);
-            if (!fieldName.IsNullOrEmpty())
+            var name = Convert.ToString(e.Value);
+            if (!name.IsNullOrEmpty())
             {
-                if ((Entity.GetType() == typeof(CreateFieldInput)) ||
-                    (Entity.GetType() == typeof(UpdateFieldInput) && !fieldName.Equals(Entity.Name, StringComparison.InvariantCultureIgnoreCase)))
+                if (!name.Equals(fieldNameForValidation, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    var field = await FieldService.FindByNameAsync(fieldName);
-                    e.Status = field != null
+                    e.Status = await FieldService.NameExistsAsync(name)
                         ? ValidationStatus.Error
                         : ValidationStatus.Success;
 
-                    e.ErrorText = L["FieldName{0}AlreadyExist", fieldName];
+                    e.ErrorText = L["FieldName{0}AlreadyExist", name];
                 }
             }
             else

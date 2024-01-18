@@ -1,4 +1,5 @@
 ﻿using Dignite.Cms.Entries;
+using Dignite.Cms.Fields;
 using Dignite.Cms.Sections;
 using Microsoft.AspNetCore.Authorization;
 using System;
@@ -162,6 +163,12 @@ namespace Dignite.Cms.Admin.Entries
             {
                 throw new Volo.Abp.AbpException("Only entries in the structural section can be moved!");
             }
+        }
+
+        [Authorize(Permissions.CmsAdminPermissions.Entry.Default)]
+        public async Task<bool> SlugExistsAsync(Guid sectionId,string culture,string slug)
+        {
+            return await _entryRepository.SlugExistsAsync(sectionId,culture, slug);
         }
     }
 }

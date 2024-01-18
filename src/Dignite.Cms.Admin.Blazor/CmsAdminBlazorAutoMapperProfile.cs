@@ -5,6 +5,7 @@ using Dignite.Cms.Admin.Sections;
 using Dignite.Cms.Admin.Sites;
 using Dignite.Cms.Sections;
 using Dignite.Cms.Sites;
+using Volo.Abp.AutoMapper;
 
 namespace Dignite.Cms.Admin.Blazor
 {
@@ -22,8 +23,10 @@ namespace Dignite.Cms.Admin.Blazor
             CreateMap<EntryTypeDto, UpdateEntryTypeInput>();
             CreateMap<EntryFieldTabDto, EntryFieldTabInput>();
             CreateMap<EntryFieldDto, EntryFieldInput>();
-            CreateMap<EntryDto, CreateEntryInput>();
-            CreateMap<EntryDto, UpdateEntryInput>();
+            CreateMap<EntryDto, CreateEntryInput>()
+                .Ignore(e=>e.Draft);
+            CreateMap<EntryDto, UpdateEntryInput>()
+                .Ignore(e => e.Draft);
         }
     }
 }

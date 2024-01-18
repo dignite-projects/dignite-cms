@@ -2,6 +2,7 @@
   "culture": "zh-Hans",
   "texts": {
     "Menu:Cms": "内容管理",
+    "Menu:Settings": "设置",
     "Fields": "字段",
     "FieldGroup": "字段分组",
     "DisplayName": "显示名称",
@@ -28,7 +29,7 @@
     "Slug": "别名",
     "ParentEntry": "上级条目",
     "RevisionNotes": "修订说明",
-    "SamplePageMessage": "Cms模块的示例页面",
+    "{0}SectionHasNotCreatedAnEntryType": "\"{0}\" 版块尚未创建条目类型",
     "FormControl:Matrix": "矩阵控件",
     "MatrixBlockTypes": "矩阵块类型",
     "NewBlockType": "新建矩阵块类型",
@@ -44,6 +45,10 @@
     "Enum:SectionType:Structure": "结构",
     "Enum:SectionType:Channel": "频道",
     "PleaseSelectSection": "请选择版块。",
-    "{0}NoAvailableEntryTypes": "{0}版块中没有可用的条目类型."
+    "{0}NoAvailableEntryTypes": "\"{0}\"版块中没有可用的条目类型.",
+    "SiteName{0}AlreadyExist": "站点名称 \"{0}\" 已存在.",
+    "SectionName{0}AlreadyExist": "版块名称 \"{0}\" 已存在.",
+    "EntryTypeName{0}AlreadyExist": "条目类型名称 \"{0}\" 已存在.",
+    "EntrySlugName{0}AlreadyExist": "条目别名 \"{0}\" 已存在."
   }
 }

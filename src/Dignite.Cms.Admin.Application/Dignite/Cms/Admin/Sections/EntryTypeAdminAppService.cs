@@ -70,6 +70,12 @@ namespace Dignite.Cms.Admin.Sections
             return dto;
         }
 
+        [Authorize(Permissions.CmsAdminPermissions.Section.Default)]
+        public async Task<bool> NameExistsAsync(Guid sectionId, string name)
+        {
+            return await _entryTypeRepository.NameExistsAsync(sectionId, name);
+        }
+
         [Authorize(Permissions.CmsAdminPermissions.Section.Update)]
         public async Task<EntryTypeDto> UpdateAsync(Guid id, UpdateEntryTypeInput input)
         {

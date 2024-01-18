@@ -12,6 +12,6 @@ namespace Dignite.Cms.Admin.Fields
         CreateFieldInput,
         UpdateFieldInput>
     {
-        Task<FieldDto> FindByNameAsync(string name);
+        Task<bool> NameExistsAsync(string name);
     }
 }

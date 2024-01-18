@@ -17,6 +17,23 @@
               "name": "ISiteAdminAppService",
               "methods": [
                 {
+                  "name": "NameExistsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "name",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Boolean",
+                    "typeSimple": "boolean"
+                  }
+                },
+                {
                   "name": "GetAsync",
                   "parametersOnMethod": [
                     {
@@ -335,6 +352,43 @@
               },
               "allowAnonymous": false,
               "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
+            },
+            "NameExistsAsyncByName": {
+              "uniqueName": "NameExistsAsyncByName",
+              "name": "NameExistsAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-admin/sites/name-exists/{name}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "name",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "name",
+                  "name": "name",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Boolean",
+                "typeSimple": "boolean"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "Dignite.Cms.Admin.Sites.ISiteAdminAppService"
             }
           }
         },
@@ -365,6 +419,31 @@
                   "returnValue": {
                     "type": "Dignite.Cms.Admin.Sections.EntryTypeDto",
                     "typeSimple": "Dignite.Cms.Admin.Sections.EntryTypeDto"
+                  }
+                },
+                {
+                  "name": "NameExistsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "sectionId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "name",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Boolean",
+                    "typeSimple": "boolean"
                   }
                 },
                 {
@@ -603,6 +682,63 @@
               },
               "allowAnonymous": false,
               "implementFrom": "Dignite.Cms.Admin.Sections.IEntryTypeAdminAppService"
+            },
+            "NameExistsAsyncBySectionIdAndName": {
+              "uniqueName": "NameExistsAsyncBySectionIdAndName",
+              "name": "NameExistsAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-admin/entry-types/name-exists",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "sectionId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "name",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "sectionId",
+                  "name": "sectionId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "name",
+                  "name": "name",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Boolean",
+                "typeSimple": "boolean"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "Dignite.Cms.Admin.Sections.IEntryTypeAdminAppService"
             }
           }
         },
@@ -618,6 +754,31 @@
               "type": "Dignite.Cms.Admin.Sections.ISectionAdminAppService",
               "name": "ISectionAdminAppService",
               "methods": [
+                {
+                  "name": "NameExistsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "siteId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "name",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Boolean",
+                    "typeSimple": "boolean"
+                  }
+                },
                 {
                   "name": "GetAsync",
                   "parametersOnMethod": [
@@ -985,6 +1146,63 @@
               },
               "allowAnonymous": false,
               "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Dignite.Cms.Admin.Sections.SectionDto,Dignite.Cms.Admin.Sections.SectionDto,System.Guid,Dignite.Cms.Admin.Sections.GetSectionsInput>"
+            },
+            "NameExistsAsyncBySiteIdAndName": {
+              "uniqueName": "NameExistsAsyncBySiteIdAndName",
+              "name": "NameExistsAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-admin/sections/name-exists",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "siteId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "name",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "siteId",
+                  "name": "siteId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "name",
+                  "name": "name",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Boolean",
+                "typeSimple": "boolean"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "Dignite.Cms.Admin.Sections.ISectionAdminAppService"
             }
           }
         },
@@ -1001,11 +1219,20 @@
               "name": "IFieldAdminAppService",
               "methods": [
                 {
-                  "name": "GetFormsAsync",
-                  "parametersOnMethod": [],
+                  "name": "NameExistsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "name",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
                   "returnValue": {
-                    "type": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Cms.Admin.Fields.FormDto>",
-                    "typeSimple": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Cms.Admin.Fields.FormDto>"
+                    "type": "System.Boolean",
+                    "typeSimple": "boolean"
                   }
                 },
                 {
@@ -1364,17 +1591,39 @@
               "allowAnonymous": false,
               "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Dignite.Cms.Admin.Fields.FieldDto,Dignite.Cms.Admin.Fields.FieldDto,System.Guid,Dignite.Cms.Admin.Fields.GetFieldsInput>"
             },
-            "GetFormsAsync": {
-              "uniqueName": "GetFormsAsync",
-              "name": "GetFormsAsync",
+            "NameExistsAsyncByName": {
+              "uniqueName": "NameExistsAsyncByName",
+              "name": "NameExistsAsync",
               "httpMethod": "GET",
-              "url": "api/cms-admin/fields/forms",
+              "url": "api/cms-admin/fields/name-exists/{name}",
               "supportedVersions": [],
-              "parametersOnMethod": [],
-              "parameters": [],
+              "parametersOnMethod": [
+                {
+                  "name": "name",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "name",
+                  "name": "name",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
               "returnValue": {
-                "type": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Cms.Admin.Fields.FormDto>",
-                "typeSimple": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Cms.Admin.Fields.FormDto>"
+                "type": "System.Boolean",
+                "typeSimple": "boolean"
               },
               "allowAnonymous": false,
               "implementFrom": "Dignite.Cms.Admin.Fields.IFieldAdminAppService"
@@ -1716,7 +1965,7 @@
               "name": "IEntryAdminAppService",
               "methods": [
                 {
-                  "name": "GetVersionListAsync",
+                  "name": "GetAllVersionsAsync",
                   "parametersOnMethod": [
                     {
                       "name": "id",
@@ -1742,44 +1991,11 @@
                       "typeSimple": "string",
                       "isOptional": false,
                       "defaultValue": null
-                    },
-                    {
-                      "name": "version",
-                      "typeAsString": "System.Int32, System.Private.CoreLib",
-                      "type": "System.Int32",
-                      "typeSimple": "number",
-                      "isOptional": false,
-                      "defaultValue": null
                     }
                   ],
                   "returnValue": {
                     "type": "System.Void",
                     "typeSimple": "System.Void"
-                  }
-                },
-                {
-                  "name": "GetByVersionAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "id",
-                      "typeAsString": "System.Guid, System.Private.CoreLib",
-                      "type": "System.Guid",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    },
-                    {
-                      "name": "version",
-                      "typeAsString": "System.Int32, System.Private.CoreLib",
-                      "type": "System.Int32",
-                      "typeSimple": "number",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
-                  "returnValue": {
-                    "type": "Dignite.Cms.Admin.Entries.EntryDto",
-                    "typeSimple": "Dignite.Cms.Admin.Entries.EntryDto"
                   }
                 },
                 {
@@ -1805,6 +2021,39 @@
                   "returnValue": {
                     "type": "System.Void",
                     "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "SlugExistsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "sectionId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "culture",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "slug",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Boolean",
+                    "typeSimple": "boolean"
                   }
                 },
                 {
@@ -2221,11 +2470,11 @@
               "allowAnonymous": false,
               "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Dignite.Cms.Admin.Entries.EntryDto,Dignite.Cms.Admin.Entries.EntryDto,System.Guid,Dignite.Cms.Admin.Entries.GetEntriesInput>"
             },
-            "GetVersionListAsyncById": {
-              "uniqueName": "GetVersionListAsyncById",
-              "name": "GetVersionListAsync",
+            "GetAllVersionsAsyncById": {
+              "uniqueName": "GetAllVersionsAsyncById",
+              "name": "GetAllVersionsAsync",
               "httpMethod": "GET",
-              "url": "api/cms-admin/entries/{id}/versions",
+              "url": "api/cms-admin/entries/{id}/all-versions",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
@@ -2260,11 +2509,11 @@
               "allowAnonymous": false,
               "implementFrom": "Dignite.Cms.Admin.Entries.IEntryAdminAppService"
             },
-            "ActivateAsyncByIdAndVersion": {
-              "uniqueName": "ActivateAsyncByIdAndVersion",
+            "ActivateAsyncById": {
+              "uniqueName": "ActivateAsyncById",
               "name": "ActivateAsync",
               "httpMethod": "POST",
-              "url": "api/cms-admin/entries/activate/{id}/{version}",
+              "url": "api/cms-admin/entries/activate/{id}",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
@@ -2272,14 +2521,6 @@
                   "typeAsString": "System.Guid, System.Private.CoreLib",
                   "type": "System.Guid",
                   "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
-                {
-                  "name": "version",
-                  "typeAsString": "System.Int32, System.Private.CoreLib",
-                  "type": "System.Int32",
-                  "typeSimple": "number",
                   "isOptional": false,
                   "defaultValue": null
                 }
@@ -2295,20 +2536,6 @@
                   "defaultValue": null,
                   "constraintTypes": [
                     "GuidRouteConstraint"
-                  ],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                },
-                {
-                  "nameOnMethod": "version",
-                  "name": "version",
-                  "jsonName": null,
-                  "type": "System.Int32",
-                  "typeSimple": "number",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [
-                    "IntRouteConstraint"
                   ],
                   "bindingSourceId": "Path",
                   "descriptorName": ""
@@ -2317,67 +2544,6 @@
               "returnValue": {
                 "type": "System.Void",
                 "typeSimple": "System.Void"
-              },
-              "allowAnonymous": false,
-              "implementFrom": "Dignite.Cms.Admin.Entries.IEntryAdminAppService"
-            },
-            "GetByVersionAsyncByIdAndVersion": {
-              "uniqueName": "GetByVersionAsyncByIdAndVersion",
-              "name": "GetByVersionAsync",
-              "httpMethod": "GET",
-              "url": "api/cms-admin/entries/{id}/{version}",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "id",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
-                {
-                  "name": "version",
-                  "typeAsString": "System.Int32, System.Private.CoreLib",
-                  "type": "System.Int32",
-                  "typeSimple": "number",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "id",
-                  "name": "id",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [
-                    "GuidRouteConstraint"
-                  ],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                },
-                {
-                  "nameOnMethod": "version",
-                  "name": "version",
-                  "jsonName": null,
-                  "type": "System.Int32",
-                  "typeSimple": "number",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [
-                    "IntRouteConstraint"
-                  ],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "Dignite.Cms.Admin.Entries.EntryDto",
-                "typeSimple": "Dignite.Cms.Admin.Entries.EntryDto"
               },
               "allowAnonymous": false,
               "implementFrom": "Dignite.Cms.Admin.Entries.IEntryAdminAppService"
@@ -2440,6 +2606,124 @@
               },
               "allowAnonymous": false,
               "implementFrom": "Dignite.Cms.Admin.Entries.IEntryAdminAppService"
+            },
+            "SlugExistsAsyncBySectionIdAndCultureAndSlug": {
+              "uniqueName": "SlugExistsAsyncBySectionIdAndCultureAndSlug",
+              "name": "SlugExistsAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-admin/entries/slug-exists",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "sectionId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "culture",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "slug",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "sectionId",
+                  "name": "sectionId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "culture",
+                  "name": "culture",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "slug",
+                  "name": "slug",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Boolean",
+                "typeSimple": "boolean"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "Dignite.Cms.Admin.Entries.IEntryAdminAppService"
+            }
+          }
+        },
+        "Dignite.Cms.Admin.DynamicForms.FormAdminController": {
+          "controllerName": "FormAdmin",
+          "controllerGroupName": "FormAdmin",
+          "isRemoteService": true,
+          "isIntegrationService": false,
+          "apiVersion": null,
+          "type": "Dignite.Cms.Admin.DynamicForms.FormAdminController",
+          "interfaces": [
+            {
+              "type": "Dignite.Cms.Admin.DynamicForms.IFormAdminAppService",
+              "name": "IFormAdminAppService",
+              "methods": [
+                {
+                  "name": "GetFormControlsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Cms.Admin.DynamicForms.FormControlDto>",
+                    "typeSimple": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Cms.Admin.DynamicForms.FormControlDto>"
+                  }
+                }
+              ]
+            }
+          ],
+          "actions": {
+            "GetFormControlsAsync": {
+              "uniqueName": "GetFormControlsAsync",
+              "name": "GetFormControlsAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-admin/dynamic-forms/forms",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Cms.Admin.DynamicForms.FormControlDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Cms.Admin.DynamicForms.FormControlDto>"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "Dignite.Cms.Admin.DynamicForms.IFormAdminAppService"
             }
           }
         }

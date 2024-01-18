@@ -1,4 +1,5 @@
 ﻿using Dignite.Cms.Fields;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Dignite.Cms.Admin.Fields
             _fieldGroupRepository = fieldGroupRepository;
         }
 
+        [Authorize(Permissions.CmsAdminPermissions.Field.Create)]
         public async Task<FieldGroupDto> CreateAsync(CreateOrUpdateFieldGroupInput input)
         {
             var entity = new FieldGroup(GuidGenerator.Create(),input.Name,CurrentTenant.Id);
@@ -28,11 +30,13 @@ namespace Dignite.Cms.Admin.Fields
             return dto;
         }
 
+        [Authorize(Permissions.CmsAdminPermissions.Field.Delete)]
         public async Task DeleteAsync(Guid id)
         {
             await _fieldGroupRepository.DeleteAsync(id);
         }
 
+        [Authorize(Permissions.CmsAdminPermissions.Field.Default)]
         public async Task<FieldGroupDto> GetAsync(Guid id)
         {
             var entity = await _fieldGroupRepository.GetAsync(id);
@@ -44,17 +48,7 @@ namespace Dignite.Cms.Admin.Fields
             return dto;
         }
 
-        public async Task<ListResultDto<FieldGroupDto>> GetListAsync()
-        {
-            var result = await _fieldGroupRepository.GetListAsync();
-            var dto =
-                ObjectMapper.Map<List<FieldGroup>, List<FieldGroupDto>>(
-                    result
-                    );
-
-            return new ListResultDto<FieldGroupDto>( dto);
-        }
-
+        [Authorize(Permissions.CmsAdminPermissions.Field.Default)]
         public async Task<PagedResultDto<FieldGroupDto>> GetListAsync(GetFieldGroupsInput input)
         {
             var result = await _fieldGroupRepository.GetListAsync();
@@ -66,6 +60,7 @@ namespace Dignite.Cms.Admin.Fields
             return new PagedResultDto<FieldGroupDto>(result.Count, dto);
         }
 
+        [Authorize(Permissions.CmsAdminPermissions.Field.Update)]
         public async Task<FieldGroupDto> UpdateAsync(Guid id, CreateOrUpdateFieldGroupInput input)
         {
             var entity = await _fieldGroupRepository.GetAsync(id,false);

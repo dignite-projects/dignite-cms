@@ -92,7 +92,7 @@
                 </Blazorise.ModalHeader>
                 <Blazorise.ModalBody>
                     <Blazorise.Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
-                        <CreateOrUpdateSectionComponent Entity="@NewEntity"></CreateOrUpdateSectionComponent>
+                        <CreateOrUpdateSectionComponent Entity="@NewEntity" SiteId="CurrentSite?.Id"></CreateOrUpdateSectionComponent>
                         <ExtensionProperties TEntityType="CreateSectionInput" TResourceType="CmsResource" Entity="@NewEntity" LH="@LH" />
                     </Blazorise.Validations>
                 </Blazorise.ModalBody>
@@ -117,7 +117,7 @@
                 <Blazorise.ModalBody>
                     <Blazorise.Validations @ref="@EditValidationsRef" Model="@EditingEntity" ValidateOnLoad="false">
                         <input type="hidden" name="ConcurrencyStamp" @bind-value="EditingEntity.ConcurrencyStamp"/>
-                        <CreateOrUpdateSectionComponent Entity="@EditingEntity"></CreateOrUpdateSectionComponent>
+                        <CreateOrUpdateSectionComponent Entity="@EditingEntity" SiteId="CurrentSite?.Id"></CreateOrUpdateSectionComponent>
                         <ExtensionProperties TEntityType="UpdateSectionInput" TResourceType="CmsResource" Entity="@EditingEntity" LH="@LH" />
                     </Blazorise.Validations>
                 </Blazorise.ModalBody>

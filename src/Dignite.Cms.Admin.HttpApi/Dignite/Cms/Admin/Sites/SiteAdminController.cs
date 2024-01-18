@@ -57,5 +57,12 @@ namespace Dignite.Cms.Admin.Sites
         {
             await _siteAppService.DeleteAsync(id);
         }
+
+        [HttpGet]
+        [Route("name-exists/{name}")]
+        public async Task<bool> NameExistsAsync(string name)
+        {
+            return await _siteAppService.NameExistsAsync(name);
+        }
     }
 }

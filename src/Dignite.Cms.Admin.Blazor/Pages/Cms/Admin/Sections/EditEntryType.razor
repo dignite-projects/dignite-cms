@@ -20,7 +20,7 @@
             <Blazorise.Validations @ref="@EditValidationsRef" Model="@EditingEntity" ValidateOnLoad="false">
                 @if (EditingEntity != null)
                 {
-                    <CreateOrUpdateEntryTypeComponent Entity="EditingEntity"></CreateOrUpdateEntryTypeComponent>
+                    <CreateOrUpdateEntryTypeComponent Entity="EditingEntity" SectionId="SectionId"></CreateOrUpdateEntryTypeComponent>
                 }
                 else
                 {

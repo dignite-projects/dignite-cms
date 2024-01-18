@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
 
 namespace Dignite.Cms.Admin.Sections
@@ -11,5 +12,6 @@ namespace Dignite.Cms.Admin.Sections
         CreateSectionInput,
         UpdateSectionInput>
     {
+        Task<bool> NameExistsAsync(Guid siteId, string name);
     }
 }

@@ -2,6 +2,7 @@
   "culture": "zh-Hant",
   "texts": {
     "Menu:Cms": "內容管理",
+    "Menu:Settings": "設置",
     "Fields": "字段",
     "FieldGroup": "字段分組",
     "DisplayName": "顯示名稱",
@@ -28,7 +29,7 @@
     "Slug": "別名",
     "ParentEntry": "上級條目",
     "RevisionNotes": "修訂說明",
-    "SamplePageMessage": "Cms模塊的示例頁面",
+    "{0}SectionHasNotCreatedAnEntryType": "\"{0}\" 版塊尚未創建條目類型",
     "FormControl:Matrix": "矩陣控制項",
     "MatrixBlockTypes": "矩陣塊類型",
     "NewBlockType": "新建矩陣塊類型",
@@ -42,6 +43,12 @@
     "FieldName{0}AlreadyExist": "字段名 \"{0}\" 已存在.",
     "Enum:SectionType:Single": "單頁",
     "Enum:SectionType:Structure": "結構",
-    "Enum:SectionType:Channel": "頻道"
+    "Enum:SectionType:Channel": "頻道",
+    "PleaseSelectSection": "請選擇版塊。",
+    "{0}NoAvailableEntryTypes": "\"{0}\"版塊中沒有可用的條目類型.",
+    "SiteName{0}AlreadyExist": "站點名稱 \"{0}\" 已存在.",
+    "SectionName{0}AlreadyExist": "版塊名稱 \"{0}\" 已存在.",
+    "EntryTypeName{0}AlreadyExist": "條目類型名稱 \"{0}\" 已存在.",
+    "EntrySlugName{0}AlreadyExist": "條目別名 \"{0}\" 已存在."
   }
 }

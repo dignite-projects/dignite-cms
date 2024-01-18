@@ -53,7 +53,7 @@
         </Card>
     </Column>
     <Column ColumnSize="ColumnSize.Is4">
-        <Validation MessageLocalizer="@LH.Localize">
+        <Validation MessageLocalizer="@LH.Localize" AsyncValidator="@SlugExistsValidatorAsync">
             <Field>
                 <Blazorise.FieldLabel>@L["Slug"]</Blazorise.FieldLabel>
                 <Blazorise.TextEdit @bind-Text="@Entry.Slug">
@@ -75,7 +75,7 @@
                 </Select>
             </Field>
         </Validation>
-        <Validation MessageLocalizer="@LH.Localize" Validator="@ValidationRule.None">
+        <Validation MessageLocalizer="@LH.Localize" AsyncValidator="@CultureExistsValidatorAsync">
             <Field>
                 <Blazorise.FieldLabel>@L["Culture"]</Blazorise.FieldLabel>
                 <Select TValue="string" SelectedValue="Entry.Culture" SelectedValueChanged="@OnCultureSelectedValueChanged">

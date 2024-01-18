@@ -1,4 +1,5 @@
 ﻿using Dignite.Cms.Fields;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Cms.Admin.Fields
 {
+    [Authorize(Permissions.CmsAdminPermissions.Field.Default)]
     public class FieldAdminAppService : CmsAdminAppServiceBase, IFieldAdminAppService
     {
         private readonly IFieldRepository  _fieldRepository;
@@ -17,6 +19,7 @@ namespace Dignite.Cms.Admin.Fields
             _fieldManager = fieldManager;
         }
 
+        [Authorize(Permissions.CmsAdminPermissions.Field.Create)]
         public async Task<FieldDto> CreateAsync(CreateFieldInput input)
         {
             var entity = await _fieldManager.CreateAsync(
@@ -36,11 +39,13 @@ namespace Dignite.Cms.Admin.Fields
             return dto;
         }
 
+        [Authorize(Permissions.CmsAdminPermissions.Field.Delete)]
         public async Task DeleteAsync(Guid id)
         {
             await _fieldRepository.DeleteAsync(id);
         }
 
+        [Authorize(Permissions.CmsAdminPermissions.Field.Default)]
         public virtual async Task<FieldDto> GetAsync(Guid id)
         {
             return ObjectMapper.Map<Field, FieldDto>(
@@ -48,6 +53,7 @@ namespace Dignite.Cms.Admin.Fields
             );
         }
 
+        [Authorize(Permissions.CmsAdminPermissions.Field.Default)]
         public async Task<PagedResultDto<FieldDto>> GetListAsync(GetFieldsInput input)
         {
             var count = await _fieldRepository.GetCountAsync(input.GroupId, input.Filter);
@@ -60,6 +66,7 @@ namespace Dignite.Cms.Admin.Fields
             return new PagedResultDto<FieldDto>(count, dto);
         }
 
+        [Authorize(Permissions.CmsAdminPermissions.Field.Update)]
         public async Task<FieldDto> UpdateAsync(Guid id, UpdateFieldInput input)
         {
             var entity = await _fieldManager.UpdateAsync(id,
@@ -77,11 +84,10 @@ namespace Dignite.Cms.Admin.Fields
 
             return dto;
         }
-        public async Task<FieldDto> FindByNameAsync(string name)
+        [Authorize(Permissions.CmsAdminPermissions.Field.Default)]
+        public async Task<bool> NameExistsAsync(string name)
         {
-            var result = await _fieldRepository.FindByNameAsync(name);
-            return ObjectMapper.Map<Field, FieldDto>(result);
+            return await _fieldRepository.NameExistsAsync(name);
         }
-
     }
 }

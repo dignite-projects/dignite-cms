@@ -57,4 +57,12 @@ public partial class SiteAdminClientProxy : ClientProxyBase<ISiteAdminAppService
             { typeof(Guid), id }
         });
     }
+
+    public virtual async Task<bool> NameExistsAsync(string name)
+    {
+        return await RequestAsync<bool>(nameof(NameExistsAsync), new ClientProxyRequestTypeValue
+        {
+            { typeof(string), name }
+        });
+    }
 }

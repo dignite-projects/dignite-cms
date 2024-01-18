@@ -9,9 +9,8 @@ namespace Dignite.Cms.Entries
 {
     public interface IEntryRepository : IBasicRepository<Entry, Guid>
     {
-        Task<bool> SlugExistsAsync( Guid sectionId,string culture, string slug, Guid? ignoredId = null, CancellationToken cancellationToken = default);
+        Task<bool> SlugExistsAsync( Guid sectionId,string culture, string slug, CancellationToken cancellationToken = default);
 
-        Task<bool> AnyAsync(Guid sectionId, string culture, CancellationToken cancellationToken = default);
 
         Task<List<Entry>> GetListAsync(
             Guid sectionId,

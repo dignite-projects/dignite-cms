@@ -2,6 +2,7 @@
   "culture": "en",
   "texts": {
     "Menu:Cms": "CMS",
+    "Menu:Settings": "Settings",
     "Fields": "Fields",
     "FieldGroup": "Field Group",
     "DisplayName": "Display Name",
@@ -28,7 +29,7 @@
     "Slug": "Slug",
     "ParentEntry": "Parent Entry",
     "RevisionNotes": "Revision Notes",
-    "{0}SectionHasNotCreatedAnEntryType": "{0} Section Has Not Created An Entry Type",
+    "{0}SectionHasNotCreatedAnEntryType": "\"{0}\" Section Has Not Created An Entry Type",
     "FormControl:Matrix": "Matrix",
     "MatrixBlockTypes": "Matrix Block Types",
     "NewBlockType": "New Block Type",
@@ -42,6 +43,12 @@
     "FieldName{0}AlreadyExist": "Field Name \"{0}\" Already Exist.",
     "Enum:SectionType:Single": "Single Page",
     "Enum:SectionType:Structure": "Structure",
-    "Enum:SectionType:Channel": "Channel"
+    "Enum:SectionType:Channel": "Channel",
+    "PleaseSelectSection": "Please select a section.",
+    "{0}NoAvailableEntryTypes": "There are no available entry types in the \"{0}\" section",
+    "SiteName{0}AlreadyExist": "Site Name \"{0}\" Existing.",
+    "SectionName{0}AlreadyExist": "版块名称 \"{0}\" 已存在.",
+    "EntryTypeName{0}AlreadyExist": "条目类型名称 \"{0}\" 已存在.",
+    "EntrySlugName{0}AlreadyExist": "条目别名 \"{0}\" 已存在."
   }
 }

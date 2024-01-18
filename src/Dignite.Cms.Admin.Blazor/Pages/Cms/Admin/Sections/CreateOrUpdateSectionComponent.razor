@@ -1,9 +1,11 @@
 ﻿@using Dignite.Cms.Admin.Sections
 @using Dignite.Cms.Localization
 @using Dignite.Cms.Sections;
+@using System.Threading
 @using Volo.Abp.BlazoriseUI.Components.ObjectExtending
 @using Volo.Abp.Localization;
 @inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
+@inject ISectionAdminAppService _sectionAdminAppService;
 @inherits AbpComponentBase
 
 <Validation MessageLocalizer="@LH.Localize">
@@ -16,7 +18,7 @@
         </TextEdit>
     </Field>
 </Validation>
-<Validation MessageLocalizer="@LH.Localize">
+    <Validation MessageLocalizer="@LH.Localize" AsyncValidator="@NameExistsValidatorAsync">
     <Field>
         <FieldLabel>@L["Name"]</FieldLabel>
         <TextEdit @bind-Text="Entity.Name">
@@ -67,7 +69,13 @@
 
     @code {
     [Parameter] public CreateOrUpdateSectionInputBase Entity { get; set; }
+
+    [Parameter] public Guid? SiteId { get; set; }
+
     protected IReadOnlyList<SectionType> SectionTypes { get; set; }
+
+    //Will not change again after assignment, used to verify that the site name already exists
+    private string sectionNameForValidation;
 
     public CreateOrUpdateSectionComponent()
     {
@@ -75,6 +83,33 @@
         SectionTypes = Enum.GetValues(typeof(SectionType))
                             .Cast<SectionType>()
                             .ToList();
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        sectionNameForValidation = Entity.Name;
+    }
+
+    private async Task NameExistsValidatorAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        var name = Convert.ToString(e.Value);
+        if (SiteId.HasValue && !name.IsNullOrEmpty())
+        {
+            if (!name.Equals(sectionNameForValidation, StringComparison.InvariantCultureIgnoreCase))
+            {
+                e.Status = await _sectionAdminAppService.NameExistsAsync(SiteId.Value, name)
+                    ? ValidationStatus.Error
+                    : ValidationStatus.Success;
+
+                e.ErrorText = L["SectionName{0}AlreadyExist", name];
+            }
+        }
+        else
+        {
+            e.Status = ValidationStatus.Error;
+        }
     }
 
     void DisplayNameTextboxBlur()

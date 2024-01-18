@@ -30,17 +30,10 @@ namespace Dignite.Cms.Entries
         }
 
 
-        public async Task<bool> SlugExistsAsync(Guid sectionId, string culture, string slug, Guid? ignoredId = null, CancellationToken cancellationToken = default)
+        public async Task<bool> SlugExistsAsync(Guid sectionId, string culture, string slug, CancellationToken cancellationToken = default)
         {
             return await (await GetDbSetAsync())
-                       .WhereIf(ignoredId != null, ct => ct.Id != ignoredId)
                        .AnyAsync(e => e.SectionId== sectionId && e.Culture==culture && e.Slug == slug && e.IsActivatedVersion, GetCancellationToken(cancellationToken));
-        }
-
-        public async Task<bool> AnyAsync(Guid sectionId, string culture, CancellationToken cancellationToken = default)
-        {
-            return await (await GetDbSetAsync())
-                       .AnyAsync(e => e.SectionId == sectionId && e.Culture == culture, GetCancellationToken(cancellationToken));
         }
 
 

@@ -34,5 +34,7 @@ namespace Dignite.Cms.Admin.Entries
         /// <param name="input"></param>
         /// <returns></returns>
         Task MoveAsync(Guid id, MoveEntryInput input);
+
+        Task<bool> SlugExistsAsync(Guid sectionId, string culture, string slug);
     }
 }

@@ -40,7 +40,7 @@
         </TextEdit>
     </Field>
 </Validation>
-<Validation AsyncValidator="@ValidateNameExistsAsync">
+<Validation AsyncValidator="@NameExistsValidatorAsync">
     <Field>
         <FieldLabel>@L["FieldName"]</FieldLabel>
             <TextEdit MaxLength="FieldConsts.MaxNameLength" @bind-Text="@Entity.Name">
@@ -70,7 +70,6 @@
         </Select>
     </Field>
 </Validation>
-
 
 @if (FormConfigurationComponentType is not null)
 {

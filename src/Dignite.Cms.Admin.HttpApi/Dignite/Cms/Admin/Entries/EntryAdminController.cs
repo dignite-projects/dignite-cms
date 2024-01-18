@@ -121,5 +121,12 @@ namespace Dignite.Cms.Admin.Entries
         {
             await _entryAppService.MoveAsync(id, input);
         }
+
+        [HttpGet]
+        [Route("slug-exists")]
+        public Task<bool> SlugExistsAsync(Guid sectionId, string culture, string slug)
+        {
+            return _entryAppService.SlugExistsAsync(sectionId, culture, slug);
+        }
     }
 }

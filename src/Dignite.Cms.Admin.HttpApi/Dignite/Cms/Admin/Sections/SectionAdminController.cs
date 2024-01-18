@@ -61,5 +61,13 @@ namespace Dignite.Cms.Admin.Sections
         {
             return await _sectionAppService.GetAsync(id);
         }
+
+
+        [HttpGet]
+        [Route("name-exists")]
+        public async Task<bool> NameExistsAsync(Guid siteId,string name)
+        {
+            return await _sectionAppService.NameExistsAsync(siteId, name);
+        }
     }
 }

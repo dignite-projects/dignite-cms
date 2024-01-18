@@ -7,5 +7,6 @@ namespace Dignite.Cms.Admin.Sections
     public interface IEntryTypeAdminAppService : ICreateUpdateAppService<EntryTypeDto, Guid, CreateEntryTypeInput, UpdateEntryTypeInput>, IDeleteAppService<Guid>
     {
         Task<EntryTypeDto> GetAsync(Guid id);
+        Task<bool> NameExistsAsync(Guid sectionId, string name);
     }
 }

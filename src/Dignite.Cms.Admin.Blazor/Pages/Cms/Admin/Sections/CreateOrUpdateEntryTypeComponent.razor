@@ -4,7 +4,7 @@
 @using Dignite.Cms.Localization
 @using Volo.Abp.BlazoriseUI.Components.ObjectExtending
 @using Volo.Abp.Localization;
-@inject IEntryTypeAdminAppService AppService
+@inject IEntryTypeAdminAppService EntryTypeAdminAppService
 @inject IFieldGroupAdminAppService FieldGroupAppService
 @inject IFieldAdminAppService FieldAppService
 @inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
@@ -20,7 +20,7 @@
         </TextEdit>
     </Field>
 </Validation>
-<Validation MessageLocalizer="@LH.Localize">
+<Validation MessageLocalizer="@LH.Localize" AsyncValidator="@NameExistsValidatorAsync">
     <Field>
         <FieldLabel>@L["Name"]</FieldLabel>
         <TextEdit @bind-Text="Entity.Name">

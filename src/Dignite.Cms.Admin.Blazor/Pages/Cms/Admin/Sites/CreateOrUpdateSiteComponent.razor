@@ -1,8 +1,10 @@
 ﻿@using Dignite.Cms.Admin.Sites
 @using Dignite.Cms.Localization
+@using System.Threading
 @using Volo.Abp.BlazoriseUI.Components.ObjectExtending
 @using Volo.Abp.Localization;
 @inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
+@inject ISiteAdminAppService _siteAdminAppService;
 @inherits AbpComponentBase
 
 <Validation MessageLocalizer="@LH.Localize">
@@ -15,7 +17,7 @@
         </TextEdit>
     </Field>
 </Validation>
-<Validation MessageLocalizer="@LH.Localize">
+<Validation MessageLocalizer="@LH.Localize" AsyncValidator="@NameExistsValidatorAsync">
     <Field>
         <FieldLabel>@L["Name"]</FieldLabel>
         <TextEdit @bind-Text="Entity.Name">
@@ -57,9 +59,18 @@
     [Parameter] public CreateOrUpdateSiteInputBase Entity { get; set; }
     [Parameter] public IReadOnlyList<LanguageInfo> AllCultures { get; set; }
 
+    //Will not change again after assignment, used to verify that the site name already exists
+    private string siteNameForValidation;
+
     public CreateOrUpdateSiteComponent()
     {
         LocalizationResource = typeof(CmsResource);
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        siteNameForValidation = Entity.Name;
     }
 
     protected override async Task OnInitializedAsync()
@@ -91,6 +102,27 @@
             {
                 sl.IsDefault = false;
             }
+        }
+    }
+
+    private async Task NameExistsValidatorAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        var name = Convert.ToString(e.Value);
+        if (!name.IsNullOrEmpty())
+        {
+            if (!name.Equals(siteNameForValidation, StringComparison.InvariantCultureIgnoreCase))
+            {
+                e.Status = await _siteAdminAppService.NameExistsAsync(name)
+                    ? ValidationStatus.Error
+                    : ValidationStatus.Success;
+
+                e.ErrorText = L["SiteName{0}AlreadyExist", name];
+            }
+        }
+        else
+        {
+            e.Status = ValidationStatus.Error;
         }
     }
     void DisplayNameTextboxBlur()

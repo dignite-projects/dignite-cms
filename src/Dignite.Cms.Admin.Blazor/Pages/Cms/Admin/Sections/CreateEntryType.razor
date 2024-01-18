@@ -20,7 +20,7 @@
             <Blazorise.Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
                 @if (NewEntity != null)
                 {
-                    <CreateOrUpdateEntryTypeComponent Entity="NewEntity"></CreateOrUpdateEntryTypeComponent>
+                    <CreateOrUpdateEntryTypeComponent Entity="NewEntity" SectionId="SectionId"></CreateOrUpdateEntryTypeComponent>
                 }
             </Blazorise.Validations>
         </Blazorise.Form>

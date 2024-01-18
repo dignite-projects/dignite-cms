@@ -63,10 +63,10 @@ namespace Dignite.Cms.Admin.Fields
         }
 
         [HttpGet]
-        [Route("find-by-name/{name}")]
-        public async Task<FieldDto> FindByNameAsync(string name)
+        [Route("name-exists/{name}")]
+        public async Task<bool> NameExistsAsync(string name)
         {
-            return await _fieldAppService.FindByNameAsync(name);
+            return await _fieldAppService.NameExistsAsync(name);
         }
     }
 }

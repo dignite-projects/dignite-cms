@@ -37,7 +37,7 @@ namespace Dignite.Cms.Admin.Blazor.Menus
 
             var settingsMenuItem = new ApplicationMenuItem(
                     CmsAdminMenus.Settings,
-                    l["Settings"],
+                    l["Menu:Settings"],
                     icon: "fas fa fa-cog").RequirePermissions(CmsAdminPermissions.Site.Default);
             cmsAdminMenuItem.AddItem(settingsMenuItem);
 

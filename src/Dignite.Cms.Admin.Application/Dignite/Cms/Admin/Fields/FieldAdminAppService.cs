@@ -1,5 +1,4 @@
 ﻿using Dignite.Cms.Fields;
-using Dignite.Cms.Sections;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,25 +9,24 @@ namespace Dignite.Cms.Admin.Fields
     public class FieldAdminAppService : CmsAdminAppServiceBase, IFieldAdminAppService
     {
         private readonly IFieldRepository  _fieldRepository;
+        private readonly FieldManager _fieldManager;
 
-        public FieldAdminAppService(IFieldRepository fieldRepository)
+        public FieldAdminAppService(IFieldRepository fieldRepository, FieldManager fieldManager)
         {
             _fieldRepository = fieldRepository;
+            _fieldManager = fieldManager;
         }
 
         public async Task<FieldDto> CreateAsync(CreateFieldInput input)
         {
-            await CheckNameExistenceAsync(input.Name);
-            var entity = new Field(
-                GuidGenerator.Create(),
-                input.GroupId.HasValue ? (input.GroupId.Value == Guid.Empty ? null : input.GroupId.Value) : null,
-                input.Name,
-                input.DisplayName,
-                input.Description,
-                input.FormControlName,
-                input.FormConfiguration,
+            var entity = await _fieldManager.CreateAsync(
+                input.GroupId, 
+                input.Name, 
+                input.DisplayName, 
+                input.Description, 
+                input.FormControlName, 
+                input.FormConfiguration, 
                 CurrentTenant.Id);
-            await _fieldRepository.InsertAsync(entity);
 
             var dto =
                 ObjectMapper.Map<Field, FieldDto>(
@@ -64,18 +62,13 @@ namespace Dignite.Cms.Admin.Fields
 
         public async Task<FieldDto> UpdateAsync(Guid id, UpdateFieldInput input)
         {
-            var entity = await _fieldRepository.GetAsync(id,false);
-            if (!entity.Name.Equals(input.Name, StringComparison.OrdinalIgnoreCase))
-            {
-                await CheckNameExistenceAsync(input.Name, id);
-            }
-            entity.SetDisplayName(input.DisplayName);
-            entity.SetName(input.Name);
-            entity.SetDescription(input.Description);
-            entity.SetFormControlName(input.FormControlName);
-            entity.SetGroupId(input.GroupId.HasValue ? (input.GroupId.Value == Guid.Empty ? null : input.GroupId.Value) : null);
-            entity.SetFormConfigurationDictionary(input.FormConfiguration);
-            await _fieldRepository.UpdateAsync(entity);
+            var entity = await _fieldManager.UpdateAsync(id,
+                input.GroupId,
+                input.Name,
+                input.DisplayName,
+                input.Description,
+                input.FormControlName,
+                input.FormConfiguration);
 
             var dto =
                 ObjectMapper.Map<Field, FieldDto>(
@@ -90,12 +83,5 @@ namespace Dignite.Cms.Admin.Fields
             return ObjectMapper.Map<Field, FieldDto>(result);
         }
 
-        protected virtual async Task CheckNameExistenceAsync(string name, Guid? ignoredId = null)
-        {
-            if (await _fieldRepository.NameExistsAsync(name, ignoredId))
-            {
-                throw new FieldNameAlreadyExistException(name);
-            }
-        }
     }
 }

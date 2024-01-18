@@ -46,10 +46,9 @@ namespace Dignite.Cms.Fields
                 .ToListAsync(GetCancellationToken(cancellationToken));
         }
 
-        public async Task<bool> NameExistsAsync(string name, Guid? ignoredId = null, CancellationToken cancellationToken = default)
+        public async Task<bool> NameExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             return await (await GetDbSetAsync())
-                .WhereIf(ignoredId != null, f => f.Id != ignoredId)
                 .AnyAsync(f => f.Name == name, GetCancellationToken(cancellationToken));
         }
 

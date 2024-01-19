@@ -15,10 +15,12 @@ namespace Dignite.Cms.Admin.Entries
 
 
         [Required]
-        public Guid SectionId { get; set; }
+        public string Culture { get; set; }
 
         [Required]
-        public string Culture { get; set; }
+        public Guid SectionId { get; set; }
+
+        public Guid? EntryTypeId { get; set; }
 
         public DateTime? StartPublishDate { get; set; }
 

@@ -12,13 +12,15 @@ namespace Dignite.Cms.Public.Entries
             MaxResultCount = 20;
         }
 
-        [Required]
-        public Guid SectionId { get; set; }
-
         /// <summary>
         /// 
         /// </summary>
         public string Culture { get; set; }
+
+        [Required]
+        public Guid SectionId { get; set; }
+
+        public Guid? EntryTypeId { get; set; }
 
         /// <summary>
         /// 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dignite.Cms.Admin.Sections;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Dignite.Cms.Admin.Entries
@@ -21,5 +23,10 @@ namespace Dignite.Cms.Admin.Entries
         public Guid? ParentId { get; set; }
 
         public virtual Guid? InitialVersionId { get; set; }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            return base.Validate(validationContext);
+        }
     }
 }

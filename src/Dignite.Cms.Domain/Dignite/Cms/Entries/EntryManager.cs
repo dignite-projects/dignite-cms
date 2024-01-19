@@ -12,12 +12,14 @@ namespace Dignite.Cms.Entries
 {
     public class EntryManager : DomainService
     {
+        protected readonly ISectionRepository _sectionRepository;
         protected readonly IEntryRepository _entryRepository;
         protected readonly IEntryTypeRepository _entryTypeRepository;
         protected readonly IFieldRepository _fieldRepository;
 
-        public EntryManager(IEntryRepository entryRepository, IEntryTypeRepository entryTypeRepository, IFieldRepository fieldRepository)
+        public EntryManager(ISectionRepository sectionRepository, IEntryRepository entryRepository, IEntryTypeRepository entryTypeRepository, IFieldRepository fieldRepository)
         {
+            _sectionRepository = sectionRepository;
             _entryRepository = entryRepository;
             _entryTypeRepository = entryTypeRepository;
             _fieldRepository = fieldRepository;
@@ -28,10 +30,11 @@ namespace Dignite.Cms.Entries
             Guid? initialVersionId, string versionNotes,Guid? tenantId)
         {
             var entryType = await _entryTypeRepository.GetAsync(entryTypeId);
-            await CheckSlugExistenceAsync(entryType.SectionId, culture, slug);
+            await ExistForTypeAsync(culture, entryType);
+            await CheckSlugExistenceAsync(culture, entryType.SectionId, slug);
             await CheckExtraPropertiesAsync(entryType,extraProperties);
 
-            var order = (await _entryRepository.GetMaxOrderAsync(entryType.SectionId, culture, parentId)) + 1;
+            var order = (await _entryRepository.GetMaxOrderAsync(culture,entryType.SectionId,  parentId)) + 1;
             var entry = new Entry(
                 GuidGenerator.Create(),
                 entryType.SectionId,
@@ -68,7 +71,7 @@ namespace Dignite.Cms.Entries
             if (!culture.Equals(entry.Culture, StringComparison.OrdinalIgnoreCase) ||
                 !slug.Equals(entry.Slug, StringComparison.OrdinalIgnoreCase))
             {
-                await CheckSlugExistenceAsync(entry.SectionId, culture, slug);
+                await CheckSlugExistenceAsync(culture,entry.SectionId,  slug);
             }
 
             //
@@ -125,7 +128,7 @@ namespace Dignite.Cms.Entries
 
         public virtual async Task MoveAsync(Entry entry, Guid? parentId,int order)
         {
-            var allEntries = (await _entryRepository.GetListAsync(entry.SectionId, entry.Culture))
+            var allEntries = (await _entryRepository.GetListAsync(entry.Culture,entry.SectionId))
                 .Where(e => e.ParentId == parentId && e.Order >= order);
             var allVisions = await GetAllVisionsAsync(entry);
 
@@ -139,9 +142,20 @@ namespace Dignite.Cms.Entries
                 item.SetOrder(parentId,order);
             }
         }
-        protected virtual async Task CheckSlugExistenceAsync(Guid sectionId, string culture, string slug)
+        protected virtual async Task ExistForTypeAsync(string culture, EntryType entryType)
         {
-            if (await _entryRepository.SlugExistsAsync(sectionId, culture, slug))
+            var section = await _sectionRepository.GetAsync(entryType.SectionId);
+            if (section.Type == SectionType.Single)
+            {
+                if (await _entryRepository.ExistForEntryTypeAsync(culture, entryType.SectionId, entryType.Id))
+                {
+                    throw new EntryExistForTypeException(culture, entryType.DisplayName);
+                }
+            }
+        }
+        protected virtual async Task CheckSlugExistenceAsync(string culture,Guid sectionId,  string slug)
+        {
+            if (await _entryRepository.SlugExistsAsync(culture,sectionId, slug))
             {
                 throw new EntrySlugAlreadyExistException(culture, slug);
             }

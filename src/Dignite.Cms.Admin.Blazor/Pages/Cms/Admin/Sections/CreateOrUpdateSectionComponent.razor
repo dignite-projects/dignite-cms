@@ -99,7 +99,7 @@
         {
             if (!name.Equals(sectionNameForValidation, StringComparison.InvariantCultureIgnoreCase))
             {
-                e.Status = await _sectionAdminAppService.NameExistsAsync(SiteId.Value, name)
+                e.Status = await _sectionAdminAppService.NameExistsAsync(new SectionNameExistsInput(SiteId.Value,name))
                     ? ValidationStatus.Error
                     : ValidationStatus.Success;
 
@@ -121,7 +121,7 @@
             //
             if (Entity.Type == SectionType.Single)
             {
-                Entity.Route = Entity.Name;
+                Entity.Route = Entity.Name + "/{slug}";
                 Entity.Template = Entity.Route+"/Index";
             }
             else

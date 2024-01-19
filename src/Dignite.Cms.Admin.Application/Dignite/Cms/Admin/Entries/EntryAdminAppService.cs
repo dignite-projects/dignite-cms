@@ -1,5 +1,4 @@
 ﻿using Dignite.Cms.Entries;
-using Dignite.Cms.Fields;
 using Dignite.Cms.Sections;
 using Microsoft.AspNetCore.Authorization;
 using System;
@@ -14,15 +13,18 @@ namespace Dignite.Cms.Admin.Entries
         private readonly IEntryRepository _entryRepository;        
         private readonly ISectionRepository _sectionRepository;
         private readonly EntryManager _entryManager;
+        private readonly IEntryTypeRepository _entryTypeRepository;
 
         public EntryAdminAppService(
             IEntryRepository entryRepository, 
             ISectionRepository sectionRepository,
-            EntryManager entryManager)
+            EntryManager entryManager,
+            IEntryTypeRepository entryTypeRepository)
         {
             _entryRepository = entryRepository;
             _sectionRepository = sectionRepository;
             _entryManager = entryManager;
+            _entryTypeRepository = entryTypeRepository;
         }
 
 
@@ -95,12 +97,12 @@ namespace Dignite.Cms.Admin.Entries
             if (input.SectionId == Guid.Empty)
                 return new PagedResultDto<EntryDto>(0, new List<EntryDto>());
 
-            var count = await _entryRepository.GetCountAsync(input.SectionId, input.Culture, input.CreatorId, input.Status, input.Filter,input.StartPublishDate,input.ExpiryPublishDate, null);
+            var count = await _entryRepository.GetCountAsync(input.Culture,input.SectionId,input.EntryTypeId,  input.CreatorId, input.Status, input.Filter,input.StartPublishDate,input.ExpiryPublishDate, null);
             if (count == 0)
                 return new PagedResultDto<EntryDto>(0, new List<EntryDto>());
 
             //get entry list
-            var result = await _entryRepository.GetListAsync(input.SectionId, input.Culture, input.CreatorId, input.Status, input.Filter, input.StartPublishDate, input.ExpiryPublishDate, null, input.MaxResultCount, input.SkipCount, input.Sorting);
+            var result = await _entryRepository.GetListAsync(input.Culture, input.SectionId, input.EntryTypeId, input.CreatorId, input.Status, input.Filter, input.StartPublishDate, input.ExpiryPublishDate, null, input.MaxResultCount, input.SkipCount, input.Sorting);
             var dto = ObjectMapper.Map<List<Entry>, List<EntryDto>>(result);
 
             return new PagedResultDto<EntryDto>(count, dto);
@@ -166,9 +168,15 @@ namespace Dignite.Cms.Admin.Entries
         }
 
         [Authorize(Permissions.CmsAdminPermissions.Entry.Default)]
-        public async Task<bool> SlugExistsAsync(Guid sectionId,string culture,string slug)
+        public async Task<bool> SlugExistsAsync(SlugExistsInput input)
         {
-            return await _entryRepository.SlugExistsAsync(sectionId,culture, slug);
+            return await _entryRepository.SlugExistsAsync(input.Culture, input.SectionId, input.Slug);
+        }
+
+        [Authorize(Permissions.CmsAdminPermissions.Entry.Default)]
+        public async Task<bool> CanCreateForEntryTypeAsync(CanCreateEntryForSectionInput input)
+        {
+            return await _entryRepository.ExistForEntryTypeAsync(input.Culture, input.SectionId, input.EntryTypeId);
         }
     }
 }

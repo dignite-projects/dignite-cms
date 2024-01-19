@@ -6,10 +6,9 @@ using Dignite.Cms.Sites;
 using Dignite.FileExplorer.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Text.Encodings.Web;
-using System.Text.Json;
 using Volo.Abp;
 using Volo.Abp.EntityFrameworkCore.Modeling;
+using Volo.Abp.EntityFrameworkCore.ValueConverters;
 using Volo.CmsKit.EntityFrameworkCore;
 
 namespace Dignite.Cms.EntityFrameworkCore;
@@ -35,14 +34,7 @@ public static class CmsDbContextModelCreatingExtensions
             site.Property(s => s.DisplayName).IsRequired().HasMaxLength(SiteConsts.MaxDisplayNameLength);
             site.Property(s => s.Name).IsRequired().HasMaxLength(SiteConsts.MaxNameLength);
             site.Property(s => s.Host).IsRequired().HasMaxLength(SiteConsts.MaxHostLength);
-            site.Property(s => s.Cultures).HasConversion(
-                config => JsonSerializer.Serialize(config, new JsonSerializerOptions
-                    {
-                        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                        WriteIndented = true
-                    }),
-                jsonData => JsonSerializer.Deserialize<ICollection<SiteCulture>>(jsonData,new JsonSerializerOptions())
-                );
+            site.Property(s => s.Cultures).HasConversion(new AbpJsonValueConverter<ICollection<SiteCulture>>());
 
             //Indexs
             site.HasIndex(s => s.Name);
@@ -80,14 +72,8 @@ public static class CmsDbContextModelCreatingExtensions
             //Properties
             entryType.Property(et => et.DisplayName).IsRequired().HasMaxLength(EntryTypeConsts.MaxDisplayNameLength);
             entryType.Property(et => et.Name).IsRequired().HasMaxLength(EntryTypeConsts.MaxNameLength);
-            entryType.Property(et => et.FieldTabs).HasConversion(
-                config => JsonSerializer.Serialize(config, new JsonSerializerOptions
-                {
-                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                    WriteIndented = true
-                }),
-                jsonData => JsonSerializer.Deserialize<IList<EntryFieldTab>>(jsonData, new JsonSerializerOptions())
-                );
+            entryType.Property(et => et.FieldTabs).HasConversion(new AbpJsonValueConverter<IList<EntryFieldTab>>());
+                
 
             //
             entryType.HasIndex(et=>et.SectionId);
@@ -116,12 +102,7 @@ public static class CmsDbContextModelCreatingExtensions
             field.Property(f => f.Name).IsRequired().HasMaxLength(FieldConsts.MaxNameLength);
             field.Property(f => f.FormControlName).IsRequired().HasMaxLength(FieldConsts.MaxFormControlNameLength);
             field.Property(f => f.Description).HasMaxLength(FieldConsts.MaxDescriptionLength);
-            field.Property<FormConfigurationDictionary>(nameof(Field.FormConfiguration))
-                .HasColumnName(nameof(Field.FormConfiguration))
-                .HasConversion(
-                    new FormConfigurationValueConverter()
-                    )
-                .Metadata.SetValueComparer(new FormConfigurationDictionaryValueComparer());
+            field.Property(et => et.FormConfiguration).HasConversion(new AbpJsonValueConverter<FormConfigurationDictionary>());
         });
 
         builder.Entity<Entry>(entry =>
@@ -137,9 +118,9 @@ public static class CmsDbContextModelCreatingExtensions
             entry.Property(e => e.VersionNotes).HasMaxLength(EntryConsts.MaxRevisionNotesLength);
 
             //Indexes
-            entry.HasIndex(e => new { e.SectionId, e.Culture, e.PublishTime, e.Status });
-            entry.HasIndex(e => new { e.SectionId, e.CreatorId, e.PublishTime, e.Status });
-            entry.HasIndex(e => new { e.SectionId, e.Culture, e.Slug });
+            entry.HasIndex(e => new { e.Culture, e.SectionId, e.PublishTime, e.Status });
+            entry.HasIndex(e => new { e.CreatorId, e.SectionId, e.PublishTime, e.Status });
+            entry.HasIndex(e => new { e.Culture, e.SectionId, e.Slug });
         });
 
         builder.TryConfigureObjectExtensions<CmsDbContext>();

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 
@@ -107,9 +106,9 @@ namespace Dignite.Cms.Admin.Sections
         }
 
         [Authorize(Permissions.CmsAdminPermissions.Section.Default)]
-        public async Task<bool> NameExistsAsync(Guid siteId, string name)
+        public async Task<bool> NameExistsAsync(SectionNameExistsInput input)
         {
-            return await _sectionRepository.NameExistsAsync(siteId, name);
+            return await _sectionRepository.NameExistsAsync(input.SiteId,input.Name);
         }
     }
 }

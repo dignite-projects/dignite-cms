@@ -7,7 +7,7 @@ public class TableConfiguration : FormConfigurationBase
 {
     [Required]
     public List<FormField> TableColumns {
-        get => ConfigurationDictionary.GetConfigurationOrDefault(TableConfigurationNames.TableColumns, new List<FormField>());
+        get => ConfigurationDictionary.GetConfiguration<List<FormField>>(TableConfigurationNames.TableColumns, null);
         set => ConfigurationDictionary.SetConfiguration(TableConfigurationNames.TableColumns, value);
     }
 

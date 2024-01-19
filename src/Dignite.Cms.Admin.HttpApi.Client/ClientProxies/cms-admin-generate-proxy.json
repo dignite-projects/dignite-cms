@@ -425,18 +425,10 @@
                   "name": "NameExistsAsync",
                   "parametersOnMethod": [
                     {
-                      "name": "sectionId",
-                      "typeAsString": "System.Guid, System.Private.CoreLib",
-                      "type": "System.Guid",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    },
-                    {
-                      "name": "name",
-                      "typeAsString": "System.String, System.Private.CoreLib",
-                      "type": "System.String",
-                      "typeSimple": "string",
+                      "name": "input",
+                      "typeAsString": "Dignite.Cms.Admin.Sections.EntryTypeNameExistsInput, Dignite.Cms.Admin.Application.Contracts",
+                      "type": "Dignite.Cms.Admin.Sections.EntryTypeNameExistsInput",
+                      "typeSimple": "Dignite.Cms.Admin.Sections.EntryTypeNameExistsInput",
                       "isOptional": false,
                       "defaultValue": null
                     }
@@ -683,34 +675,26 @@
               "allowAnonymous": false,
               "implementFrom": "Dignite.Cms.Admin.Sections.IEntryTypeAdminAppService"
             },
-            "NameExistsAsyncBySectionIdAndName": {
-              "uniqueName": "NameExistsAsyncBySectionIdAndName",
+            "NameExistsAsyncByInput": {
+              "uniqueName": "NameExistsAsyncByInput",
               "name": "NameExistsAsync",
               "httpMethod": "GET",
               "url": "api/cms-admin/entry-types/name-exists",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
-                  "name": "sectionId",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
-                {
-                  "name": "name",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
+                  "name": "input",
+                  "typeAsString": "Dignite.Cms.Admin.Sections.EntryTypeNameExistsInput, Dignite.Cms.Admin.Application.Contracts",
+                  "type": "Dignite.Cms.Admin.Sections.EntryTypeNameExistsInput",
+                  "typeSimple": "Dignite.Cms.Admin.Sections.EntryTypeNameExistsInput",
                   "isOptional": false,
                   "defaultValue": null
                 }
               ],
               "parameters": [
                 {
-                  "nameOnMethod": "sectionId",
-                  "name": "sectionId",
+                  "nameOnMethod": "input",
+                  "name": "SectionId",
                   "jsonName": null,
                   "type": "System.Guid",
                   "typeSimple": "string",
@@ -718,11 +702,11 @@
                   "defaultValue": null,
                   "constraintTypes": null,
                   "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
+                  "descriptorName": "input"
                 },
                 {
-                  "nameOnMethod": "name",
-                  "name": "name",
+                  "nameOnMethod": "input",
+                  "name": "Name",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",
@@ -730,7 +714,7 @@
                   "defaultValue": null,
                   "constraintTypes": null,
                   "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
+                  "descriptorName": "input"
                 }
               ],
               "returnValue": {
@@ -758,18 +742,10 @@
                   "name": "NameExistsAsync",
                   "parametersOnMethod": [
                     {
-                      "name": "siteId",
-                      "typeAsString": "System.Guid, System.Private.CoreLib",
-                      "type": "System.Guid",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    },
-                    {
-                      "name": "name",
-                      "typeAsString": "System.String, System.Private.CoreLib",
-                      "type": "System.String",
-                      "typeSimple": "string",
+                      "name": "input",
+                      "typeAsString": "Dignite.Cms.Admin.Sections.SectionNameExistsInput, Dignite.Cms.Admin.Application.Contracts",
+                      "type": "Dignite.Cms.Admin.Sections.SectionNameExistsInput",
+                      "typeSimple": "Dignite.Cms.Admin.Sections.SectionNameExistsInput",
                       "isOptional": false,
                       "defaultValue": null
                     }
@@ -1147,34 +1123,26 @@
               "allowAnonymous": false,
               "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Dignite.Cms.Admin.Sections.SectionDto,Dignite.Cms.Admin.Sections.SectionDto,System.Guid,Dignite.Cms.Admin.Sections.GetSectionsInput>"
             },
-            "NameExistsAsyncBySiteIdAndName": {
-              "uniqueName": "NameExistsAsyncBySiteIdAndName",
+            "NameExistsAsyncByInput": {
+              "uniqueName": "NameExistsAsyncByInput",
               "name": "NameExistsAsync",
               "httpMethod": "GET",
               "url": "api/cms-admin/sections/name-exists",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
-                  "name": "siteId",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
-                {
-                  "name": "name",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
+                  "name": "input",
+                  "typeAsString": "Dignite.Cms.Admin.Sections.SectionNameExistsInput, Dignite.Cms.Admin.Application.Contracts",
+                  "type": "Dignite.Cms.Admin.Sections.SectionNameExistsInput",
+                  "typeSimple": "Dignite.Cms.Admin.Sections.SectionNameExistsInput",
                   "isOptional": false,
                   "defaultValue": null
                 }
               ],
               "parameters": [
                 {
-                  "nameOnMethod": "siteId",
-                  "name": "siteId",
+                  "nameOnMethod": "input",
+                  "name": "SiteId",
                   "jsonName": null,
                   "type": "System.Guid",
                   "typeSimple": "string",
@@ -1182,11 +1150,11 @@
                   "defaultValue": null,
                   "constraintTypes": null,
                   "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
+                  "descriptorName": "input"
                 },
                 {
-                  "nameOnMethod": "name",
-                  "name": "name",
+                  "nameOnMethod": "input",
+                  "name": "Name",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",
@@ -1194,7 +1162,7 @@
                   "defaultValue": null,
                   "constraintTypes": null,
                   "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
+                  "descriptorName": "input"
                 }
               ],
               "returnValue": {
@@ -2027,26 +1995,27 @@
                   "name": "SlugExistsAsync",
                   "parametersOnMethod": [
                     {
-                      "name": "sectionId",
-                      "typeAsString": "System.Guid, System.Private.CoreLib",
-                      "type": "System.Guid",
-                      "typeSimple": "string",
+                      "name": "input",
+                      "typeAsString": "Dignite.Cms.Admin.Entries.SlugExistsInput, Dignite.Cms.Admin.Application.Contracts",
+                      "type": "Dignite.Cms.Admin.Entries.SlugExistsInput",
+                      "typeSimple": "Dignite.Cms.Admin.Entries.SlugExistsInput",
                       "isOptional": false,
                       "defaultValue": null
-                    },
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Boolean",
+                    "typeSimple": "boolean"
+                  }
+                },
+                {
+                  "name": "CanCreateForEntryTypeAsync",
+                  "parametersOnMethod": [
                     {
-                      "name": "culture",
-                      "typeAsString": "System.String, System.Private.CoreLib",
-                      "type": "System.String",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    },
-                    {
-                      "name": "slug",
-                      "typeAsString": "System.String, System.Private.CoreLib",
-                      "type": "System.String",
-                      "typeSimple": "string",
+                      "name": "input",
+                      "typeAsString": "Dignite.Cms.Admin.Entries.CanCreateEntryForSectionInput, Dignite.Cms.Admin.Application.Contracts",
+                      "type": "Dignite.Cms.Admin.Entries.CanCreateEntryForSectionInput",
+                      "typeSimple": "Dignite.Cms.Admin.Entries.CanCreateEntryForSectionInput",
                       "isOptional": false,
                       "defaultValue": null
                     }
@@ -2305,6 +2274,18 @@
               "parameters": [
                 {
                   "nameOnMethod": "input",
+                  "name": "Culture",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
                   "name": "SectionId",
                   "jsonName": null,
                   "type": "System.Guid",
@@ -2317,10 +2298,10 @@
                 },
                 {
                   "nameOnMethod": "input",
-                  "name": "Culture",
+                  "name": "EntryTypeId",
                   "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
                   "isOptional": false,
                   "defaultValue": null,
                   "constraintTypes": null,
@@ -2607,42 +2588,38 @@
               "allowAnonymous": false,
               "implementFrom": "Dignite.Cms.Admin.Entries.IEntryAdminAppService"
             },
-            "SlugExistsAsyncBySectionIdAndCultureAndSlug": {
-              "uniqueName": "SlugExistsAsyncBySectionIdAndCultureAndSlug",
+            "SlugExistsAsyncByInput": {
+              "uniqueName": "SlugExistsAsyncByInput",
               "name": "SlugExistsAsync",
               "httpMethod": "GET",
               "url": "api/cms-admin/entries/slug-exists",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
-                  "name": "sectionId",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
-                {
-                  "name": "culture",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
-                {
-                  "name": "slug",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
+                  "name": "input",
+                  "typeAsString": "Dignite.Cms.Admin.Entries.SlugExistsInput, Dignite.Cms.Admin.Application.Contracts",
+                  "type": "Dignite.Cms.Admin.Entries.SlugExistsInput",
+                  "typeSimple": "Dignite.Cms.Admin.Entries.SlugExistsInput",
                   "isOptional": false,
                   "defaultValue": null
                 }
               ],
               "parameters": [
                 {
-                  "nameOnMethod": "sectionId",
-                  "name": "sectionId",
+                  "nameOnMethod": "input",
+                  "name": "Culture",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "SectionId",
                   "jsonName": null,
                   "type": "System.Guid",
                   "typeSimple": "string",
@@ -2650,11 +2627,11 @@
                   "defaultValue": null,
                   "constraintTypes": null,
                   "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
+                  "descriptorName": "input"
                 },
                 {
-                  "nameOnMethod": "culture",
-                  "name": "culture",
+                  "nameOnMethod": "input",
+                  "name": "Slug",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",
@@ -2662,11 +2639,36 @@
                   "defaultValue": null,
                   "constraintTypes": null,
                   "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                },
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "System.Boolean",
+                "typeSimple": "boolean"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "Dignite.Cms.Admin.Entries.IEntryAdminAppService"
+            },
+            "CanCreateForEntryTypeAsyncByInput": {
+              "uniqueName": "CanCreateForEntryTypeAsyncByInput",
+              "name": "CanCreateForEntryTypeAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-admin/entries/can-create-for-entry-type",
+              "supportedVersions": [],
+              "parametersOnMethod": [
                 {
-                  "nameOnMethod": "slug",
-                  "name": "slug",
+                  "name": "input",
+                  "typeAsString": "Dignite.Cms.Admin.Entries.CanCreateEntryForSectionInput, Dignite.Cms.Admin.Application.Contracts",
+                  "type": "Dignite.Cms.Admin.Entries.CanCreateEntryForSectionInput",
+                  "typeSimple": "Dignite.Cms.Admin.Entries.CanCreateEntryForSectionInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "Culture",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",
@@ -2674,7 +2676,31 @@
                   "defaultValue": null,
                   "constraintTypes": null,
                   "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "SectionId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "EntryTypeId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
                 }
               ],
               "returnValue": {

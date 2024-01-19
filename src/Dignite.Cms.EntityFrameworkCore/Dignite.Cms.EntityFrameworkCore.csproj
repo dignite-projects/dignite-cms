@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Dignite.Cms.Domain\Dignite.Cms.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dignite\Abp\DynamicForms\" />
+  </ItemGroup>
+
 </Project>

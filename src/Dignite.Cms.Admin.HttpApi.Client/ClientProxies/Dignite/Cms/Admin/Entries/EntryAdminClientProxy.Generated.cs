@@ -83,13 +83,19 @@ public partial class EntryAdminClientProxy : ClientProxyBase<IEntryAdminAppServi
         });
     }
 
-    public virtual async Task<bool> SlugExistsAsync(Guid sectionId, string culture, string slug)
+    public virtual async Task<bool> SlugExistsAsync(SlugExistsInput input)
     {
         return await RequestAsync<bool>(nameof(SlugExistsAsync), new ClientProxyRequestTypeValue
         {
-            { typeof(Guid), sectionId },
-            { typeof(string), culture },
-            { typeof(string), slug }
+            { typeof(SlugExistsInput), input }
+        });
+    }
+
+    public virtual async Task<bool> CanCreateForEntryTypeAsync(CanCreateEntryForSectionInput input)
+    {
+        return await RequestAsync<bool>(nameof(CanCreateForEntryTypeAsync), new ClientProxyRequestTypeValue
+        {
+            { typeof(CanCreateEntryForSectionInput), input }
         });
     }
 }

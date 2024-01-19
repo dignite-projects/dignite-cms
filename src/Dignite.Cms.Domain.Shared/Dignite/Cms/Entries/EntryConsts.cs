@@ -19,7 +19,7 @@ namespace Dignite.Cms.Entries
         /// <summary>
         /// Regular Expression of the Name property.
         /// </summary>
-        public const string SlugRegularExpression = "^[A-Za-z0-9_.-]+$";
+        public const string SlugRegularExpression = "^[a-zA-Z0-9_\\-\\.]+$";
 
         /// <summary>
         /// Maximum length of the entry revision notes property.

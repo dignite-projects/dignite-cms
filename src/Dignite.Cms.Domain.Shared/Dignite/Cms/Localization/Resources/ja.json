@@ -37,7 +37,8 @@
     "FormControl:Table": "テーブル",
     "TableColumns": "テーブル列",
     "SelectFormControl": "コントロールの選択",
-    "TableColumnName": "列タイトル",
+    "TableColumnDisplayName": "列表示名",
+    "TableColumnName": "列名",
     "TableColumnForm": "フォームコントロール",
     "ColumnNameAlreadyExist": "列名は既に存在しています。",
     "FieldName{0}AlreadyExist": "フィールド名 \"{0}\" は既に存在しています。",
@@ -49,6 +50,7 @@
     "SiteName{0}AlreadyExist": "サイト名 \"{0}\" は既に存在しています。",
     "SectionName{0}AlreadyExist": "セクション名 \"{0}\" は既に存在しています。",
     "EntryTypeName{0}AlreadyExist": "エントリータイプ名 \"{0}\" は既に存在しています。",
-    "EntrySlugName{0}AlreadyExist": "エントリー別名 \"{0}\" は既に存在しています。"
+    "EntrySlug{0}AlreadyExist": "エントリー別名 \"{0}\" は既に存在しています。",
+    "EntriesAlreadyExistEntryType": "このエントリー・タイプにはすでにエントリーが存在する。"
   }
 }

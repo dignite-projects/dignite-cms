@@ -91,7 +91,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
             {
                 if (!name.Equals(entryTypeNameForValidation, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    e.Status = await EntryTypeAdminAppService.NameExistsAsync(SectionId, name)
+                    e.Status = await EntryTypeAdminAppService.NameExistsAsync(new EntryTypeNameExistsInput(SectionId,name))
                         ? ValidationStatus.Error
                         : ValidationStatus.Success;
 

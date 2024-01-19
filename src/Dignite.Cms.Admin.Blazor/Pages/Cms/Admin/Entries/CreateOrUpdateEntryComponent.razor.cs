@@ -49,6 +49,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         {
             Entry.EntryTypeId = value;
             await SetEntryType(value);
+            Entry.ExtraProperties.Clear();
         }
 
         protected Task SetEntryType(Guid entryTypeId)
@@ -122,11 +123,23 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
         private async Task ValidateNameExistsAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
         {
-            e.Status = await AppService.SlugExistsAsync(Section.Id, Entry.Culture, Entry.Slug)
+            e.Status = await AppService.SlugExistsAsync(new SlugExistsInput(Entry.Culture,Section.Id,Entry.Slug))
                 ? ValidationStatus.Error
                 : ValidationStatus.Success;
 
             e.ErrorText = L["EntrySlug{0}AlreadyExist", Entry.Slug];
+        }
+
+        private async Task CanCreateForTypeValidatorAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            var entryTypeId = (Guid)e.Value;
+
+            e.Status = await AppService.CanCreateForEntryTypeAsync(new CanCreateEntryForSectionInput(Entry.Culture, Section.Id, entryTypeId))
+                ? ValidationStatus.Error
+                : ValidationStatus.Success;
+
+            e.ErrorText = L["EntriesAlreadyExistEntryType", Entry.Slug];
         }
     }
 }

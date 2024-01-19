@@ -37,6 +37,7 @@
     "FormControl:Table": "Table",
     "TableColumns": "Table Columns",
     "SelectFormControl": "Select Control",
+    "TableColumnDisplayName": "Column Display Name",
     "TableColumnName": "Column Name",
     "TableColumnForm": "Form Control",
     "ColumnNameAlreadyExist": "Column Name Already Exist.",
@@ -47,8 +48,9 @@
     "PleaseSelectSection": "Please select a section.",
     "{0}NoAvailableEntryTypes": "There are no available entry types in the \"{0}\" section",
     "SiteName{0}AlreadyExist": "Site Name \"{0}\" Existing.",
-    "SectionName{0}AlreadyExist": "版块名称 \"{0}\" 已存在.",
-    "EntryTypeName{0}AlreadyExist": "条目类型名称 \"{0}\" 已存在.",
-    "EntrySlugName{0}AlreadyExist": "条目别名 \"{0}\" 已存在."
+    "SectionName{0}AlreadyExist": "Section Name \"{0}\" Existing.",
+    "EntryTypeName{0}AlreadyExist": "Entry Type Name \"{0}\" Existing.",
+    "EntrySlug{0}AlreadyExist": "Entry Slug \"{0}\" Existing.",
+    "EntriesAlreadyExistEntryType": "Entries already exist in this entry type."
   }
 }

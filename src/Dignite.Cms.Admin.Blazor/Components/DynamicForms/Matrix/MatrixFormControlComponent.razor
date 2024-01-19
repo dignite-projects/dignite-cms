@@ -53,13 +53,15 @@
     </FieldBody>
 </Field>
 
-@code {
+    @code {
     List<MatrixBlock> MatrixBlocks = new List<MatrixBlock>();
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
 
-        var value = Field.Value == null ? new List<MatrixBlock>() : JsonSerializer.Deserialize<List<MatrixBlock>>(Field.Value.ToString(), new JsonSerializerOptions(JsonSerializerDefaults.Web));
+        var value = Field.Value == null ?
+                    new List<MatrixBlock>()
+                    : JsonSerializer.Deserialize<List<MatrixBlock>>(Field.Value.ToString(), new JsonSerializerOptions(JsonSerializerDefaults.Web));
         if (value != null)
         {
             MatrixBlocks = value;

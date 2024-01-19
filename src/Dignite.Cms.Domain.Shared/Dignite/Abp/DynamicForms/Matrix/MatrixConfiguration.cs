@@ -7,7 +7,7 @@ public class MatrixConfiguration : FormConfigurationBase
 {
     [Required]
     public List<MatrixBlockType> MatrixBlockTypes {
-        get => ConfigurationDictionary.GetConfigurationOrDefault(MatrixConfigurationNames.MatrixBlockTypes, new List<MatrixBlockType>());
+        get => ConfigurationDictionary.GetConfiguration<List<MatrixBlockType>>(MatrixConfigurationNames.MatrixBlockTypes, null);
         set => ConfigurationDictionary.SetConfiguration(MatrixConfigurationNames.MatrixBlockTypes, value);
     }
 

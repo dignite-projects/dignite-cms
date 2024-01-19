@@ -31,7 +31,7 @@ namespace Dignite.Cms.Public.Entries
             {
                 input.Culture = section.Site.GetDefaultCulture();
             }
-            var entry = await _entryRepository.FindBySlugAsync(input.SectionId,input.Culture,input.Slug);
+            var entry = await _entryRepository.FindBySlugAsync(input.Culture,input.SectionId,input.Slug);
 
             return GetEntryDto(section,entry);
         }
@@ -78,24 +78,25 @@ namespace Dignite.Cms.Public.Entries
 
             if (section.Type == Cms.Sections.SectionType.Single)
             {
-                result = await _entryRepository.GetListAsync(input.SectionId, input.Culture, null, EntryStatus.Published, null, null, null, null, 100, 0);
+                result = await _entryRepository.GetListAsync(input.Culture, input.SectionId, input.EntryTypeId, null, EntryStatus.Published, null, null, null, null, 100, 0);
             }
             else if (section.Type == Cms.Sections.SectionType.Structure)
             {
-                result = await _entryRepository.GetListAsync(input.SectionId, input.Culture, null, EntryStatus.Published, null, null, null, null, 1000, 0);
+                result = await _entryRepository.GetListAsync(input.Culture, input.SectionId, input.EntryTypeId, null, EntryStatus.Published, null, null, null, null, 1000, 0);
                 count = result.Count;
             }
             else
             {
                 List<QueryingByCustomField> queryingByCustomFields = input.QueryingByCustomFieldsJson.IsNullOrEmpty() ? null : JsonSerializer.Deserialize<List<QueryingByCustomField>>(input.QueryingByCustomFieldsJson);
-                count = await _entryRepository.GetCountAsync(input.SectionId, input.Culture, input.CreatorId, EntryStatus.Published, input.Filter, input.StartPublishDate, input.ExpiryPublishDate, queryingByCustomFields);
+                count = await _entryRepository.GetCountAsync(input.Culture, input.SectionId, input.EntryTypeId, input.CreatorId, EntryStatus.Published, input.Filter, input.StartPublishDate, input.ExpiryPublishDate, queryingByCustomFields);
                 if (count == 0)
                 {
                     return new PagedResultDto<EntryDto>(0, new List<EntryDto>());
                 }
                 result = await _entryRepository.GetListAsync(
-                        input.SectionId,
                         input.Culture,
+                        input.SectionId,
+                        input.EntryTypeId,
                         input.CreatorId,
                         EntryStatus.Published,
                         input.Filter,

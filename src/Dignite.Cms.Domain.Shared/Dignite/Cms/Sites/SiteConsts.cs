@@ -17,7 +17,7 @@
         /// <summary>
         /// Regular Expression of the site name property.
         /// </summary>
-        public const string NameRegularExpression= "^[A-Za-z0-9_-]+$";
+        public const string NameRegularExpression= "^[a-zA-Z0-9_\\-\\.]+$";
 
         /// <summary>
         /// Maximum length of the site culture property.

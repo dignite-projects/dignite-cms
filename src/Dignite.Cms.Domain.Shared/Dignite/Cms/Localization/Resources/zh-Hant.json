@@ -37,7 +37,8 @@
     "FormControl:Table": "表格",
     "TableColumns": "表格列",
     "SelectFormControl": "選擇控制項",
-    "TableColumnName": "列標題",
+    "TableColumnDisplayName": "列標題",
+    "TableColumnName": "列名",
     "TableColumnForm": "列表單",
     "ColumnNameAlreadyExist": "列名已存在",
     "FieldName{0}AlreadyExist": "字段名 \"{0}\" 已存在.",
@@ -49,6 +50,7 @@
     "SiteName{0}AlreadyExist": "站點名稱 \"{0}\" 已存在.",
     "SectionName{0}AlreadyExist": "版塊名稱 \"{0}\" 已存在.",
     "EntryTypeName{0}AlreadyExist": "條目類型名稱 \"{0}\" 已存在.",
-    "EntrySlugName{0}AlreadyExist": "條目別名 \"{0}\" 已存在."
+    "EntrySlug{0}AlreadyExist": "條目別名 \"{0}\" 已存在.",
+    "EntriesAlreadyExistEntryType": "該條目類型下已存在條目."
   }
 }

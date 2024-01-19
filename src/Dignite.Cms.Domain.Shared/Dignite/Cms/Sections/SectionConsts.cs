@@ -19,7 +19,7 @@ namespace Dignite.Cms.Sections
         /// <summary>
         /// Regular Expression of the section name property.
         /// </summary>
-        public const string NameRegularExpression = "^[A-Za-z0-9_-]+$";
+        public const string NameRegularExpression = "^[a-zA-Z0-9_\\-\\.]+$";
 
         /// <summary>
         /// Maximum length of the section page route property.
@@ -30,7 +30,7 @@ namespace Dignite.Cms.Sections
         /// <summary>
         /// Regular Expression of the page route property.
         /// </summary>dddd
-        public const string PageRouteRegularExpression = "^[A-Za-z0-9-_/{}:.]+$";
+        public const string PageRouteRegularExpression = "^[a-zA-Z0-9_\\-.\\{\\}:\\\\/\\\\\\\\]+$";
 
         /// <summary>
         /// Maximum length of the section page template property.
@@ -41,6 +41,6 @@ namespace Dignite.Cms.Sections
         /// <summary>
         /// Regular Expression of the template path property.
         /// </summary>
-        public const string PageTemplateRegularExpression = "^[A-Za-z0-9-_][A-Za-z0-9-_/]*$";
+        public const string PageTemplateRegularExpression = "^[a-zA-Z0-9_\\-.\\\\/\\\\\\\\]+$";
     }
 }

@@ -64,7 +64,7 @@
             </Field>
         </Validation>
 
-        <Validation MessageLocalizer="@LH.Localize" Validator="@ValidationRule.None">
+        <Validation MessageLocalizer="@LH.Localize" AsyncValidator="@CanCreateForTypeValidatorAsync">
             <Field>
                 <FieldLabel>@L["EntryType"]</FieldLabel>
                 <Select TValue="Guid" SelectedValue="@Entry.EntryTypeId" Disabled="@(Entry.GetType()==typeof(UpdateEntryInput))" SelectedValueChanged="@OnEntryTypeSelectedValueChanged">
@@ -73,6 +73,7 @@
                         <SelectItem Value="@item.Id">@item.DisplayName</SelectItem>
                     }
                 </Select>
+                <Blazorise.ValidationError />
             </Field>
         </Validation>
         <Validation MessageLocalizer="@LH.Localize" AsyncValidator="@CultureExistsValidatorAsync">

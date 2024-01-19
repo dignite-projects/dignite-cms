@@ -124,9 +124,16 @@ namespace Dignite.Cms.Admin.Entries
 
         [HttpGet]
         [Route("slug-exists")]
-        public Task<bool> SlugExistsAsync(Guid sectionId, string culture, string slug)
+        public Task<bool> SlugExistsAsync(SlugExistsInput input)
         {
-            return _entryAppService.SlugExistsAsync(sectionId, culture, slug);
+            return _entryAppService.SlugExistsAsync(input);
+        }
+
+        [HttpGet]
+        [Route("can-create-for-entry-type")]
+        public Task<bool> CanCreateForEntryTypeAsync(CanCreateEntryForSectionInput input)
+        {
+            return _entryAppService.CanCreateForEntryTypeAsync(input);
         }
     }
 }

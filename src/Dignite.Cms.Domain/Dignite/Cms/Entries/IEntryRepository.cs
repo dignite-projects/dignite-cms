@@ -9,12 +9,13 @@ namespace Dignite.Cms.Entries
 {
     public interface IEntryRepository : IBasicRepository<Entry, Guid>
     {
-        Task<bool> SlugExistsAsync( Guid sectionId,string culture, string slug, CancellationToken cancellationToken = default);
+        Task<bool> SlugExistsAsync(string culture, Guid sectionId, string slug, CancellationToken cancellationToken = default);
 
 
         Task<List<Entry>> GetListAsync(
-            Guid sectionId,
             string culture,
+            Guid sectionId,
+            Guid? entryTypeId=null,
             Guid? creatorId = null,
             EntryStatus? status = null,
             string filter = null,
@@ -26,16 +27,19 @@ namespace Dignite.Cms.Entries
             string sorting = null,
             CancellationToken cancellationToken = default);
         Task<int> GetCountAsync(
-             Guid sectionId,
-             string culture,
-             Guid? creatorId = null,
-             EntryStatus? status = null,
-             string filter = null,
+            string culture,
+            Guid sectionId,
+            Guid? entryTypeId = null,
+            Guid? creatorId = null,
+            EntryStatus? status = null,
+            string filter = null,
             DateTime? start = null,
             DateTime? end = null,
             IList<QueryingByCustomField> queryingByCustomFields = null,
             CancellationToken cancellationToken = default
             );
+
+        Task<bool> ExistForEntryTypeAsync(string culture, Guid sectionId, Guid entryTypeId);
 
         Task<List<Entry>> GetListAsync(Guid sectionId, IEnumerable<Guid> ids, CancellationToken cancellationToken = default);
 
@@ -56,12 +60,12 @@ namespace Dignite.Cms.Entries
         /// <returns>
         /// This method gets the active revision
         /// </returns>
-        Task<Entry> FindBySlugAsync(Guid sectionId, string culture, string slug, bool includeDetails = true, CancellationToken cancellationToken = default);
+        Task<Entry> FindBySlugAsync(string culture,Guid sectionId,  string slug, bool includeDetails = true, CancellationToken cancellationToken = default);
 
         Task<Entry> FindPrevAsync(Guid id, bool includeDetails = false, CancellationToken cancellationToken = default);
 
         Task<Entry> FindNextAsync(Guid id, bool includeDetails = false, CancellationToken cancellationToken = default);
 
-        Task<int> GetMaxOrderAsync(Guid sectionId, string culture, Guid? parentId, CancellationToken cancellationToken = default);
+        Task<int> GetMaxOrderAsync( string culture,Guid sectionId, Guid? parentId, CancellationToken cancellationToken = default);
     }
 }

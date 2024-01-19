@@ -50,12 +50,11 @@ public partial class EntryTypeAdminClientProxy : ClientProxyBase<IEntryTypeAdmin
         });
     }
 
-    public virtual async Task<bool> NameExistsAsync(Guid sectionId, string name)
+    public virtual async Task<bool> NameExistsAsync(EntryTypeNameExistsInput input)
     {
         return await RequestAsync<bool>(nameof(NameExistsAsync), new ClientProxyRequestTypeValue
         {
-            { typeof(Guid), sectionId },
-            { typeof(string), name }
+            { typeof(EntryTypeNameExistsInput), input }
         });
     }
 }

@@ -74,7 +74,7 @@
                         <Validation Validator="ValidationRule.IsNotEmpty">
                             <Field>
                                 <FieldLabel>@L["FieldDisplayName"]</FieldLabel>
-                                    <TextEdit MaxLength="FieldConsts.MaxDisplayNameLength" @bind-Text="@SelectedField.DisplayName" Blur="@DisplayNameTextboxBlur" />
+                                    <TextEdit MaxLength="FieldConsts.MaxDisplayNameLength" @bind-Text="@SelectedField.DisplayName" Blur="@FieldDisplayNameTextboxBlur" />
                             </Field>
                         </Validation>
                             <Validation Validator="ValidationFieldName">
@@ -130,7 +130,7 @@
                     <Validation>
                         <Field>
                             <FieldLabel>@L["DisplayName"]</FieldLabel>
-                            <TextEdit @bind-Text="@NewBlockType.DisplayName" />
+                            <TextEdit @bind-Text="@NewBlockType.DisplayName" Blur="((args)=>BlockTypeDisplayNameTextboxBlur(NewBlockType))" />
                         </Field>
                     </Validation>
                     <Validation>
@@ -161,7 +161,7 @@
                     <Validation>
                         <Field>
                             <FieldLabel>@L["DisplayName"]</FieldLabel>
-                            <TextEdit @bind-Text="@EditingBlockType.DisplayName" />
+                                <TextEdit @bind-Text="@EditingBlockType.DisplayName" Blur="((args)=>BlockTypeDisplayNameTextboxBlur(EditingBlockType))" />
                         </Field>
                     </Validation>
                     <Validation>
@@ -360,7 +360,16 @@
             e.Status = ValidationStatus.Error;            
         }
     }
-    void DisplayNameTextboxBlur()
+
+
+    private void BlockTypeDisplayNameTextboxBlur(MatrixBlockType blockType)
+    {
+        if (!blockType.DisplayName.IsNullOrEmpty() && blockType.Name.IsNullOrEmpty())
+        {
+            blockType.Name = SlugNormalizer.Normalize(blockType.DisplayName);
+        }
+    }
+    private void FieldDisplayNameTextboxBlur()
     {
         if (!SelectedField.DisplayName.IsNullOrEmpty() && SelectedField.Name.IsNullOrEmpty())
         {

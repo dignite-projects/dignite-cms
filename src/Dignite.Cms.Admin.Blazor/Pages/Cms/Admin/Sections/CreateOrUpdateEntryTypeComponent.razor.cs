@@ -1,4 +1,5 @@
 ﻿using Blazorise;
+using Dignite.Abp.DynamicForms.Matrix;
 using Dignite.Cms.Admin.Fields;
 using Dignite.Cms.Admin.Sections;
 using Dignite.Cms.Localization;
@@ -101,6 +102,14 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
             else
             {
                 e.Status = ValidationStatus.Error;
+            }
+        }
+
+        private void DisplayNameTextboxBlur()
+        {
+            if (!Entity.DisplayName.IsNullOrEmpty() && Entity.Name.IsNullOrEmpty())
+            {
+                Entity.Name = SlugNormalizer.Normalize(Entity.DisplayName);
             }
         }
     }

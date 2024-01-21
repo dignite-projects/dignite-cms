@@ -13,7 +13,7 @@
 <Validation MessageLocalizer="@LH.Localize">
     <Field>
         <FieldLabel>@L["DisplayName"]</FieldLabel>
-        <TextEdit @bind-Text="Entity.DisplayName" Autofocus="true">
+        <TextEdit @bind-Text="Entity.DisplayName" Autofocus="true" Blur="DisplayNameTextboxBlur">
             <Feedback>
                 <ValidationError />
             </Feedback>

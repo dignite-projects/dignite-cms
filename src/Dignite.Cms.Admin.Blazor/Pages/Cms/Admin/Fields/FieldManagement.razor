@@ -1,9 +1,11 @@
 ﻿@page "/cms/admin/fields"
+@using Dignite.Cms.Admin.DynamicForms
 @using Dignite.Cms.Admin.Fields;
 @using Dignite.Cms.Localization;
 @using Dignite.Cms.Permissions;
 @using Microsoft.AspNetCore.Authorization;
 @using Volo.Abp.AspNetCore.Components.Web.Theming.Layout
+@inject IFormAdminAppService FormService
 @inject NavigationManager Navigation
 @attribute [Authorize(CmsAdminPermissions.Field.Default)]
 @inherits AbpCrudPageBase<IFieldAdminAppService, FieldDto, Guid, GetFieldsInput, CreateFieldInput, UpdateFieldInput>

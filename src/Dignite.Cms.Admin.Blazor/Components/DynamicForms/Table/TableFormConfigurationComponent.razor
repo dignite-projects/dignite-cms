@@ -120,7 +120,7 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        TableColumns = FormConfiguration.TableColumns;
+        TableColumns = FormConfiguration.TableColumns == null ? new() : FormConfiguration.TableColumns;
         if (!TableColumns.Any())
         {
             AddTableColumn();

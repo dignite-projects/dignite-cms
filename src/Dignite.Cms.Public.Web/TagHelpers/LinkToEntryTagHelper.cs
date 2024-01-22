@@ -49,7 +49,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             var hostAddress = ViewContext.HttpContext.Request.Scheme + "://" + ViewContext.HttpContext.Request.Host;
             var urlHelper = ViewContext.GetUrlHelper();
             var routeParameters = GetRouteParameters(section.Route).ToArray();
-            string siteDefaultCulture = section.Site.GetDefaultCulture();
+            string siteDefaultLanguageCulture = section.Site.GetDefaultLanguage().CultureName;
             string url = section.Route;
 
             //If there is a routing parameter, get the routing parameter value and update the URL
@@ -74,7 +74,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             }
 
             //splice Culture path
-            if (siteDefaultCulture.Equals(entry.Culture, StringComparison.OrdinalIgnoreCase))
+            if (siteDefaultLanguageCulture.Equals(entry.Culture, StringComparison.OrdinalIgnoreCase))
             {
                 url = urlHelper.ActionLink(nameof(CmsController.Entry), CmsController.ControllerName, new { url });
             }

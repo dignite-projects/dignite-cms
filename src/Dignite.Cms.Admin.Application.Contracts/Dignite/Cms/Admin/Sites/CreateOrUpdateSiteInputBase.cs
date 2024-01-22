@@ -1,9 +1,10 @@
-﻿using Dignite.Cms.Sites;
-using System;
+﻿using Dignite.Cms.Localization;
+using Dignite.Cms.Sites;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Volo.Abp.ObjectExtending;
 using Volo.Abp.Validation;
 
@@ -13,7 +14,7 @@ namespace Dignite.Cms.Admin.Sites
     {
         protected CreateOrUpdateSiteInputBase() : base(false)
         {
-            this.Cultures = new List<CreateOrUpdateCultureInput>();
+            this.Languages = new List<SiteLanguageInput>();
         }
 
         /// <summary>
@@ -33,10 +34,10 @@ namespace Dignite.Cms.Admin.Sites
         public virtual string Name { get; set; }
 
         /// <summary>
-        /// Cultures supported on this site
+        /// Languages supported on this site
         /// </summary>
         [Required]
-        public ICollection<CreateOrUpdateCultureInput> Cultures { get; set; }
+        public ICollection<SiteLanguageInput> Languages { get; set; }
 
         /// <summary>
         /// Host of this site.
@@ -44,6 +45,7 @@ namespace Dignite.Cms.Admin.Sites
         /// </summary>
         [Required]
         [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxHostLength))]
+        [Url]
         public virtual string Host { get;  set; }
 
 
@@ -54,32 +56,18 @@ namespace Dignite.Cms.Admin.Sites
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (!IsHost())
-            {
-                yield return new ValidationResult(
-                "The host of the site must be a domain name or IP",
-                new[] { nameof(Host) });
-            }
+            var stringLocalizerFactory = validationContext.GetRequiredService<IStringLocalizerFactory>();
+            var L = stringLocalizerFactory.Create(typeof(CmsResource));
 
-            if (Cultures.Count(l => l.IsDefault) != 1)
+            if (Languages == null || !Languages.Any())
             {
                 yield return new ValidationResult(
-                "The site's culture list is missing a unique default culture!",
-                new[] { nameof(Cultures) });
+                    L["SelectSiteSupportLanguages"],
+                    new[] { nameof(Languages) }
+                    );
             }
 
             base.Validate(validationContext);
-        }
-
-        protected bool IsHost()
-        {
-            Host = Host.RemovePostFix("/");
-            Host = Host.RemovePostFix("\\");
-
-            // Regular expression that matches a host URL with an IP address containing a port number
-            string hostPattern = @"^(http|https)://((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|([a-zA-Z0-9\-]{1,63}(\.[a-zA-Z0-9\-]{1,63})*))(:\d+)?$";
-
-            return Regex.IsMatch(Host, hostPattern);
         }
     }
 }

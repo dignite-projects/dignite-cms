@@ -7,6 +7,7 @@ using Dignite.Cms.Public.Sites;
 using Dignite.Cms.Sections;
 using Dignite.Cms.Sites;
 using Volo.Abp.AutoMapper;
+using Volo.Abp.ObjectExtending;
 
 namespace Dignite.Cms.Public;
 
@@ -16,7 +17,7 @@ public class CmsPublicApplicationAutoMapperProfile : Profile
     {
         /**** site *****************************************/
         CreateMap<Site, SiteDto>();
-        CreateMap<SiteCulture, SiteCultureDto>();
+        CreateMap<SiteLanguage, SiteLanguageDto>();
 
         /**** field *****************************************/
         CreateMap<Field, FieldDto>();
@@ -33,6 +34,6 @@ public class CmsPublicApplicationAutoMapperProfile : Profile
         CreateMap<Entry, EntryDto>()
             .Ignore(e => e.Author)
             .Ignore(e => e.Url)
-            .MapExtraProperties();
+            .MapExtraProperties(MappingPropertyDefinitionChecks.None);
     }
 }

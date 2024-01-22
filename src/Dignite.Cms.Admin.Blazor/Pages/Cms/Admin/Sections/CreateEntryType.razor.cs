@@ -24,10 +24,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
         protected override Task OnInitializedAsync()
         {
             NewEntity = new CreateEntryTypeInput(SectionId);
-            NewEntity.FieldTabs.Add(new EntryFieldTabInput()
-            {
-                Name = L["FieldTab"]+1
-            });
+            NewEntity.FieldTabs.Add(new EntryFieldTabInput(L["FieldTab"]));
             return base.OnInitializedAsync();
         }
 

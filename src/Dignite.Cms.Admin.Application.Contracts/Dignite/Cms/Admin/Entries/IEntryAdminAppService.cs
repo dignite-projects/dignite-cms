@@ -38,11 +38,10 @@ namespace Dignite.Cms.Admin.Entries
         Task<bool> SlugExistsAsync(SlugExistsInput input);
 
         /// <summary>
-        /// Determines whether creation of an entry is allowed under the specified entry type.
         /// When the section is of type Single and an entry already exists under the specified entryTypeId, no new entries are allowed to be created.
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<bool> CanCreateForEntryTypeAsync(CanCreateEntryForSectionInput input);
+        Task<bool> EntryTypeExistsAsync(EntryTypeExistsInput input);
     }
 }

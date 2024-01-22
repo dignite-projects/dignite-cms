@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
 {
@@ -23,6 +24,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
 
         //Will not change again after assignment, used to verify that the site name already exists
         private string sectionNameForValidation;
+        private string sectionRouteForValidation;
 
         public CreateOrUpdateSectionComponent()
         {
@@ -36,9 +38,10 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
         {
             base.OnParametersSet();
             sectionNameForValidation = Entity.Name;
+            sectionRouteForValidation = Entity.Route;
         }
 
-        private async Task NameExistsValidatorAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
+        private async Task NameValidatorAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             var name = Convert.ToString(e.Value);
@@ -68,7 +71,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
             }
         }
 
-        private void RouteValidatorAsync(ValidatorEventArgs e)
+        private async Task RouteValidatorAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
         {
             var route = Convert.ToString(e.Value);
             if (Entity.Type != SectionType.Single)
@@ -78,6 +81,26 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
                     : ValidationStatus.Success;
 
                 e.ErrorText = L["RouteVerificationTips", L[Entity.Type.ToLocalizationKey()], "{" + nameof(Dignite.Cms.Admin.Entries.EntryDto.Slug) + "}"];
+
+            }
+
+            if (e.Status != ValidationStatus.Error)
+            {
+                if (!route.IsNullOrEmpty())
+                {
+                    if (!route.Equals(sectionRouteForValidation, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        e.Status = await _sectionAdminAppService.RouteExistsAsync(new SectionRouteExistsInput(SiteId.Value, route))
+                            ? ValidationStatus.Error
+                            : ValidationStatus.Success;
+
+                        e.ErrorText = L["SectionRoute{0}AlreadyExist", route];
+                    }
+                }
+                else
+                {
+                    e.Status = ValidationStatus.Error;
+                }
             }
         }
 
@@ -104,11 +127,11 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
                 {
                     if (Entity.Type == SectionType.Single)
                     {
-                        Entity.Template = Entity.Route + "/Index";
+                        Entity.Template = Entity.Name + "/Index";
                     }
                     else
                     {
-                        Entity.Template = Entity.Route + "/Entry";
+                        Entity.Template = Entity.Name + "/Entry";
                     }
                 }
             }

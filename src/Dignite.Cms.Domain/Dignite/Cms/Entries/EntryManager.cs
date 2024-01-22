@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Dignite.Abp.Data;
+using Dignite.Cms.Fields;
+using Dignite.Cms.Sections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Data;
 using Volo.Abp.Domain.Services;
-using Dignite.Abp.Data;
-using Dignite.Cms.Sections;
-using Dignite.Cms.Fields;
 
 namespace Dignite.Cms.Entries
 {
@@ -31,8 +31,11 @@ namespace Dignite.Cms.Entries
         {
             var entryType = await _entryTypeRepository.GetAsync(entryTypeId);
             await ExistForTypeAsync(culture, entryType);
-            await CheckSlugExistenceAsync(culture, entryType.SectionId, slug);
             await CheckExtraPropertiesAsync(entryType,extraProperties);
+            if (!initialVersionId.HasValue)
+            {
+                await CheckSlugExistenceAsync(culture, entryType.SectionId, slug);
+            }
 
             var order = (await _entryRepository.GetMaxOrderAsync(culture,entryType.SectionId,  parentId)) + 1;
             var entry = new Entry(
@@ -55,6 +58,7 @@ namespace Dignite.Cms.Entries
                 entry.SetField(item.Key, item.Value);
             }
 
+
             //          
             return await _entryRepository.InsertAsync(entry);
         }
@@ -62,9 +66,11 @@ namespace Dignite.Cms.Entries
         public virtual async Task<Entry> UpdateAsync(
             Guid id, string culture, string title, string slug,
             DateTime publishTime, EntryStatus status, ExtraPropertyDictionary extraProperties,
-            string versionNotes)
+            string versionNotes,
+            string concurrencyStamp)
         {
             var entry = await _entryRepository.GetAsync(id, false);
+            entry.SetConcurrencyStampIfNotNull(concurrencyStamp);
             var entryType = await _entryTypeRepository.GetAsync(entry.EntryTypeId);
             await CheckExtraPropertiesAsync(entryType, extraProperties);
 
@@ -94,20 +100,8 @@ namespace Dignite.Cms.Entries
 
         public virtual async Task<List<Entry>> GetAllVisionsAsync(Entry entry)
         {
-            var list = await _entryRepository.GetVisionListAsync(entry);
-            if (entry.InitialVersionId.HasValue)
-            {
-                var initialVersionEntry = await _entryRepository.FindAsync(entry.InitialVersionId.Value);
-                if (initialVersionEntry != null)
-                {
-                    list.Add(initialVersionEntry);
-                }
-            }
-            else
-            {
-                list.Add(entry);
-            }
-            return list;
+            var initialVersionId = entry.InitialVersionId.HasValue ? entry.InitialVersionId.Value : entry.Id;
+            return await _entryRepository.GetVisionListAsync(initialVersionId);
         }
 
         public virtual async Task ActivateAsync(Entry entry)
@@ -167,9 +161,9 @@ namespace Dignite.Cms.Entries
                         .SelectMany(ft => ft.Fields)
                         .Select(ef => ef.FieldId)
                 );
-            if (extraProperties.Keys.Except(fields.Select(f=>f.Name)).Any())
+            foreach (var fieldName in extraProperties.Keys.Except(fields.Select(f => f.Name)))
             {
-                throw new Volo.Abp.AbpException("Custom field values do not match custom fields of the entry type!");
+                extraProperties.Remove(fieldName);
             }
         }
     }

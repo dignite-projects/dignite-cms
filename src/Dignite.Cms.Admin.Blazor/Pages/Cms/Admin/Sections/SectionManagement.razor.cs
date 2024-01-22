@@ -3,6 +3,7 @@ using Dignite.Cms.Admin.Sections;
 using Dignite.Cms.Admin.Sites;
 using Dignite.Cms.Localization;
 using Dignite.Cms.Permissions;
+using Dignite.Cms.Sections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
     {
         protected IReadOnlyList<SiteDto> AllSites = new List<SiteDto>();
         protected SiteDto CurrentSite=null;
-        private string SelectedSiteItemName;
+        private string SelectedSiteName;
         protected PageToolbar Toolbar { get; } = new();
         protected List<TableColumn> SectionManagementTableColumns => TableColumns.Get<SectionManagement>();
 
@@ -33,23 +34,19 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
 
         protected override async Task OnInitializedAsync()
         {
-            await base.OnInitializedAsync();
             try
             {
                 AllSites = (await SiteAdminAppService.GetListAsync(new GetSitesInput())).Items;
                 if (AllSites.Any())
                 {
-                    CurrentSite = AllSites
-                        .OrderBy(s => s.CreationTime)
-                        .FirstOrDefault();
-                    SelectedSiteItemName = CurrentSite?.Name;
-                    await OnSiteClickAsync(CurrentSite);
+                    await OnSiteChangedAsync(AllSites[0].Name);
                 }
             }
             catch (Exception ex)
             {
                 await HandleErrorAsync(ex);
             }
+            await base.OnInitializedAsync();
         }
 
 
@@ -113,31 +110,21 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
                     },
                     new TableColumn
                     {
-                        Title = L["Route"],
-                        Data = nameof(SectionDto.Route)
-                    },
-                    new TableColumn
-                    {
-                        Title = L["Template"],
-                        Sortable = true,
-                        Data = nameof(SectionDto.Template)
-                    },
-                    new TableColumn
-                    {
                         Title = L["SectionType"],
                         Sortable = true,
+                        ValueConverter = (data)=> L[((SectionDto)data).Type.ToLocalizationKey()],
                         Data = nameof(SectionDto.Type)
+                    },
+                    new TableColumn
+                    {
+                        Title = L["IsDefault"],
+                        Data = nameof(SectionDto.IsDefault)
                     },
                     new TableColumn
                     {
                         Title = L["IsActive"],
                         Sortable = true,
                         Data = nameof(SectionDto.IsActive)
-                    },
-                    new TableColumn
-                    {
-                        Title = L["IsDefault"],
-                        Data = nameof(SectionDto.IsDefault)
                     },
                     new TableColumn
                     {
@@ -156,10 +143,6 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
         }
 
 
-        protected override string GetDeleteConfirmationMessage(SectionDto entity)
-        {
-            return string.Format(L["SectionDeletionConfirmationMessage"], entity.DisplayName);
-        }
 
         protected override async Task OpenCreateModalAsync()
         {
@@ -174,10 +157,10 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
             }
         }
 
-        protected async Task OnSiteClickAsync(SiteDto site)
+        protected async Task OnSiteChangedAsync(string name)
         {
-            CurrentSite = site;
-            SelectedSiteItemName = site.Name;
+            CurrentSite = AllSites.Single(s => s.Name == name);
+            SelectedSiteName = name;
 
             await SearchEntitiesAsync();
         }

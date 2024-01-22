@@ -28,13 +28,13 @@ public class CultureSwitchViewComponent : AbpViewComponent
         var host = $"{Request.Scheme}://{Request.Host.Value}";
         var site = await _sitePublicAppService.FindByHostAsync(host);
         var languages = _localizationOptions.Value.Languages
-            .Where(l=>site.Cultures.Any(r=>r.CultureName.Equals(l.CultureName,System.StringComparison.OrdinalIgnoreCase)))
+            .Where(l=>site.Languages.Any(r=>r.CultureName.Equals(l.CultureName,System.StringComparison.OrdinalIgnoreCase)))
             .ToList();
         var culture = HttpContext.GetRouteValue(CultureRouteSegmentConstraint.RouteSegmentName)?.ToString();
         var currentCulture = culture==null? 
-            site.GetDefaultCulture():
-            site.Cultures.FirstOrDefault(r=>r.CultureName.Equals(culture,System.StringComparison.OrdinalIgnoreCase))?.CultureName;
-        currentCulture = currentCulture == null ? site.GetDefaultCulture() : currentCulture;
+            site.GetDefaultLanguage().CultureName:
+            site.Languages.FirstOrDefault(r=>r.CultureName.Equals(culture,System.StringComparison.OrdinalIgnoreCase))?.CultureName;
+        currentCulture = currentCulture == null ? site.GetDefaultLanguage().CultureName : currentCulture;
 
         var model = new CultureSwitchViewComponentModel
         {

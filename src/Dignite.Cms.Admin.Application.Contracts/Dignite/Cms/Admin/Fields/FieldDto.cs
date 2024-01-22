@@ -8,7 +8,9 @@ namespace Dignite.Cms.Admin.Fields
         /// <summary>
         /// 
         /// </summary>
-        public virtual Guid? GroupId { get; set; }
+        public Guid? GroupId { get; set; }
+
+        public string GroupName { get; set; }
 
         public DateTime CreationTime { get; set; }
 

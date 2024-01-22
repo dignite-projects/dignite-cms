@@ -131,9 +131,9 @@ namespace Dignite.Cms.Admin.Entries
 
         [HttpGet]
         [Route("can-create-for-entry-type")]
-        public Task<bool> CanCreateForEntryTypeAsync(CanCreateEntryForSectionInput input)
+        public Task<bool> EntryTypeExistsAsync(EntryTypeExistsInput input)
         {
-            return _entryAppService.CanCreateForEntryTypeAsync(input);
+            return _entryAppService.EntryTypeExistsAsync(input);
         }
     }
 }

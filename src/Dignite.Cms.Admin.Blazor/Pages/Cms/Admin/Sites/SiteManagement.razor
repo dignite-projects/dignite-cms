@@ -61,7 +61,7 @@
                 </ModalHeader>
                 <ModalBody>
                     <Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
-                        <CreateOrUpdateSiteComponent Entity="@NewEntity" AllCultures="@AllCultures"></CreateOrUpdateSiteComponent>
+                        <CreateOrUpdateSiteComponent Entity="@NewEntity" AllLanguages="@AllLanguages"></CreateOrUpdateSiteComponent>
                         <ExtensionProperties TEntityType="CreateSiteInput" TResourceType="CmsResource" Entity="@NewEntity" LH="@LH" />
                     </Validations>
                 </ModalBody>
@@ -86,7 +86,7 @@
                 <ModalBody>
                     <Validations @ref="@EditValidationsRef" Model="@EditingEntity" ValidateOnLoad="false">
                         <input type="hidden" name="ConcurrencyStamp" @bind-value="EditingEntity.ConcurrencyStamp"/>
-                        <CreateOrUpdateSiteComponent Entity="@EditingEntity" AllCultures="@AllCultures"></CreateOrUpdateSiteComponent>
+                        <CreateOrUpdateSiteComponent Entity="@EditingEntity" AllLanguages="@AllLanguages"></CreateOrUpdateSiteComponent>
                         <ExtensionProperties TEntityType="UpdateSiteInput" TResourceType="CmsResource" Entity="@EditingEntity" LH="@LH" />
                     </Validations>
                 </ModalBody>

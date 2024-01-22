@@ -2,5 +2,6 @@
 {
     public class UpdateEntryInput : CreateOrUpdateEntryInputBase
     {
+        public string ConcurrencyStamp { get; set; }
     }
 }

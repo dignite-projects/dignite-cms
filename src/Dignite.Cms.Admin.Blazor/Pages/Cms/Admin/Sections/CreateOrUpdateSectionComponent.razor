@@ -15,7 +15,7 @@
         </TextEdit>
     </Field>
 </Validation>
-    <Validation MessageLocalizer="@LH.Localize" AsyncValidator="@NameExistsValidatorAsync">
+    <Validation MessageLocalizer="@LH.Localize" AsyncValidator="@NameValidatorAsync">
     <Field>
         <FieldLabel>@L["Name"]</FieldLabel>
         <TextEdit @bind-Text="Entity.Name">
@@ -36,17 +36,24 @@
         </RadioGroup>
     </Field>
 </Validation>
-<Validation MessageLocalizer="@LH.Localize" Validator="RouteValidatorAsync">
+<Validation MessageLocalizer="@LH.Localize" AsyncValidator="RouteValidatorAsync">
     <Field>
-        <FieldLabel>@L["Route"]</FieldLabel>
+        <FieldLabel>@L["Route"] 
+            <Anchor TextColor="TextColor.Black50" To="https://learn.dignite.com/en/cms/latest/Section"><Icon Name="IconName.QuestionCircle" /></Anchor>
+        </FieldLabel>
         <TextEdit @bind-Text="Entity.Route">
             <Feedback>
                 <ValidationError />
             </Feedback>
         </TextEdit>
         <FieldHelp>@L["RouteTips"]</FieldHelp>
-        <br/>
-        <FieldHelp><Icon Name="IconName.QuestionCircle" /> <a href="https://learn.dignite.com/en/cms/latest/Section">@L["SeeDocument"]</a></FieldHelp>
+        <FieldHelp>
+            <OrderedList>
+                <OrderedListItem>blog</OrderedListItem>
+                <OrderedListItem>blog/{slug}</OrderedListItem>
+                <OrderedListItem>blog/{publishTime:yyyy}/{publishTime:MM}/{slug}</OrderedListItem>
+            </OrderedList>
+        </FieldHelp>
     </Field>
 </Validation>
 <Validation MessageLocalizer="@LH.Localize">

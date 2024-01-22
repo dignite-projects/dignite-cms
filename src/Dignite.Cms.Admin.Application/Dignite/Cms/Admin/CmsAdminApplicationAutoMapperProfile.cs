@@ -7,6 +7,7 @@ using Dignite.Cms.Entries;
 using Dignite.Cms.Sections;
 using Dignite.Cms.Sites;
 using Volo.Abp.AutoMapper;
+using Volo.Abp.ObjectExtending;
 
 namespace Dignite.Cms.Admin
 {
@@ -16,12 +17,13 @@ namespace Dignite.Cms.Admin
         {
             /**** site *****************************************/
             CreateMap<Site, SiteDto>();
-            CreateMap<SiteCulture, SiteCultureDto>();
+            CreateMap<SiteLanguage, SiteLanguageDto>();
 
             /**** field *****************************************/
             CreateMap<Cms.Fields.FieldGroup, FieldGroupDto>();
             CreateMap<Cms.Fields.Field, Cms.Fields.FieldDto>();
-            CreateMap<Cms.Fields.Field, FieldDto>();
+            CreateMap<Cms.Fields.Field, FieldDto>()
+                .Ignore(f=>f.GroupName);
 
             /**** section *****************************************/
             CreateMap<Section, SectionDto>();
@@ -34,7 +36,7 @@ namespace Dignite.Cms.Admin
             /**** entity *****************************************/
             CreateMap<Entry, EntryDto>()
                 .Ignore(u => u.Author)
-                .MapExtraProperties(Volo.Abp.ObjectExtending.MappingPropertyDefinitionChecks.None);
+                .MapExtraProperties(MappingPropertyDefinitionChecks.None);
 
         }
     }

@@ -20,9 +20,9 @@ namespace Dignite.Cms.Public.Sites
         public string Name { get; set; }
 
         /// <summary>
-        /// Cultures supported on this site
+        /// Languages supported on this site
         /// </summary>
-        public ICollection<SiteCultureDto> Cultures { get; set; }
+        public ICollection<SiteLanguageDto> Languages { get; set; }
 
         /// <summary>
         /// Host of this site

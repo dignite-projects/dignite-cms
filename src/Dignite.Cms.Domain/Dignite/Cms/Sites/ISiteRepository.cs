@@ -8,7 +8,9 @@ namespace Dignite.Cms.Sites
 {
     public interface ISiteRepository : IBasicRepository<Site, Guid>
     {
-        Task<bool> NameExistsAsync(string name, Guid? ignoredId = null, CancellationToken cancellationToken = default);
+        Task<bool> NameExistsAsync(string name, CancellationToken cancellationToken = default);
+
+        Task<bool> HostExistsAsync(string host, CancellationToken cancellationToken = default);
 
         Task<Site> FindByNameAsync(string name, CancellationToken cancellationToken = default);
 

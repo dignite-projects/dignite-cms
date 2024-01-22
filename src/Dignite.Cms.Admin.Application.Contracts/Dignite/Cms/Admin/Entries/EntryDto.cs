@@ -11,7 +11,7 @@ namespace Dignite.Cms.Admin.Entries
     /// <summary>
     /// Entry
     /// </summary>
-    public class EntryDto: ExtensibleAuditedEntityDto<Guid>, IHasCustomFields
+    public class EntryDto: ExtensibleAuditedEntityDto<Guid>, IHasCustomFields, IHasConcurrencyStamp
     {
         /// <summary>
         /// 
@@ -90,5 +90,6 @@ namespace Dignite.Cms.Admin.Entries
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public CmsUserDto Author { get; set; }
+        public string ConcurrencyStamp { get; set; }
     }
 }

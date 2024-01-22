@@ -9,7 +9,7 @@ namespace Dignite.Cms.Admin.Sites
         {
             IsActive= true;
             Host = "https://";
-            Cultures.Add(new CreateOrUpdateCultureInput(true,"en"));
+            Languages.Add(new SiteLanguageInput(true,"en"));
         }
     }
 }

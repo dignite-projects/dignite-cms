@@ -1,6 +1,8 @@
 ﻿using Dignite.Cms.Entries;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Volo.Abp.Data;
 using Volo.Abp.Domain.Services;
 
 namespace Dignite.Cms.Sections
@@ -50,9 +52,10 @@ namespace Dignite.Cms.Sections
         }
 
 
-        public async Task<Section> UpdateAsync(Guid id, SectionType type, string displayName, string name, bool isDefault, bool isActive, string route, string template)
+        public async Task<Section> UpdateAsync(Guid id, SectionType type, string displayName, string name, bool isDefault, bool isActive, string route, string template,string concurrencyStamp)
         {
             var section = await _sectionRepository.GetAsync(id);
+            section.SetConcurrencyStampIfNotNull(concurrencyStamp);
             if (!section.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
             {
                 await CheckNameExistenceAsync(section.SiteId, name);
@@ -66,7 +69,7 @@ namespace Dignite.Cms.Sections
             if (isDefault && !section.IsDefault)
             {
                 var sections = await _sectionRepository.GetListAsync(section.SiteId);
-                foreach (var item in sections)
+                foreach (var item in sections.Where(s=>s.Id!=id))
                 {
                     item.SetDefault(false);
                 }

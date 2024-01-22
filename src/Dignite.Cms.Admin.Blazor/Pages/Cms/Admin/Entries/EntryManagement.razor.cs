@@ -1,5 +1,4 @@
-﻿using Blazorise;
-using Dignite.Cms.Admin.Entries;
+﻿using Dignite.Cms.Admin.Entries;
 using Dignite.Cms.Admin.Sections;
 using Dignite.Cms.Admin.Sites;
 using Dignite.Cms.Localization;
@@ -24,16 +23,16 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
         [Parameter]
         [SupplyParameterFromQuery]
-        public string Culture { get; set; }
+        public string CultureName { get; set; }
 
-        protected PageToolbar Toolbar { get; } = new();
+        protected PageToolbar Toolbar { get; private set; } = new();
         protected List<TableColumn> EntryManagementTableColumns => TableColumns.Get<EntryManagement>();
-        protected IReadOnlyList<LanguageInfo> AllCultures = new List<LanguageInfo>();
+
+        protected IReadOnlyList<LanguageInfo> AllLanguages = new List<LanguageInfo>();
         protected IReadOnlyList<SiteDto> AllSites { get; set; }=new List<SiteDto>();
         protected IReadOnlyList<SectionDto> Sections { get; set; }=new List<SectionDto>();
-        protected SiteDto CurrentSite { get; set; }
+        protected SiteDto CurrentSite { get; set; } = new();
         protected SectionDto CurrentSection { get; set; }
-        protected string CurrentSectionName { get; set; } 
 
         public EntryManagement()
         {
@@ -47,20 +46,27 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
         protected override async Task OnInitializedAsync()
         {
-            await base.OnInitializedAsync();
             await InitializePageDataAsync();
+            await base.OnInitializedAsync();
         }
 
 
-
-        protected override ValueTask SetToolbarItemsAsync()
+        protected override async ValueTask SetToolbarItemsAsync()
         {
-            Toolbar.AddButton(L["New"],
-                OnNewEntryAsync,
-                IconName.Add,
-                requiredPolicyName: CreatePolicyName);
-
-            return base.SetToolbarItemsAsync();
+            Toolbar = new();
+            if (CurrentSection != null)
+            {
+                Toolbar.AddComponent<NewEntryButtonComponent>(
+                    new Dictionary<string, object?>
+                    {
+                        { nameof(NewEntryButtonComponent.ButtonText), L["New"]},
+                        { nameof(NewEntryButtonComponent.CultureName), CultureName},
+                        { nameof(NewEntryButtonComponent.Section), CurrentSection},
+                    },
+                    requiredPolicyName: CreatePolicyName
+                    );
+            }
+            await base.SetToolbarItemsAsync();
         }
 
         protected override ValueTask SetEntityActionsAsync()
@@ -97,13 +103,20 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                 {
                     new TableColumn
                     {
+                        Title = L["EntryType"],
+                        Sortable = true,
+                        ValueConverter=(data)=> CurrentSection.EntryTypes.FirstOrDefault(et=>et.Id==((EntryDto)data).EntryTypeId)?.DisplayName,
+                        Data = nameof(EntryDto.EntryTypeId)
+                    },
+                    new TableColumn
+                    {
                         Title = L["Title"],
                         Sortable = true,
                         Data = nameof(EntryDto.Title)
                     },
                     new TableColumn
                     {
-                        Title = L["Name"],
+                        Title = L["Slug"],
                         Sortable = true,
                         Data = nameof(EntryDto.Slug)
                     },
@@ -130,36 +143,23 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         }
 
 
-        protected override string GetDeleteConfirmationMessage(EntryDto entity)
-        {
-            return string.Format(L["EntryDeletionConfirmationMessage"], entity.Title);
-        }
 
         protected override Task UpdateGetListInputAsync()
         {
-            if (CurrentSection != null)
-            {
-                GetListInput.SectionId = CurrentSection.Id;
-                GetListInput.Culture = Culture;
-            }
-            else
-            {
-                GetListInput.SectionId = SectionId.HasValue ? SectionId.Value : Guid.Empty;
-                GetListInput.Culture = Culture.IsNullOrEmpty() ? "en" : Culture;
-            }
+            GetListInput.SectionId = SectionId.HasValue ? SectionId.Value : Guid.Empty;
+            GetListInput.Culture = CultureName.IsNullOrEmpty() ? "en" : CultureName;
             return base.UpdateGetListInputAsync();
         }
 
 
         protected async Task InitializePageDataAsync()
         {
-            AllCultures = await LanguageProvider.GetLanguagesAsync();
+            AllLanguages = await LanguageProvider.GetLanguagesAsync();
             AllSites = (await SiteAppService.GetListAsync(new GetSitesInput())).Items;
             if (SectionId.HasValue)
             {
                 CurrentSection = await SectionAppService.GetAsync(SectionId.Value);
                 CurrentSite = AllSites.First(s => s.Id == CurrentSection.SiteId);
-                CurrentSectionName = CurrentSection.Name;
                 Sections = (await SectionAppService.GetListAsync(
                     new GetSectionsInput()
                     {
@@ -198,56 +198,37 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                 .OrderByDescending(s => s.IsActive)
                 .ThenByDescending(s => s.IsDefault)
                 .FirstOrDefault();
+            SectionId=CurrentSection?.Id;
 
 
             if (CurrentSection != null)
             {
-                await OnSectionClickAsync(CurrentSection);
+                await OnSectionChangedAsync(CurrentSection.Id);
+            }
+            else
+            {
+                await SetToolbarItemsAsync();
+                await SearchEntitiesAsync();
             }
         }
 
-        protected async Task OnSectionClickAsync(SectionDto value)
+        protected async Task OnSectionChangedAsync(Guid sectionId)
         {
-            CurrentSection = value;
-            CurrentSectionName = CurrentSection.Name;
-            Culture = Culture.IsNullOrEmpty()? 
-                CurrentSite.Cultures.OrderByDescending(l => l.IsDefault).First().CultureName:
-                CurrentSite.Cultures.Any(l=>l.CultureName== Culture) ? Culture : CurrentSite.Cultures.OrderByDescending(l => l.IsDefault).First().CultureName;
-
-            GetListInput.Filter = null; 
-            await SearchEntitiesAsync();
+            SectionId = sectionId;
+            CurrentSection = Sections.FirstOrDefault(s => s.Id == sectionId);
+            CultureName = CultureName.IsNullOrEmpty()? 
+                CurrentSite.Languages.OrderByDescending(l => l.IsDefault).First().CultureName:
+                CurrentSite.Languages.Any(l=>l.CultureName== CultureName) ? CultureName : CurrentSite.Languages.OrderByDescending(l => l.IsDefault).First().CultureName;
+            
+            await OnCultureChangedAsync(CultureName);
         }
 
         protected async Task OnCultureChangedAsync(string value)
         {
-            Culture = value;
+            CultureName = value;
+            GetListInput.Filter = null; 
+            await SetToolbarItemsAsync();
             await SearchEntitiesAsync();
-        }
-
-        protected async Task OnNewEntryAsync()
-        {
-            if (CurrentSection == null)
-            { 
-                await Notify.Error(L["PleaseSelectSection"]);
-            }
-            else
-            {
-                if (CurrentSection.EntryTypes.Any())
-                {
-                    if (CurrentSection.EntryTypes.Select(et => et.Id).Except(Entities.Select(e => e.EntryTypeId)).Any())
-                    {
-                        Navigation.NavigateTo($"cms/admin/entries/create?sectionId={CurrentSection.Id}&culture={Culture}");
-                    }
-                    else
-                    {
-                        await Notify.Error(L["{0}NoAvailableEntryTypes", CurrentSection.DisplayName]);
-                    }
-                }
-                else
-                {
-                    await Notify.Error(L["{0}NoAvailableEntryTypes", CurrentSection.DisplayName]);
-                }
-            }
         }
     }
 }

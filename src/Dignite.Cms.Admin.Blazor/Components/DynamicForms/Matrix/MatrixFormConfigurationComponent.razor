@@ -223,7 +223,7 @@
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-        MatrixBlockTypes = FormConfiguration.MatrixBlockTypes;
+        MatrixBlockTypes = FormConfiguration.MatrixBlockTypes == null ? new() : FormConfiguration.MatrixBlockTypes;
     }
 
     #region create block type methods

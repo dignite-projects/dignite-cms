@@ -3,13 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Dignite.Cms.Admin.Entries
 {
-    public class CanCreateEntryForSectionInput
+    public class EntryTypeExistsInput
     {
-        public CanCreateEntryForSectionInput()
+        public EntryTypeExistsInput()
         {
         }
 
-        public CanCreateEntryForSectionInput(string culture, Guid sectionId, Guid entryTypeId)
+        public EntryTypeExistsInput(string culture, Guid sectionId, Guid entryTypeId)
         {
             Culture = culture;
             SectionId = sectionId;

@@ -29,7 +29,7 @@ namespace Dignite.Cms.Admin.Entries
         /// The culture corresponding to the entry
         /// </summary>
         [Required]
-        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxCultureLength))]
+        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxLanguageCultureNameLength))]
         public string Culture { get; set; }
 
 
@@ -48,6 +48,11 @@ namespace Dignite.Cms.Admin.Entries
         [RegularExpression(EntryConsts.SlugRegularExpression)]
         public string Slug { get; set; }
 
+        /// <summary>
+        /// Parent entry id of the entry;
+        /// When it is affiliated with <see cref="SectionDto.Type"/>=<see cref="Cms.Sections.SectionType.Structure"/>, this value is valid
+        /// </summary>
+        public Guid? ParentId { get; set; }
 
         /// <summary>
         /// Is draft

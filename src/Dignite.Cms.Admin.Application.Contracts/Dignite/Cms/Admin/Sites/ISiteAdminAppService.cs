@@ -13,5 +13,6 @@ namespace Dignite.Cms.Admin.Sites
         UpdateSiteInput>
     {
         Task<bool> NameExistsAsync(string name);
+        Task<bool> HostExistsAsync(string host);
     }
 }

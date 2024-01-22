@@ -1,9 +1,12 @@
 ﻿using Blazorise;
+using Dignite.Cms.Admin.DynamicForms;
 using Dignite.Cms.Admin.Fields;
 using Dignite.Cms.Localization;
 using Dignite.Cms.Permissions;
+using Dignite.FileExplorer.Files;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Components.Web.Extensibility.EntityActions;
 using Volo.Abp.AspNetCore.Components.Web.Extensibility.TableColumns;
@@ -15,6 +18,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
     {
         protected PageToolbar Toolbar { get; } = new();
         protected List<TableColumn> FieldManagementTableColumns => TableColumns.Get<FieldManagement>();
+        protected IReadOnlyList<FormControlDto> AllFormControls { get; set; } = new List<FormControlDto>();
 
         public FieldManagement()
         {
@@ -26,6 +30,11 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
             DeletePolicyName = CmsAdminPermissions.Field.Delete;
         }
 
+        protected override async Task OnInitializedAsync()
+        {
+            AllFormControls = (await FormService.GetFormControlsAsync()).Items;
+            await base.OnInitializedAsync();
+        }
 
         protected override ValueTask SetToolbarItemsAsync()
         {
@@ -88,7 +97,15 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
                     {
                         Title = L["FormControlName"],
                         Sortable = true,
+                        ValueConverter = (data)=> AllFormControls.FirstOrDefault(fc=>fc.Name == data.As<FieldDto>().FormControlName)?.DisplayName,
                         Data = nameof(FieldDto.FormControlName)
+                    },
+                    new TableColumn
+                    {
+                        Title = L["Group"],
+                        Sortable = true,
+                        ValueConverter = (data)=> data.As<FieldDto>().GroupName,
+                        Data = nameof(FieldDto.GroupId)
                     },
                     new TableColumn
                     {
@@ -107,10 +124,6 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
         }
 
 
-        protected override string GetDeleteConfirmationMessage(FieldDto entity)
-        {
-            return string.Format(L["FieldDeletionConfirmationMessage"], entity.DisplayName);
-        }
 
         /// <summary>
         /// 

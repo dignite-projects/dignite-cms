@@ -1,4 +1,5 @@
 ﻿using Blazorise;
+using Blazorise.Extensions;
 using Dignite.Cms.Admin.Fields;
 using Dignite.Cms.Admin.Sections;
 using Dignite.Cms.Localization;
@@ -16,6 +17,13 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
         [Parameter] public CreateOrUpdateEntryTypeInputBase Entity { get; set; }
         [Parameter] public Guid SectionId{ get; set; }
 
+        protected Modal? CreateModal;
+        protected Modal? EditModal;
+        protected Modal? EditFieldModal;
+
+        protected Validations? CreateValidationsRef;
+        protected Validations? EditValidationsRef;
+        protected Validations? EditFieldValidationsRef;
 
         /// <summary>
         /// 
@@ -24,6 +32,12 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
 
         protected IReadOnlyList<FieldGroupDto> FieldGroups { get; set; } = new List<FieldGroupDto>();
         protected IReadOnlyList<FieldDto> AllFields { get; set; }=new List<FieldDto>();
+
+        private string SelectedFieldTabName;
+
+        private EntryFieldTabInput NewFieldTab = new();
+        private EntryFieldTabInput EditingFieldTab = new();
+        private EntryFieldInput EditingField = new();
 
         //Will not change again after assignment, used to verify that the site name already exists
         private string entryTypeNameForValidation;
@@ -37,6 +51,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
         {
             base.OnParametersSet();
             entryTypeNameForValidation = Entity.Name;
+            SelectedFieldTabName = Entity.FieldTabs.First().Name;
         }
 
         protected override async Task OnInitializedAsync()
@@ -49,6 +64,35 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
             })).Items;
         }
 
+        private async Task NameExistsValidatorAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            var name = Convert.ToString(e.Value);
+            if (!name.IsNullOrEmpty())
+            {
+                if (!name.Equals(entryTypeNameForValidation, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    e.Status = await EntryTypeAdminAppService.NameExistsAsync(new EntryTypeNameExistsInput(SectionId, name))
+                        ? ValidationStatus.Error
+                        : ValidationStatus.Success;
+
+                    e.ErrorText = L["EntryTypeName{0}AlreadyExist", name];
+                }
+            }
+            else
+            {
+                e.Status = ValidationStatus.Error;
+            }
+        }
+
+
+        private void DisplayNameTextboxBlur()
+        {
+            if (!Entity.DisplayName.IsNullOrEmpty() && Entity.Name.IsNullOrEmpty())
+            {
+                Entity.Name = SlugNormalizer.Normalize(Entity.DisplayName);
+            }
+        }
 
         private async Task SectionFieldDropped(string fieldTabName)
         {
@@ -83,19 +127,142 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
             await InvokeAsync(StateHasChanged);
         }
 
-        private async Task NameExistsValidatorAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
+
+        /****** Field Tab **************************/
+
+        private void OnTabClicked(string name)
         {
-            cancellationToken.ThrowIfCancellationRequested();
+            SelectedFieldTabName = name;
+        }
+
+        void RemoveFieldTab(EntryFieldTabInput tab)
+        {
+            if (Entity.FieldTabs.Count > 1)
+            {
+                var index = Entity.FieldTabs.IndexOf(tab);
+                Entity.FieldTabs.Remove(tab);
+
+                index = index > 0 ? index - 1 : index;
+                OnTabClicked(Entity.FieldTabs[index].Name);
+            }
+        }
+
+        private void OnSelectedTabChanged(string name)
+        {
+            if (!Entity.FieldTabs.Any(ft => ft.Name == name))
+            {
+                var tabCount=Entity.FieldTabs.Count;
+                OnTabClicked(Entity.FieldTabs[tabCount-1].Name);
+            }
+        }
+
+
+        /****** Create Field Tab **************************/
+        private async Task OpenCreateModalAsync()
+        {
+            if (CreateValidationsRef != null)
+            {
+                await CreateValidationsRef.ClearAll();
+            }
+            await InvokeAsync(async () =>
+            {
+                StateHasChanged();
+                if (CreateModal != null)
+                {
+                    await CreateModal.Show();
+                }
+
+            });
+        }
+
+        private Task CloseCreateModalAsync()
+        {
+            NewFieldTab.Name = "";
+            return InvokeAsync(CreateModal!.Hide);
+        }
+
+        private Task ClosingCreateModal(ModalClosingEventArgs eventArgs)
+        {
+            // cancel close if clicked outside of modal area
+            eventArgs.Cancel = eventArgs.CloseReason == CloseReason.FocusLostClosing;
+
+            return Task.CompletedTask;
+        }
+
+        private void NewFieldTabNameValidator(ValidatorEventArgs e)
+        {
             var name = Convert.ToString(e.Value);
             if (!name.IsNullOrEmpty())
             {
-                if (!name.Equals(entryTypeNameForValidation, StringComparison.InvariantCultureIgnoreCase))
+                e.Status = Entity.FieldTabs.Any(ft => ft.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase))
+                    ? ValidationStatus.Error
+                    : ValidationStatus.Success;
+
+                e.ErrorText = L["FieldTabName{0}AlreadyExist", name];
+            }
+            else
+            {
+                e.Status = ValidationStatus.Error;
+            }
+        }
+        private async Task CreateFieldTabAsync()
+        {
+            var validate = true;
+            if (CreateValidationsRef != null)
+            {
+                validate = await CreateValidationsRef.ValidateAll();
+            }
+            if (validate)
+            {
+                Entity.FieldTabs.Add(new EntryFieldTabInput(NewFieldTab.Name));
+                OnTabClicked(NewFieldTab.Name);
+
+                NewFieldTab = new("");
+                await InvokeAsync(CreateModal!.Hide);
+            }
+        }
+
+        /****** Edit Field Tab **************************/
+        private async Task OpenEditModalAsync()
+        {
+            if (EditValidationsRef != null)
+            {
+                await EditValidationsRef.ClearAll();
+            }
+            EditingFieldTab = new EntryFieldTabInput(SelectedFieldTabName);
+            await InvokeAsync(async () =>
+            {
+                StateHasChanged();
+                if (EditModal != null)
                 {
-                    e.Status = await EntryTypeAdminAppService.NameExistsAsync(new EntryTypeNameExistsInput(SectionId,name))
+                    await EditModal.Show();
+                }
+            });
+        }
+        private Task CloseEditModalAsync()
+        {
+            InvokeAsync(EditModal!.Hide);
+            return Task.CompletedTask;
+        }
+        private Task ClosingEditModal(ModalClosingEventArgs eventArgs)
+        {
+            // cancel close if clicked outside of modal area
+            eventArgs.Cancel = eventArgs.CloseReason == CloseReason.FocusLostClosing;
+
+            return Task.CompletedTask;
+        }
+        private void EditingFieldTabNameValidator(ValidatorEventArgs e)
+        {
+            var name = Convert.ToString(e.Value);
+            if (!name.IsNullOrEmpty())
+            {
+                if (!name.Equals(SelectedFieldTabName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    e.Status = Entity.FieldTabs.Any(ft=>ft.Name.Equals(name,StringComparison.InvariantCultureIgnoreCase))
                         ? ValidationStatus.Error
                         : ValidationStatus.Success;
 
-                    e.ErrorText = L["EntryTypeName{0}AlreadyExist", name];
+                    e.ErrorText = L["FieldTabName{0}AlreadyExist", name];
                 }
             }
             else
@@ -104,11 +271,68 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
             }
         }
 
-        private void DisplayNameTextboxBlur()
+
+        private async Task UpdateEntityAsync()
         {
-            if (!Entity.DisplayName.IsNullOrEmpty() && Entity.Name.IsNullOrEmpty())
+            var validate = true;
+            if (EditValidationsRef != null)
             {
-                Entity.Name = SlugNormalizer.Normalize(Entity.DisplayName);
+                validate = await EditValidationsRef.ValidateAll();
+            }
+            if (validate)
+            {
+                Entity.FieldTabs.Single(t => t.Name == SelectedFieldTabName).Name = EditingFieldTab.Name;
+                OnTabClicked(EditingFieldTab.Name);
+
+                await InvokeAsync(EditModal!.Hide);
+            }
+        }      
+
+
+        /****** Edit Field **************************/
+        private async Task OpenEditFieldModalAsync(EntryFieldInput field)
+        {
+            if (EditFieldValidationsRef != null)
+            {
+                await EditFieldValidationsRef.ClearAll();
+            }
+            EditingField = new EntryFieldInput(field.FieldId,field.DisplayName,field.Required,field.ShowOnList);
+            await InvokeAsync(async () =>
+            {
+                StateHasChanged();
+                if (EditFieldModal != null)
+                {
+                    await EditFieldModal.Show();
+                }
+            });
+        }
+        private Task CloseEditFieldModalAsync()
+        {
+            InvokeAsync(EditFieldModal!.Hide);
+            return Task.CompletedTask;
+        }
+        private Task ClosingEditFieldModal(ModalClosingEventArgs eventArgs)
+        {
+            // cancel close if clicked outside of modal area
+            eventArgs.Cancel = eventArgs.CloseReason == CloseReason.FocusLostClosing;
+
+            return Task.CompletedTask;
+        }
+
+        private async Task UpdateFieldAsync()
+        {
+            var validate = true;
+            if (EditFieldValidationsRef != null)
+            {
+                validate = await EditFieldValidationsRef.ValidateAll();
+            }
+            if (validate)
+            {
+                var field = Entity.FieldTabs.SelectMany(ft => ft.Fields).Single(f => f.FieldId == EditingField.FieldId);
+                field.DisplayName = EditingField.DisplayName;
+                field.Required = EditingField.Required;
+                field.ShowOnList = EditingField.ShowOnList;
+                await InvokeAsync(EditFieldModal!.Hide);
             }
         }
     }

@@ -1,8 +1,5 @@
 ﻿@using Dignite.Cms.Admin.Sites
 @using Dignite.Cms.Localization
-@using System.Threading
-@using Volo.Abp.BlazoriseUI.Components.ObjectExtending
-@using Volo.Abp.Localization;
 @inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
 @inject ISiteAdminAppService _siteAdminAppService;
 @inherits AbpComponentBase
@@ -27,7 +24,7 @@
         </TextEdit>
     </Field>
 </Validation>
-<Validation MessageLocalizer="@LH.Localize">
+    <Validation MessageLocalizer="@LH.Localize" AsyncValidator="@HostExistsValidatorAsync">
     <Field>
         <FieldLabel>@L["Host"]</FieldLabel>
         <TextEdit @bind-Text="Entity.Host">
@@ -35,101 +32,31 @@
                 <ValidationError />
             </Feedback>
         </TextEdit>
-        <FieldHelp>@L["SiteHostRequirements"]</FieldHelp>
     </Field>
 </Validation>
-<Field>
-    <FieldLabel>@L["Cultures"]</FieldLabel>
-    <ListGroup Flush>
-        @foreach (var culture in AllCultures)
-        {
-            <ListGroupItem Flex="Flex.JustifyContent.Between.AlignItems.Center">
-                <Check TValue="bool" Checked="@Entity.Cultures.Any(l=>l.CultureName.Equals(culture.CultureName,StringComparison.OrdinalIgnoreCase))" CheckedChanged="(value)=>OnCultureChanged(culture.CultureName,value)">@culture.DisplayName</Check>
-                <Button Color="Color.Primary" Size="Size.Small" Clicked="()=>OnSetDefault(culture.CultureName)">@L["DefaultCulture"]</Button>
-            </ListGroupItem>
-        }
-    </ListGroup>
-</Field>
+
 <Field>
     <Check TValue="bool" @bind-Checked="Entity.IsActive">@L["IsActive"]</Check>
 </Field>
 
-
-    @code {
-    [Parameter] public CreateOrUpdateSiteInputBase Entity { get; set; }
-    [Parameter] public IReadOnlyList<LanguageInfo> AllCultures { get; set; }
-
-    //Will not change again after assignment, used to verify that the site name already exists
-    private string siteNameForValidation;
-
-    public CreateOrUpdateSiteComponent()
-    {
-        LocalizationResource = typeof(CmsResource);
-    }
-
-    protected override void OnParametersSet()
-    {
-        base.OnParametersSet();
-        siteNameForValidation = Entity.Name;
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-    }
-
-    void OnCultureChanged(string cultureName, bool value, bool defaultCulture = false)
-    {
-        if (value)
+<Field>
+    <FieldLabel>@L["Languages"]</FieldLabel>
+    <ListGroup Flush>
+        @foreach (var culture in AllLanguages)
         {
-            Entity.Cultures.Add(new CreateOrUpdateCultureInput(defaultCulture, cultureName));
+            var isChecked= @Entity.Languages.Any(l => l.CultureName.Equals(culture.CultureName, StringComparison.OrdinalIgnoreCase));
+            var isDefault = Entity.Languages.FirstOrDefault(c => c.CultureName == culture.CultureName)?.IsDefault;
+            <ListGroupItem Flex="Flex.JustifyContent.Between.AlignItems.Center">
+                <Check TValue="bool" Checked="@isChecked" CheckedChanged="(value)=>OnCultureChanged(culture.CultureName,value)">@culture.DisplayName</Check>
+                @if (isChecked && isDefault.HasValue && !isDefault.Value)
+                {
+                    <Button Color="Color.Light" Size="Size.Small" Clicked="()=>OnSetDefault(culture.CultureName)">@L["SetDefault"]</Button>
+                }
+                @if (isChecked && isDefault.HasValue && isDefault.Value)
+                {
+                    <Span TextColor="TextColor.Primary">@L["Default"]</Span>
+                }
+            </ListGroupItem>            
         }
-        else
-        {
-            Entity.Cultures.RemoveAll(l => l.CultureName == cultureName);
-        }
-    }
-
-    void OnSetDefault(string cultureName)
-    {
-        foreach (var sl in Entity.Cultures)
-        {
-            if (sl.CultureName == cultureName)
-            {
-                sl.IsDefault = true;
-            }
-            else
-            {
-                sl.IsDefault = false;
-            }
-        }
-    }
-
-    private async Task NameExistsValidatorAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
-    {
-        cancellationToken.ThrowIfCancellationRequested();
-        var name = Convert.ToString(e.Value);
-        if (!name.IsNullOrEmpty())
-        {
-            if (!name.Equals(siteNameForValidation, StringComparison.InvariantCultureIgnoreCase))
-            {
-                e.Status = await _siteAdminAppService.NameExistsAsync(name)
-                    ? ValidationStatus.Error
-                    : ValidationStatus.Success;
-
-                e.ErrorText = L["SiteName{0}AlreadyExist", name];
-            }
-        }
-        else
-        {
-            e.Status = ValidationStatus.Error;
-        }
-    }
-    void DisplayNameTextboxBlur()
-    {
-        if (!Entity.DisplayName.IsNullOrEmpty() && Entity.Name.IsNullOrEmpty())
-        {
-            Entity.Name = SlugNormalizer.Normalize(Entity.DisplayName);
-        }
-    }
-}
+    </ListGroup>
+</Field>

@@ -1,12 +1,9 @@
-﻿using AutoMapper.Execution;
-using Blazorise;
+﻿using Blazorise;
 using Dignite.Cms.Admin.Sites;
 using Dignite.Cms.Localization;
 using Dignite.Cms.Permissions;
-using Dignite.Cms.Sites;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Components.Web.Extensibility.EntityActions;
 using Volo.Abp.AspNetCore.Components.Web.Extensibility.TableColumns;
@@ -17,7 +14,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sites
 {
     public partial class SiteManagement
     {
-        protected IReadOnlyList<LanguageInfo> AllCultures = new List<LanguageInfo>();
+        protected IReadOnlyList<LanguageInfo> AllLanguages = new List<LanguageInfo>();
         protected PageToolbar Toolbar { get; } = new();
         protected List<TableColumn> SiteManagementTableColumns => TableColumns.Get<SiteManagement>();
 
@@ -35,16 +32,15 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sites
 
         protected override async Task OnInitializedAsync()
         {
-            await base.OnInitializedAsync();
-
             try
             {
-                AllCultures= await LanguageProvider.GetLanguagesAsync();
+                AllLanguages= await LanguageProvider.GetLanguagesAsync();
             }
             catch (Exception ex)
             {
                 await HandleErrorAsync(ex);
             }
+            await base.OnInitializedAsync();
         }
 
         protected override ValueTask SetToolbarItemsAsync()
@@ -122,12 +118,6 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sites
                 });
 
             return base.SetTableColumnsAsync();
-        }
-
-
-        protected override string GetDeleteConfirmationMessage(SiteDto entity)
-        {
-            return string.Format(L["SiteDeletionConfirmationMessage"], entity.DisplayName);
         }
     }
 }

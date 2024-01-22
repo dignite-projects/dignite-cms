@@ -24,10 +24,13 @@
   
 @* ************************* CREATE  ************************* *@        
 <Blazorise.Form>
-    <Blazorise.Validations @ref="@EditValidationsRef" Model="@EditingEntity" ValidateOnLoad="false">
+    <CascadingValue Value="@Id" Name="EditingEntryId">
+        <Blazorise.Validations @ref="@EditValidationsRef" Model="@EditingEntity" ValidateOnLoad="false">
         @if (EditingEntity != null)
         {
+            <input type="hidden" name="ConcurrencyStamp" @bind-value="EditingEntity.ConcurrencyStamp" />
             <CreateOrUpdateEntryComponent Entry="@EditingEntity" Section="@Section"></CreateOrUpdateEntryComponent>
         }
-    </Blazorise.Validations>
+        </Blazorise.Validations>
+    </CascadingValue>
 </Blazorise.Form>

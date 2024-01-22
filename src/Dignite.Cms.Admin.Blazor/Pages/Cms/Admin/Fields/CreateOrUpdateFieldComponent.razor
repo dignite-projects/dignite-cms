@@ -18,7 +18,7 @@
 {
     <Validation MessageLocalizer="@LH.Localize">
         <Field>
-            <FieldLabel>@L["Group"]</FieldLabel>
+            <FieldLabel>@L["FieldGroup"]</FieldLabel>
             <Select TValue="Guid?" @bind-SelectedValue="@Entity.GroupId">
                 <SelectItem Value="@(System.Guid.Empty)">@L["OptionalGrouping"]</SelectItem>
                 @foreach (var item in AllGroups)

@@ -1,6 +1,6 @@
 ﻿namespace Dignite.Cms.Sites
 {
-    public class SiteCultureDto
+    public class SiteLanguageDto
     {
         public bool IsDefault { get; set; }
 

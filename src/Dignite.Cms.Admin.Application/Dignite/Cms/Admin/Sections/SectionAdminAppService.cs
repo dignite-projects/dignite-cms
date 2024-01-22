@@ -44,7 +44,7 @@ namespace Dignite.Cms.Admin.Sections
         [Authorize(Permissions.CmsAdminPermissions.Section.Update)]
         public async Task<SectionDto> UpdateAsync(Guid id, UpdateSectionInput input)
         {
-            var section = await _sectionManager.UpdateAsync(id, input.Type, input.DisplayName, input.Name, input.IsDefault, input.IsActive, input.Route, input.Template);
+            var section = await _sectionManager.UpdateAsync(id, input.Type, input.DisplayName, input.Name, input.IsDefault, input.IsActive, input.Route, input.Template,input.ConcurrencyStamp);
             return ObjectMapper.Map<Section, SectionDto>(section);
         }
 
@@ -109,6 +109,11 @@ namespace Dignite.Cms.Admin.Sections
         public async Task<bool> NameExistsAsync(SectionNameExistsInput input)
         {
             return await _sectionRepository.NameExistsAsync(input.SiteId,input.Name);
+        }
+        [Authorize(Permissions.CmsAdminPermissions.Section.Default)]
+        public async Task<bool> RouteExistsAsync(SectionRouteExistsInput input)
+        {
+            return await _sectionRepository.RouteExistsAsync(input.SiteId, input.Route);
         }
     }
 }

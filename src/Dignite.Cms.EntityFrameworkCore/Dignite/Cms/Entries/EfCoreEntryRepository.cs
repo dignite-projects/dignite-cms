@@ -112,10 +112,11 @@ namespace Dignite.Cms.Entries
         /// <param name="entry"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<List<Entry>> GetVisionListAsync(Entry entry, CancellationToken cancellationToken = default)
+        public async Task<List<Entry>> GetVisionListAsync(Guid initialVersionId, CancellationToken cancellationToken = default)
         {
             return await (await GetDbSetAsync())
-                .Where(e => e.InitialVersionId== (entry.InitialVersionId.HasValue ? entry.InitialVersionId.Value : entry.Id))
+                .Where(e => e.InitialVersionId == initialVersionId || e.Id == initialVersionId)
+                .OrderByDescending(e => e.CreationTime)
                 .ToListAsync(GetCancellationToken(cancellationToken));
         }
 

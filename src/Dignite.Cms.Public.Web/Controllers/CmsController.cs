@@ -86,7 +86,7 @@ namespace Dignite.Cms.Public.Web.Controllers
             }
 
             //
-            var defaultCulture = section.Site.GetDefaultCulture();
+            var defaultCulture = section.Site.GetDefaultLanguage().CultureName;
             if (culture.IsNullOrEmpty())
             {
                 culture = defaultCulture;

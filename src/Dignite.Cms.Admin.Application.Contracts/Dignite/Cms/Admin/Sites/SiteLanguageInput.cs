@@ -6,13 +6,13 @@ using Volo.Abp.Validation;
 namespace Dignite.Cms.Admin.Sites
 {
     [Serializable]
-    public class CreateOrUpdateCultureInput
+    public class SiteLanguageInput
     {
-        public CreateOrUpdateCultureInput()
+        public SiteLanguageInput()
         {
         }
 
-        public CreateOrUpdateCultureInput(bool isDefault, string cultureName)
+        public SiteLanguageInput(bool isDefault, string cultureName)
         {
             IsDefault = isDefault;
             CultureName = cultureName;
@@ -22,7 +22,7 @@ namespace Dignite.Cms.Admin.Sites
         public bool IsDefault { get; set; }
 
         [Required]
-        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxCultureLength))]
+        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxLanguageCultureNameLength))]
         public string CultureName { get; set; }
     }
 }

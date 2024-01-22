@@ -53,7 +53,7 @@ public class CmsRouteRequestCultureProvider : RequestCultureProvider
                 var _siteAppService = httpContext.RequestServices.GetRequiredService<ISitePublicAppService>();
                 var host = $"{httpContext.Request.Scheme}://{httpContext.Request.Host.Value}";
                 var site = await _siteAppService.FindByHostAsync(host);
-                culture = site.GetDefaultCulture();
+                culture = site.GetDefaultLanguage().CultureName;
             }
         }
 

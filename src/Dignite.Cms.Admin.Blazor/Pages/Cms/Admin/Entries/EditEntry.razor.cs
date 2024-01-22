@@ -51,6 +51,15 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
         private async ValueTask SetToolbarItemsAsync()
         {
+            Toolbar.AddButton(L["Cancel"],
+                CancelAsync,
+                color: Color.Light);
+
+            Toolbar.AddButton(L["SaveAsDraft"],
+                SaveAsDraftAsync,
+                color: Color.Info,
+                requiredPolicyName: CmsAdminPermissions.Entry.Update);
+
             Toolbar.AddButton(L["Save"],
                 SaveAsync,
                 IconName.Save,
@@ -70,13 +79,24 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                 if (validate)
                 {
                     await EntryAppService.UpdateAsync(Id, EditingEntity);
-                    Navigation.NavigateTo($"cms/admin/entries?sectionId={Entry.SectionId}&culture={EditingEntity.Culture}");
+                    Navigation.NavigateTo($"cms/admin/entries?sectionId={Entry.SectionId}&cultureName={EditingEntity.Culture}");
                 }
             }
             catch (Exception ex)
             {
                 await HandleErrorAsync(ex);
             }
+        }
+        protected async Task SaveAsDraftAsync()
+        {
+            EditingEntity.Draft = true;
+            await SaveAsync();
+        }
+
+        protected Task CancelAsync()
+        {
+            Navigation.NavigateTo($"cms/admin/entries?sectionId={Entry.SectionId}&cultureName={Entry.Culture}");
+            return Task.CompletedTask;
         }
     }
 }

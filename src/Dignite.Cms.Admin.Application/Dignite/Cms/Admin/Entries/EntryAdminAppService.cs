@@ -1,8 +1,10 @@
-﻿using Dignite.Cms.Entries;
+﻿using Dignite.Cms.Admin.Sections;
+using Dignite.Cms.Entries;
 using Dignite.Cms.Sections;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 
@@ -13,18 +15,15 @@ namespace Dignite.Cms.Admin.Entries
         private readonly IEntryRepository _entryRepository;        
         private readonly ISectionRepository _sectionRepository;
         private readonly EntryManager _entryManager;
-        private readonly IEntryTypeRepository _entryTypeRepository;
 
         public EntryAdminAppService(
             IEntryRepository entryRepository, 
             ISectionRepository sectionRepository,
-            EntryManager entryManager,
-            IEntryTypeRepository entryTypeRepository)
+            EntryManager entryManager)
         {
             _entryRepository = entryRepository;
             _sectionRepository = sectionRepository;
             _entryManager = entryManager;
-            _entryTypeRepository = entryTypeRepository;
         }
 
 
@@ -37,6 +36,12 @@ namespace Dignite.Cms.Admin.Entries
         [Authorize(Permissions.CmsAdminPermissions.Entry.Create)]
         public async Task<EntryDto> CreateAsync(CreateEntryInput input)
         {
+            if (input.InitialVersionId.HasValue)
+            {
+                var initialEntry = await _entryRepository.GetAsync(input.InitialVersionId.Value, false);
+                input.EntryTypeId = initialEntry.EntryTypeId;
+            }
+
             var entry = await _entryManager.CreateAsync(
                 input.EntryTypeId,
                 input.Culture,
@@ -65,7 +70,7 @@ namespace Dignite.Cms.Admin.Entries
             var entry = await _entryManager.UpdateAsync(
                 id, input.Culture, input.Title, input.Slug, input.PublishTime,
                 input.Draft ? EntryStatus.Draft : EntryStatus.Published,
-                input.ExtraProperties, input.VersionNotes
+                input.ExtraProperties, input.VersionNotes,input.ConcurrencyStamp
                 );
 
             return ObjectMapper.Map<Entry, EntryDto>(entry);
@@ -104,6 +109,7 @@ namespace Dignite.Cms.Admin.Entries
             //get entry list
             var result = await _entryRepository.GetListAsync(input.Culture, input.SectionId, input.EntryTypeId, input.CreatorId, input.Status, input.Filter, input.StartPublishDate, input.ExpiryPublishDate, null, input.MaxResultCount, input.SkipCount, input.Sorting);
             var dto = ObjectMapper.Map<List<Entry>, List<EntryDto>>(result);
+
 
             return new PagedResultDto<EntryDto>(count, dto);
         }
@@ -174,7 +180,7 @@ namespace Dignite.Cms.Admin.Entries
         }
 
         [Authorize(Permissions.CmsAdminPermissions.Entry.Default)]
-        public async Task<bool> CanCreateForEntryTypeAsync(CanCreateEntryForSectionInput input)
+        public async Task<bool> EntryTypeExistsAsync(EntryTypeExistsInput input)
         {
             return await _entryRepository.ExistForEntryTypeAsync(input.Culture, input.SectionId, input.EntryTypeId);
         }

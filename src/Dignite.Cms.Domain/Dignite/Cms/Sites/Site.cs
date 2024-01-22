@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 
@@ -12,17 +13,18 @@ namespace Dignite.Cms.Sites
     {
         protected Site()
         {
+            Languages = new List<SiteLanguage>();
         }
 
-        public Site(Guid id, string displayName, string name, ICollection<SiteCulture> cultures, string host, bool isActive, Guid? tenantId)
+        public Site(Guid id, string displayName, string name, string host, bool isActive, Guid? tenantId)
             :base(id)
         {
             DisplayName = displayName;
             Name = name;
-            Cultures = cultures;
             Host = host;
             IsActive = isActive;
             TenantId = tenantId;
+            Languages = new List<SiteLanguage>();
         }
 
         /// <summary>
@@ -37,9 +39,9 @@ namespace Dignite.Cms.Sites
         public virtual string Name { get; protected set; }
 
         /// <summary>
-        /// Cultures supported on this site
+        /// Languages supported on this site
         /// </summary>
-        public ICollection<SiteCulture> Cultures { get; protected set; }
+        public ICollection<SiteLanguage> Languages { get; protected set; }
 
         /// <summary>
         /// Host url of this site
@@ -73,9 +75,14 @@ namespace Dignite.Cms.Sites
         {
             Host = host;
         }
-        public virtual void SetCultures(ICollection<SiteCulture> cultures)
+        public virtual void AddLanguage(SiteLanguage language)
         {
-            Cultures = cultures;
+            if (!Languages.Any(l => l.CultureName.Equals(language.CultureName, StringComparison.InvariantCultureIgnoreCase)))
+                Languages.Add(language);
+        }
+        public virtual void RemoveLanguage(string cultureName) 
+        {
+            Languages.RemoveAll(l=>l.CultureName.Equals(cultureName,StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

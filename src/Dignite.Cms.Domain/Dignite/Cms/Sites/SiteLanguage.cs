@@ -1,14 +1,14 @@
 ﻿namespace Dignite.Cms.Sites
 {
-    public class SiteCulture
+    public class SiteLanguage
     {
-        public SiteCulture(bool isDefault, string cultureName)
+        public SiteLanguage(bool isDefault, string cultureName)
         {
             IsDefault = isDefault;
             CultureName = cultureName;
         }
 
-        protected SiteCulture()
+        protected SiteLanguage()
         {
         }
 

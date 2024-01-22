@@ -9,6 +9,11 @@ namespace Dignite.Cms.Admin.Sites
     [Serializable]
     public class SiteDto : ExtensibleAuditedEntityDto<Guid>, IHasConcurrencyStamp
     {
+        public SiteDto()
+        {
+            Languages = new List<SiteLanguageDto>();
+        }
+
         /// <summary>
         /// Display Name of this site.
         /// </summary>
@@ -21,9 +26,9 @@ namespace Dignite.Cms.Admin.Sites
         public virtual string Name { get; set; }
 
         /// <summary>
-        /// cultures supported on this site
+        /// Languages supported on this site
         /// </summary>
-        public ICollection<SiteCultureDto> Cultures { get; set; }
+        public ICollection<SiteLanguageDto> Languages { get; set; }
 
         /// <summary>
         /// Host of this site

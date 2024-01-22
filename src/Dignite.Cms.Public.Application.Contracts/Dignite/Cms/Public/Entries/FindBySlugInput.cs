@@ -14,7 +14,7 @@ namespace Dignite.Cms.Public.Entries
         /// <summary>
         /// The Culture corresponding to the entry
         /// </summary>
-        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxCultureLength))]
+        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxLanguageCultureNameLength))]
         public string Culture { get; set; }
 
         /// <summary>

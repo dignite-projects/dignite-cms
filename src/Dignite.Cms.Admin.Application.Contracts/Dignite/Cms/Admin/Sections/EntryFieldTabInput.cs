@@ -9,6 +9,11 @@ namespace Dignite.Cms.Admin.Sections
     {
         public EntryFieldTabInput()
         {
+        }
+
+        public EntryFieldTabInput(string name)
+        {
+            Name = name;
             Fields = new List<EntryFieldInput>();
         }
 

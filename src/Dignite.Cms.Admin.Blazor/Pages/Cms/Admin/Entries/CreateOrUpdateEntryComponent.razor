@@ -6,6 +6,7 @@
 @using Dignite.Cms.Localization;
 @using Volo.Abp.BlazoriseUI.Components.ObjectExtending
 @using Volo.Abp.Localization;
+@inject NavigationManager Navigation
 @inject IEntryAdminAppService AppService
 @inject ISectionAdminAppService SectionAppService
 @inject IFormControlComponentSelector FormControlComponentSelector
@@ -14,7 +15,7 @@
 @inherits AbpComponentBase
 
 <Row>
-    <Column ColumnSize="ColumnSize.Is8">
+    <Column ColumnSize="ColumnSize.Is8.OnDesktop">
         <Card Background="@Background.White">
             <CardBody>
                 <Validation MessageLocalizer="@LH.Localize">
@@ -52,7 +53,7 @@
             </CardBody>
         </Card>
     </Column>
-    <Column ColumnSize="ColumnSize.Is4">
+    <Column ColumnSize="ColumnSize.Is4.OnDesktop">
         <Validation MessageLocalizer="@LH.Localize" AsyncValidator="@SlugExistsValidatorAsync">
             <Field>
                 <Blazorise.FieldLabel>@L["Slug"]</Blazorise.FieldLabel>
@@ -63,41 +64,30 @@
                 </Blazorise.TextEdit>
             </Field>
         </Validation>
-
-        <Validation MessageLocalizer="@LH.Localize" AsyncValidator="@CanCreateForTypeValidatorAsync">
-            <Field>
-                <FieldLabel>@L["EntryType"]</FieldLabel>
-                <Select TValue="Guid" SelectedValue="@Entry.EntryTypeId" Disabled="@(Entry.GetType()==typeof(UpdateEntryInput))" SelectedValueChanged="@OnEntryTypeSelectedValueChanged">
-                    @foreach (var item in Section.EntryTypes)
-                    {
-                        <SelectItem Value="@item.Id">@item.DisplayName</SelectItem>
-                    }
-                </Select>
-                <Blazorise.ValidationError />
-            </Field>
-        </Validation>
         <Validation MessageLocalizer="@LH.Localize" AsyncValidator="@CultureExistsValidatorAsync">
             <Field>
-                <Blazorise.FieldLabel>@L["Culture"]</Blazorise.FieldLabel>
-                <Select TValue="string" SelectedValue="Entry.Culture" SelectedValueChanged="@OnCultureSelectedValueChanged">
-                    @foreach (var item in Section.Site.Cultures)
-                    {
-                        <SelectItem Value="@item.CultureName">@AllLanguages.FirstOrDefault(l=>l.CultureName==item.CultureName)?.DisplayName</SelectItem>
-                    }
+                <Blazorise.FieldLabel>@L["Language"]</Blazorise.FieldLabel>
+                    <Select TValue="string" SelectedValue="Entry.Culture" SelectedValueChanged="@OnCultureSelectedValueChanged">
+                    <ChildContent>
+                        @foreach (var item in Section.Site.Languages)
+                        {
+                            <SelectItem Value="@item.CultureName">@AllLanguages.FirstOrDefault(l => l.CultureName == item.CultureName)?.DisplayName</SelectItem>
+                        }
+                    </ChildContent>
+                    <Feedback>
+                        <ValidationError />
+                    </Feedback>
                 </Select>
             </Field>
         </Validation>
-        @if (AllEntriesOfStructure!=null)
+        @if (AllEntriesOfStructure!=null && AllEntriesOfStructure.Any())
         {
-            var newEntry = (CreateEntryInput)Entry;
             <Validation MessageLocalizer="@LH.Localize" Validator="@ValidationRule.None">
                 <Field>
                     <FieldLabel>@L["ParentEntry"]</FieldLabel>
-                    <Select TValue="Guid?" @bind-SelectedValue="@newEntry.ParentId">
-                        @foreach (var item in AllEntriesOfStructure)
-                        {
-                            <SelectItem Value="@item.Id">@item.Title</SelectItem>
-                        }
+                    <Select TValue="Guid?" @bind-SelectedValue="@Entry.ParentId">
+                        <SelectItem> </SelectItem>
+                        <StructuredEntriesComponent Entries="AllEntriesOfStructure" Level="0" ParentId="null"></StructuredEntriesComponent>
                     </Select>
                 </Field>
             </Validation>            
@@ -112,15 +102,69 @@
                 </DateEdit>
             </Field>
         </Validation>
-        <Validation MessageLocalizer="@LH.Localize">
+        @if (AllVersions!=null)
+        {
             <Field>
-                <FieldLabel>@L["RevisionNotes"]</FieldLabel>
-                <MemoEdit @bind-Text="@Entry.VersionNotes" AutoSize>
-                    <Feedback>
-                        <ValidationError />
-                    </Feedback>
-                </MemoEdit>
+                <FieldLabel>
+                    @L["EntryVersion"]
+                </FieldLabel>
+                <ListGroup>
+                    @foreach (var item in AllVersions)
+                    {
+                        var versionTitle = item.InitialVersionId.HasValue ? item.CreationTime.ToString() : L["InitialVersion"];
+                        <ListGroupItem Name="@item.Id.ToString()" Flex="Flex.JustifyContent.Between.AlignItems.Center">
+                            <Div Flex="Flex.JustifyContent.Start">
+                                @versionTitle
+                                @if (item.IsActivatedVersion)
+                                {
+                                    <Badge Color="Color.Success" TextSize="TextSize.Small" Margin="Margin.Is1.FromStart" Pill>@L["Activated"]</Badge>
+                                }
+                                @if (item.Id==EditingEntryId)
+                                {
+                                    <Badge Color="Color.Primary" TextSize="TextSize.Small" Margin="Margin.Is1.FromStart" Pill>@L["Editing"]</Badge>
+                                }
+                            </Div>
+                            <Dropdown>
+                                <DropdownToggle Color="Color.Default">                                    
+                                </DropdownToggle>
+                                <DropdownMenu Shadow="Shadow.Default">
+                                    @if(!item.IsActivatedVersion)
+                                    {
+                                        <DropdownItem Clicked="()=>ActivateAsync(item.Id)"><Icon Name="IconName.Check"></Icon> @L["Activate"]</DropdownItem>
+                                        <DropdownDivider />
+                                    }
+                                    <DropdownItem Clicked="()=>NewVersion(item.Id)"><Icon Name="IconName.Add"></Icon> @L["NewVersion"]</DropdownItem>
+                                        @if (item.Id != EditingEntryId)
+                                    {
+                                        <DropdownDivider />
+                                        <DropdownItem Clicked="()=>EditVersion(item.Id)"><Icon Name="IconName.Edit"></Icon> @L["Edit"]</DropdownItem>
+                                    }
+                                    @if (item.InitialVersionId.HasValue && !item.IsActivatedVersion && item.Id != EditingEntryId)
+                                    {
+                                        <DropdownDivider />
+                                        <DropdownItem Clicked="()=>DeleteVersionAsync(item.Id)"><Icon Name="IconName.Delete"></Icon> @L["Delete"]</DropdownItem>
+                                    }
+                                </DropdownMenu>
+                            </Dropdown>
+                        </ListGroupItem>
+                    }
+                </ListGroup>
             </Field>
-        </Validation>
+        }
+        @if ((Entry.GetType() == typeof(CreateEntryInput) && ((CreateEntryInput)Entry).InitialVersionId.HasValue) 
+            || (Entry.GetType() == typeof(UpdateEntryInput))
+            )
+        {
+            <Validation MessageLocalizer="@LH.Localize">
+                <Field>
+                    <FieldLabel>@L["RevisionNotes"]</FieldLabel>
+                    <MemoEdit @bind-Text="@Entry.VersionNotes" AutoSize>
+                        <Feedback>
+                            <ValidationError />
+                        </Feedback>
+                    </MemoEdit>
+                </Field>
+            </Validation>
+        }
     </Column>
 </Row>

@@ -11,6 +11,7 @@ using Volo.Abp.Localization;
 using Dignite.Abp.Data;
 using System.Threading;
 using Blazorise;
+using Dignite.Cms.Sections;
 
 namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 {
@@ -20,13 +21,21 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         [Parameter] public CreateOrUpdateEntryInputBase Entry { get; set; }
         [Parameter] public SectionDto Section { get; set; }
 
+        /// <summary>
+        /// This property is only valid when editing and is used to get the Id of the edited entry
+        /// </summary>
+        [CascadingParameter(Name = "EditingEntryId")]
+        Guid? EditingEntryId { get; set; }
+
         protected EntryTypeDto CurrentEntryType { get; set; }
         protected IReadOnlyList<LanguageInfo> AllLanguages = new List<LanguageInfo>();
         protected IReadOnlyList<EntryDto> AllEntriesOfStructure;
+        protected List<EntryDto> AllVersions = null;
 
         //Will not change again after assignment, used to verify that the slug already exists
         private string slugForValidation;
         private string cultureForValidation;
+
         public CreateOrUpdateEntryComponent()
         {
             LocalizationResource = typeof(CmsResource);
@@ -41,21 +50,10 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            await SetEntryType(Entry.EntryTypeId);
+            CurrentEntryType = Section.EntryTypes.FirstOrDefault(et => et.Id == Entry.EntryTypeId);
             AllLanguages = await LanguageProvider.GetLanguagesAsync();
             await SetCultureAsync(Entry.Culture);
-        }
-        protected async Task OnEntryTypeSelectedValueChanged(Guid value)
-        {
-            Entry.EntryTypeId = value;
-            await SetEntryType(value);
-            Entry.ExtraProperties.Clear();
-        }
-
-        protected Task SetEntryType(Guid entryTypeId)
-        { 
-            CurrentEntryType = Section.EntryTypes.FirstOrDefault(et => et.Id == entryTypeId);
-            return Task.CompletedTask;
+            await GetVersionsAsync();
         }
 
         protected async Task OnCultureSelectedValueChanged(string value)
@@ -66,15 +64,49 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         protected async Task SetCultureAsync(string culture)
         { 
             Entry.Culture = culture;
-            if (Section.Type == Dignite.Cms.Sections.SectionType.Structure && Entry.GetType() == typeof(CreateEntryInput))
+            if (Section.Type == SectionType.Structure)
             {
                 AllEntriesOfStructure =( await AppService.GetListAsync(new GetEntriesInput { 
                     SectionId=Section.Id,
                     Culture= culture,
                     MaxResultCount=1000
                 })).Items;
+
+                if (Entry.GetType() == typeof(UpdateEntryInput))
+                {
+                    AllEntriesOfStructure = AllEntriesOfStructure.Where(e => e.Slug != Entry.Slug).ToList();
+                }
             }
         }
+        protected async Task GetVersionsAsync()
+        {
+            if (Entry.GetType() == typeof(UpdateEntryInput))
+            {
+                AllVersions = (await AppService.GetAllVersionsAsync(EditingEntryId.Value))
+                                .Items.ToList();
+            }
+        }
+
+        private async Task ActivateAsync(Guid id)
+        {
+            await AppService.ActivateAsync(id);
+            AllVersions.ForEach(v => v.IsActivatedVersion = false);
+            AllVersions.Single(v=>v.Id==id).IsActivatedVersion = true;
+        }
+        private void EditVersion(Guid id)
+        {
+            Navigation.NavigateTo($"cms/admin/entries/{id}/edit",true);
+        }
+        private void NewVersion(Guid id)
+        {
+            Navigation.NavigateTo($"cms/admin/entries/create?RevisionEntryId={id}");
+        }
+        private async Task DeleteVersionAsync(Guid id) 
+        { 
+            AllVersions.RemoveAll(e => e.Id == id);
+            await AppService.DeleteAsync(id);
+        }
+
         private void OnFieldValueChanged(FormField field)
         { 
             Entry.SetField(field.Name, field.Value);
@@ -95,7 +127,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
             {
                 if (!slug.Equals(slugForValidation, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    await ValidateNameExistsAsync(e, cancellationToken);
+                    await ValidateSlugExistsAsync(e);
                 }
             }
             else
@@ -108,20 +140,33 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         {
             cancellationToken.ThrowIfCancellationRequested();
             var culture = Convert.ToString(e.Value);
-            if (!culture.IsNullOrEmpty())
+
+            if (Section.Type == SectionType.Single)
+            {
+                if (Entry.GetType() == typeof(CreateEntryInput))
+                {
+                    if (!((CreateEntryInput)Entry).InitialVersionId.HasValue)
+                        await ValidateEntryTypeExistsAsync(e);
+                }
+                else if (Entry.GetType() == typeof(UpdateEntryInput))
+                {
+                    if (!culture.Equals(cultureForValidation, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        await ValidateEntryTypeExistsAsync(e);
+                    }
+                }
+            }
+
+            if (e.Status == ValidationStatus.Success)
             {
                 if (!culture.Equals(cultureForValidation, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    await ValidateNameExistsAsync(e,cancellationToken); 
+                    await ValidateSlugExistsAsync(e);
                 }
-            }
-            else
-            {
-                e.Status = ValidationStatus.Error;
             }
         }
 
-        private async Task ValidateNameExistsAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
+        private async Task ValidateSlugExistsAsync(ValidatorEventArgs e)
         {
             e.Status = await AppService.SlugExistsAsync(new SlugExistsInput(Entry.Culture,Section.Id,Entry.Slug))
                 ? ValidationStatus.Error
@@ -130,16 +175,13 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
             e.ErrorText = L["EntrySlug{0}AlreadyExist", Entry.Slug];
         }
 
-        private async Task CanCreateForTypeValidatorAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
+        private async Task ValidateEntryTypeExistsAsync(ValidatorEventArgs e)
         {
-            cancellationToken.ThrowIfCancellationRequested();
-            var entryTypeId = (Guid)e.Value;
-
-            e.Status = await AppService.CanCreateForEntryTypeAsync(new CanCreateEntryForSectionInput(Entry.Culture, Section.Id, entryTypeId))
+            e.Status = await AppService.EntryTypeExistsAsync(new EntryTypeExistsInput(Entry.Culture, Section.Id, Entry.EntryTypeId))
                 ? ValidationStatus.Error
                 : ValidationStatus.Success;
 
-            e.ErrorText = L["EntriesAlreadyExistEntryType", Entry.Slug];
+            e.ErrorText = L["EntriesAlreadyExistEntryType", CurrentEntryType.DisplayName, AllLanguages.FirstOrDefault(l=>l.CultureName==Entry.Culture)?.DisplayName];
         }
     }
 }

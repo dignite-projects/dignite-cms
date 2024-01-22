@@ -29,7 +29,7 @@ namespace Dignite.Cms.Public.Entries
             var section = await _sectionPublicAppService.GetAsync(input.SectionId);
             if (input.Culture.IsNullOrEmpty())
             {
-                input.Culture = section.Site.GetDefaultCulture();
+                input.Culture = section.Site.GetDefaultLanguage().CultureName;
             }
             var entry = await _entryRepository.FindBySlugAsync(input.Culture,input.SectionId,input.Slug);
 
@@ -73,7 +73,7 @@ namespace Dignite.Cms.Public.Entries
             var section = await _sectionPublicAppService.GetAsync(input.SectionId);
             if (input.Culture.IsNullOrEmpty())
             {
-                input.Culture = section.Site.GetDefaultCulture();
+                input.Culture = section.Site.GetDefaultLanguage().CultureName;
             }
 
             if (section.Type == Cms.Sections.SectionType.Single)
@@ -109,6 +109,25 @@ namespace Dignite.Cms.Public.Entries
             }
 
             var dto = ObjectMapper.Map<List<Entry>, List<EntryDto>>(result);
+
+
+            //Remove custom fields that don't show up in the list
+            foreach (var item in dto)
+            {
+                var onListFields = section.EntryTypes
+                    .SingleOrDefault(et => et.Id == item.EntryTypeId)?.FieldTabs
+                    .SelectMany(ft => ft.Fields.Where(f => f.ShowOnList));
+                if (onListFields == null)
+                {
+                    item.ExtraProperties.Clear();
+                }
+                else
+                {
+                    item.ExtraProperties.RemoveAll(ep => !onListFields.Select(f => f.Field.Name).Contains(ep.Key));
+                }
+            }
+
+            //
             foreach (var entry in dto)
             {
                 SetEntryUrl(entry, section);
@@ -139,7 +158,7 @@ namespace Dignite.Cms.Public.Entries
         protected void SetEntryUrl(EntryDto entry, SectionDto section)
         {
             var routeParameters = GetRouteParameters(section.Route).ToArray();
-            var siteDefaultCulture = section.Site.GetDefaultCulture();
+            var siteDefaultLanguage = section.Site.GetDefaultLanguage();
             entry.Url = section.Route;
 
             //If there is a routing parameter, get the routing parameter value and update the URL
@@ -164,7 +183,7 @@ namespace Dignite.Cms.Public.Entries
             }
 
             //splice Culture path
-            if (!siteDefaultCulture.Equals(entry.Culture, StringComparison.OrdinalIgnoreCase))
+            if (!siteDefaultLanguage.CultureName.Equals(entry.Culture, StringComparison.OrdinalIgnoreCase))
             {
                 entry.Url = entry.Culture + entry.Url.EnsureStartsWith('/');
             }

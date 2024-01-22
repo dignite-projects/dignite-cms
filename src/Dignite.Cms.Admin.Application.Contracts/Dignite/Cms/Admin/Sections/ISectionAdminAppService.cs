@@ -13,5 +13,6 @@ namespace Dignite.Cms.Admin.Sections
         UpdateSectionInput>
     {
         Task<bool> NameExistsAsync(SectionNameExistsInput input);
+        Task<bool> RouteExistsAsync(SectionRouteExistsInput input);
     }
 }

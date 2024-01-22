@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Volo.Abp.Data;
 using Volo.Abp.Domain.Services;
 
 namespace Dignite.Cms.Sites
@@ -15,28 +15,34 @@ namespace Dignite.Cms.Sites
             _siteRepository = siteRepository;
         }
 
-        public async Task<Site> CreateAsync(string displayName, string name, ICollection<SiteCulture> cultures, string host, bool isActive, Guid? tenantId)
+        public async Task<Site> CreateAsync(string displayName, string name, string host, bool isActive, List<SiteLanguage> languages, Guid? tenantId=null)
         {
             await CheckNameExistenceAsync(name);
+            await CheckHostExistenceAsync(host);
+
             var entity = new Site(
                 GuidGenerator.Create(),
                 displayName,
                 name,
-                cultures.Select(l => new SiteCulture(l.IsDefault, l.CultureName)).ToList(),
                 host,
                 isActive,
                 tenantId);
-
+            languages.ForEach(entity.AddLanguage);
 
             return await _siteRepository.InsertAsync(entity);
         }
 
-        public async Task<Site> UpdateAsync(Guid id, string displayName, string name, ICollection<SiteCulture> cultures, string host, bool isActive)
+        public async Task<Site> UpdateAsync(Guid id, string displayName, string name, string host, bool isActive, List<SiteLanguage> languages,string concurrencyStamp)
         {
             var entity = await _siteRepository.GetAsync(id, false);
+            entity.SetConcurrencyStampIfNotNull(concurrencyStamp);
             if (!entity.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
             {
                 await CheckNameExistenceAsync(name);
+            }
+            if (!entity.Host.Equals(host, StringComparison.OrdinalIgnoreCase))
+            {
+                await CheckHostExistenceAsync(host);
             }
 
             //
@@ -44,16 +50,24 @@ namespace Dignite.Cms.Sites
             entity.SetName(name);
             entity.SetHost(host);
             entity.SetActive(isActive);
-            entity.SetCultures(cultures.Select(l => new SiteCulture(l.IsDefault, l.CultureName)).ToList());
+            entity.Languages.Clear();
+            languages.ForEach(entity.AddLanguage);
             
             return await _siteRepository.UpdateAsync(entity);
         }
 
-        protected virtual async Task CheckNameExistenceAsync( string name)
+        protected virtual async Task CheckNameExistenceAsync(string name)
         {
             if (await _siteRepository.NameExistsAsync( name))
             {
                 throw new SiteNameAlreadyExistException(name);
+            }
+        }
+        protected virtual async Task CheckHostExistenceAsync(string host)
+        {
+            if (await _siteRepository.HostExistsAsync(host))
+            {
+                throw new SiteHostAlreadyExistException(host);
             }
         }
     }

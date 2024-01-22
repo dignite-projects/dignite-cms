@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.ObjectMapping;
 
 namespace Dignite.Cms.Admin.Pages
 {
@@ -25,16 +25,21 @@ namespace Dignite.Cms.Admin.Pages
         [Authorize(Permissions.CmsAdminPermissions.Site.Create)]
         public async Task<SiteDto> CreateAsync(CreateSiteInput input)
         {
+            if (!input.Languages.Any(m => m.IsDefault))
+            {
+                input.Languages.First().IsDefault = true;
+            }
+
             var entity = await _siteManager.CreateAsync(
                 input.DisplayName,
                 input.Name,
-                input.Cultures.Select(
-                    l => new SiteCulture(
+                input.Host,
+                input.IsActive,
+                input.Languages.Select(
+                    l => new SiteLanguage(
                         l.IsDefault,
                         l.CultureName)
                     ).ToList(),
-                input.Host,
-                input.IsActive,
                 CurrentTenant.Id);
 
             var dto = ObjectMapper.Map<Site, SiteDto>(entity);
@@ -52,6 +57,12 @@ namespace Dignite.Cms.Admin.Pages
         public async Task<bool> NameExistsAsync(string name)
         {
             return await _siteRepository.NameExistsAsync(name);
+        }
+
+        [Authorize(Permissions.CmsAdminPermissions.Site.Default)]
+        public async Task<bool> HostExistsAsync(string host)
+        {
+            return await _siteRepository.HostExistsAsync(host);
         }
 
         [Authorize(Permissions.CmsAdminPermissions.Site.Default)]
@@ -77,17 +88,23 @@ namespace Dignite.Cms.Admin.Pages
         [Authorize(Permissions.CmsAdminPermissions.Site.Update)]
         public async Task<SiteDto> UpdateAsync(Guid id, UpdateSiteInput input)
         {
+            if (!input.Languages.Any(m => m.IsDefault))
+            {
+                input.Languages.First().IsDefault = true;
+            }
+
             var entity = await _siteManager.UpdateAsync(
                 id, 
                 input.DisplayName, 
                 input.Name, 
-                input.Cultures.Select(
-                    l => new SiteCulture(
+                input.Host, 
+                input.IsActive, 
+                input.Languages.Select(
+                    l => new SiteLanguage(
                         l.IsDefault, 
                         l.CultureName)
-                    ).ToList(), 
-                input.Host, 
-                input.IsActive);
+                    ).ToList(),
+                input.ConcurrencyStamp);
 
             var dto =
                 ObjectMapper.Map<Site, SiteDto>(

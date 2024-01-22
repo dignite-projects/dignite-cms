@@ -2,12 +2,10 @@
 using Dignite.Cms.Admin.Entries;
 using Dignite.Cms.Admin.Sections;
 using Dignite.Cms.Localization;
+using Dignite.Cms.Permissions;
 using Microsoft.AspNetCore.Components;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Volo.Abp;
 using Volo.Abp.AspNetCore.Components.Web.Theming.PageToolbars;
 
 namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
@@ -16,11 +14,15 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
     {
         [Parameter]
         [SupplyParameterFromQuery]
+        public string CultureName { get; set; }
+
+        [Parameter]
+        [SupplyParameterFromQuery]
         public Guid SectionId { get; set; }
 
         [Parameter]
         [SupplyParameterFromQuery]
-        public string Culture { get; set; }
+        public Guid EntryTypeId { get; set; }
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -40,28 +42,29 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            Section = await SectionAppService.GetAsync(SectionId);
-            Culture = Culture.IsNullOrEmpty() ? Section.Site.Cultures.OrderByDescending(l => l.IsDefault).First().CultureName : Culture;
-
-            if (!Section.EntryTypes.Any())
-            {
-                throw new UserFriendlyException(L["{0}SectionHasNotCreatedAnEntryType", Section.DisplayName]);
-            }
-
 
             if (RevisionEntryId.HasValue && RevisionEntryId.Value != default)
             {
                 var revisionEntry = await EntryAppService.GetAsync(RevisionEntryId.Value);
                 NewEntity = ObjectMapper.Map<EntryDto, CreateEntryInput>(revisionEntry);
+                NewEntity.InitialVersionId = revisionEntry.InitialVersionId.HasValue ? revisionEntry.InitialVersionId.Value : revisionEntry.Id;
+                NewEntity.PublishTime = Clock.Now;
+                NewEntity.VersionNotes = "";
+                SectionId = revisionEntry.SectionId;
+                CultureName = revisionEntry.Culture;
+                EntryTypeId = revisionEntry.EntryTypeId;
             }
-            else 
+            else
             {
-                NewEntity = new CreateEntryInput(Section.EntryTypes.First().Id)
+                NewEntity = new CreateEntryInput()
                 {
+                    EntryTypeId = EntryTypeId,
                     PublishTime = Clock.Now,
-                    Culture = Culture,
+                    Culture = CultureName,
                 };
             }
+
+            Section = await SectionAppService.GetAsync(SectionId);
         }
 
 
@@ -76,9 +79,19 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
         protected async ValueTask SetToolbarItemsAsync()
         {
+            Toolbar.AddButton(L["Cancel"],
+                CancelAsync,
+                color: Color.Light);
+
+            Toolbar.AddButton(L["SaveAsDraft"],
+                SaveAsDraftAsync,
+                color: Color.Info,
+                requiredPolicyName: CmsAdminPermissions.Entry.Update);
+
             Toolbar.AddButton(L["Save"],
                 SaveAsync,
-                IconName.Save);
+                IconName.Save,
+                requiredPolicyName: CmsAdminPermissions.Entry.Update);
             await InvokeAsync(StateHasChanged);
         }
 
@@ -94,13 +107,24 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                 if (validate)
                 {
                     await EntryAppService.CreateAsync(NewEntity);
-                    Navigation.NavigateTo($"cms/admin/entries?sectionId={SectionId}&culture={NewEntity.Culture}");
+                    Navigation.NavigateTo($"cms/admin/entries?sectionId={SectionId}&cultureName={NewEntity.Culture}");
                 }
             }
             catch (Exception ex)
             {
                 await HandleErrorAsync(ex);
             }
+        }
+
+        protected async Task SaveAsDraftAsync()
+        {
+            NewEntity.Draft = true;
+            await SaveAsync();
+        }
+        protected Task CancelAsync()
+        {
+            Navigation.NavigateTo($"cms/admin/entries?sectionId={SectionId}&cultureName={NewEntity.Culture}");
+            return Task.CompletedTask;
         }
     }
 }

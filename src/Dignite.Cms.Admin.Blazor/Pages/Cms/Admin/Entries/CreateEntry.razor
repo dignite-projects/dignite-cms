@@ -8,6 +8,7 @@
 @inherits AbpComponentBase
 @attribute [Authorize(CmsAdminPermissions.Entry.Create)]
 @inject IEntryAdminAppService EntryAppService
+@inject IEntryTypeAdminAppService EntryTypeAppService
 @inject ISectionAdminAppService SectionAppService
 @inject NavigationManager Navigation
 
@@ -22,7 +23,7 @@
 @* ************************* CREATE  ************************* *@        
 <Blazorise.Form>
     <Blazorise.Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
-        @if (NewEntity != null)
+        @if (NewEntity != null && Section!=null)
         {
             <CreateOrUpdateEntryComponent Entry="@NewEntity" Section="@Section"></CreateOrUpdateEntryComponent>
         }

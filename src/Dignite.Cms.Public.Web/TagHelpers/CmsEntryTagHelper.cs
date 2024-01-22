@@ -52,10 +52,10 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             var section = await _sectionAppService.FindByNameAsync(SiteId, SectionName);
-            var defaultCulture = section.Site.GetDefaultCulture();
+            var defaultLanguageCulture = section.Site.GetDefaultLanguage().CultureName;
             if (Culture.IsNullOrEmpty())
             {
-                Culture= defaultCulture;
+                Culture= defaultLanguageCulture;
             }
 
             var findEntryBySlugInput = new FindBySlugInput
@@ -67,9 +67,9 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             var model = await _entryAppService.FindBySlugAsync(findEntryBySlugInput);
             if (model == null)
             {
-                if (!Culture.Equals(defaultCulture, StringComparison.OrdinalIgnoreCase))
+                if (!Culture.Equals(defaultLanguageCulture, StringComparison.OrdinalIgnoreCase))
                 {
-                    findEntryBySlugInput.Culture = defaultCulture;
+                    findEntryBySlugInput.Culture = defaultLanguageCulture;
                     model = await _entryAppService.FindBySlugAsync(findEntryBySlugInput);
                 }
             }

@@ -34,7 +34,7 @@ public static class CmsDbContextModelCreatingExtensions
             site.Property(s => s.DisplayName).IsRequired().HasMaxLength(SiteConsts.MaxDisplayNameLength);
             site.Property(s => s.Name).IsRequired().HasMaxLength(SiteConsts.MaxNameLength);
             site.Property(s => s.Host).IsRequired().HasMaxLength(SiteConsts.MaxHostLength);
-            site.Property(s => s.Cultures).HasConversion(new AbpJsonValueConverter<ICollection<SiteCulture>>());
+            site.Property(s => s.Languages).HasConversion(new AbpJsonValueConverter<ICollection<SiteLanguage>>());
 
             //Indexs
             site.HasIndex(s => s.Name);
@@ -112,7 +112,7 @@ public static class CmsDbContextModelCreatingExtensions
 
             entry.ConfigureByConvention();
 
-            entry.Property(e => e.Culture).IsRequired().HasMaxLength(SiteConsts.MaxCultureLength);
+            entry.Property(e => e.Culture).IsRequired().HasMaxLength(SiteConsts.MaxLanguageCultureNameLength);
             entry.Property(e => e.Title).IsRequired().HasMaxLength(EntryConsts.MaxTitleLength);
             entry.Property(e => e.Slug).IsRequired().HasMaxLength(EntryConsts.MaxSlugLength);
             entry.Property(e => e.VersionNotes).HasMaxLength(EntryConsts.MaxRevisionNotesLength);

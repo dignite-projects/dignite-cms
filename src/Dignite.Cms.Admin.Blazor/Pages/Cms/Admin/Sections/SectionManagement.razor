@@ -22,35 +22,22 @@
 </PageHeader>
 
 
-<Row>
-    <Column ColumnSize="ColumnSize.Is3">
-        <Card>
-            <CardHeader>
-                <Heading Size="HeadingSize.Is6" Margin="Margin.Is2.FromTop">@L["Sites"]</Heading>
-            </CardHeader>
-            <CardBody Padding="Padding.Is0">
-                <AutoHeight ExtraHeight="45">
-                    @* ************************* Sections ************************* *@
-                    @if (CurrentSite!=null)
-                    {
-                        <ListGroup Flush Mode="ListGroupMode.Selectable" @bind-SelectedItem="SelectedSiteItemName">
+@* ************************* PAGE BODY ************************* *@
+<Card>
+    <CardHeader>
+        <Fields>
+            @if (CurrentSite != null)
+            {
+                <Column ColumnSize="ColumnSize.Is3.OnDesktop">
+                    <Select TValue="string" SelectedValue="@SelectedSiteName" SelectedValueChanged="@OnSiteChangedAsync">
                         @foreach (var item in AllSites)
-                            {
-                                <ListGroupItem Name="@item.Name" Color="Color.Light" Flex="Flex.JustifyContent.Between.AlignItems.Center" Clicked="()=>OnSiteClickAsync(item)">
-                                    @item.DisplayName
-                                </ListGroupItem>
-                            }
-                        </ListGroup>
+                        {
+                            <SelectItem Value="item.Name">@item.DisplayName</SelectItem>
                         }
-                </AutoHeight>
-            </CardBody>
-        </Card>
-    </Column>
-    <Column ColumnSize="ColumnSize.Is9">
-
-        @* ************************* PAGE BODY ************************* *@
-        <Card>
-            <CardHeader>
+                    </Select>
+                </Column>
+            }
+            <Column ColumnSize="ColumnSize.Is9.OnDesktop">
                 <Addons>
                     <Addon AddonType="AddonType.Body">
                         <TextEdit Placeholder="@L["Search"]" @bind-Text="@GetListInput.Filter" />
@@ -61,23 +48,22 @@
                         </Button>
                     </Addon>
                 </Addons>
-            </CardHeader>
-            <CardBody>
-                @* ************************* DATA GRID ************************* *@
-                <ExtensibleDataGrid TItem="SectionDto"
-                                    Data="@Entities"
-                                    ReadData="@OnDataGridReadAsync"
-                                    TotalItems="@TotalCount"
-                                    ShowPager="true"
-                                    PageSize="@PageSize"
-                                    CurrentPage="@CurrentPage"
-                                    Columns="@SectionManagementTableColumns">
-                </ExtensibleDataGrid>
-            </CardBody>
-        </Card>
-
-    </Column>
-</Row>
+            </Column>
+        </Fields>
+    </CardHeader>
+    <CardBody>
+        @* ************************* DATA GRID ************************* *@
+        <ExtensibleDataGrid TItem="SectionDto"
+                            Data="@Entities"
+                            ReadData="@OnDataGridReadAsync"
+                            TotalItems="@TotalCount"
+                            ShowPager="true"
+                            PageSize="@PageSize"
+                            CurrentPage="@CurrentPage"
+                            Columns="@SectionManagementTableColumns">
+        </ExtensibleDataGrid>
+    </CardBody>
+</Card>
 
 
 @* ************************* CREATE MODAL ************************* *@

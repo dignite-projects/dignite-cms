@@ -64,5 +64,12 @@ namespace Dignite.Cms.Admin.Sites
         {
             return await _siteAppService.NameExistsAsync(name);
         }
+
+        [HttpGet]
+        [Route("host-exists/{name}")]
+        public async Task<bool> HostExistsAsync(string name)
+        {
+            return await _siteAppService.HostExistsAsync(name);
+        }
     }
 }

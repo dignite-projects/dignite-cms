@@ -13,35 +13,35 @@ namespace Dignite.Cms.Admin.Sections
         /// <summary>
         /// 
         /// </summary>
-        public virtual Guid SiteId { get; set; }
+        public Guid SiteId { get; set; }
 
         public SiteDto Site { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual SectionType Type { get; set; }
+        public SectionType Type { get; set; }
 
         /// <summary>
         /// Display Name of this section.
         /// </summary>
-        public virtual string DisplayName { get; set; }
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// Name of this section.
         /// Section Unique Name.
         /// </summary>
-        public virtual string Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// The default section in the site
         /// </summary>
-        public virtual bool IsDefault { get; set; }
+        public bool IsDefault { get; set; }
 
         /// <summary>
         /// Is this section active
         /// </summary>
-        public virtual bool IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         /// <summary>
         /// Routing format for entry page;
@@ -69,6 +69,6 @@ namespace Dignite.Cms.Admin.Sections
         public string ConcurrencyStamp { get; set; }
 
 
-        public virtual ICollection<EntryTypeDto> EntryTypes { get; set; }
+        public IList<EntryTypeDto> EntryTypes { get; set; }
     }
 }

@@ -7,6 +7,18 @@ namespace Dignite.Cms.Admin.Sections
 {
     public class EntryFieldInput
     {
+        public EntryFieldInput()
+        {
+        }
+
+        public EntryFieldInput(Guid fieldId, string displayName, bool required, bool showOnList)
+        {
+            FieldId = fieldId;
+            DisplayName = displayName;
+            Required = required;
+            ShowOnList = showOnList;
+        }
+
         [Required]
         public Guid FieldId { get; set; }
 
@@ -14,6 +26,7 @@ namespace Dignite.Cms.Admin.Sections
         /// <summary>
         /// Text to override field definition
         /// </summary>
+        [Required]
         [DynamicMaxLength(typeof(EntryTypeConsts), nameof(EntryTypeConsts.MaxDisplayNameLength))]
         public virtual string DisplayName { get; set; }
 

@@ -43,12 +43,12 @@
 <Validation AsyncValidator="@NameExistsValidatorAsync">
     <Field>
         <FieldLabel>@L["FieldName"]</FieldLabel>
-            <TextEdit MaxLength="FieldConsts.MaxNameLength" @bind-Text="@Entity.Name">
-                <Feedback>
-                    <Blazorise.ValidationError />
-                </Feedback>
-            </TextEdit>
-            <FieldHelp>@L["FieldNameHelpText"]</FieldHelp>
+        <TextEdit MaxLength="FieldConsts.MaxNameLength" @bind-Text="@Entity.Name">
+            <Feedback>
+                <Blazorise.ValidationError />
+            </Feedback>
+        </TextEdit>
+        <FieldHelp>@L["FieldNameHelpText"]</FieldHelp>
     </Field>
 </Validation>
 <Validation>

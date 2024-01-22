@@ -51,6 +51,16 @@
     "SectionName{0}AlreadyExist": "Section Name \"{0}\" Existing.",
     "EntryTypeName{0}AlreadyExist": "Entry Type Name \"{0}\" Existing.",
     "EntrySlug{0}AlreadyExist": "Entry Slug \"{0}\" Existing.",
-    "EntriesAlreadyExistEntryType": "Entries already exist in this entry type."
+    "EntriesAlreadyExistEntryType": "Entries already exist in this entry type.",
+    "UngroupedFields": "Ungrouped Fields",
+    "DragAndDropFieldTips": "Select and drag these fields to the left.",
+    "FieldLayout": "Field Layout",
+    "NewTab": "New Tab",
+    "FieldTab": "Field Tab",
+    "Route": "Route",
+    "RouteTips": "Configure routes for entries. Example:(1)blog (2)blog/{slug} (3)blog/{publishTime:yyyy}/{publishTime:MM}/{slug}",
+    "Template": "Template",
+    "TemplateTips": "Please specify the view page in the asp.net core site without the tenant prefix and .cshtml suffix in the path.",
+    "RouteVerificationTips": "The {0} type block routes need to contain the {1} parameter."
   }
 }

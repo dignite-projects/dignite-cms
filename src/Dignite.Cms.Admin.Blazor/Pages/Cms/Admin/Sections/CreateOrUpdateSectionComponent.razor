@@ -1,9 +1,6 @@
 ﻿@using Dignite.Cms.Admin.Sections
 @using Dignite.Cms.Localization
 @using Dignite.Cms.Sections;
-@using System.Threading
-@using Volo.Abp.BlazoriseUI.Components.ObjectExtending
-@using Volo.Abp.Localization;
 @inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
 @inject ISectionAdminAppService _sectionAdminAppService;
 @inherits AbpComponentBase
@@ -28,7 +25,7 @@
         </TextEdit>
     </Field>
 </Validation>
-<Validation MessageLocalizer="@LH.Localize">
+    <Validation MessageLocalizer="@LH.Localize" Validator="SectionTypeValidatorAsync">
     <Field>
         <FieldLabel>@L["SectionType"]</FieldLabel>
         <RadioGroup TValue="SectionType" Name="SectionType" @bind-CheckedValue="Entity.Type">
@@ -39,7 +36,7 @@
         </RadioGroup>
     </Field>
 </Validation>
-<Validation MessageLocalizer="@LH.Localize">
+<Validation MessageLocalizer="@LH.Localize" Validator="RouteValidatorAsync">
     <Field>
         <FieldLabel>@L["Route"]</FieldLabel>
         <TextEdit @bind-Text="Entity.Route">
@@ -47,6 +44,9 @@
                 <ValidationError />
             </Feedback>
         </TextEdit>
+        <FieldHelp>@L["RouteTips"]</FieldHelp>
+        <br/>
+        <FieldHelp><Icon Name="IconName.QuestionCircle" /> <a href="https://learn.dignite.com/en/cms/latest/Section">@L["SeeDocument"]</a></FieldHelp>
     </Field>
 </Validation>
 <Validation MessageLocalizer="@LH.Localize">
@@ -57,78 +57,13 @@
                 <ValidationError />
             </Feedback>
         </TextEdit>
+        <FieldHelp>@L["TemplateTips"]</FieldHelp>
     </Field>
 </Validation>
 <Field>
-    <Check TValue="bool" @bind-Checked="Entity.IsDefault">@L["IsDefault"]</Check>
+    <Check TValue="bool" @bind-Checked="Entity.IsDefault" Disabled="@(Entity.Type!=SectionType.Single)">@L["IsDefault"]</Check>
 </Field>
 <Field>
     <Check TValue="bool" @bind-Checked="Entity.IsActive">@L["IsActive"]</Check>
 </Field>
 
-
-    @code {
-    [Parameter] public CreateOrUpdateSectionInputBase Entity { get; set; }
-
-    [Parameter] public Guid? SiteId { get; set; }
-
-    protected IReadOnlyList<SectionType> SectionTypes { get; set; }
-
-    //Will not change again after assignment, used to verify that the site name already exists
-    private string sectionNameForValidation;
-
-    public CreateOrUpdateSectionComponent()
-    {
-        LocalizationResource = typeof(CmsResource);
-        SectionTypes = Enum.GetValues(typeof(SectionType))
-                            .Cast<SectionType>()
-                            .ToList();
-    }
-
-    protected override void OnParametersSet()
-    {
-        base.OnParametersSet();
-        sectionNameForValidation = Entity.Name;
-    }
-
-    private async Task NameExistsValidatorAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
-    {
-        cancellationToken.ThrowIfCancellationRequested();
-        var name = Convert.ToString(e.Value);
-        if (SiteId.HasValue && !name.IsNullOrEmpty())
-        {
-            if (!name.Equals(sectionNameForValidation, StringComparison.InvariantCultureIgnoreCase))
-            {
-                e.Status = await _sectionAdminAppService.NameExistsAsync(new SectionNameExistsInput(SiteId.Value,name))
-                    ? ValidationStatus.Error
-                    : ValidationStatus.Success;
-
-                e.ErrorText = L["SectionName{0}AlreadyExist", name];
-            }
-        }
-        else
-        {
-            e.Status = ValidationStatus.Error;
-        }
-    }
-
-    void DisplayNameTextboxBlur()
-    {
-        if (!Entity.DisplayName.IsNullOrEmpty() && Entity.Name.IsNullOrEmpty())
-        {
-            Entity.Name = SlugNormalizer.Normalize(Entity.DisplayName);
-
-            //
-            if (Entity.Type == SectionType.Single)
-            {
-                Entity.Route = Entity.Name + "/{slug}";
-                Entity.Template = Entity.Route+"/Index";
-            }
-            else
-            {
-                Entity.Route = Entity.Name + "/{slug}";
-                Entity.Template = Entity.Route+"/Entry";
-            }
-        }
-    }
-}

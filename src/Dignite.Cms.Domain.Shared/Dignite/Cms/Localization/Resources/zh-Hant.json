@@ -51,6 +51,16 @@
     "SectionName{0}AlreadyExist": "版塊名稱 \"{0}\" 已存在.",
     "EntryTypeName{0}AlreadyExist": "條目類型名稱 \"{0}\" 已存在.",
     "EntrySlug{0}AlreadyExist": "條目別名 \"{0}\" 已存在.",
-    "EntriesAlreadyExistEntryType": "該條目類型下已存在條目."
+    "EntriesAlreadyExistEntryType": "該條目類型下已存在條目.",
+    "UngroupedFields": "未分組字段",
+    "DragAndDropFieldTips": "選擇并拖拽這些字段到左側",
+    "FieldLayout": "字段佈局",
+    "NewTab": "新標籤頁",
+    "FieldTab": "字段標籤頁",
+    "Route": "路由",
+    "RouteTips": "為條目配置路由，示例：(1)blog (2)blog/{slug} (3)blog/{publishTime:yyyy}/{publishTime:MM}/{slug}",
+    "Template": "模板",
+    "TemplateTips": "請指定Asp.net Core站點中視圖頁面，路徑中不要租戶前綴和.cshtml後綴.",
+    "RouteVerificationTips": "{0}類型版塊路由中需要包含 {1} 參數。"
   }
 }

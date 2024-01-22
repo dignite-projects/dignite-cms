@@ -51,6 +51,16 @@
     "SectionName{0}AlreadyExist": "セクション名 \"{0}\" は既に存在しています。",
     "EntryTypeName{0}AlreadyExist": "エントリータイプ名 \"{0}\" は既に存在しています。",
     "EntrySlug{0}AlreadyExist": "エントリー別名 \"{0}\" は既に存在しています。",
-    "EntriesAlreadyExistEntryType": "このエントリー・タイプにはすでにエントリーが存在する。"
+    "EntriesAlreadyExistEntryType": "このエントリー・タイプにはすでにエントリーが存在する。",
+    "UngroupedFields": "サブグループフィールドなし",
+    "DragAndDropFieldTips": "これらのフィールドを選択し、左側にドラッグする。",
+    "FieldLayout": "フィールド・レイアウト",
+    "NewTab": "新しいタブ",
+    "FieldTab": "フィールド・タブ",
+    "Route": "ルート",
+    "RouteTips": "エントリーのルートを設定する，例：(1)blog (2)blog/{slug} (3)blog/{publishTime:yyyy}/{publishTime:MM}/{slug}",
+    "Template": "テンプレート",
+    "TemplateTips": "パスにテナント接頭辞と .cshtml 接尾辞を付けずに、Asp.net Core サイトのビューページを指定してください。",
+    "RouteVerificationTips": "{0}タイプのブロックルートは {1} パラメータを含む必要があります。"
   }
 }

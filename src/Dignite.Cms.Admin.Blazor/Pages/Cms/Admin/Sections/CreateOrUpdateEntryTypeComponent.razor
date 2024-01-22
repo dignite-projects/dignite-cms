@@ -1,9 +1,6 @@
-﻿@using Dignite.Abp.DynamicForms.Components;
-@using Dignite.Cms.Admin.Fields;
+﻿@using Dignite.Cms.Admin.Fields;
 @using Dignite.Cms.Admin.Sections;
 @using Dignite.Cms.Localization
-@using Volo.Abp.BlazoriseUI.Components.ObjectExtending
-@using Volo.Abp.Localization;
 @inject IEntryTypeAdminAppService EntryTypeAdminAppService
 @inject IFieldGroupAdminAppService FieldGroupAppService
 @inject IFieldAdminAppService FieldAppService
@@ -59,6 +56,9 @@
             }
         </Div>
         <Div Margin="Margin.IsAuto.FromStart" ondragover="event.preventDefault();" @ondrop="@FieldDropped">
+            <p>
+                @L["DragAndDropFieldTips"]
+            </p>
             @foreach (var group in FieldGroups)
             {
                 var fields = AllFields.Where(f => f.GroupId == group.Id && !Entity.FieldTabs.SelectMany(ft=>ft.Fields).Select(ef=>ef.FieldId).Contains(f.Id)).ToList();
@@ -78,7 +78,7 @@
             }
             @if (AllFields.Where(f => !f.GroupId.HasValue && !Entity.FieldTabs.SelectMany(ft => ft.Fields).Select(ef => ef.FieldId).Contains(f.Id)).Any())
             {
-                var fields = AllFields.Where(f => !f.GroupId.HasValue).ToList();
+                var fields = AllFields.Where(f => !f.GroupId.HasValue && !Entity.FieldTabs.SelectMany(ft => ft.Fields).Select(ef => ef.FieldId).Contains(f.Id)).ToList();
                 <Heading Size="HeadingSize.Is6" Margin="Margin.Is0.FromBottom">@L["UngroupedFields"]</Heading>
                 <ListGroup>
                     @foreach (var item in fields)

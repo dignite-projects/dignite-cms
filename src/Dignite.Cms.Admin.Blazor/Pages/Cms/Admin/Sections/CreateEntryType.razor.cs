@@ -26,7 +26,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
             NewEntity = new CreateEntryTypeInput(SectionId);
             NewEntity.FieldTabs.Add(new EntryFieldTabInput()
             {
-                Name = L["FieldTab1"]
+                Name = L["FieldTab"]+1
             });
             return base.OnInitializedAsync();
         }

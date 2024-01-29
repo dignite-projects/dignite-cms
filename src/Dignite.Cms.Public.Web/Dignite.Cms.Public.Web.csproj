@@ -11,13 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dignite.Abp.Localization" Version="2.0.0" />
     <PackageReference Include="Volo.Abp.AutoMapper" Version="7.4.5" />
     <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared" Version="7.4.5" />
 	  <PackageReference Include="Volo.CmsKit.Public.Web" Version="7.4.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\dignite-abp\framework\src\Dignite.Abp.Localization\Dignite.Abp.Localization.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Public.Application.Contracts\Dignite.Cms.Public.Application.Contracts.csproj" />
   </ItemGroup>
 

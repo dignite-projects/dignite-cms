@@ -7,11 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Dignite.Abp.AspNetCore.Components.CkEditor.Server" Version="2.0.0" />
         <PackageReference Include="Volo.Abp.AspNetCore.Components.Server.Theming" Version="7.4.5" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\dignite-abp\modules\ckeditor-component\src\Dignite.Abp.AspNetCore.Components.CkEditor.Server\Dignite.Abp.AspNetCore.Components.CkEditor.Server.csproj" />
       <ProjectReference Include="..\Dignite.Cms.Admin.Blazor\Dignite.Cms.Admin.Blazor.csproj" />
     </ItemGroup>
 

@@ -7,15 +7,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Dignite.Abp.BlazoriseUI" Version="2.0.0" />
+		<PackageReference Include="Dignite.Abp.DynamicForms.Components.BlazoriseUI" Version="2.0.0" />
+		<PackageReference Include="Dignite.Abp.DynamicForms.Components.CkEditor" Version="2.0.0" />
+		<PackageReference Include="Dignite.Abp.DynamicForms.Components.FileExplorer" Version="2.0.0" />
 		<PackageReference Include="Volo.Abp.AutoMapper" Version="7.4.5" />
 		<PackageReference Include="Volo.Abp.AspNetCore.Components.Web.Theming" Version="7.4.5" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\dignite-abp\framework\src\Dignite.Abp.BlazoriseUI\Dignite.Abp.BlazoriseUI.csproj" />
-		<ProjectReference Include="..\..\..\dignite-abp\framework\src\Dignite.Abp.DynamicForms.Components.BlazoriseUI\Dignite.Abp.DynamicForms.Components.BlazoriseUI.csproj" />
-		<ProjectReference Include="..\..\..\dignite-abp\modules\ckeditor-component\src\Dignite.Abp.DynamicForms.Components.CkEditor\Dignite.Abp.DynamicForms.Components.CkEditor.csproj" />
-		<ProjectReference Include="..\..\..\dignite-abp\modules\file-explorer\src\Dignite.Abp.DynamicForms.Components.FileExplorer\Dignite.Abp.DynamicForms.Components.FileExplorer.csproj" />
 		<ProjectReference Include="..\Dignite.Cms.Admin.Application.Contracts\Dignite.Cms.Admin.Application.Contracts.csproj" />
 	</ItemGroup>
 </Project>

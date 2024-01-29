@@ -12,12 +12,12 @@
 	  <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
 	  <RootNamespace />
   </PropertyGroup>
-
+	
   <ItemGroup>
+	  <PackageReference Include="Dignite.Abp.DynamicForms.FileExplorer" Version="2.0.0" />
+	  <PackageReference Include="Dignite.FileExplorer.Application.Contracts" Version="2.0.0" />
 	  <PackageReference Include="Volo.CmsKit.Public.Application.Contracts" Version="7.4.5" />
-	  <ProjectReference Include="..\..\..\dignite-abp\modules\file-explorer\src\Dignite.FileExplorer.Application.Contracts\Dignite.FileExplorer.Application.Contracts.csproj" />
 	  <ProjectReference Include="..\Dignite.Cms.Common.Application.Contracts\Dignite.Cms.Common.Application.Contracts.csproj" />
-	  <ProjectReference Include="..\..\..\dignite-abp\modules\file-explorer\src\Dignite.Abp.DynamicForms.FileExplorer\Dignite.Abp.DynamicForms.FileExplorer.csproj" />
   </ItemGroup>
 
 </Project>

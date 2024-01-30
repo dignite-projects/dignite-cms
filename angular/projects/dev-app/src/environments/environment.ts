@@ -22,7 +22,7 @@ export const environment = {
       url: 'https://localhost:44322',
       rootNamespace: 'Dignite.Cms',
     },
-    Cms: {
+    CmsAdmin: {
       url: 'https://localhost:44321',
       rootNamespace: 'Dignite.Cms',
     },

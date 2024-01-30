@@ -11,39 +11,44 @@ namespace Dignite.Cms.Admin.Entries
     /// <summary>
     /// Entry
     /// </summary>
+    [Serializable]
     public class EntryDto: ExtensibleAuditedEntityDto<Guid>, IHasCustomFields, IHasConcurrencyStamp
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public virtual Guid SectionId { get; set; }
+        public EntryDto():base()
+        {
+        }
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual Guid EntryTypeId { get; set;}
+        public Guid SectionId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Guid EntryTypeId { get; set;}
 
         /// <summary>
         /// The culture corresponding to the entry
         /// </summary>
-        public virtual string Culture { get; set; }
+        public string Culture { get; set; }
 
-        public virtual string Title { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public virtual string Slug { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual DateTime PublishTime { get; set; }
+        public string Slug { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual EntryStatus Status { get; set; }
+        public DateTime PublishTime { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public EntryStatus Status { get; set; }
 
         #region Section type is a exclusive property of Structure type
 
@@ -51,13 +56,13 @@ namespace Dignite.Cms.Admin.Entries
         /// Parent entry id of the entry;
         /// When it is affiliated with <see cref="Sections.SectionDto.Type"/>=<see cref="Cms.Sections.SectionType.Structure"/>, this value is valid
         /// </summary>
-        public virtual Guid? ParentId { get; set; }
+        public Guid? ParentId { get; set; }
 
         /// <summary>
         /// Order of the entry
         /// When it is affiliated with <see cref="Sections.SectionDto.Type"/>=<see cref="Cms.Sections.SectionType.Structure"/>, this value is valid
         /// </summary>
-        public virtual int Order { get; set; }
+        public int Order { get; set; }
 
         #endregion
 
@@ -70,17 +75,17 @@ namespace Dignite.Cms.Admin.Entries
         /// <remarks>
         /// The Id of the initial version is null;
         /// </remarks>
-        public virtual Guid? InitialVersionId { get; set; }
+        public Guid? InitialVersionId { get; set; }
 
         /// <summary>
         /// Whether it is an activated version
         /// </summary>
-        public virtual bool IsActivatedVersion { get; set; }
+        public bool IsActivatedVersion { get; set; }
 
         /// <summary>
         /// Notes on changes to this version
         /// </summary>
-        public virtual string VersionNotes { get; set; }
+        public string VersionNotes { get; set; }
 
         #endregion
 
@@ -90,6 +95,7 @@ namespace Dignite.Cms.Admin.Entries
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public CmsUserDto Author { get; set; }
+
         public string ConcurrencyStamp { get; set; }
     }
 }

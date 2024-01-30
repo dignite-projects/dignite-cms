@@ -17,13 +17,13 @@ namespace Dignite.Cms.Admin.Sites
         /// <summary>
         /// Display Name of this site.
         /// </summary>
-        public virtual string DisplayName { get; set; }
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// Name of this site.
         /// Site Unique Name.
         /// </summary>
-        public virtual string Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Languages supported on this site
@@ -33,13 +33,13 @@ namespace Dignite.Cms.Admin.Sites
         /// <summary>
         /// Host of this site
         /// </summary>
-        public virtual string Host { get; set; }
+        public string Host { get; set; }
 
 
         /// <summary>
         /// Is this site active
         /// </summary>
-        public virtual bool IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         /// <summary>
         /// 

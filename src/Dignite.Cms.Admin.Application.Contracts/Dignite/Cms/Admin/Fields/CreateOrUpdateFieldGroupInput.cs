@@ -8,6 +8,6 @@ namespace Dignite.Cms.Admin.Fields
     {
         [Required]
         [DynamicMaxLength(typeof(FieldGroupConsts), nameof(FieldGroupConsts.MaxNameLength))]
-        public virtual string Name { get; set; }
+        public string Name { get; set; }
     }
 }

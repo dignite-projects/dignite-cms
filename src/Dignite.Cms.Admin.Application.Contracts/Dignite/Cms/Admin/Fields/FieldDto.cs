@@ -3,8 +3,13 @@ using Volo.Abp.Auditing;
 
 namespace Dignite.Cms.Admin.Fields
 {
+    [Serializable]
     public class FieldDto: Cms.Fields.FieldDto, IAuditedObject
     {
+        public FieldDto():base()
+        {
+        }
+
         /// <summary>
         /// 
         /// </summary>

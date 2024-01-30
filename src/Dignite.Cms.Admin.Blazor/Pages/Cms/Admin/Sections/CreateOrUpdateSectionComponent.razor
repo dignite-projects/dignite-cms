@@ -5,6 +5,17 @@
 @inject ISectionAdminAppService _sectionAdminAppService;
 @inherits AbpComponentBase
 
+<Validation MessageLocalizer="@LH.Localize" Validator="SectionTypeValidatorAsync">
+    <Field>
+        <FieldLabel>@L["SectionType"]</FieldLabel>
+            <RadioGroup TValue="SectionType" Name="SectionType" @bind-CheckedValue="Entity.Type">
+                @foreach (var item in SectionTypes)
+            {
+                <Radio TValue="SectionType" Value="@item">@L[item.ToLocalizationKey()]</Radio>
+            }
+        </RadioGroup>
+    </Field>
+</Validation>
 <Validation MessageLocalizer="@LH.Localize">
     <Field>
         <FieldLabel>@L["DisplayName"]</FieldLabel>
@@ -23,17 +34,6 @@
                 <ValidationError />
             </Feedback>
         </TextEdit>
-    </Field>
-</Validation>
-    <Validation MessageLocalizer="@LH.Localize" Validator="SectionTypeValidatorAsync">
-    <Field>
-        <FieldLabel>@L["SectionType"]</FieldLabel>
-        <RadioGroup TValue="SectionType" Name="SectionType" @bind-CheckedValue="Entity.Type">
-            @foreach(var item in SectionTypes)
-            {
-            <Radio TValue="SectionType" Value="@item">@L[item.ToLocalizationKey()]</Radio>
-            }
-        </RadioGroup>
     </Field>
 </Validation>
 <Validation MessageLocalizer="@LH.Localize" AsyncValidator="RouteValidatorAsync">

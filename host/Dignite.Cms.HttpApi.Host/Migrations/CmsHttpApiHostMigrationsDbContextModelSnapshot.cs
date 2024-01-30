@@ -66,6 +66,12 @@ namespace Dignite.Cms.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
+                    b.Property<Guid?>("InitialVersionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActivatedVersion")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -109,13 +115,19 @@ namespace Dignite.Cms.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("VersionNotes")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("SectionId", "Culture", "Slug");
+                    b.HasIndex("SectionId");
 
-                    b.HasIndex("SectionId", "CreatorId", "PublishTime", "Status");
+                    b.HasIndex("Culture", "SectionId", "Slug");
 
-                    b.HasIndex("SectionId", "Culture", "PublishTime", "Status");
+                    b.HasIndex("CreatorId", "SectionId", "PublishTime", "Status");
+
+                    b.HasIndex("Culture", "SectionId", "PublishTime", "Status");
 
                     b.ToTable("CmsEntries", (string)null);
                 });
@@ -125,13 +137,6 @@ namespace Dignite.Cms.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
-                        .HasColumnName("ConcurrencyStamp");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2")
@@ -150,23 +155,18 @@ namespace Dignite.Cms.Migrations
                         .HasColumnName("DeletionTime");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("DisplayName")
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<string>("ExtraProperties")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ExtraProperties");
-
                     b.Property<string>("FormConfiguration")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("FormConfiguration");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FormName")
+                    b.Property<string>("FormControlName")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
@@ -210,18 +210,6 @@ namespace Dignite.Cms.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
-                        .HasColumnName("ConcurrencyStamp");
-
-                    b.Property<string>("ExtraProperties")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ExtraProperties");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -241,13 +229,6 @@ namespace Dignite.Cms.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
-                        .HasColumnName("ConcurrencyStamp");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2")
@@ -269,11 +250,6 @@ namespace Dignite.Cms.Migrations
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("ExtraProperties")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ExtraProperties");
 
                     b.Property<string>("FieldTabs")
                         .HasColumnType("nvarchar(max)");
@@ -423,9 +399,6 @@ namespace Dignite.Cms.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatorId");
 
-                    b.Property<string>("Cultures")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid?>("DeleterId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("DeleterId");
@@ -444,7 +417,7 @@ namespace Dignite.Cms.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
-                    b.Property<string>("HostUrl")
+                    b.Property<string>("Host")
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
@@ -457,6 +430,9 @@ namespace Dignite.Cms.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false)
                         .HasColumnName("IsDeleted");
+
+                    b.Property<string>("Languages")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2")
@@ -723,38 +699,6 @@ namespace Dignite.Cms.Migrations
                         .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.OwnsOne("Dignite.Cms.Entries.EntryRevision", "Revision", b1 =>
-                        {
-                            b1.Property<Guid>("EntryId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<Guid>("InitialId")
-                                .HasColumnType("uniqueidentifier")
-                                .HasColumnName("Revision_InitialId");
-
-                            b1.Property<bool>("IsActive")
-                                .HasColumnType("bit")
-                                .HasColumnName("Revision_IsActive");
-
-                            b1.Property<string>("Notes")
-                                .HasMaxLength(512)
-                                .HasColumnType("nvarchar(512)")
-                                .HasColumnName("Revision_Notes");
-
-                            b1.Property<int>("Version")
-                                .HasColumnType("int")
-                                .HasColumnName("Revision_Version");
-
-                            b1.HasKey("EntryId");
-
-                            b1.ToTable("CmsEntries");
-
-                            b1.WithOwner()
-                                .HasForeignKey("EntryId");
-                        });
-
-                    b.Navigation("Revision");
                 });
 
             modelBuilder.Entity("Dignite.Cms.Fields.Field", b =>

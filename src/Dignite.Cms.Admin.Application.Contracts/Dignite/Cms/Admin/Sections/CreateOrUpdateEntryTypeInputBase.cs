@@ -17,7 +17,7 @@ namespace Dignite.Cms.Admin.Sections
         /// </summary>
         [Required]
         [DynamicMaxLength(typeof(EntryTypeConsts), nameof(EntryTypeConsts.MaxDisplayNameLength))]
-        public virtual string DisplayName { get; set; }
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// Name of this entry type.
@@ -26,7 +26,7 @@ namespace Dignite.Cms.Admin.Sections
         [Required]
         [DynamicMaxLength(typeof(EntryTypeConsts), nameof(EntryTypeConsts.MaxNameLength))]
         [RegularExpression(EntryTypeConsts.NameRegularExpression)]
-        public virtual string Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// 

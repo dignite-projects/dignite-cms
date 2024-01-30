@@ -10,6 +10,10 @@ namespace Dignite.Cms.Admin.Sections
     [Serializable]
     public class SectionDto : ExtensibleAuditedEntityDto<Guid>, IHasConcurrencyStamp
     {
+        public SectionDto():base()
+        {
+        }
+
         /// <summary>
         /// 
         /// </summary>

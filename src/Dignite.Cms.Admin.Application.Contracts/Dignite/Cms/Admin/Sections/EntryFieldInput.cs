@@ -28,16 +28,16 @@ namespace Dignite.Cms.Admin.Sections
         /// </summary>
         [Required]
         [DynamicMaxLength(typeof(EntryTypeConsts), nameof(EntryTypeConsts.MaxDisplayNameLength))]
-        public virtual string DisplayName { get; set; }
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual bool Required { get; set; }
+        public bool Required { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual bool ShowOnList { get; set; }
+        public bool ShowOnList { get; set; }
     }
 }

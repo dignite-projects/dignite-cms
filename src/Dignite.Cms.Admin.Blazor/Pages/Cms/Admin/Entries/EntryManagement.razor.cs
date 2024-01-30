@@ -46,8 +46,8 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
         protected override async Task OnInitializedAsync()
         {
-            await base.OnInitializedAsync();
             await InitializePageDataAsync();
+            await base.OnInitializedAsync();
         }
 
 

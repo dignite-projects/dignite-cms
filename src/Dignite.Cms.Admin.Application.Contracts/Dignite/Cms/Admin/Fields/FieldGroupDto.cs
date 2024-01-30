@@ -5,6 +5,6 @@ namespace Dignite.Cms.Admin.Fields
 {
     public class FieldGroupDto: EntityDto<Guid>
     {
-        public virtual string Name { get; set; }
+        public string Name { get; set; }
     }
 }

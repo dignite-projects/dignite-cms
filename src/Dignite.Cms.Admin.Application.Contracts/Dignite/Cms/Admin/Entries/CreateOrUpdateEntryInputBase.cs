@@ -70,7 +70,7 @@ namespace Dignite.Cms.Admin.Entries
         /// <summary>
         /// Notes on changes to this version
         /// </summary>
-        public virtual string VersionNotes { get; set; }
+        public string VersionNotes { get; set; }
 
 
         /// <summary>

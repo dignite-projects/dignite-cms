@@ -1,5 +1,6 @@
 ﻿using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
+using Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme;
 using Dignite.Cms.Admin.Blazor.WebAssembly;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,9 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
 using Volo.Abp.Account;
-using Volo.Abp.AspNetCore.Components.Web.BasicTheme.Themes.Basic;
+using Dignite.Abp.AspNetCore.Components.Web.PureTheme.Themes.Pure;
 using Volo.Abp.AspNetCore.Components.Web.Theming.Routing;
-using Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme;
 using Volo.Abp.Autofac.WebAssembly;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Identity.Blazor.WebAssembly;
@@ -22,7 +22,7 @@ namespace Dignite.Cms.Blazor.Host;
 
 [DependsOn(
     typeof(AbpAutofacWebAssemblyModule),
-    typeof(AbpAspNetCoreComponentsWebAssemblyBasicThemeModule),
+    typeof(DigniteAbpAspNetCoreComponentsWebAssemblyPureThemeModule),
     typeof(AbpAccountApplicationContractsModule),
     typeof(AbpIdentityBlazorWebAssemblyModule),
     typeof(AbpTenantManagementBlazorWebAssemblyModule),

@@ -8,14 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dignite.FileExplorer.HttpApi.Client" Version="2.0.0" />
+    <PackageReference Include="Dignite.FileExplorer.HttpApi.Client" Version="2.0.1" />
     <PackageReference Include="Volo.Abp.Http.Client" Version="7.4.5" />
-	  <PackageReference Include="Volo.CmsKit.Public.HttpApi.Client" Version="7.4.5" />
+	<PackageReference Include="Volo.CmsKit.Public.HttpApi.Client" Version="7.4.5" />
     <ProjectReference Include="..\Dignite.Cms.Public.Application.Contracts\Dignite.Cms.Public.Application.Contracts.csproj" />
   </ItemGroup>
 
-	<ItemGroup>
-		<EmbeddedResource Include="**\*generate-proxy.json" />
-		<Content Remove="**\*generate-proxy.json" />
-	</ItemGroup>
 </Project>

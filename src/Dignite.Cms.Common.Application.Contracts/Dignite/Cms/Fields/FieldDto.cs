@@ -4,34 +4,39 @@ using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Cms.Fields
 {
+    [Serializable]
     public class FieldDto: EntityDto<Guid>
     {
+        public FieldDto()
+        {
+            FormConfiguration = new();
+        }
 
         /// <summary>
         /// Field Unique Name
         /// </summary>
-        public virtual string Name { get; protected set; }
+        public string Name { get; set; }
 
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual string DisplayName { get; protected set; }
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual string Description { get; protected set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// Field <see cref="IFormControl.Name"/>
         /// </summary>
-        public virtual string FormControlName { get; protected set; }
+        public string FormControlName { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual FormConfigurationDictionary FormConfiguration { get; set; }
+        public FormConfigurationDictionary FormConfiguration { get; set; }
         
     }
 }

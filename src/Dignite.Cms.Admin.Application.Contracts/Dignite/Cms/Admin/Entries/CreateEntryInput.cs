@@ -11,7 +11,7 @@ namespace Dignite.Cms.Admin.Entries
         }
 
 
-        public virtual Guid? InitialVersionId { get; set; }
+        public Guid? InitialVersionId { get; set; }
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

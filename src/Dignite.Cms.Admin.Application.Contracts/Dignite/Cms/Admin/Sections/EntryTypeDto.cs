@@ -10,13 +10,13 @@ namespace Dignite.Cms.Admin.Sections
         /// <summary>
         /// Display Name of this entry type.
         /// </summary>
-        public virtual string DisplayName { get; set; }
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// Name of this entry type.
         /// Entry Type Unique Name.
         /// </summary>
-        public virtual string Name { get; set; }
+        public string Name { get; set; }
 
         public IList<EntryFieldTabDto> FieldTabs { get; set; }
 

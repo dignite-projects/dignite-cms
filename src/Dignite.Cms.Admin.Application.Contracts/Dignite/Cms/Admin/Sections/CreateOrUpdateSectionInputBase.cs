@@ -18,14 +18,14 @@ namespace Dignite.Cms.Admin.Sections
         /// 
         /// </summary>
         [Required]
-        public virtual SectionType Type { get; set; }
+        public SectionType Type { get; set; }
 
         /// <summary>
         /// Display Name of this section.
         /// </summary>
         [Required]
         [DynamicMaxLength(typeof(SectionConsts), nameof(SectionConsts.MaxDisplayNameLength))]
-        public virtual string DisplayName { get; set; }
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// Name of this section.
@@ -34,18 +34,18 @@ namespace Dignite.Cms.Admin.Sections
         [Required]
         [DynamicMaxLength(typeof(SectionConsts), nameof(SectionConsts.MaxNameLength))]
         [RegularExpression(SectionConsts.NameRegularExpression)]
-        public virtual string Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// The default section in the site;
         /// Only the single type of section can be set as the default section
         /// </summary>
-        public virtual bool IsDefault { get; set; }
+        public bool IsDefault { get; set; }
 
         /// <summary>
         /// Is this section active
         /// </summary>
-        public virtual bool IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         /// <summary>
         /// Routing format for entry page;

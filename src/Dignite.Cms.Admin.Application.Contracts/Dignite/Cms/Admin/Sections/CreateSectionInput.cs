@@ -15,6 +15,6 @@ namespace Dignite.Cms.Admin.Sections
         /// 
         /// </summary>
         [Required]
-        public virtual Guid SiteId { get; set; }
+        public Guid SiteId { get; set; }
     }
 }

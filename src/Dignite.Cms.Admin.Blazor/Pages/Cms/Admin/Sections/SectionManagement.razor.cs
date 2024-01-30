@@ -18,7 +18,6 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
     {
         protected IReadOnlyList<SiteDto> AllSites = new List<SiteDto>();
         protected SiteDto CurrentSite=null;
-        private string SelectedSiteName;
         protected PageToolbar Toolbar { get; } = new();
         protected List<TableColumn> SectionManagementTableColumns => TableColumns.Get<SectionManagement>();
 
@@ -160,7 +159,6 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
         protected async Task OnSiteChangedAsync(string name)
         {
             CurrentSite = AllSites.Single(s => s.Name == name);
-            SelectedSiteName = name;
 
             await SearchEntitiesAsync();
         }

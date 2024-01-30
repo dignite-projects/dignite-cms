@@ -26,17 +26,14 @@
 <Card>
     <CardHeader>
         <Fields>
-            @if (CurrentSite != null)
-            {
                 <Column ColumnSize="ColumnSize.Is3.OnDesktop">
-                    <Select TValue="string" SelectedValue="@SelectedSiteName" SelectedValueChanged="@OnSiteChangedAsync">
+                    <Select TValue="string" SelectedValue="@CurrentSite?.Name" SelectedValueChanged="@OnSiteChangedAsync">
                         @foreach (var item in AllSites)
                         {
                             <SelectItem Value="item.Name">@item.DisplayName</SelectItem>
                         }
                     </Select>
                 </Column>
-            }
             <Column ColumnSize="ColumnSize.Is9.OnDesktop">
                 <Addons>
                     <Addon AddonType="AddonType.Body">

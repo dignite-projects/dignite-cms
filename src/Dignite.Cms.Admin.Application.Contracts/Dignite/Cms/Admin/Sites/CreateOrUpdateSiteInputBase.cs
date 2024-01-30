@@ -22,7 +22,7 @@ namespace Dignite.Cms.Admin.Sites
         /// </summary>
         [Required]
         [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxDisplayNameLength))]
-        public virtual string DisplayName { get; set; }
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// Name of this site.
@@ -31,7 +31,7 @@ namespace Dignite.Cms.Admin.Sites
         [Required]
         [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxNameLength))]
         [RegularExpression(SiteConsts.NameRegularExpression)]
-        public virtual string Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Languages supported on this site
@@ -46,13 +46,13 @@ namespace Dignite.Cms.Admin.Sites
         [Required]
         [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxHostLength))]
         [Url]
-        public virtual string Host { get;  set; }
+        public string Host { get;  set; }
 
 
         /// <summary>
         /// Is this site active
         /// </summary>
-        public virtual bool IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

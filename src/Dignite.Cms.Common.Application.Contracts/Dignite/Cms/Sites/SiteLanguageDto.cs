@@ -1,5 +1,8 @@
-﻿namespace Dignite.Cms.Sites
+﻿using System;
+
+namespace Dignite.Cms.Sites
 {
+    [Serializable]
     public class SiteLanguageDto
     {
         public bool IsDefault { get; set; }

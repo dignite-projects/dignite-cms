@@ -4,12 +4,15 @@
 {
     if (Section.EntryTypes.Count == 1)
     {
-        <Button Color="Color.Primary" Clicked="()=>OnEntryTypeClick(Section.EntryTypes[0].Id)">@ButtonText</Button>
+        <Button Color="Color.Primary" Clicked="()=>OnEntryTypeClick(Section.EntryTypes[0].Id)">
+            <Icon Name="IconName.Add"></Icon>
+            @ButtonText</Button>
     }
     else
     {
         <Dropdown>
             <DropdownToggle Color="Color.Primary">
+                <Icon Name="IconName.Add"></Icon>
                 @ButtonText
             </DropdownToggle>
             <DropdownMenu>

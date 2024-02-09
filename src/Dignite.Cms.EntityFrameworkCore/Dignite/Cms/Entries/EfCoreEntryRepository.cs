@@ -109,7 +109,7 @@ namespace Dignite.Cms.Entries
         /// <summary>
         /// Get a list of revisions
         /// </summary>
-        /// <param name="entry"></param>
+        /// <param name="initialVersionId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public async Task<List<Entry>> GetVisionListAsync(Guid initialVersionId, CancellationToken cancellationToken = default)

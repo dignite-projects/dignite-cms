@@ -29,11 +29,6 @@ namespace Dignite.Cms.Public.Sections
             return dto;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
         public async Task<SectionDto> FindByNameAsync(Guid siteId, string name)
         {
             var dto = ObjectMapper.Map<Section, SectionDto>(
@@ -45,13 +40,6 @@ namespace Dignite.Cms.Public.Sections
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="url">
-        /// 
-        /// </param>
-        /// <returns></returns>
         public async Task<SectionDto> FindByUrlAsync(Guid siteId, string url)
         {
             url = url.RemovePreFix("/").RemovePostFix("/");

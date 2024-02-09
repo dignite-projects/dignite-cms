@@ -71,12 +71,15 @@
     "FieldTabName{0}AlreadyExist": "Field Tab Name \"{0}\" Existing.",
     "Required": "Required",
     "ShowOnList": "Show On List",
-    "EntryVersion": "Entry Version",
+    "Version": "Version",
     "NewVersion": "New Version",
     "InitialVersion": "Initial Version",
     "Activated": "Activated",
     "Activate": "Activate",
     "Editing": "Editing",
-    "SaveAsDraft": "Save As Draft"
+    "SaveAsDraft": "Save As Draft",
+    "Publish": "Publish",
+    "Enum:EntryStatus:Draft": "Draft",
+    "Enum:EntryStatus:Published": "Published"
   }
 }

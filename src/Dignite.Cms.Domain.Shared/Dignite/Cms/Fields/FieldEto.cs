@@ -14,31 +14,31 @@ public class FieldEto
     /// <summary>
     /// 
     /// </summary>
-    public virtual Guid? GroupId { get; set; }
+    public Guid? GroupId { get; set; }
 
     /// <summary>
     /// Field Unique Name
     /// </summary>
-    public virtual string Name { get; set; }
+    public string Name { get; set; }
 
 
     /// <summary>
     /// 
     /// </summary>
-    public virtual string DisplayName { get; set; }
+    public string DisplayName { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
-    public virtual string Description { get; set; }
+    public string Description { get; set; }
 
     /// <summary>
     /// Field <see cref="IFormControl.Name"/>
     /// </summary>
-    public virtual string FormControlName { get; set; }
+    public string FormControlName { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
-    public virtual FormConfigurationDictionary FormConfiguration { get; set; }
+    public FormConfigurationDictionary FormConfiguration { get; set; }
 }

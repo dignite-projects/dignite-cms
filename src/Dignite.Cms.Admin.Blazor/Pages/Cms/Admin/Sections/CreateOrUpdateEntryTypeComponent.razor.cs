@@ -17,13 +17,13 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
         [Parameter] public CreateOrUpdateEntryTypeInputBase Entity { get; set; }
         [Parameter] public Guid SectionId{ get; set; }
 
-        protected Modal? CreateModal;
-        protected Modal? EditModal;
-        protected Modal? EditFieldModal;
+        protected Modal CreateModal;
+        protected Modal EditModal;
+        protected Modal EditFieldModal;
 
-        protected Validations? CreateValidationsRef;
-        protected Validations? EditValidationsRef;
-        protected Validations? EditFieldValidationsRef;
+        protected Validations CreateValidationsRef;
+        protected Validations EditValidationsRef;
+        protected Validations EditFieldValidationsRef;
 
         /// <summary>
         /// 

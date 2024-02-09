@@ -31,7 +31,7 @@ namespace Dignite.Cms.Public.Entries
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("{id:Guid}/prev")]
@@ -44,7 +44,7 @@ namespace Dignite.Cms.Public.Entries
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("{id:Guid}/next")]

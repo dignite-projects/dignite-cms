@@ -12,6 +12,7 @@ using Volo.Abp.AspNetCore.Components.Web.Extensibility.EntityActions;
 using Volo.Abp.AspNetCore.Components.Web.Extensibility.TableColumns;
 using Volo.Abp.AspNetCore.Components.Web.Theming.PageToolbars;
 using Volo.Abp.Localization;
+using Dignite.Cms.Entries;
 
 namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 {
@@ -57,7 +58,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
             if (CurrentSection != null)
             {
                 Toolbar.AddComponent<NewEntryButtonComponent>(
-                    new Dictionary<string, object?>
+                    new Dictionary<string, object>
                     {
                         { nameof(NewEntryButtonComponent.ButtonText), L["New"]},
                         { nameof(NewEntryButtonComponent.CultureName), CultureName},
@@ -124,6 +125,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                     {
                         Title = L["Status"],
                         Sortable = true,
+                        ValueConverter = (data)=> L[((EntryDto)data).Status.ToLocalizationKey()],
                         Data = nameof(EntryDto.Status)
                     },
                     new TableColumn
@@ -180,11 +182,6 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="group"></param>
-        /// <returns></returns>
         protected async Task OnSiteChangedAsync(Guid siteId)
         {
             CurrentSite = AllSites.First(s => s.Id == siteId);

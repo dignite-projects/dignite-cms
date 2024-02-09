@@ -39,7 +39,7 @@ namespace Dignite.Cms.Public.Entries
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         public async Task<EntryDto> FindPrevAsync(Guid id)
         {
@@ -51,7 +51,7 @@ namespace Dignite.Cms.Public.Entries
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         public async Task<EntryDto> FindNextAsync(Guid id)
         {

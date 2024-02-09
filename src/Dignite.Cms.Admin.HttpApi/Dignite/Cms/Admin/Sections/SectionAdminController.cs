@@ -38,7 +38,7 @@ namespace Dignite.Cms.Admin.Sections
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
 
         [HttpDelete]

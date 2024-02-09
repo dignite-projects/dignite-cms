@@ -71,12 +71,15 @@
     "FieldTabName{0}AlreadyExist": "字段標籤頁名稱 \"{0}\" 已存在.",
     "Required": "必填",
     "ShowOnList": "在列表中展示",
-    "EntryVersion": "條目版本",
+    "Version": "版本",
     "NewVersion": "新版本",
     "InitialVersion": "初始版本",
     "Activated": "激活的",
     "Activate": "激活",
     "Editing": "編輯中",
-    "SaveAsDraft": "保存為草稿"
+    "SaveAsDraft": "保存為草稿",
+    "Publish": "發布",
+    "Enum:EntryStatus:Draft": "草稿",
+    "Enum:EntryStatus:Published": "發布"
   }
 }

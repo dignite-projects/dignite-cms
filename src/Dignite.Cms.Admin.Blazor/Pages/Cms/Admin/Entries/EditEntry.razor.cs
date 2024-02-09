@@ -60,7 +60,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                 color: Color.Info,
                 requiredPolicyName: CmsAdminPermissions.Entry.Update);
 
-            Toolbar.AddButton(L["Save"],
+            Toolbar.AddButton(L["Publish"],
                 SaveAsync,
                 IconName.Save,
                 requiredPolicyName: CmsAdminPermissions.Entry.Update);

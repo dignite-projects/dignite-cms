@@ -71,12 +71,15 @@
     "FieldTabName{0}AlreadyExist": "フィールド・タブ名 \"{0}\" は既に存在しています。",
     "Required": "必須",
     "ShowOnList": "リストに表示",
-    "EntryVersion": "エントリー版",
+    "Version": "バージョン",
     "NewVersion": "ニューバージョン",
     "InitialVersion": "初期バージョン",
     "Activated": "活性化",
     "Activate": "アクティブ化",
     "Editing": "編集",
-    "SaveAsDraft": "下書きとして保存"
+    "SaveAsDraft": "下書きとして保存",
+    "Publish": "出版",
+    "Enum:EntryStatus:Draft": "ドラフト",
+    "Enum:EntryStatus:Published": "出版"
   }
 }

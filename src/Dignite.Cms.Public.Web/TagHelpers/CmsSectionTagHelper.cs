@@ -8,15 +8,8 @@ namespace Dignite.Cms.Public.Web.TagHelpers
 {
     public class CmsSectionTagHelper : TagHelper
     {
-        /// <summary>
-        /// If no <see cref="Section"/> is specified, entries can be queried by <see cref="SectionName"/>
-        /// </summary>
-
         public Guid SiteId { get; set; }
 
-        /// <summary>
-        /// If no <see cref="Section"/> is specified, entries can be queried by <see cref="SectionName"/>
-        /// </summary>
         public string SectionName{ get; set; }
 
         /// <summary>

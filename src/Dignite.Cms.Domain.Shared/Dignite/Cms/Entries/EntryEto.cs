@@ -15,22 +15,22 @@ namespace Dignite.Cms.Entries
         /// <summary>
         /// 
         /// </summary>
-        public virtual Guid SectionId { get; set; }
+        public Guid SectionId { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual Guid EntryTypeId { get; set; }
+        public Guid EntryTypeId { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual string Culture { get; set; }
+        public string Culture { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual string Title { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// 
@@ -40,37 +40,31 @@ namespace Dignite.Cms.Entries
         /// <summary>
         /// 
         /// </summary>
-        public virtual DateTime PublishTime { get; set; }
+        public DateTime PublishTime { get; set; }
 
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual EntryStatus Status { get; protected set; }
+        public EntryStatus Status { get; protected set; }
 
 
         public ExtraPropertyDictionary ExtraProperties { get; set; }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-
         #region Section type is a exclusive property of Structure type
 
         /// <summary>
         /// Parent entry id of the entry;
-        /// When it is affiliated with <see cref="Sections.SectionDto.Type"/>=<see cref="Cms.Sections.SectionType.Structure"/>, this value is valid
         /// </summary>
-        public virtual Guid? ParentId { get; set; }
+        public Guid? ParentId { get; set; }
 
         /// <summary>
         /// Order of the entry
-        /// When it is affiliated with <see cref="Sections.SectionDto.Type"/>=<see cref="Cms.Sections.SectionType.Structure"/>, this value is valid
         /// </summary>
-        public virtual int Order { get; set; }
+        public int Order { get; set; }
         #endregion
 
-        public virtual Guid? TenantId { get; protected set; }
+        public Guid? TenantId { get; protected set; }
     }
 }

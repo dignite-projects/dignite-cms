@@ -39,6 +39,7 @@ namespace Dignite.Cms.Admin.Sections
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="input"></param>
         /// <returns></returns>
         [Authorize(Permissions.CmsAdminPermissions.Section.Update)]
@@ -48,11 +49,6 @@ namespace Dignite.Cms.Admin.Sections
             return ObjectMapper.Map<Section, SectionDto>(section);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
         [Authorize(Permissions.CmsAdminPermissions.Section.Delete)]
         public async Task DeleteAsync(Guid id)
         {
@@ -73,11 +69,6 @@ namespace Dignite.Cms.Admin.Sections
             return new PagedResultDto<SectionDto>(count, dto);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
         [Authorize(Permissions.CmsAdminPermissions.Section.Default)]
         public async Task<SectionDto> GetAsync(Guid id)
         {

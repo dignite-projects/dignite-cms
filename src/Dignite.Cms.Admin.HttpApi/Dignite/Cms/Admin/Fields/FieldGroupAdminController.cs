@@ -37,7 +37,7 @@ namespace Dignite.Cms.Admin.Fields
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
 
         [HttpDelete]

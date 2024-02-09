@@ -37,13 +37,14 @@ namespace Dignite.Cms.Admin.Entries
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="input"></param>
         /// <returns></returns>
 
         [HttpPut]
-        public async Task<EntryDto> UpdateAsync(Guid id,UpdateEntryInput input)
+        public async Task<EntryDto> UpdateAsync(Guid id, UpdateEntryInput input)
         {
-            return await _entryAppService.UpdateAsync(id,input);
+            return await _entryAppService.UpdateAsync(id, input);
         }
 
         /// <summary>

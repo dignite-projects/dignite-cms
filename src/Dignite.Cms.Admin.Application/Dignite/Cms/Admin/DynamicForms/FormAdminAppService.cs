@@ -8,18 +8,18 @@ namespace Dignite.Cms.Admin.DynamicForms
 {
     public class FormAdminAppService : CmsAdminAppServiceBase, IFormAdminAppService
     {
-        private readonly IEnumerable<IFormControl> _forms;
+        private readonly IEnumerable<IFormControl> _formControls;
 
-        public FormAdminAppService(IEnumerable<IFormControl> forms)
+        public FormAdminAppService(IEnumerable<IFormControl> formControls)
         {
-            _forms = forms;
+            _formControls = formControls;
         }
 
         public async Task<ListResultDto<FormControlDto>> GetFormControlsAsync()
         {
             return await Task.FromResult(
                 new ListResultDto<FormControlDto>(
-                _forms.Select(
+                _formControls.Select(
                     f => new FormControlDto(f.Name, f.DisplayName)
                     ).ToList()
                     ));

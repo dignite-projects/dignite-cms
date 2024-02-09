@@ -62,6 +62,7 @@ namespace Dignite.Cms.Admin.Entries
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="input"></param>
         /// <returns></returns>
         [Authorize(Permissions.CmsAdminPermissions.Entry.Update)]
@@ -153,11 +154,6 @@ namespace Dignite.Cms.Admin.Entries
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
         [Authorize(Permissions.CmsAdminPermissions.Entry.Update)]
         public async Task MoveAsync(Guid id, MoveEntryInput input)
         {

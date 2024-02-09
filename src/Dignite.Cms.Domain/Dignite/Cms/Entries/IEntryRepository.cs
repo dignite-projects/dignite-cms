@@ -52,10 +52,12 @@ namespace Dignite.Cms.Entries
         Task<List<Entry>> GetVisionListAsync(Guid initialVersionId, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get entries using slug
+        /// Find entries using slug
         /// </summary>
+        /// <param name="culture"></param>
         /// <param name="sectionId"></param>
         /// <param name="slug"></param>
+        /// <param name="includeDetails"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>
         /// This method gets the active revision

@@ -2,12 +2,8 @@
 @using Dignite.Abp.DynamicForms.Components
 @using Dignite.Abp.DynamicForms.Matrix
 @using Dignite.Abp.DynamicForms.Textbox;
-@using System.Collections.Immutable;
-@using System.Text.Json;
 @using Dignite.Cms.Fields
 @using Dignite.Cms.Localization
-@using System.Threading
-@using Volo.Abp.AspNetCore.Components.Web;
 @inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
 @inject IFormConfigurationComponentSelector ConfigurationComponentSelector
 @inject IEnumerable<IFormControl> AllFormControls;
@@ -16,58 +12,63 @@
 
 <Validation Validator="@ValidateAll">
     <Field>
-        <Row NoGutters>
-            <Column ColumnSize="ColumnSize.Is2">
-                <Card>
-                    <CardHeader>
-                            @L["MatrixBlockTypes"]
+        <Row>
+            <Column ColumnSize="ColumnSize.Is3.OnDesktop">
+                <Card Margin="Margin.Is3.FromBottom">
+                    <CardHeader Flex="Flex.JustifyContent.Between.AlignItems.Center">
+                        <Heading Size="HeadingSize.Is6" Margin="Margin.Is0.FromBottom">@L["MatrixBlockTypes"]</Heading>
+                        <Button Color="Color.Light" Size="Size.Small" Clicked="OpenCreateBlockTypeModal"><Icon Name="IconName.PlusCircle" /></Button>
                     </CardHeader>
-                    <CardBody>
-                        <ListGroup Flush>
+                    <CardBody Padding="Padding.Is0">
+                        <ListGroup Mode="ListGroupMode.Selectable" SelectedItem="@SelectedBlockType?.Name">
                             @foreach(var blockType in MatrixBlockTypes)
                             {
-                                <ListGroupItem Clicked="()=>SelectBlockType(blockType)">
-                                    <Div Flex="Flex.JustifyContent.Between" Width="Width.Is100">
-                                        <Heading Size="HeadingSize.Is5" Margin="Margin.Is1.FromBottom">@blockType.DisplayName</Heading>
-                                        <Button Color="Color.Default" Size="Size.Small" Clicked="()=>OpenEditBlockTypeModal(blockType)">@L["Edit"]</Button>
+                                <ListGroupItem Name="@blockType.Name" Border="Border.Is0.RoundedZero" Clicked="()=>SelectBlockTypeAsync(blockType)" Flex="Flex.JustifyContent.Between.AlignItems.Center">
+                                    <Div>
+                                        <Heading Size="HeadingSize.Is6" Margin="Margin.Is1.FromBottom">@blockType.DisplayName</Heading>
+                                        <Paragraph Margin="Margin.Is1.FromBottom">@blockType.Name</Paragraph>
                                     </Div>
-                                    <Paragraph Margin="Margin.Is1.FromBottom">@blockType.Name</Paragraph>
+                                    <Dropdown>
+                                        <DropdownToggle>                                            
+                                        </DropdownToggle>
+                                        <DropdownMenu>
+                                            <DropdownItem Clicked="()=>OpenEditBlockTypeModal(blockType)"><Icon Name="IconName.Edit"></Icon> @L["Edit"]</DropdownItem>
+                                            <DropdownDivider />
+                                            <DropdownItem Clicked="()=>DeleteBlockTypeAsync(blockType)"><Icon Name="IconName.Delete"></Icon> @L["Delete"]</DropdownItem>
+                                        </DropdownMenu>
+                                    </Dropdown>
                                 </ListGroupItem>
                             }
                         </ListGroup>
                     </CardBody>
-                    <CardFooter>
-                        <Button Color="Color.Default" Size="Size.Small" Clicked="OpenCreateBlockTypeModal">@L["NewBlockType"]</Button>
-                    </CardFooter>
                 </Card>
             </Column>
-            <Column ColumnSize="ColumnSize.Is2">
+            <Column ColumnSize="ColumnSize.Is3.OnDesktop">
                 @if (SelectedBlockType != null)
                 {
-                    <Card>
-                        <CardHeader>
-                            @L["Fields"]
+                    <Card Margin="Margin.Is3.FromBottom">
+                        <CardHeader Flex="Flex.JustifyContent.Between.AlignItems.Center">
+                            <Heading Size="HeadingSize.Is6" Margin="Margin.Is0.FromBottom">@L["Fields"]</Heading>
+                            <Button Color="Color.Light" Size="Size.Small" Clicked="AddFieldAsync"><Icon Name="IconName.PlusCircle" /></Button>
                         </CardHeader>
-                        <CardBody>
-                            <ListGroup Flush>
-                                @foreach (var field in SelectedBlockType.Fields)
-                                {
-                                    <ListGroupItem Clicked="()=>SelectFieldAsync(field)">
-                                        <Div Flex="Flex.JustifyContent.Between" Width="Width.Is100">
-                                            <Heading Size="HeadingSize.Is5" Margin="Margin.Is1.FromBottom">@field.DisplayName</Heading>
-                                        </Div>
-                                        <Paragraph Margin="Margin.Is1.FromBottom">@field.Name</Paragraph>
-                                    </ListGroupItem>
-                                }
-                            </ListGroup>
-                    </CardBody>
-                    <CardFooter>
-                        <Button Color="Color.Default" Size="Size.Small" Clicked="AddFieldAsync">@L["NewField"]</Button>
-                    </CardFooter>
-                </Card>
+                        <CardBody Padding="Padding.Is0">
+                                <ListGroup Mode="ListGroupMode.Selectable" Border="Border.Is0.RoundedZero" SelectedItem="@SelectedField?.Name">
+                                    @foreach (var field in SelectedBlockType.Fields)
+                                    {
+                                        <ListGroupItem Name="@field.Name" Clicked="()=>SelectFieldAsync(field)" Flex="Flex.JustifyContent.Between.AlignItems.Center">
+                                            <Div>
+                                                <Heading Size="HeadingSize.Is6" Margin="Margin.Is1.FromBottom">@field.DisplayName</Heading>
+                                                <Paragraph Margin="Margin.Is1.FromBottom">@field.Name</Paragraph>
+                                            </Div>
+                                            <Button Color="Color.Default" Size="Size.Small" Clicked="()=>DeleteFieldAsync(field)">@L["Delete"]</Button>
+                                        </ListGroupItem>
+                                    }
+                                </ListGroup>
+                        </CardBody>
+                    </Card>
                 }
             </Column>
-            <Column ColumnSize="ColumnSize.Is8">
+            <Column ColumnSize="ColumnSize.Is6.OnDesktop">
                 @if (SelectedField != null)
                 {
                     <Validations @ref="@FieldValidationsRef" Model="@SelectedField">
@@ -77,7 +78,7 @@
                                     <TextEdit MaxLength="FieldConsts.MaxDisplayNameLength" @bind-Text="@SelectedField.DisplayName" Blur="@FieldDisplayNameTextboxBlur" />
                             </Field>
                         </Validation>
-                            <Validation Validator="ValidationFieldName">
+                            <Validation Validator="FieldNameExistsValidator">
                             <Field>
                                 <FieldLabel>@L["FieldName"]</FieldLabel>
                                     <TextEdit MaxLength="FieldConsts.MaxNameLength" @bind-Text="@SelectedField.Name">
@@ -122,21 +123,29 @@
     <Blazorise.ModalContent Centered="true">
         <Blazorise.Form>
             <Blazorise.ModalHeader>
-                <Blazorise.ModalTitle>@L["MatrixBlockType"]</Blazorise.ModalTitle>
+                <Blazorise.ModalTitle>@L["New"]</Blazorise.ModalTitle>
                 <Blazorise.CloseButton Clicked="CloseCreateBlockTypeModalAsync" />
             </Blazorise.ModalHeader>
             <Blazorise.ModalBody>
                 <Blazorise.Validations @ref="@CreateBlockTypeValidationsRef" Model="@NewBlockType" ValidateOnLoad="false">
-                    <Validation>
+                    <Validation Validator="ValidationRule.IsNotEmpty">
                         <Field>
                             <FieldLabel>@L["DisplayName"]</FieldLabel>
-                            <TextEdit @bind-Text="@NewBlockType.DisplayName" Blur="((args)=>BlockTypeDisplayNameTextboxBlur(NewBlockType))" />
+                            <TextEdit @bind-Text="@NewBlockType.DisplayName" Blur="((args)=>BlockTypeDisplayNameTextboxBlur(NewBlockType))" >
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
                         </Field>
                     </Validation>
-                    <Validation>
+                    <Validation Validator="CreateMatrixBlockTypeNameExistsValidator">
                         <Field>
                             <FieldLabel>@L["Name"]</FieldLabel>
-                            <TextEdit @bind-Text="@NewBlockType.Name" />
+                            <TextEdit @bind-Text="@NewBlockType.Name">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
                         </Field>
                     </Validation>
                 </Blazorise.Validations>
@@ -153,21 +162,29 @@
     <Blazorise.ModalContent Centered="true">
         <Blazorise.Form>
             <Blazorise.ModalHeader>
-                <Blazorise.ModalTitle>@L["MatrixBlockType"]</Blazorise.ModalTitle>
+                <Blazorise.ModalTitle>@L["Edit"]</Blazorise.ModalTitle>
                 <Blazorise.CloseButton Clicked="CloseEditBlockTypeModalAsync" />
             </Blazorise.ModalHeader>
             <Blazorise.ModalBody>
                 <Blazorise.Validations @ref="@EditBlockTypeValidationsRef" Model="@EditingBlockType" ValidateOnLoad="false">
-                    <Validation>
+                    <Validation Validator="ValidationRule.IsNotEmpty">
                         <Field>
                             <FieldLabel>@L["DisplayName"]</FieldLabel>
-                                <TextEdit @bind-Text="@EditingBlockType.DisplayName" Blur="((args)=>BlockTypeDisplayNameTextboxBlur(EditingBlockType))" />
+                            <TextEdit @bind-Text="@EditingBlockType.DisplayName" Blur="((args)=>BlockTypeDisplayNameTextboxBlur(EditingBlockType))">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
                         </Field>
                     </Validation>
-                    <Validation>
+                    <Validation Validator="EditingMatrixBlockTypeNameExistsValidator">
                         <Field>
                             <FieldLabel>@L["Name"]</FieldLabel>
-                            <TextEdit @bind-Text="@EditingBlockType.Name" />
+                            <TextEdit @bind-Text="@EditingBlockType.Name">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
                         </Field>
                     </Validation>
                 </Blazorise.Validations>
@@ -179,201 +196,3 @@
         </Blazorise.Form>
     </Blazorise.ModalContent>
 </Blazorise.Modal>
-
-
-    @code {
-    protected List<MatrixBlockType> MatrixBlockTypes = new();
-    protected ImmutableList<IFormControl> AvailableFormControls;
-
-    protected Modal CreateBlockTypeModal;
-    protected Validations CreateBlockTypeValidationsRef;
-    protected MatrixBlockType NewBlockType=new();
-
-    protected Modal EditBlockTypeModal;
-    protected Validations EditBlockTypeValidationsRef;
-    protected MatrixBlockType EditingBlockType = new();
-
-    protected MatrixBlockType SelectedBlockType = null;
-
-    protected Validations FieldValidationsRef;
-    protected FormField SelectedField = null;
-    protected Type FieldFormConfigurationComponentType;
-    protected Dictionary<string, object> FieldFormConfigurationComponentParameters = new();
-
-
-
-    public MatrixFormConfigurationComponent()
-    {
-        LocalizationResource = typeof(CmsResource);
-    }
-
-
-    void ValidateAll(ValidatorEventArgs e)
-    {
-        FormConfiguration.MatrixBlockTypes = MatrixBlockTypes;
-    }
-
-
-    protected override Task OnInitializedAsync()
-    {
-        AvailableFormControls = AllFormControls.Where(p => p.Name != MatrixFormControl.ControlName).ToImmutableList();
-        return base.OnInitializedAsync();
-    }
-
-    protected override void OnParametersSet()
-    {
-        base.OnParametersSet();
-        MatrixBlockTypes = FormConfiguration.MatrixBlockTypes == null ? new() : FormConfiguration.MatrixBlockTypes;
-    }
-
-    #region create block type methods
-    protected virtual Task ClosingCreateBlockTypeModal(ModalClosingEventArgs eventArgs)
-    {
-        // cancel close if clicked outside of modal area
-        eventArgs.Cancel = eventArgs.CloseReason == CloseReason.FocusLostClosing;
-
-        return Task.CompletedTask;
-    }
-
-    protected virtual Task CloseCreateBlockTypeModalAsync()
-    {
-        InvokeAsync(CreateBlockTypeModal.Hide);
-        return Task.CompletedTask;
-    }
-
-    private async Task OpenCreateBlockTypeModal()
-    {
-        NewBlockType = new MatrixBlockType();
-
-        await InvokeAsync(async () =>
-        {
-            StateHasChanged();
-            await CreateBlockTypeModal.Show();
-        });
-    }
-
-    protected virtual async Task CreateBlockType()
-    {
-        MatrixBlockTypes.Add(NewBlockType);
-        SelectedBlockType = null;
-        SelectedField = null;
-        FormConfiguration.MatrixBlockTypes = MatrixBlockTypes;
-        await CreateBlockTypeModal.Hide();
-    }
-    #endregion
-
-
-    #region update block type methods
-    protected virtual Task ClosingEditBlockTypeModal(ModalClosingEventArgs eventArgs)
-    {
-        // cancel close if clicked outside of modal area
-        eventArgs.Cancel = eventArgs.CloseReason == CloseReason.FocusLostClosing;
-
-        return Task.CompletedTask;
-    }
-
-    protected virtual Task CloseEditBlockTypeModalAsync()
-    {
-        InvokeAsync(EditBlockTypeModal.Hide);
-        return Task.CompletedTask;
-    }
-
-    private async Task OpenEditBlockTypeModal(MatrixBlockType blockType)
-    {
-        EditingBlockType = blockType;
-
-        await InvokeAsync(async () =>
-        {
-            StateHasChanged();
-            await EditBlockTypeModal.Show();
-        });
-    }
-
-    protected virtual async Task UpdateBlockType()
-    {
-        FormConfiguration.MatrixBlockTypes = MatrixBlockTypes;
-        await EditBlockTypeModal.Hide();
-    }
-    #endregion
-
-    protected virtual void SelectBlockType(MatrixBlockType blockType)
-    {
-        SelectedBlockType = blockType;
-        SelectedField = null;
-    }
-    protected virtual async Task SelectFieldAsync(FormField field)
-    {
-        if (SelectedField == null || await FieldValidationsRef.ValidateAll())
-        {
-            SelectedField = field;
-            await SetFieldFormConfigurationComponentAsync();
-        }
-    }
-
-    protected virtual async Task AddFieldAsync()
-    {
-        if (SelectedField == null || await FieldValidationsRef.ValidateAll())
-        {
-            SelectedField = new FormField("", "", "", TextEditFormControl.ControlName, new FormConfigurationDictionary(), false, null);
-            SelectedBlockType.Fields.Add(SelectedField);
-            await SetFieldFormConfigurationComponentAsync();
-        }
-    }
-
-    private async Task FormTypeChangedAsync(string formName)
-    {
-        SelectedField.FormControlName = formName;
-        await SetFieldFormConfigurationComponentAsync();
-    }
-
-    private async Task SetFieldFormConfigurationComponentAsync()
-    {
-        var configurationComponent = ConfigurationComponentSelector.Get(SelectedField.FormControlName);
-        FieldFormConfigurationComponentType = configurationComponent.GetType();
-        FieldFormConfigurationComponentParameters = new Dictionary<string, object>
-            {
-                { nameof(IFormConfigurationComponent.ConfigurationDictionary), SelectedField.FormConfiguration }
-            };
-
-        await Task.CompletedTask;
-    }
-
-    private void ValidationFieldName(ValidatorEventArgs e)
-    {
-        var fieldName = Convert.ToString(e.Value);
-        if (!fieldName.IsNullOrEmpty())
-        {
-            if (
-                SelectedBlockType.Fields.Count(f =>f.Name.Equals(fieldName, StringComparison.InvariantCultureIgnoreCase))==2
-            )
-            {
-                e.Status = ValidationStatus.Error;
-                e.ErrorText = L["FieldName{0}AlreadyExist", fieldName];
-            }
-            else
-            {
-                e.Status = ValidationStatus.Success;
-            }
-        }
-        else
-        {
-            e.Status = ValidationStatus.Error;            
-        }
-    }
-
-
-    private void BlockTypeDisplayNameTextboxBlur(MatrixBlockType blockType)
-    {
-        if (!blockType.DisplayName.IsNullOrEmpty() && blockType.Name.IsNullOrEmpty())
-        {
-            blockType.Name = SlugNormalizer.Normalize(blockType.DisplayName);
-        }
-    }
-    private void FieldDisplayNameTextboxBlur()
-    {
-        if (!SelectedField.DisplayName.IsNullOrEmpty() && SelectedField.Name.IsNullOrEmpty())
-        {
-            SelectedField.Name = SlugNormalizer.Normalize(SelectedField.DisplayName);
-        }
-    }
-}

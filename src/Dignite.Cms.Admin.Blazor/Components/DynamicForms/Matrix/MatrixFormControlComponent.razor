@@ -15,15 +15,15 @@
             var blockType = FormConfiguration.MatrixBlockTypes.FirstOrDefault(t => t.Name == block.MatrixBlockTypeName);
             if (blockType!=null)
             {
-                <Card>
-                    <CardHeader>                        
-                        <Div Flex="Flex.JustifyContent.Between">
-                            <Div Padding="Padding.Is2">
-                                @blockType.DisplayName
-                            </Div>
-                            <Div Padding="Padding.Is2">
-                                <Button Color="Color.Default" Size="Size.Small" Clicked="()=>RemoveMatrixBlockAsync(block)">@L["Remove"]</Button>
-                            </Div>
+                <Card Margin="Margin.Is3.FromBottom">
+                    <CardHeader Flex="Flex.JustifyContent.Between">
+                        <Div>
+                            @blockType.DisplayName
+                        </Div>
+                        <Div>
+                            <Button Color="Color.Light" Size="Size.Small" Clicked="()=>RemoveMatrixBlockAsync(block)">
+                                <Icon Name="IconName.Delete"></Icon>
+                            </Button>
                         </Div>
                     </CardHeader>
                     <CardBody>
@@ -43,13 +43,17 @@
                 </Card>
             }
         }
-        <ListGroup Flex="Flex.AlignItems.Start">
-            @foreach(var blockType in FormConfiguration.MatrixBlockTypes)
+        <Buttons>
+            @foreach (var blockType in FormConfiguration.MatrixBlockTypes)
             {
-                <ListGroupItem Clicked="()=>AddMatrixBlockAsync(blockType)">@blockType.DisplayName</ListGroupItem>
+                <Button Color="Color.Secondary" Clicked="()=>AddMatrixBlockAsync(blockType)">
+                    <Icon Name="IconName.Add"></Icon> @blockType.DisplayName
+                </Button>
             }
-        </ListGroup>
-        <FieldHelp>@Field.Description</FieldHelp>
+        </Buttons>
+        <Paragraph>
+            <FieldHelp>@Field.Description</FieldHelp>
+        </Paragraph>
     </FieldBody>
 </Field>
 

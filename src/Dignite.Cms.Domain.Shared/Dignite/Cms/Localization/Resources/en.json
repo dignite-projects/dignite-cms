@@ -36,7 +36,6 @@
     "RevisionNotes": "Revision Notes",
     "FormControl:Matrix": "Matrix",
     "MatrixBlockTypes": "Matrix Block",
-    "NewBlockType": "New Block",
     "MatrixBlockType": "Matrix Block",
     "FormControl:Table": "Table",
     "TableColumns": "Table Columns",
@@ -54,6 +53,7 @@
     "SectionName{0}AlreadyExist": "Section Name \"{0}\" Existing.",
     "SectionRoute{0}AlreadyExist": "Route \"{0}\" Existing.",
     "EntryTypeName{0}AlreadyExist": "Entry Type Name \"{0}\" Existing.",
+    "MatrixBlockTypeName{0}AlreadyExist": "Matrix Block Type Name \"{0}\" Existing.",
     "EntrySlug{0}AlreadyExist": "Entry Slug \"{0}\" Existing.",
     "EntriesAlreadyExistEntryType": "{0} Entry type {1} language entry existing.",
     "UngroupedFields": "Ungrouped Fields",
@@ -80,6 +80,7 @@
     "SaveAsDraft": "Save As Draft",
     "Publish": "Publish",
     "Enum:EntryStatus:Draft": "Draft",
-    "Enum:EntryStatus:Published": "Published"
+    "Enum:EntryStatus:Published": "Published",
+    "FormControlConfiguration": "Form Control Configuration"
   }
 }

@@ -36,7 +36,6 @@
     "RevisionNotes": "修正説明",
     "FormControl:Matrix": "マトリックス",
     "MatrixBlockTypes": "マトリックスブロック",
-    "NewBlockType": "新規マトリックスブロック",
     "MatrixBlockType": "マトリックスブロック",
     "FormControl:Table": "テーブル",
     "TableColumns": "テーブル列",
@@ -54,6 +53,7 @@
     "SectionName{0}AlreadyExist": "セクション名 \"{0}\" は既に存在しています。",
     "SectionRoute{0}AlreadyExist": "ルート \"{0}\" は既に存在しています。",
     "EntryTypeName{0}AlreadyExist": "エントリータイプ名 \"{0}\" は既に存在しています。",
+    "MatrixBlockTypeName{0}AlreadyExist": "マトリックス ブロック タイプ名 {0} 既存。",
     "EntrySlug{0}AlreadyExist": "エントリー別名 \"{0}\" は既に存在しています。",
     "EntriesAlreadyExistEntryType": "{0} エントリタイプの言語 {1} のエントリが既に存在しています。",
     "UngroupedFields": "サブグループフィールドなし",
@@ -80,6 +80,7 @@
     "SaveAsDraft": "下書きとして保存",
     "Publish": "出版",
     "Enum:EntryStatus:Draft": "ドラフト",
-    "Enum:EntryStatus:Published": "出版"
+    "Enum:EntryStatus:Published": "出版",
+    "FormControlConfiguration": "フォーム・コントロールの設定"
   }
 }

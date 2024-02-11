@@ -36,7 +36,6 @@
     "RevisionNotes": "修订说明",
     "FormControl:Matrix": "矩阵",
     "MatrixBlockTypes": "矩阵块",
-    "NewBlockType": "新建矩阵块",
     "MatrixBlockType": "矩阵块",
     "FormControl:Table": "表格",
     "TableColumns": "表格列",
@@ -54,6 +53,7 @@
     "SectionName{0}AlreadyExist": "版块名称 \"{0}\" 已存在.",
     "SectionRoute{0}AlreadyExist": "路由 \"{0}\" 已存在.",
     "EntryTypeName{0}AlreadyExist": "条目类型名称 \"{0}\" 已存在.",
+    "MatrixBlockTypeName{0}AlreadyExist": "矩阵块类型名称 \"{0}\" 已存在.",
     "EntrySlug{0}AlreadyExist": "条目别名 \"{0}\" 已存在.",
     "EntriesAlreadyExistEntryType": "{0} 条目类型 {1} 语言的条目已存.",
     "UngroupedFields": "未分组字段",
@@ -81,6 +81,7 @@
     "SaveAsDraft": "保存为草稿",
     "Publish": "发布",
     "Enum:EntryStatus:Draft": "草稿",
-    "Enum:EntryStatus:Published": "发布"
+    "Enum:EntryStatus:Published": "发布",
+    "FormControlConfiguration": "表单控件配置"
   }
 }

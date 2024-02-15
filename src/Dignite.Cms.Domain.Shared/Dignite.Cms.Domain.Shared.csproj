@@ -8,12 +8,12 @@
 	<RootNamespace />
   </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Dignite.Abp.DynamicForms" Version="2.0.1" />
-		<PackageReference Include="Dignite.FileExplorer.Domain.Shared" Version="2.0.1" />
-		<PackageReference Include="Slugify.Core" Version="2.1.0" />
-		<PackageReference Include="Unidecode.NET" Version="1.0.0" />
-	</ItemGroup>
+  <ItemGroup>
+	  <PackageReference Include="Dignite.Abp.DynamicForms" Version="2.0.4" />
+    <PackageReference Include="Dignite.FileExplorer.Domain.Shared" Version="2.0.4" />
+    <PackageReference Include="Slugify.Core" Version="2.1.0" />
+    <PackageReference Include="Unidecode.NET" Version="1.0.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Validation" Version="7.4.5" />
@@ -28,5 +28,4 @@
 	<EmbeddedResource Include="Dignite\Cms\Localization\Resources\*.json" />
 	<Content Remove="Dignite\Cms\Localization\Resources\*.json" />
   </ItemGroup>
-
 </Project>

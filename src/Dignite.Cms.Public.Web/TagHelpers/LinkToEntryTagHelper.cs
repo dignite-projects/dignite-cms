@@ -5,7 +5,6 @@ using Dignite.Cms.Public.Web.Controllers;
 using Dignite.Cms.Public.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
@@ -20,13 +19,13 @@ namespace Dignite.Cms.Public.Web.TagHelpers
     /// <summary>
     /// Tag helper for linking to entry
     /// </summary>
-    [HtmlTargetElement("a", Attributes = "[entry-view-model]")]
+    [HtmlTargetElement("a", Attributes = "[entry]")]
     public class LinkToEntryTagHelper : TagHelper
     {
         /// <summary>
         /// 
         /// </summary>
-        public EntryViewModel EntryViewModel { get; set; }= null;
+        public EntryViewModel Entry { get; set; }= null;
 
 
         [ViewContext, HtmlAttributeNotBound]
@@ -34,7 +33,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            var entryUrl = GetEntryUrl(EntryViewModel.Entry,EntryViewModel.Section);
+            var entryUrl = GetEntryUrl(Entry.Entry,Entry.Section);
 
             output.Attributes.SetAttribute("href", entryUrl);
         }

@@ -1,4 +1,5 @@
-﻿using Dignite.Cms.Fields;
+﻿using Dignite.Cms.Entries;
+using Dignite.Cms.Fields;
 using Dignite.Cms.Sections;
 using System;
 using System.Collections.Generic;
@@ -35,32 +36,34 @@ namespace Dignite.Cms.Public.Sections
                 await _sectionRepository.FindByNameAsync(siteId, name)
                 );
 
-            await FillSectionFields( dto );
+            await FillSectionFields(dto);
             return dto;
         }
 
-
-        public async Task<SectionDto> FindByUrlAsync(Guid siteId, string url)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="siteId"></param>
+        /// <param name="entryPath">
+        /// The entry path does not contain culture.
+        /// </param>
+        /// <returns></returns>
+        public async Task<SectionDto> FindByEntryPathAsync(Guid siteId, string entryPath)
         {
-            url = url.RemovePreFix("/").RemovePostFix("/");
             var allSections = await _sectionRepository.GetListAsync(siteId, null, true, true);
-			allSections.ForEach((s) => s.Route.RemovePreFix("/").RemovePostFix("/"));
+            var section = await MatchingSectionWithEntryPath(allSections, entryPath);
 
-			foreach ( var section in allSections.OrderByDescending(s => s.Route)) 
+            /**
+             * When no matching Section is found, add /index/ to the url to try again.
+             * The reason is that when the Section type is SectionType.Single, the url may not contain a slug, so the default slug (i.e. index) is used to match again.
+             * **/
+            if (section == null)
             {
-                var route = section.Route.RemovePreFix("/").RemovePostFix("/");
-                var extractResult = FormattedStringValueExtracter.Extract(url, route, ignoreCase: true);
-                if (extractResult.IsMatch)
-                {
-                    var dto = ObjectMapper.Map<Section, SectionDto>(
-                        section
-                        );
-                    await FillSectionFields(dto);
-                    return dto;
-                }
+                entryPath = entryPath.EnsureEndsWith('/') + EntryConsts.DefaultSlug;
+                section= await MatchingSectionWithEntryPath(allSections,entryPath);
             }
 
-            return null;
+            return section;
         }
 
         public async Task<SectionDto> GetDefaultAsync(Guid siteId)
@@ -79,6 +82,26 @@ namespace Dignite.Cms.Public.Sections
                 await FillSectionFields(dto);
                 return dto;
             }
+        }
+
+        protected async Task<SectionDto> MatchingSectionWithEntryPath(List<Section> sections, string entryPath)
+        {
+            entryPath = entryPath.RemovePreFix("/").RemovePostFix("/");
+            foreach (var section in sections.OrderByDescending(s => s.Route))
+            {
+                var route = section.Route.RemovePreFix("/").RemovePostFix("/");
+                var extractResult = FormattedStringValueExtracter.Extract(entryPath, route, ignoreCase: true);
+                if (extractResult.IsMatch)
+                {
+                    var dto = ObjectMapper.Map<Section, SectionDto>(
+                        section
+                        );
+                    await FillSectionFields(dto);
+                    return dto;
+                }
+            }
+
+            return null;
         }
 
         protected async Task FillSectionFields(SectionDto dto)

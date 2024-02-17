@@ -1,4 +1,5 @@
-﻿using Dignite.Cms.Localization;
+﻿using Dignite.Cms.Entries;
+using Dignite.Cms.Localization;
 using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
 using Dignite.Cms.Public.Sites;
@@ -41,7 +42,7 @@ namespace Dignite.Cms.Public.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return await EntryViewResult("/", null);
+            return await EntryViewResult();
         }
 
 
@@ -49,37 +50,37 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// 
         /// </summary>
         /// <param name="culture"></param>
-        /// <param name="url">
+        /// <param name="path">
         /// There are several formats:
         /// 1.{culture}
-        /// 2.{culture}/{url}
+        /// 2.{culture}/{path}
         /// </param>
         /// <returns></returns>
-        public async Task<IActionResult> EntryByCulture(string culture, string url="/")
+        public async Task<IActionResult> EntryWithCulture(string culture, string path = "/")
         {
-            return await EntryViewResult(url, culture);
+            return await EntryViewResult(culture, path);
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="path"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Entry(string url="/")
+        public async Task<IActionResult> Entry(string path = "/")
         {
-            return await EntryViewResult(url, null);
+            return await EntryViewResult(null, path);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="url"></param>
         /// <param name="culture"></param>
+        /// <param name="path"></param>
         /// <returns></returns>
-        protected async Task<IActionResult> EntryViewResult(string url, string culture = null)
+        protected async Task<IActionResult> EntryViewResult(string culture = null, string path = "/")
         {
-            var section = await GetSection(url);
+            var section = await GetSection(path);
             if (section == null)
             {
                 return NotFound();
@@ -93,8 +94,8 @@ namespace Dignite.Cms.Public.Web.Controllers
             }
             else
             {
-                /* Remove the default culture prefix and redirect to the new Url.
-                 * Example: the default culture is en, the current request path is /en/about, will jump to /about Url
+                /* Remove the default culture prefix and redirect to the new path.
+                 * Example: the default culture is en, the current request path is /en/about, will jump to /about path
                  */
                 if (culture.Equals(defaultCulture, StringComparison.OrdinalIgnoreCase) 
                     && Request.Path.Value.EnsureEndsWith('/').StartsWith($"/{culture}/"))
@@ -119,7 +120,7 @@ namespace Dignite.Cms.Public.Web.Controllers
                 );
 
             //
-            var entry = await GetEntry(section, url, culture);
+            var entry = await GetEntry(culture, section, path);
             if (entry != null)
             {
                 var viewModel = new EntryViewModel(entry, section);
@@ -129,7 +130,7 @@ namespace Dignite.Cms.Public.Web.Controllers
             {
                 if (!culture.Equals(defaultCulture, StringComparison.OrdinalIgnoreCase))
                 {
-                    return Redirect(url.EnsureStartsWith('/'));
+                    return Redirect(path.EnsureStartsWith('/'));
                 }
                 else
                 {
@@ -138,7 +139,7 @@ namespace Dignite.Cms.Public.Web.Controllers
             }
         }
 
-        protected async Task<SectionDto> GetSection(string url = null)
+        protected async Task<SectionDto> GetSection(string path)
         {
             var host = $"{Request.Scheme}://{Request.Host.Value}";
             var site = await _sitePublicAppService.FindByHostAsync(host);
@@ -146,51 +147,34 @@ namespace Dignite.Cms.Public.Web.Controllers
             if (site == null)
                 return null;
 
-            if (url.IsNullOrEmpty() || url == "/")
+            if (path.IsNullOrEmpty() || path == "/")
             {
                 return await _sectionPublicAppService.GetDefaultAsync(site.Id);
             }
             else
             {
-                return await _sectionPublicAppService.FindByUrlAsync(site.Id,url);
+                return await _sectionPublicAppService.FindByEntryPathAsync(site.Id, path);
             }
         }
 
-        protected async Task<EntryDto> GetEntry(SectionDto section, string url, string culture)
+        protected async Task<EntryDto> GetEntry(string culture, SectionDto section, string path)
         {
-            EntryDto entry = null;
-            // If the section type is single, then the slug value of the entry is the name of the section
-            if (section.Type == Cms.Sections.SectionType.Single) 
+            var slug = ExtractSlug(section.Route, path);
+            if (slug.IsNullOrEmpty())
             {
-                var result = await _entryPublicAppService.GetListAsync(new GetEntriesInput { 
-                    SectionId = section.Id,
-                    SkipCount=0,
-                    MaxResultCount=1,
-                    Culture = culture
-                });
-                entry = result.Items.Any() ? result.Items[0] : null;
-            }
-            else
-            {
-                string slug = null;
-                //Extract Slug value from URL
-                var extractResult = FormattedStringValueExtracter.Extract(url.RemovePreFix("/").RemovePostFix("/"), section.Route.RemovePreFix("/").RemovePostFix("/"), ignoreCase: true);
-                if (extractResult.IsMatch)
-                {
-                    slug = extractResult.Matches.First(m => m.Name.Equals(nameof(EntryDto.Slug), StringComparison.OrdinalIgnoreCase)).Value;
-                    //
-                    entry = await _entryPublicAppService.FindBySlugAsync(new FindBySlugInput
-                    {
-                        Culture = culture,
-                        SectionId = section.Id,
-                        Slug = slug
-                    });
-                }
+                if (section.Type == Cms.Sections.SectionType.Single)
+                    slug = EntryConsts.DefaultSlug;
                 else
-                {
                     throw new Volo.Abp.AbpException($"The structure type section and channel type section route of the entry must contain {{slug}}");
-                }
             }
+
+            EntryDto entry = await _entryPublicAppService.FindBySlugAsync(
+                                                            new FindBySlugInput
+                                                                {
+                                                                    Culture = culture,
+                                                                    SectionId = section.Id,
+                                                                    Slug = slug
+                                                                });
 
 
             if (entry != null)
@@ -202,13 +186,26 @@ namespace Dignite.Cms.Public.Web.Controllers
         }
 
 
-        protected void SetEntryUrl(EntryDto entry)
+        protected virtual void SetEntryUrl(EntryDto entry)
         {
             var host = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
             if (entry.Url.StartsWith(host, StringComparison.OrdinalIgnoreCase))
             {
                 entry.Url = entry.Url.RemovePreFix(StringComparison.OrdinalIgnoreCase, host);
             }
+        }
+
+        protected virtual string ExtractSlug(string route, string path)
+        {
+            string slug = null;
+            //Extract Slug value from path
+            var extractResult = FormattedStringValueExtracter.Extract(path.RemovePreFix("/").RemovePostFix("/"), route.RemovePreFix("/").RemovePostFix("/"), ignoreCase: true);
+            if (extractResult.IsMatch)
+            {
+                slug = extractResult.Matches.FirstOrDefault(m => m.Name.Equals(nameof(EntryDto.Slug), StringComparison.InvariantCultureIgnoreCase))?.Value;
+            }
+
+            return slug;
         }
     }
 }

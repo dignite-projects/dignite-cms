@@ -16,16 +16,16 @@ namespace Dignite.Cms.Public.Web.Builder
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "cms-home",
+                    name: RouteConsts.HomeRouteName,
                     pattern: "/",
                     defaults: new { controller = CmsController.ControllerName, action = "Index" });
                 endpoints.MapControllerRoute(
-                    name: "cms-entry-by-culture",
-                    pattern: "{"+ CultureRouteSegmentConstraint.RouteSegmentName + ":"+ CultureRouteSegmentConstraint.RouteConstraintName + "}/{*url}",
+                    name: RouteConsts.EntryWithCultureRouteName,
+                    pattern: "{"+ CultureRouteSegmentConstraint.RouteSegmentName + ":"+ CultureRouteSegmentConstraint.RouteConstraintName + "}/{*path}",
                     defaults: new { controller = CmsController.ControllerName, action = "EntryByCulture" });
                 endpoints.MapControllerRoute(
-                    name: "cms-entry",
-                    pattern: "{*url:regex(^(?!swagger/).*)}", //TODO: Use an options to configure the regular expression for the url
+                    name: RouteConsts.EntryRouteName,
+                    pattern: "{*path:regex(^(?!swagger/).*)}", //TODO: Use an options to configure the regular expression for the path
                     defaults: new { controller = CmsController.ControllerName, action = "Entry" });
             });
 

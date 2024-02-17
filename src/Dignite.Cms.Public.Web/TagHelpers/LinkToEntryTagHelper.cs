@@ -79,7 +79,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             }
             else
             {
-                url = urlHelper.ActionLink(nameof(CmsController.EntryByCulture), CmsController.ControllerName, new { culture = entry.Culture, url });
+                url = urlHelper.ActionLink(nameof(CmsController.EntryWithCulture), CmsController.ControllerName, new { culture = entry.Culture, url });
             }
 
             //Since the URL is encoded in the ActionLink method, it is decoded here

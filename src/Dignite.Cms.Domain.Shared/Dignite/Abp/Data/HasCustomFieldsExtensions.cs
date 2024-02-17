@@ -1,7 +1,9 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
 using JetBrains.Annotations;
 using Volo.Abp;
 using Volo.Abp.Data;
+using Volo.Abp.Reflection;
 
 namespace Dignite.Abp.Data;
 
@@ -29,14 +31,18 @@ public static class HasCustomFieldsExtensions
         {
             return source.GetProperty<TField>(name, defaultValue);
         }
-        catch (AbpException)
+        catch (Exception exc)
         {
             var value = source.GetProperty(name);
             if (value == null)
             {
                 return defaultValue;
             }
-            return JsonSerializer.Deserialize<TField>(value.ToString(), new JsonSerializerOptions(JsonSerializerDefaults.Web));
+
+            if (TypeHelper.IsPrimitiveExtended(typeof(TField)))
+                return ((JsonElement)value).Deserialize<TField>(JsonSerializerOptions.Default);
+            else
+                return JsonSerializer.Deserialize<TField>(value.ToString(), new JsonSerializerOptions(JsonSerializerDefaults.Web));
         }
     }
 

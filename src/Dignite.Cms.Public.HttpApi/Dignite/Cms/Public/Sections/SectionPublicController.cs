@@ -30,15 +30,15 @@ namespace Dignite.Cms.Public.Sections
         /// 
         /// </summary>
         /// <param name="siteId"></param>
-        /// <param name="url">
-        /// 
+        /// <param name="entryPath">
+        /// The entry path does not contain culture.
         /// </param>
         /// <returns></returns>
         [HttpGet]
-        [Route("find-by-url")]
-        public async Task<SectionDto> FindByUrlAsync(Guid siteId, string url)
+        [Route("find-by-entry-path")]
+        public async Task<SectionDto> FindByEntryPathAsync(Guid siteId, string entryPath)
         {
-            return await _sectionAppService.FindByUrlAsync(siteId, url);
+            return await _sectionAppService.FindByEntryPathAsync(siteId, entryPath);
         }
 
         [HttpGet]
@@ -49,7 +49,7 @@ namespace Dignite.Cms.Public.Sections
         }
 
         [HttpGet]
-        [Route("get-default")]
+        [Route("get-default-by-siteId/{siteId:guid}")]
         public async Task<SectionDto> GetDefaultAsync(Guid siteId)
         {
             return await _sectionAppService.GetDefaultAsync(siteId);

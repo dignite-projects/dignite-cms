@@ -13,11 +13,11 @@ namespace Dignite.Cms.Public.Sections
         /// 
         /// </summary>
         /// <param name="siteId"></param>
-        /// <param name="url">
-        /// 
+        /// <param name="entryPath">
+        /// The entry path does not contain culture.
         /// </param>
         /// <returns></returns>
-        Task<SectionDto> FindByUrlAsync(Guid siteId, string url);
+        Task<SectionDto> FindByEntryPathAsync(Guid siteId, string entryPath);
 
         Task<SectionDto> GetDefaultAsync(Guid siteId);
     }

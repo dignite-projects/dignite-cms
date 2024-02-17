@@ -26,12 +26,12 @@ public partial class SectionPublicClientProxy : ClientProxyBase<ISectionPublicAp
         });
     }
 
-    public virtual async Task<SectionDto> FindByUrlAsync(Guid siteId, string url)
+    public virtual async Task<SectionDto> FindByEntryPathAsync(Guid siteId, string entryPath)
     {
-        return await RequestAsync<SectionDto>(nameof(FindByUrlAsync), new ClientProxyRequestTypeValue
+        return await RequestAsync<SectionDto>(nameof(FindByEntryPathAsync), new ClientProxyRequestTypeValue
         {
             { typeof(Guid), siteId },
-            { typeof(string), url }
+            { typeof(string), entryPath }
         });
     }
 

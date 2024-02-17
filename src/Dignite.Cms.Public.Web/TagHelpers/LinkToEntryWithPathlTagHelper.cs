@@ -10,13 +10,13 @@ namespace Dignite.Cms.Public.Web.TagHelpers
     /// <summary>
     /// Link to entry
     /// </summary>
-    [HtmlTargetElement("a", Attributes = "[entry-url]")]
-    public class LinkToEntryByUrlTagHelper : TagHelper
+    [HtmlTargetElement("a", Attributes = "[entry-path]")]
+    public class LinkToEntryWithPathlTagHelper : TagHelper
     {
         /// <summary>
-        /// Specify the url of the link to the entry
+        /// Specify the path of the link to the entry
         /// </summary>
-        public string EntryUrl { get; set; }
+        public string EntryPath { get; set; }
 
         /// <summary>
         /// Specify Culture;
@@ -37,22 +37,22 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         {
             var urlHelper = ViewContext.GetUrlHelper();
 
-            if (urlHelper.IsLocalUrl(EntryUrl))
+            if (urlHelper.IsLocalUrl(EntryPath))
             {
                 if (Culture.IsNullOrEmpty())
                 {
                     Culture = ViewContext.HttpContext.GetRouteValue(CultureRouteSegmentConstraint.RouteSegmentName)?.ToString();
                 }
 
-                EntryUrl = ("~/" + Culture).EnsureEndsWith('/') + EntryUrl.RemovePreFix("~").RemovePreFix("/");
+                EntryPath = ("~/" + Culture).EnsureEndsWith('/') + EntryPath.RemovePreFix("~").RemovePreFix("/");
 
                 if (!Host.IsNullOrEmpty())
                 {
-                    EntryUrl = Host + urlHelper.Content(EntryUrl);
+                    EntryPath = Host + urlHelper.Content(EntryPath);
                 }
             }
 
-            output.Attributes.SetAttribute("href", urlHelper.Content(EntryUrl));
+            output.Attributes.SetAttribute("href", urlHelper.Content(EntryPath));
         }
     }
 }

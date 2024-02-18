@@ -5,9 +5,7 @@ using Dignite.Cms.Public.Sites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 
@@ -33,7 +31,7 @@ namespace Dignite.Cms.Public.Entries
             }
             var entry = await _entryRepository.FindBySlugAsync(input.Culture,input.SectionId,input.Slug);
 
-            return GetEntryDto(section,entry);
+            return ObjectMapper.Map<Entry, EntryDto>(entry);
         }
 
         /// <summary>
@@ -44,8 +42,7 @@ namespace Dignite.Cms.Public.Entries
         public async Task<EntryDto> FindPrevAsync(Guid id)
         {
             var entry = await _entryRepository.FindPrevAsync(id);
-            var section = await _sectionPublicAppService.GetAsync(entry.SectionId);
-            return GetEntryDto(section, entry);
+            return ObjectMapper.Map<Entry, EntryDto>(entry);
         }
 
         /// <summary>
@@ -56,8 +53,7 @@ namespace Dignite.Cms.Public.Entries
         public async Task<EntryDto> FindNextAsync(Guid id)
         {
             var entry = await _entryRepository.FindNextAsync(id);
-            var section = await _sectionPublicAppService.GetAsync(entry.SectionId);
-            return GetEntryDto(section, entry);
+            return ObjectMapper.Map<Entry, EntryDto>(entry);
         }
 
 
@@ -127,105 +123,9 @@ namespace Dignite.Cms.Public.Entries
                 }
             }
 
-            //
-            foreach (var entry in dto)
-            {
-                SetEntryUrl(entry, section);
-            }
-
             return new PagedResultDto<EntryDto>(count, dto);
         }
 
 
-        protected EntryDto GetEntryDto(SectionDto section, Entry entry)
-        {
-            if (entry == null)
-            {
-                return null;
-            }
-
-            var dto = ObjectMapper.Map<Entry, EntryDto>(entry);
-            SetEntryUrl(dto, section);
-
-            return dto;
-        }
-
-        /// <summary>
-        /// set entry url
-        /// </summary>
-        /// <param name="entry"></param>
-        /// <param name="section"></param>
-        protected void SetEntryUrl(EntryDto entry, SectionDto section)
-        {
-            var routeParameters = GetRouteParameters(section.Route).ToArray();
-            var siteDefaultLanguage = section.Site.GetDefaultLanguage();
-            entry.Url = section.Route;
-
-            //If there is a routing parameter, get the routing parameter value and update the URL
-            if (routeParameters.Any()) 
-            {
-                foreach (string routePerameter in routeParameters)
-                {
-                    var routeParameterName = routePerameter.RemovePreFix("{").RemovePostFix("}");
-                    if (routeParameterName.IndexOf(':') > -1)
-                    {
-                        var propertyName = routeParameterName.Split(':')[0];
-                        var parameterFormat = $"{{0:{routeParameterName.Split(':')[1]}}}";
-                        var propertyValue = GetPropertyValue(entry, propertyName);
-                        entry.Url = entry.Url.Replace(routePerameter, string.Format(parameterFormat, propertyValue));
-                    }
-                    else
-                    {
-                        var propertyValue = GetPropertyValue(entry, routeParameterName);
-                        entry.Url = entry.Url.Replace(routePerameter, propertyValue.ToString());
-                    }
-                }
-            }
-
-            //splice Culture path
-            if (!siteDefaultLanguage.CultureName.Equals(entry.Culture, StringComparison.OrdinalIgnoreCase))
-            {
-                entry.Url = entry.Culture + entry.Url.EnsureStartsWith('/');
-            }
-
-            entry.Url = section.Site.Host.EnsureEndsWith('/') + entry.Url.RemovePreFix("/");
-        }
-
-        /// <summary>
-        /// Get Route Parameters
-        /// </summary>
-        /// <param name="route"></param>
-        /// <returns></returns>
-        private IEnumerable<string> GetRouteParameters(string route)
-        {
-            Regex regex = new Regex(@"\{[a-zA-Z][\w:\-.\/]*\}");
-            var matchCollection = regex.Matches(route);
-
-            for (int i = 0; i < matchCollection.Count; i++)
-            {
-                yield return matchCollection[i].Groups[0].Value;
-            }
-        }
-
-        /// <summary>
-        /// Using reflection to get the value of an entry property
-        /// </summary>
-        /// <param name="entry"></param>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
-        /// <exception cref="Volo.Abp.AbpException"></exception>
-        private object GetPropertyValue(EntryDto entry, string propertyName)
-        {
-            Type type = entry.GetType();
-            var property = type.GetProperty(propertyName, BindingFlags.Public | BindingFlags.IgnoreCase| BindingFlags.Instance);
-            if (property != null)
-            {
-                return property.GetValue(entry, new object[0]);
-            }
-            else
-            {
-                throw new Volo.Abp.AbpException($"The entry property corresponding to the routing parameter {propertyName} was not found in the entry");
-            }
-        }
     }
 }

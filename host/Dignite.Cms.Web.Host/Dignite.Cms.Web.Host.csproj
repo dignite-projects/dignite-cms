@@ -34,9 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Dignite.Cms.Web\Dignite.Cms.Web.csproj" />
     <ProjectReference Include="..\..\src\Dignite.Cms.HttpApi.Client\Dignite.Cms.HttpApi.Client.csproj" />
     <ProjectReference Include="..\..\src\Dignite.Cms.HttpApi\Dignite.Cms.HttpApi.csproj" />
+    <ProjectReference Include="..\..\src\Dignite.Cms.Public.Web\Dignite.Cms.Public.Web.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Host.Shared\Dignite.Cms.Host.Shared.csproj" />
   </ItemGroup>
 

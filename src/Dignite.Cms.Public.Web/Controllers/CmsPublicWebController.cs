@@ -20,7 +20,7 @@ using Volo.Abp.Text.Formatting;
 namespace Dignite.Cms.Public.Web.Controllers
 {
     [ControllerName(ControllerName)]
-    public class CmsController : AbpController
+    public class CmsPublicWebController : AbpController
     {
         public const string ControllerName = "Cms";
 
@@ -30,7 +30,7 @@ namespace Dignite.Cms.Public.Web.Controllers
         private readonly IOptions<AbpLocalizationOptions> _localizationOptions;
 
 
-        public CmsController(ISitePublicAppService sitePublicAppService, ISectionPublicAppService sectionPublicAppService, IEntryPublicAppService entryPublicAppService,
+        public CmsPublicWebController(ISitePublicAppService sitePublicAppService, ISectionPublicAppService sectionPublicAppService, IEntryPublicAppService entryPublicAppService,
             IOptions<AbpLocalizationOptions> localizationOptions)
         {
             LocalizationResource = typeof(CmsResource);
@@ -175,25 +175,10 @@ namespace Dignite.Cms.Public.Web.Controllers
                                                                     SectionId = section.Id,
                                                                     Slug = slug
                                                                 });
-
-
-            if (entry != null)
-            {
-                SetEntryUrl(entry);
-            }
-
             return entry;
         }
 
 
-        protected virtual void SetEntryUrl(EntryDto entry)
-        {
-            var host = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
-            if (entry.Url.StartsWith(host, StringComparison.OrdinalIgnoreCase))
-            {
-                entry.Url = entry.Url.RemovePreFix(StringComparison.OrdinalIgnoreCase, host);
-            }
-        }
 
         protected virtual string ExtractSlug(string route, string path)
         {

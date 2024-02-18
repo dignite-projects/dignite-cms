@@ -96,6 +96,5 @@ $projects = (
     "src/Dignite.Cms.Public.Application.Contracts",
     "src/Dignite.Cms.Public.HttpApi",
     "src/Dignite.Cms.Public.HttpApi.Client",
-    "src/Dignite.Cms.Public.Web",
-    "src/Dignite.Cms.Web"
+    "src/Dignite.Cms.Public.Web"
 )

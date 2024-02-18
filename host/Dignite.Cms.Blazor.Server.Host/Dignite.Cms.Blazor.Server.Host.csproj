@@ -50,7 +50,6 @@
 		<PackageReference Include="Volo.Abp.BlobStoring.FileSystem" Version="7.4.5" />
         <ProjectReference Include="..\..\src\Dignite.Cms.EntityFrameworkCore\Dignite.Cms.EntityFrameworkCore.csproj" />
         <ProjectReference Include="..\..\src\Dignite.Cms.HttpApi\Dignite.Cms.HttpApi.csproj" />
-        <ProjectReference Include="..\..\src\Dignite.Cms.Web\Dignite.Cms.Web.csproj" />
         <ProjectReference Include="..\Dignite.Cms.Host.Shared\Dignite.Cms.Host.Shared.csproj" />
     </ItemGroup>
 

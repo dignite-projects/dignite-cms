@@ -11,7 +11,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
     /// Link to entry
     /// </summary>
     [HtmlTargetElement("a", Attributes = "[entry-path]")]
-    public class LinkToEntryWithPathlTagHelper : TagHelper
+    public class LinkToEntryWithPathTagHelper : TagHelper
     {
         /// <summary>
         /// Specify the path of the link to the entry

@@ -10,7 +10,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
 {
     public class CmsFieldTagHelper : TagHelper
     {
-        private const string partialFileFolder = "cms/fields";
+        private const string partialFileFolder = "Cms/Fields";
 
         public FormField Field { get; set; }
 

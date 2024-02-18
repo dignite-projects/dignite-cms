@@ -136,18 +136,9 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             });
 
 
-            result.Items.ForEach(entry => SetEntryUrl(entry));
             var model = new EntryListViewModel(Section, result.Items, (int)result.TotalCount, CurrentPage, ResultCount.Value);
             return model;
         }
 
-        protected void SetEntryUrl(EntryDto entry)
-        {
-            var hostAddress = _httpContextAccessor.HttpContext.Request.Scheme + "://" + _httpContextAccessor.HttpContext.Request.Host;
-            if (entry.Url.StartsWith(hostAddress, StringComparison.OrdinalIgnoreCase))
-            {
-                entry.Url = entry.Url.RemovePreFix(StringComparison.OrdinalIgnoreCase, hostAddress);
-            }
-        }
     }
 }

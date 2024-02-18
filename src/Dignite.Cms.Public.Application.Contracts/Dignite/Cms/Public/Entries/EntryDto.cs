@@ -74,7 +74,5 @@ namespace Dignite.Cms.Public.Entries
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public CmsUserDto Author { get; set; }
-
-        public string Url { get; set; }
     }
 }

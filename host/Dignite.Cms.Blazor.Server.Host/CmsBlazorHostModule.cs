@@ -9,7 +9,6 @@ using Dignite.Cms.Blazor.Server.Host.Menus;
 using Dignite.Cms.EntityFrameworkCore;
 using Dignite.Cms.Localization;
 using Dignite.Cms.MultiTenancy;
-using Dignite.Cms.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Extensions.DependencyInjection;
@@ -94,8 +93,7 @@ namespace Dignite.Cms.Blazor.Server.Host;
     typeof(AbpSettingManagementApplicationModule),
     typeof(AbpSettingManagementEntityFrameworkCoreModule),
     typeof(AbpBlobStoringFileSystemModule),
-    typeof(CmsAdminBlazorServerModule),
-    typeof(CmsWebModule)
+    typeof(CmsAdminBlazorServerModule)
 )]
 public class CmsBlazorHostModule : AbpModule
 {

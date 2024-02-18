@@ -15,7 +15,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Dignite.Cms.Localization;
 using Dignite.Cms.MultiTenancy;
-using Dignite.Cms.Web;
+using Dignite.Cms.Public.Web;
 using StackExchange.Redis;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Authentication.OAuth;
@@ -51,11 +51,15 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using Dignite.Cms.Public.Web.Builder;
+using Dignite.Cms.Public.Web.Localization;
+using CmsResource = Dignite.Cms.Localization.CmsResource;
+using Volo.Abp.Localization;
 
 namespace Dignite.Cms;
 
 [DependsOn(
-    typeof(CmsWebModule),
+    typeof(CmsPublicWebModule),
     typeof(CmsHttpApiClientModule),
     typeof(CmsHttpApiModule),
     typeof(AbpAspNetCoreAuthenticationOpenIdConnectModule),
@@ -100,6 +104,17 @@ public class CmsWebHostModule : AbpModule
         ConfigureMenu(configuration);
         ConfigureCache(configuration);
         ConfigureUrls(configuration);
+
+
+        Configure<AbpLocalizationOptions>(options =>
+        {
+            options.Languages.Add(new LanguageInfo("en", "en", "English"));
+            options.Languages.Add(new LanguageInfo("ja", "ja", "日本語"));
+            options.Languages.Add(new LanguageInfo("zh-hans", "zh-Hans", "简体中文"));
+            options.Languages.Add(new LanguageInfo("zh-hant", "zh-Hant", "繁體中文"));
+        });
+
+
         ConfigureAuthentication(context, configuration);
         ConfigureAutoMapper();
         ConfigureVirtualFileSystem(hostingEnvironment);
@@ -186,7 +201,7 @@ public class CmsWebHostModule : AbpModule
             {
                 options.FileSets.ReplaceEmbeddedByPhysical<CmsDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}..{0}src{0}Dignite.Cms.Domain.Shared", Path.DirectorySeparatorChar)));
                 options.FileSets.ReplaceEmbeddedByPhysical<CmsApplicationContractsModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}..{0}src{0}Dignite.Cms.Application.Contracts", Path.DirectorySeparatorChar)));
-                options.FileSets.ReplaceEmbeddedByPhysical<CmsWebModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}..{0}src{0}Dignite.Cms.Web", Path.DirectorySeparatorChar)));
+                options.FileSets.ReplaceEmbeddedByPhysical<CmsPublicWebModule>(Path.Combine(hostingEnvironment.ContentRootPath, string.Format("..{0}..{0}src{0}Dignite.Cms.Public.Web", Path.DirectorySeparatorChar)));
             });
         }
     }
@@ -241,7 +256,17 @@ public class CmsWebHostModule : AbpModule
             app.UseMultiTenancy();
         }
 
-        app.UseAbpRequestLocalization();
+        
+        app.UseAbpRequestLocalization(options =>
+        {
+            options.AddInitialRequestCultureProvider(
+                new CmsRouteRequestCultureProvider() //Read regions from CMS routing and convert to localization
+            );
+        });
+
+        //Configuring CMS Routing
+        app.UseCmsRoute();
+
         app.UseAuthorization();
 
         app.UseSwagger();

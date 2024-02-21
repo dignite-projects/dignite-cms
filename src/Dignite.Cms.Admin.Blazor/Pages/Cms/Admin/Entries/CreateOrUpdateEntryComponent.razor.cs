@@ -90,8 +90,9 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         private async Task ActivateAsync(Guid id)
         {
             await AppService.ActivateAsync(id);
-            AllVersions.ForEach(v => v.IsActivatedVersion = false);
-            AllVersions.Single(v=>v.Id==id).IsActivatedVersion = true;
+            AllVersions = (await AppService.GetAllVersionsAsync(EditingEntryId.Value))
+                            .Items.ToList();
+            ((UpdateEntryInput)Entry).ConcurrencyStamp = AllVersions.Single(v => v.Id == id).ConcurrencyStamp;
         }
         private void EditVersion(Guid id)
         {

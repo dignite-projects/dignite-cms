@@ -87,12 +87,12 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                 SaveAsDraftAsync,
                 IconName.Save,
                 color: Color.Info,
-                requiredPolicyName: CmsAdminPermissions.Entry.Update);
+                requiredPolicyName: CmsAdminPermissions.Entry.Create);
 
             Toolbar.AddButton(L["Publish"],
                 SaveAsync,
                 IconName.PaperPlane,
-                requiredPolicyName: CmsAdminPermissions.Entry.Update);
+                requiredPolicyName: CmsAdminPermissions.Entry.Create);
             await InvokeAsync(StateHasChanged);
         }
 

@@ -30,12 +30,12 @@ namespace Dignite.Cms.Entries
             Guid? initialVersionId, string versionNotes,Guid? tenantId)
         {
             var entryType = await _entryTypeRepository.GetAsync(entryTypeId);
-            await ExistForTypeAsync(culture, entryType);
-            await CheckExtraPropertiesAsync(entryType,extraProperties);
             if (!initialVersionId.HasValue)
             {
+                await ExistForTypeAsync(culture, entryType);
                 await CheckSlugExistenceAsync(culture, entryType.SectionId, slug);
             }
+            await CheckExtraPropertiesAsync(entryType,extraProperties);
 
             var order = (await _entryRepository.GetMaxOrderAsync(culture,entryType.SectionId,  parentId)) + 1;
             var entry = new Entry(
@@ -60,7 +60,15 @@ namespace Dignite.Cms.Entries
 
 
             //          
-            return await _entryRepository.InsertAsync(entry);
+            entry =  await _entryRepository.InsertAsync(entry);
+
+            //
+            if (initialVersionId.HasValue && status == EntryStatus.Published)
+            {
+                await ActivateAsync(entry);
+            }
+
+            return entry;
         }
 
         public virtual async Task<Entry> UpdateAsync(
@@ -95,7 +103,12 @@ namespace Dignite.Cms.Entries
             }
 
             //
-            return await _entryRepository.UpdateAsync(entry);
+            entry = await _entryRepository.UpdateAsync(entry);
+            if (entry.InitialVersionId.HasValue && !entry.IsActivatedVersion && status == EntryStatus.Published)
+            {
+                await ActivateAsync(entry);
+            }
+            return entry;
         }
 
         public virtual async Task<List<Entry>> GetAllVisionsAsync(Entry entry)

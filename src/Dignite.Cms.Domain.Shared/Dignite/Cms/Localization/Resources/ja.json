@@ -77,7 +77,6 @@
     "Activated": "活性化",
     "Activate": "アクティブ化",
     "Editing": "編集",
-    "SaveAsDraft": "下書きとして保存",
     "Publish": "出版",
     "Enum:EntryStatus:Draft": "ドラフト",
     "Enum:EntryStatus:Published": "出版",

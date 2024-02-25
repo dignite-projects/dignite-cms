@@ -1,0 +1,50 @@
+{
+  "items": [
+    {
+      "text": "快速入门",
+      "items": [
+        {
+          "text": "运行系统",
+          "path": "Notifications.md"
+        },
+        {
+          "text": "管理后台",
+          "path": "Notification-Center.md"
+        },
+        {
+          "text": "运行网站",
+          "path": "Blazor-Notification-Center.md"
+        }
+      ]
+    },    
+    {
+      "text": "安装CMS模块",
+      "path": "Contribution/Index.md"
+    },   
+    {
+      "text": "系统结构",
+      "path": "描述CMS的字段、站点、版块、条目类型、条目的逻辑关系"
+    },  
+    {
+      "text": "网站开发",
+      "items": [
+        {
+          "text": "基础知识",
+          "path": "讲解Controller、Action、ViewModel、CMS路由、获取条目URL的扩展方法"
+        },
+        {
+          "text": "Tag Helpers",
+          "path": "Notification-Center.md"
+        },
+        {
+          "text": "远程开发",
+          "path": ""
+        }
+      ]
+    },  
+    {
+      "text": "贡献指南",
+      "path": "Contribution/Index.md"
+    }
+  ]
+}

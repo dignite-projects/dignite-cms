@@ -77,7 +77,6 @@
     "Activated": "Activated",
     "Activate": "Activate",
     "Editing": "Editing",
-    "SaveAsDraft": "Save As Draft",
     "Publish": "Publish",
     "Enum:EntryStatus:Draft": "Draft",
     "Enum:EntryStatus:Published": "Published",

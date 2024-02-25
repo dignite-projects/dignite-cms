@@ -68,7 +68,7 @@ namespace Dignite.Cms.Sections
         {
             return await (await GetQueryableAsync(siteId, filter, isActive))
                 .IncludeDetails(includeDetails)
-                .OrderBy(sorting.IsNullOrEmpty() ? $"{nameof(Section.Template)} asc" : sorting)
+                .OrderBy(sorting.IsNullOrEmpty() ? $"{nameof(Section.CreationTime)} asc" : sorting)
                 .PageBy(skipCount, maxResultCount)
                 .ToListAsync(GetCancellationToken(cancellationToken));
         }

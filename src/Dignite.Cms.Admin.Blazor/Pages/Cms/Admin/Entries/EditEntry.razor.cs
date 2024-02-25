@@ -55,7 +55,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                 CancelAsync,
                 color: Color.Light);
 
-            Toolbar.AddButton(L["SaveAsDraft"],
+            Toolbar.AddButton(L["Save"],
                 SaveAsDraftAsync,
                 color: Color.Info,
                 requiredPolicyName: CmsAdminPermissions.Entry.Update);

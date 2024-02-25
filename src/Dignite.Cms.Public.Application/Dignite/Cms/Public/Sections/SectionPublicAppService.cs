@@ -86,12 +86,16 @@ namespace Dignite.Cms.Public.Sections
 
         protected async Task<SectionDto> MatchingSectionWithEntryPath(List<Section> sections, string entryPath)
         {
-            entryPath = entryPath.RemovePreFix("/").RemovePostFix("/");
+            entryPath = entryPath.EnsureStartsWith('/').EnsureEndsWith('/');
             foreach (var section in sections.OrderByDescending(s => s.Route))
             {
-                var route = section.Route.RemovePreFix("/").RemovePostFix("/");
+                var route = section.Route.EnsureStartsWith('/').EnsureEndsWith('/');
                 var extractResult = FormattedStringValueExtracter.Extract(entryPath, route, ignoreCase: true);
-                if (extractResult.IsMatch)
+                if (
+                    (!route.Contains("{slug}", StringComparison.InvariantCultureIgnoreCase) && route.Equals(entryPath,StringComparison.InvariantCultureIgnoreCase))
+                    ||
+                    (route.Contains("{slug}", StringComparison.InvariantCultureIgnoreCase) && extractResult.IsMatch)
+                    )
                 {
                     var dto = ObjectMapper.Map<Section, SectionDto>(
                         section

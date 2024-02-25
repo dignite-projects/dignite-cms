@@ -149,7 +149,9 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         protected override Task UpdateGetListInputAsync()
         {
             GetListInput.SectionId = SectionId.HasValue ? SectionId.Value : Guid.Empty;
-            GetListInput.Culture = CultureName.IsNullOrEmpty() ? "en" : CultureName;
+            GetListInput.Culture = CultureName.IsNullOrEmpty()
+                ? CurrentSite?.Languages.OrderByDescending(l => l.IsDefault).FirstOrDefault()?.CultureName 
+                : CultureName;
             return base.UpdateGetListInputAsync();
         }
 

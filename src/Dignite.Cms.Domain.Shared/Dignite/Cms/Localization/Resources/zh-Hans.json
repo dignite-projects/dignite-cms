@@ -78,7 +78,6 @@
     "Activated": "激活",
     "Activate": "激活",
     "Editing": "编辑中",
-    "SaveAsDraft": "保存为草稿",
     "Publish": "发布",
     "Enum:EntryStatus:Draft": "草稿",
     "Enum:EntryStatus:Published": "发布",

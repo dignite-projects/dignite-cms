@@ -44,6 +44,7 @@
     "TableColumnName": "Column Name",
     "TableColumnForm": "Form Control",
     "ColumnNameAlreadyExist": "Column Name Already Exist.",
+    "FormControl:Entry": "Entry",
     "FieldName{0}AlreadyExist": "Field Name \"{0}\" Already Exist.",
     "Enum:SectionType:Single": "Single Page",
     "Enum:SectionType:Structure": "Structure",

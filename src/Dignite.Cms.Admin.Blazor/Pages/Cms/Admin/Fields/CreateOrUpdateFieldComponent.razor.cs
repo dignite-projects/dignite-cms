@@ -78,7 +78,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Fields
                 e.Status = ValidationStatus.Error;
             }
         }
-        void DisplayNameTextboxBlur()
+        void DisplayNameTextEditBlur()
         {
             if (!Entity.DisplayName.IsNullOrEmpty() && Entity.Name.IsNullOrEmpty())
             {

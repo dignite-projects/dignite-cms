@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Dignite.Abp.DynamicForms.Textbox;
+using Dignite.Abp.DynamicForms.TextEdit;
 using Dignite.Cms.Entries;
 using JetBrains.Annotations;
 

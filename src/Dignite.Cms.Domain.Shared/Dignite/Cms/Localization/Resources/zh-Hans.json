@@ -43,6 +43,7 @@
     "TableColumnDisplayName": "列标题",
     "TableColumnName": "列名",
     "TableColumnForm": "表单控件",
+    "FormControl:Entry": "条目",
     "ColumnNameAlreadyExist": "列名已存在.",
     "FieldName{0}AlreadyExist": "字段名 \"{0}\" 已存在.",
     "Enum:SectionType:Single": "单页",

@@ -43,6 +43,7 @@
     "TableColumnDisplayName": "列表示名",
     "TableColumnName": "列名",
     "TableColumnForm": "フォームコントロール",
+    "FormControl:Entry": "ントリー",
     "ColumnNameAlreadyExist": "列名は既に存在しています。",
     "FieldName{0}AlreadyExist": "フィールド名 \"{0}\" は既に存在しています。",
     "Enum:SectionType:Single": "単ページ",

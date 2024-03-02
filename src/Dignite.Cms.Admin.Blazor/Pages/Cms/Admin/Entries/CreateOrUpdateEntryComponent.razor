@@ -1,6 +1,7 @@
 ﻿@using Dignite.Abp.DynamicForms;
 @using Dignite.Abp.DynamicForms.Components;
 @using Dignite.Abp.Data;
+@using Dignite.Cms.Admin.Blazor.Components
 @using Dignite.Cms.Admin.Entries;
 @using Dignite.Cms.Admin.Sections;
 @using Dignite.Cms.Localization;
@@ -16,18 +17,19 @@
 
 <Row>
     <Column ColumnSize="ColumnSize.Is8.OnDesktop">
-        <Card Background="@Background.White">
+        <Card>
             <CardBody>
                 <Validation MessageLocalizer="@LH.Localize">
                     <Field>
                         <FieldLabel>@L["Title"]</FieldLabel>
-                            <TextEdit @bind-Text="@Entry.Title" Blur="TitleTextboxBlur">
+                            <TextEdit @bind-Text="@Entry.Title" Blur="TitleTextEditBlur">
                             <Feedback>
                                 <Blazorise.ValidationError/>
                             </Feedback>
                         </TextEdit>
                     </Field>
                 </Validation>
+                <CascadingValue Value="@Entry">
                 @if (CurrentEntryType != null)
                 {
                     <!------------- Custom Fields ------------------------------------->
@@ -44,12 +46,13 @@
                                 parameters.Add(
                                     nameof(IFormControlComponent.OnChangedValueAsync),
                                     EventCallback.Factory.Create<FormField>(this, OnFieldValueChanged)
-                                    );
+                                );
                                 <DynamicComponent Type="@component.GetType()" Parameters="@parameters"></DynamicComponent>
                             }
                         }
                     }   
                 }
+                </CascadingValue>
             </CardBody>
         </Card>
     </Column>
@@ -67,7 +70,7 @@
         <Validation MessageLocalizer="@LH.Localize" AsyncValidator="@CultureExistsValidatorAsync">
             <Field>
                 <Blazorise.FieldLabel>@L["Language"]</Blazorise.FieldLabel>
-                    <Select TValue="string" SelectedValue="Entry.Culture" SelectedValueChanged="@OnCultureSelectedValueChanged">
+                    <Select TValue="string" SelectedValue="Entry.Culture" SelectedValueChanged="@OnCultureSelectedValueChanged" Disabled>
                     <ChildContent>
                         @foreach (var item in Section.Site.Languages)
                         {

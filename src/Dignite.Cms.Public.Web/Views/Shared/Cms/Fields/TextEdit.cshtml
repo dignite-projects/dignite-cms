@@ -1,8 +1,23 @@
 ﻿@using Dignite.Cms.Public.Web.Models;
 @using Dignite.Abp.DynamicForms;
+@using Dignite.Abp.DynamicForms.TextEdit;
 @using Dignite.Abp.Data;
 @model EntryFieldViewModel
 @{
+    var configuration = new TextEditConfiguration(Model.Field.FormConfiguration);
 }
-
-@Model.Entry.GetField(Model.Field.Name)
+@if (configuration.Mode == TextEditMode.MultipleLine)
+{
+    var value = Model.Entry.GetField(Model.Field.Name);
+    if (value != null)
+    {
+        value = value.ToString().Replace("\r\n", "<br/>")    // Windows
+                                .Replace("\r", "<br/>")      // Old MAC
+                                .Replace("\n", "<br/>");     // Linux / UNIX
+        @Html.Raw(value)
+    }
+}
+else
+{
+    @Model.Entry.GetField(Model.Field.Name)
+}

@@ -2,7 +2,7 @@
 using Dignite.Abp.DynamicForms;
 using Dignite.Abp.DynamicForms.Components;
 using Dignite.Abp.DynamicForms.Matrix;
-using Dignite.Abp.DynamicForms.Textbox;
+using Dignite.Abp.DynamicForms.TextEdit;
 using Dignite.Cms.Localization;
 using System;
 using System.Collections.Generic;
@@ -300,14 +300,14 @@ namespace Dignite.Cms.Admin.Blazor.Components.DynamicForms.Matrix
         }
 
 
-        private void BlockTypeDisplayNameTextboxBlur(MatrixBlockType blockType)
+        private void BlockTypeDisplayNameTextEditBlur(MatrixBlockType blockType)
         {
             if (!blockType.DisplayName.IsNullOrEmpty() && blockType.Name.IsNullOrEmpty())
             {
                 blockType.Name = SlugNormalizer.Normalize(blockType.DisplayName);
             }
         }
-        private void FieldDisplayNameTextboxBlur()
+        private void FieldDisplayNameTextEditBlur()
         {
             if (!SelectedField.DisplayName.IsNullOrEmpty() && SelectedField.Name.IsNullOrEmpty())
             {

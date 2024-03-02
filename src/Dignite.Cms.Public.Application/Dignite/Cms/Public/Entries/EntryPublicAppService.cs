@@ -25,6 +25,10 @@ namespace Dignite.Cms.Public.Entries
         public async Task<EntryDto> FindBySlugAsync(FindBySlugInput input)
         {
             var section = await _sectionPublicAppService.GetAsync(input.SectionId);
+
+            if(section==null)
+                return null;
+
             if (input.Culture.IsNullOrEmpty())
             {
                 input.Culture = section.Site.GetDefaultLanguage().CultureName;

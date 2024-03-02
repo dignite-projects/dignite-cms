@@ -19,7 +19,9 @@ namespace Dignite.Cms.Sections
         public async Task<Section> CreateAsync(Guid siteId, SectionType type, string displayName, string name, bool isDefault, bool isActive, string route, string template, Guid? tenantId)
         {
             await CheckNameExistenceAsync(siteId, name);
-            await CheckRouteExistenceAsync(siteId, route);
+
+            if(!route.IsNullOrWhiteSpace())
+                await CheckRouteExistenceAsync(siteId, route);
 
             //
             var section = new Section(
@@ -60,7 +62,7 @@ namespace Dignite.Cms.Sections
             {
                 await CheckNameExistenceAsync(section.SiteId, name);
             }
-            if (!section.Route.Equals(route, StringComparison.OrdinalIgnoreCase))
+            if (!section.Route.IsNullOrWhiteSpace() && !section.Route.Equals(route, StringComparison.OrdinalIgnoreCase))
             {
                 await CheckRouteExistenceAsync(section.SiteId, route);
             }

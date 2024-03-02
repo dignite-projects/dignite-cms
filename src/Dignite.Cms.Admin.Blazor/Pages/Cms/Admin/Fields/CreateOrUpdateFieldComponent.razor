@@ -33,7 +33,7 @@
 <Validation>
     <Field>
         <FieldLabel>@L["FieldDisplayName"]</FieldLabel>
-            <TextEdit MaxLength="FieldConsts.MaxDisplayNameLength" @bind-Text="@Entity.DisplayName" Blur="@DisplayNameTextboxBlur">
+            <TextEdit MaxLength="FieldConsts.MaxDisplayNameLength" @bind-Text="@Entity.DisplayName" Blur="@DisplayNameTextEditBlur">
                 <Feedback>
                     <Blazorise.ValidationError />
                 </Feedback>

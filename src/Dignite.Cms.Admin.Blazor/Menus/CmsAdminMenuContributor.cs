@@ -33,7 +33,7 @@ namespace Dignite.Cms.Admin.Blazor.Menus
                     CmsAdminMenus.Entries,
                     l["Entries"],
                     url: "~/cms/admin/entries",
-                    icon: "fa fa-file-text-o").RequirePermissions(CmsAdminPermissions.Entry.Default));
+                    icon: "fa fa-file").RequirePermissions(CmsAdminPermissions.Entry.Default));
 
             var settingsMenuItem = new ApplicationMenuItem(
                     CmsAdminMenus.Settings,
@@ -45,7 +45,7 @@ namespace Dignite.Cms.Admin.Blazor.Menus
                     CmsAdminMenus.Fields,
                     l["Fields"],
                     url: "~/cms/admin/fields",
-                    icon: "fa fa-pencil-square-o").RequirePermissions(CmsAdminPermissions.Field.Default));
+                    icon: "far fa-edit").RequirePermissions(CmsAdminPermissions.Field.Default));
 
             settingsMenuItem.AddItem(new ApplicationMenuItem(
                     CmsAdminMenus.Sites,
@@ -57,7 +57,7 @@ namespace Dignite.Cms.Admin.Blazor.Menus
                     CmsAdminMenus.Sections,
                     l["Sections"],
                     url: "~/cms/admin/sections",
-                    icon: "fa fa-newspaper-o").RequirePermissions(CmsAdminPermissions.Section.Default));
+                    icon: "fa fa-newspaper").RequirePermissions(CmsAdminPermissions.Section.Default));
 
             return Task.CompletedTask;
         }

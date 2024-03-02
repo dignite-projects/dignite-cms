@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
@@ -135,6 +136,13 @@ namespace Dignite.Cms.Admin.Entries
         public Task<bool> EntryTypeExistsAsync(EntryTypeExistsInput input)
         {
             return _entryAppService.EntryTypeExistsAsync(input);
+        }
+
+        [HttpGet]
+        [Route("search-by-ids")]
+        public Task<ListResultDto<EntryDto>> GetListByIdsAsync(Guid sectionId, IEnumerable<Guid> ids)
+        {
+            return _entryAppService.GetListByIdsAsync(sectionId, ids);
         }
     }
 }

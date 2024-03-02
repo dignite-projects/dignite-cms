@@ -26,7 +26,10 @@ namespace Dignite.Cms.Public.Sections
                 await _sectionRepository.GetAsync(sectionId)
                 );
 
-            await FillSectionFields(dto);
+            if (dto != null)
+            {
+                await FillSectionFields(dto);
+            }
             return dto;
         }
 
@@ -35,8 +38,10 @@ namespace Dignite.Cms.Public.Sections
             var dto = ObjectMapper.Map<Section, SectionDto>(
                 await _sectionRepository.FindByNameAsync(siteId, name)
                 );
-
-            await FillSectionFields(dto);
+            if (dto != null)
+            {
+                await FillSectionFields(dto);
+            }
             return dto;
         }
 
@@ -69,6 +74,7 @@ namespace Dignite.Cms.Public.Sections
         public async Task<SectionDto> GetDefaultAsync(Guid siteId)
         {
             var result = await _sectionRepository.GetDefaultAsync(siteId);
+
             if (result == null)
             {
                 return null;

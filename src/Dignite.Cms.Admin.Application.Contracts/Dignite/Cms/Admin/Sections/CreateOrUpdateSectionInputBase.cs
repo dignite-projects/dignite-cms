@@ -60,7 +60,6 @@ namespace Dignite.Cms.Admin.Sections
         /// 2.Route parameters must be public properties in the entry;
         /// 3.Routing parameters support formatting
         /// </remarks>
-        [Required]
         [DynamicMaxLength(typeof(SectionConsts), nameof(SectionConsts.MaxPageRouteLength))]
         [RegularExpression(SectionConsts.PageRouteRegularExpression)]
         public string Route { get; set; }
@@ -68,7 +67,6 @@ namespace Dignite.Cms.Admin.Sections
         /// <summary>
         /// asp.net core mvc Razor Page
         /// </summary>
-        [Required]
         [DynamicMaxLength(typeof(SectionConsts), nameof(SectionConsts.MaxPagetemplateLength))]
         [RegularExpression(SectionConsts.PageTemplateRegularExpression)]
         public string Template { get; set; }

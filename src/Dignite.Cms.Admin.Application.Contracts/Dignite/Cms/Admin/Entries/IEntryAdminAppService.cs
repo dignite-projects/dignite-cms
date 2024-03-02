@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -43,5 +44,7 @@ namespace Dignite.Cms.Admin.Entries
         /// <param name="input"></param>
         /// <returns></returns>
         Task<bool> EntryTypeExistsAsync(EntryTypeExistsInput input);
+
+        Task<ListResultDto<EntryDto>> GetListByIdsAsync(Guid sectionId, IEnumerable<Guid> ids);
     }
 }

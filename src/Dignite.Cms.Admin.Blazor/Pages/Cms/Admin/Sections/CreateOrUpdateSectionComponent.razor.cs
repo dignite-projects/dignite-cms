@@ -74,19 +74,18 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
         private async Task RouteValidatorAsync(ValidatorEventArgs e, CancellationToken cancellationToken)
         {
             var route = Convert.ToString(e.Value);
-            if (Entity.Type != SectionType.Single)
+            if (Entity.Type != SectionType.Single && !route.IsNullOrWhiteSpace())
             {
                 e.Status = !route.Contains("{" + nameof(Dignite.Cms.Admin.Entries.EntryDto.Slug) + "}", StringComparison.InvariantCultureIgnoreCase)
                     ? ValidationStatus.Error
                     : ValidationStatus.Success;
 
                 e.ErrorText = L["RouteVerificationTips", L[Entity.Type.ToLocalizationKey()], "{" + nameof(Dignite.Cms.Admin.Entries.EntryDto.Slug) + "}"];
-
             }
 
             if (e.Status != ValidationStatus.Error)
             {
-                if (!route.IsNullOrEmpty())
+                if (!route.IsNullOrWhiteSpace())
                 {
                     if (!route.Equals(sectionRouteForValidation, StringComparison.InvariantCultureIgnoreCase))
                     {
@@ -97,14 +96,10 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
                         e.ErrorText = L["SectionRoute{0}AlreadyExist", route];
                     }
                 }
-                else
-                {
-                    e.Status = ValidationStatus.Error;
-                }
             }
         }
 
-        void DisplayNameTextboxBlur()
+        void DisplayNameTextEditBlur()
         {
             if (!Entity.DisplayName.IsNullOrEmpty() && Entity.Name.IsNullOrEmpty())
             {

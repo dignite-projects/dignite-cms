@@ -1,7 +1,7 @@
 ﻿@using Dignite.Abp.DynamicForms
 @using Dignite.Abp.DynamicForms.Components
 @using Dignite.Abp.DynamicForms.Table
-@using Dignite.Abp.DynamicForms.Textbox
+@using Dignite.Abp.DynamicForms.TextEdit
 @using System.Collections.Immutable
 @using Dignite.Cms.Localization
 @using Volo.Abp.AspNetCore.Components.Web
@@ -32,7 +32,7 @@
                 <Blazorise.TableRow>
                     <TableRowCell>
                         <Validation Validator="((e)=>ValidateColumnDisplayName(e))">
-                            <TextEdit MaxLength="FieldConsts.MaxDisplayNameLength" @bind-Text="@column.DisplayName" Blur="@((args)=>ColumnDisplayNameTextboxBlur(column))" />
+                            <TextEdit MaxLength="FieldConsts.MaxDisplayNameLength" @bind-Text="@column.DisplayName" Blur="@((args)=>ColumnDisplayNameTextEditBlur(column))" />
                         </Validation>
                     </TableRowCell>
                     <TableRowCell>
@@ -204,7 +204,7 @@
             : ValidationStatus.Success;
     }
 
-    void ColumnDisplayNameTextboxBlur(FormField column)
+    void ColumnDisplayNameTextEditBlur(FormField column)
     {
         if (!column.DisplayName.IsNullOrEmpty() && column.Name.IsNullOrEmpty())
         {

@@ -1,5 +1,5 @@
 ﻿using Blazorise;
-using Dignite.Abp.DynamicForms.Textbox;
+using Dignite.Abp.DynamicForms.TextEdit;
 using Dignite.Cms.Admin.Fields;
 using Dignite.Cms.Localization;
 using System;

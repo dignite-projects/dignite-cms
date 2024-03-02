@@ -86,7 +86,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
         }
 
 
-        private void DisplayNameTextboxBlur()
+        private void DisplayNameTextEditBlur()
         {
             if (!Entity.DisplayName.IsNullOrEmpty() && Entity.Name.IsNullOrEmpty())
             {

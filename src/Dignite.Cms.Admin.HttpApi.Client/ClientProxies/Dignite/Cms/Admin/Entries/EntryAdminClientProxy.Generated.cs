@@ -98,4 +98,13 @@ public partial class EntryAdminClientProxy : ClientProxyBase<IEntryAdminAppServi
             { typeof(EntryTypeExistsInput), input }
         });
     }
+
+    public virtual async Task<ListResultDto<EntryDto>> GetListByIdsAsync(Guid sectionId, IEnumerable<Guid> ids)
+    {
+        return await RequestAsync<ListResultDto<EntryDto>>(nameof(GetListByIdsAsync), new ClientProxyRequestTypeValue
+        {
+            { typeof(Guid), sectionId },
+            { typeof(IEnumerable<Guid>), ids }
+        });
+    }
 }

@@ -1,10 +1,8 @@
-﻿using Dignite.Cms.Admin.Sections;
-using Dignite.Cms.Entries;
+﻿using Dignite.Cms.Entries;
 using Dignite.Cms.Sections;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 
@@ -179,6 +177,16 @@ namespace Dignite.Cms.Admin.Entries
         public async Task<bool> EntryTypeExistsAsync(EntryTypeExistsInput input)
         {
             return await _entryRepository.ExistForEntryTypeAsync(input.Culture, input.SectionId, input.EntryTypeId);
+        }
+
+        [Authorize(Permissions.CmsAdminPermissions.Entry.Default)]
+        public async Task<ListResultDto<EntryDto>> GetListByIdsAsync(Guid sectionId, IEnumerable<Guid> ids)
+        {
+            var result = await _entryRepository.GetListAsync(sectionId,ids);
+
+            return new ListResultDto<EntryDto>(
+                ObjectMapper.Map<List<Entry>, List<EntryDto>>(result)
+                );
         }
     }
 }

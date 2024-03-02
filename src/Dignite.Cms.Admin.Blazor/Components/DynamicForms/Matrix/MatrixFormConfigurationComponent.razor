@@ -1,7 +1,7 @@
 ﻿@using Dignite.Abp.DynamicForms
 @using Dignite.Abp.DynamicForms.Components
 @using Dignite.Abp.DynamicForms.Matrix
-@using Dignite.Abp.DynamicForms.Textbox;
+@using Dignite.Abp.DynamicForms.TextEdit;
 @using Dignite.Cms.Fields
 @using Dignite.Cms.Localization
 @inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
@@ -75,7 +75,7 @@
                         <Validation Validator="ValidationRule.IsNotEmpty">
                             <Field>
                                 <FieldLabel>@L["FieldDisplayName"]</FieldLabel>
-                                    <TextEdit MaxLength="FieldConsts.MaxDisplayNameLength" @bind-Text="@SelectedField.DisplayName" Blur="@FieldDisplayNameTextboxBlur" />
+                                    <TextEdit MaxLength="FieldConsts.MaxDisplayNameLength" @bind-Text="@SelectedField.DisplayName" Blur="@FieldDisplayNameTextEditBlur" />
                             </Field>
                         </Validation>
                             <Validation Validator="FieldNameExistsValidator">
@@ -131,7 +131,7 @@
                     <Validation Validator="ValidationRule.IsNotEmpty">
                         <Field>
                             <FieldLabel>@L["DisplayName"]</FieldLabel>
-                            <TextEdit @bind-Text="@NewBlockType.DisplayName" Blur="((args)=>BlockTypeDisplayNameTextboxBlur(NewBlockType))" >
+                            <TextEdit @bind-Text="@NewBlockType.DisplayName" Blur="((args)=>BlockTypeDisplayNameTextEditBlur(NewBlockType))" >
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
@@ -170,7 +170,7 @@
                     <Validation Validator="ValidationRule.IsNotEmpty">
                         <Field>
                             <FieldLabel>@L["DisplayName"]</FieldLabel>
-                            <TextEdit @bind-Text="@EditingBlockType.DisplayName" Blur="((args)=>BlockTypeDisplayNameTextboxBlur(EditingBlockType))">
+                            <TextEdit @bind-Text="@EditingBlockType.DisplayName" Blur="((args)=>BlockTypeDisplayNameTextEditBlur(EditingBlockType))">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>

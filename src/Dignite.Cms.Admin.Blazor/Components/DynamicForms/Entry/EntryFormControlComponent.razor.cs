@@ -137,7 +137,11 @@ namespace Dignite.Cms.Admin.Blazor.Components.DynamicForms.Entry
         {
             if (Field.Required)
             {
-                e.Status = MultipleSelectionEntries.Any() ? ValidationStatus.Success : ValidationStatus.Error;
+                e.Status = MultipleSelectionEntryIds.Any() ? ValidationStatus.Success : ValidationStatus.Error;
+            }
+            else
+            {
+                e.Status = ValidationStatus.Success;
             }
         }
     }

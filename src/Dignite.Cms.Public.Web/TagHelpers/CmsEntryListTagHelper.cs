@@ -6,7 +6,6 @@ using Dignite.Cms.Public.Web.Models;
 using Dignite.Cms.Public.Web.Razor;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using NUglify.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -42,6 +41,19 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         /// </summary>
         public string Culture { get; set; }
 
+        public Guid? EntryTypeId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Filter { get; set; }
+
+        public Guid? CreatorId { get; set; }
+
+        public DateTime? StartPublishDate { get; set; }
+
+        public DateTime? ExpiryPublishDate { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -57,35 +69,31 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         /// number of returned results;
         /// When the <see cref="Section"/> type is SectionType.Channel, the number of returned results must be designed
         /// </summary>
-        public int? ResultCount { get; set; }
+        public int MaxResultCount { get; set; } = 20;
 
         /// <summary>
         /// number of data paged
         /// default value : 1
         /// </summary>
-        public int CurrentPage { get; set; }
+        public int CurrentPage { get; set; } = 1;
 
 
         private readonly IRazorPartialRenderer _renderer;
         private readonly IEntryPublicAppService _entryAppService;
         private readonly ISectionPublicAppService _sectionAppService;
         private readonly ISitePublicAppService _siteAppService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public CmsEntryListTagHelper(
             IRazorPartialRenderer renderer,
             IEntryPublicAppService entryAppService,
             ISectionPublicAppService sectionAppService,
-            ISitePublicAppService siteAppService,
-            IHttpContextAccessor httpContextAccessor
+            ISitePublicAppService siteAppService
             )
         {
             _renderer = renderer;
             _entryAppService = entryAppService;
             _sectionAppService = sectionAppService;
             _siteAppService = siteAppService;
-            _httpContextAccessor = httpContextAccessor;
-            CurrentPage = 1;
         }
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -130,13 +138,18 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             {
                 SectionId = Section.Id,
                 Culture = Culture,
+                Filter = Filter,
+                EntryTypeId = EntryTypeId,
+                CreatorId = CreatorId,
+                StartPublishDate = StartPublishDate,
+                ExpiryPublishDate = ExpiryPublishDate,
                 QueryingByCustomFieldsJson = QueryingByCustomFields == null ? null : JsonSerializer.Serialize(QueryingByCustomFields),
-                MaxResultCount = this.ResultCount.Value,
-                SkipCount = (this.CurrentPage - 1) * ResultCount.Value
+                MaxResultCount = this.MaxResultCount,
+                SkipCount = (this.CurrentPage - 1) * MaxResultCount
             });
 
 
-            var model = new EntryListViewModel(Section, result.Items, (int)result.TotalCount, CurrentPage, ResultCount.Value);
+            var model = new EntryListViewModel(Section, result.Items, (int)result.TotalCount, CurrentPage, MaxResultCount);
             return model;
         }
 

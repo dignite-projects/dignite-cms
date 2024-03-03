@@ -144,6 +144,13 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
             return base.SetTableColumnsAsync();
         }
 
+        protected override async Task GetEntitiesAsync()
+        {
+            if (SectionId.HasValue)
+            {
+                await base.GetEntitiesAsync();
+            }
+        }
 
 
         protected override Task UpdateGetListInputAsync()

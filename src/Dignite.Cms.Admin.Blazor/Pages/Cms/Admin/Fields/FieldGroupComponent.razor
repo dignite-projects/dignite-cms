@@ -12,12 +12,12 @@
     <CardBody Padding="Padding.Is0">
         <AutoHeight ExtraHeight="45">
             <ListGroup Flush Mode="ListGroupMode.Selectable" @bind-SelectedItem="SelectedGroupName">
-                <ListGroupItem Name="" Color="Color.Light" Clicked="()=>OnItemClick(null)">
+                <ListGroupItem Name="" Clicked="()=>OnItemClick(null)">
                     @L["AllFields"]
                 </ListGroupItem>
                 @foreach (var item in Entities)
                 {
-                    <ListGroupItem Name="@item.Name" Color="Color.Light" Flex="Flex.JustifyContent.Between.AlignItems.Center" Clicked="()=>OnItemClick(item)">
+                    <ListGroupItem Name="@item.Name" Flex="Flex.JustifyContent.Between.AlignItems.Center" Clicked="()=>OnItemClick(item)">
                         @item.Name
                         @if (SelectedGroupName == item.Name)
                         {

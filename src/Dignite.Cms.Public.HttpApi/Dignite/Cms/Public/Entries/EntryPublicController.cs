@@ -55,6 +55,18 @@ namespace Dignite.Cms.Public.Entries
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<EntryDto> GetAsync(Guid id)
+        {
+            var entry = await _entryAppService.GetAsync(id);
+            return entry;
+        }
 
         /// <summary>
         /// 

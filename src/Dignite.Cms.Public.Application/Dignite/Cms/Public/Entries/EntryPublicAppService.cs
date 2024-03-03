@@ -60,6 +60,11 @@ namespace Dignite.Cms.Public.Entries
             return ObjectMapper.Map<Entry, EntryDto>(entry);
         }
 
+        public async Task<EntryDto> GetAsync(Guid id)
+        {
+            var entry = await _entryRepository.GetAsync(id);
+            return ObjectMapper.Map<Entry, EntryDto>(entry);
+        }
 
         /// <summary>
         /// 

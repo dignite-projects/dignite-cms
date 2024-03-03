@@ -34,5 +34,8 @@ namespace Dignite.Cms.Public.Entries
         /// <param name="input"></param>
         /// <returns></returns>
         Task<PagedResultDto<EntryDto>> GetListAsync(GetEntriesInput input);
+
+
+        Task<EntryDto> GetAsync(Guid id);
     }
 }

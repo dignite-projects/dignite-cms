@@ -41,6 +41,14 @@ public partial class EntryPublicClientProxy : ClientProxyBase<IEntryPublicAppSer
         });
     }
 
+    public virtual async Task<EntryDto> GetAsync(Guid id)
+    {
+        return await RequestAsync<EntryDto>(nameof(GetAsync), new ClientProxyRequestTypeValue
+        {
+            { typeof(Guid), id }
+        });
+    }
+
     public virtual async Task<PagedResultDto<EntryDto>> GetListAsync(GetEntriesInput input)
     {
         return await RequestAsync<PagedResultDto<EntryDto>>(nameof(GetListAsync), new ClientProxyRequestTypeValue

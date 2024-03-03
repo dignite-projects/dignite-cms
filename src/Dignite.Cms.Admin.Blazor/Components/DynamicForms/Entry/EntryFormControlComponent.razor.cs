@@ -38,8 +38,13 @@ namespace Dignite.Cms.Admin.Blazor.Components.DynamicForms.Entry
                     MultipleSelectionEntries = (await EntryAdminAppService.GetListByIdsAsync(FormConfiguration.SectionId, MultipleSelectionEntryIds))
                                                 .Items
                                                 .ToList();
+
+                    //When an entry in the data source has been deleted, the following code is used to reset the entry selected for this entry
+                    MultipleSelectionEntryIds = MultipleSelectionEntries.Select(x => x.Id).ToList();
                 }
                 MergeSelectedData();
+
+                //
                 if (FormConfiguration.Multiple)
                 {
                     MultipleSelectionTexts = EntryDataSource.Select(e => e.Title).ToList();

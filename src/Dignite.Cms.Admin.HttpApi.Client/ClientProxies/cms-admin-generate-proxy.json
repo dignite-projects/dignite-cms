@@ -2146,6 +2146,31 @@
                   }
                 },
                 {
+                  "name": "GetListByIdsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "sectionId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "ids",
+                      "typeAsString": "System.Collections.Generic.IEnumerable`1[[System.Guid, System.Private.CoreLib, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib",
+                      "type": "System.Collections.Generic.IEnumerable<System.Guid>",
+                      "typeSimple": "[string]",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Cms.Admin.Entries.EntryDto>",
+                    "typeSimple": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Cms.Admin.Entries.EntryDto>"
+                  }
+                },
+                {
                   "name": "GetAsync",
                   "parametersOnMethod": [
                     {
@@ -2826,6 +2851,63 @@
               "returnValue": {
                 "type": "System.Boolean",
                 "typeSimple": "boolean"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "Dignite.Cms.Admin.Entries.IEntryAdminAppService"
+            },
+            "GetListByIdsAsyncBySectionIdAndIds": {
+              "uniqueName": "GetListByIdsAsyncBySectionIdAndIds",
+              "name": "GetListByIdsAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-admin/entries/search-by-ids",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "sectionId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "ids",
+                  "typeAsString": "System.Collections.Generic.IEnumerable`1[[System.Guid, System.Private.CoreLib, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib",
+                  "type": "System.Collections.Generic.IEnumerable<System.Guid>",
+                  "typeSimple": "[string]",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "sectionId",
+                  "name": "sectionId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "ids",
+                  "name": "ids",
+                  "jsonName": null,
+                  "type": "System.Collections.Generic.IEnumerable<System.Guid>",
+                  "typeSimple": "[string]",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Cms.Admin.Entries.EntryDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Cms.Admin.Entries.EntryDto>"
               },
               "allowAnonymous": false,
               "implementFrom": "Dignite.Cms.Admin.Entries.IEntryAdminAppService"

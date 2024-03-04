@@ -63,29 +63,33 @@
                 <Content>
                     @foreach (var tab in Entity.FieldTabs)
                     {
-                        <TabPanel Border="Border.Is1.OnStart.Is1.OnEnd.Is1.OnBottom" Padding="Padding.Is3" Name="@tab.Name"
+                        <TabPanel Name="@tab.Name"
                                   @ondrop="@(()=> SectionFieldDropped(tab.Name))"
                                   ondragover="event.preventDefault();">
-                            <ListGroup>
-                                @foreach (var item in tab.Fields)
-                                {
-                                    <ListGroupItem draggable="true" @key="@(item.FieldId)" Flex="Flex.JustifyContent.Between.AlignItems.Center"
-                                                   @ondragstart="() => DraggingFieldId = item.FieldId"
-                                                   @ondragend="@(()=> DraggingFieldId=Guid.Empty)"
-                                                   @ondrag="@(()=> DraggingFieldId = item.FieldId)">
-                                                   @item.DisplayName
-                                                    <Button Color="Color.Light" Size="Size.Small" Clicked="()=>OpenEditFieldModalAsync(item)">
-                                                        <Icon Name="IconName.Wrench" />
-                                                        </Button>
-                                               </ListGroupItem>
-                                }
-                            </ListGroup>
-                            @if (!tab.Fields.Any())
-                            {
-                                <Span TextColor="TextColor.Secondary">
-                                    @L["DragAndDropFieldTips"]
-                                </Span>
-                            }
+                            <Card Border="Border.Is0.OnTop">
+                                <CardBody>
+                                    <ListGroup>
+                                        @foreach (var item in tab.Fields)
+                                        {
+                                            <ListGroupItem draggable="true" @key="@(item.FieldId)" Flex="Flex.JustifyContent.Between.AlignItems.Center"
+                                                           @ondragstart="() => DraggingFieldId = item.FieldId"
+                                                           @ondragend="@(()=> DraggingFieldId=Guid.Empty)"
+                                                           @ondrag="@(()=> DraggingFieldId = item.FieldId)">
+                                                @item.DisplayName
+                                                <Button Color="Color.Light" Size="Size.Small" Clicked="()=>OpenEditFieldModalAsync(item)">
+                                                    <Icon Name="IconName.Wrench" />
+                                                </Button>
+                                            </ListGroupItem>
+                                        }
+                                    </ListGroup>
+                                    @if (!tab.Fields.Any())
+                                    {
+                                        <Span TextColor="TextColor.Secondary">
+                                            @L["DragAndDropFieldTips"]
+                                        </Span>
+                                    }
+                                </CardBody>
+                            </Card>
                         </TabPanel>
                     }
                 </Content>

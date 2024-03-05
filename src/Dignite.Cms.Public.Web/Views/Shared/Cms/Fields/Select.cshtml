@@ -14,7 +14,10 @@
         <ul class="list-inline">
             @foreach (var item in items)
             {
-            <li class="list-inline-item">@item</li>
+                var option = configuration.Options.FirstOrDefault(o => o.Value == item);
+                <li class="list-inline-item">
+                    @option?.Text
+                </li>
             }
         </ul>
     }

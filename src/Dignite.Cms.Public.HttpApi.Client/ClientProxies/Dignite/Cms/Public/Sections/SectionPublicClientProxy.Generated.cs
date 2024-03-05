@@ -35,11 +35,11 @@ public partial class SectionPublicClientProxy : ClientProxyBase<ISectionPublicAp
         });
     }
 
-    public virtual async Task<SectionDto> GetAsync(Guid sectionId)
+    public virtual async Task<SectionDto> GetAsync(Guid id)
     {
         return await RequestAsync<SectionDto>(nameof(GetAsync), new ClientProxyRequestTypeValue
         {
-            { typeof(Guid), sectionId }
+            { typeof(Guid), id }
         });
     }
 

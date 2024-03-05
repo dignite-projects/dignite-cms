@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Volo.Abp;
 
 namespace Dignite.Cms.Public.Sections
@@ -43,9 +42,9 @@ namespace Dignite.Cms.Public.Sections
 
         [HttpGet]
         [Route("{id:guid}")]
-        public async Task<SectionDto> GetAsync(Guid sectionId)
+        public async Task<SectionDto> GetAsync(Guid id)
         {
-            return await _sectionAppService.GetAsync(sectionId);
+            return await _sectionAppService.GetAsync(id);
         }
 
         [HttpGet]

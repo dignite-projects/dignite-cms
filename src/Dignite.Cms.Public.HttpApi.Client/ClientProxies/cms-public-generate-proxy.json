@@ -146,7 +146,7 @@
                   "name": "GetAsync",
                   "parametersOnMethod": [
                     {
-                      "name": "sectionId",
+                      "name": "id",
                       "typeAsString": "System.Guid, System.Private.CoreLib",
                       "type": "System.Guid",
                       "typeSimple": "string",
@@ -344,15 +344,15 @@
               "allowAnonymous": null,
               "implementFrom": "Dignite.Cms.Public.Sections.ISectionPublicAppService"
             },
-            "GetAsyncBySectionId": {
-              "uniqueName": "GetAsyncBySectionId",
+            "GetAsyncById": {
+              "uniqueName": "GetAsyncById",
               "name": "GetAsync",
               "httpMethod": "GET",
               "url": "api/cms-public/sections/{id}",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
-                  "name": "sectionId",
+                  "name": "id",
                   "typeAsString": "System.Guid, System.Private.CoreLib",
                   "type": "System.Guid",
                   "typeSimple": "string",
@@ -362,23 +362,11 @@
               ],
               "parameters": [
                 {
-                  "nameOnMethod": "sectionId",
-                  "name": "sectionId",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                },
-                {
                   "nameOnMethod": "id",
                   "name": "id",
                   "jsonName": null,
-                  "type": null,
-                  "typeSimple": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
                   "isOptional": false,
                   "defaultValue": null,
                   "constraintTypes": [

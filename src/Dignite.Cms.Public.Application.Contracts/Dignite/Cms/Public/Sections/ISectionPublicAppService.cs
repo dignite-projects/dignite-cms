@@ -6,7 +6,7 @@ namespace Dignite.Cms.Public.Sections
 {
     public interface ISectionPublicAppService : IApplicationService
     {
-        Task<SectionDto> GetAsync(Guid sectionId);
+        Task<SectionDto> GetAsync(Guid id);
         Task<SectionDto> FindByNameAsync(Guid siteId,string name);
 
         /// <summary>

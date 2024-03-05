@@ -122,7 +122,10 @@ namespace Dignite.Cms.Sections
 
         protected virtual void CheckSlugRoutingParameter(Section section)
         {
-            if (section.Type != SectionType.Single && !section.Route.Contains($"{{{nameof(Entry.Slug)}}}", StringComparison.OrdinalIgnoreCase))
+            if (!section.Route.IsNullOrWhiteSpace() 
+                && section.Type != SectionType.Single 
+                && !section.Route.Contains($"{{{nameof(Entry.Slug)}}}", StringComparison.OrdinalIgnoreCase)
+                )
             {
                 throw new MissingSlugRoutingParameterException(section.Type, section.Route);
             }

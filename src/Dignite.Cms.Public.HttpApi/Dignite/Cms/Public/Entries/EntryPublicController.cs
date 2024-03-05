@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
@@ -79,5 +80,6 @@ namespace Dignite.Cms.Public.Entries
             var result = await _entryAppService.GetListAsync(input);
             return result;
         }
+
     }
 }

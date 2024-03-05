@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Application.Dtos;
 
@@ -37,5 +38,10 @@ namespace Dignite.Cms.Public.Entries
         /// 
         /// </summary>
         public string QueryingByCustomFieldsJson { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public IEnumerable<Guid> EntryIds { get; set; }
     }
 }

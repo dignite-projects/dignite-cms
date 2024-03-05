@@ -902,6 +902,18 @@
                 },
                 {
                   "nameOnMethod": "input",
+                  "name": "EntryIds",
+                  "jsonName": null,
+                  "type": "System.Collections.Generic.IEnumerable<System.Guid>",
+                  "typeSimple": "[string]",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
                   "name": "SkipCount",
                   "jsonName": null,
                   "type": "System.Int32",

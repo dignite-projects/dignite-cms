@@ -94,7 +94,7 @@ namespace Dignite.Cms.Public.Entries
                 }
                 else
                 {
-                    List<QueryingByCustomField> queryingByCustomFields = input.QueryingByCustomFieldsJson.IsNullOrEmpty() ? null : JsonSerializer.Deserialize<List<QueryingByCustomField>>(input.QueryingByCustomFieldsJson);
+                    List<QueryingByField> queryingByCustomFields = input.QueryingByFieldsJson.IsNullOrEmpty() ? null : JsonSerializer.Deserialize<List<QueryingByField>>(input.QueryingByFieldsJson);
                     count = await _entryRepository.GetCountAsync(input.Culture, input.SectionId, input.EntryTypeId, input.CreatorId, EntryStatus.Published, input.Filter, input.StartPublishDate, input.ExpiryPublishDate, queryingByCustomFields);
                     if (count == 0)
                     {

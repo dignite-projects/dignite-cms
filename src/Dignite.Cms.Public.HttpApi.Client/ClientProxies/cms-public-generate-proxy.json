@@ -890,7 +890,7 @@
                 },
                 {
                   "nameOnMethod": "input",
-                  "name": "QueryingByCustomFieldsJson",
+                  "name": "QueryingByFieldsJson",
                   "jsonName": null,
                   "type": "System.String",
                   "typeSimple": "string",

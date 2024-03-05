@@ -6,13 +6,13 @@ using Dignite.Cms.Entries;
 using JetBrains.Annotations;
 
 namespace Dignite.Abp.Data;
-public class NumericCustomFieldQuerying : CustomFieldQueryingBase<NumericEditFormControl>
+public class NumericFieldQuerying : FieldQueryingBase<NumericEditFormControl>
 {
-    public NumericCustomFieldQuerying() : base()
+    public NumericFieldQuerying() : base()
     { }
 
 
-    public override IEnumerable<Entry> Query([NotNull] IEnumerable<Entry> source, [NotNull] QueryingByCustomField customField)
+    public override IEnumerable<Entry> Query([NotNull] IEnumerable<Entry> source, [NotNull] QueryingByField customField)
     {
         var min = double.Parse(customField.Value.Split('-')[0]);
         var max = double.Parse(customField.Value.Split('-')[1]);

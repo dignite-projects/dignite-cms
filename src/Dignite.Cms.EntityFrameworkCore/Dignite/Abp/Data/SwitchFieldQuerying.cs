@@ -6,13 +6,13 @@ using Dignite.Cms.Entries;
 using JetBrains.Annotations;
 
 namespace Dignite.Abp.Data;
-public class SwitchCustomFieldQuerying : CustomFieldQueryingBase<SwitchFormControl>
+public class SwitchFieldQuerying : FieldQueryingBase<SwitchFormControl>
 {
-    public SwitchCustomFieldQuerying() : base()
+    public SwitchFieldQuerying() : base()
     { }
 
 
-    public override IEnumerable<Entry> Query([NotNull] IEnumerable<Entry> source, [NotNull] QueryingByCustomField customField)
+    public override IEnumerable<Entry> Query([NotNull] IEnumerable<Entry> source, [NotNull] QueryingByField customField)
     {
         var value = bool.Parse(customField.Value);
         return source.Where(e => e.ExtraProperties.ContainsKey(customField.Name)

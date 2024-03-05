@@ -37,7 +37,7 @@ namespace Dignite.Cms.Public.Entries
         /// <summary>
         /// 
         /// </summary>
-        public string QueryingByCustomFieldsJson { get; set; }
+        public string QueryingByFieldsJson { get; set; }
 
         /// <summary>
         /// 

@@ -16,11 +16,11 @@ namespace Dignite.Cms.Entries
     public class EfCoreEntryRepository : EfCoreRepository<ICmsDbContext, Entry,Guid>, IEntryRepository
     {
         private readonly IFormControlSelector _formControlSelector;
-        private readonly IEnumerable<ICustomFieldQuerying> _fieldQueryings;
+        private readonly IEnumerable<IFieldQuerying> _fieldQueryings;
 
         public EfCoreEntryRepository(
             IFormControlSelector formControlSelector,
-            IEnumerable<ICustomFieldQuerying> fieldQueryings,
+            IEnumerable<IFieldQuerying> fieldQueryings,
             IDbContextProvider<ICmsDbContext> dbContextProvider
             )
             : base(dbContextProvider)
@@ -46,7 +46,7 @@ namespace Dignite.Cms.Entries
             string filter = null,
             DateTime? start = null,
             DateTime? end = null,
-            IList<QueryingByCustomField> queryingByCustomFields = null,
+            IList<QueryingByField> queryingByCustomFields = null,
             int maxResultCount = int.MaxValue,
             int skipCount = 0,
             string sorting = null,
@@ -79,7 +79,7 @@ namespace Dignite.Cms.Entries
             string filter = null,
             DateTime? start = null,
             DateTime? end = null,
-            IList<QueryingByCustomField> queryingByCustomFields = null,
+            IList<QueryingByField> queryingByCustomFields = null,
             CancellationToken cancellationToken = default
             )
         {
@@ -179,7 +179,7 @@ namespace Dignite.Cms.Entries
                 .WhereIf(end.HasValue, e => e.PublishTime<end.Value);
         }
 
-        protected virtual async Task<IEnumerable<Entry>> QueryingByFields(IEnumerable<Entry> source, IList<QueryingByCustomField> queryingByCustomFields)
+        protected virtual async Task<IEnumerable<Entry>> QueryingByFields(IEnumerable<Entry> source, IList<QueryingByField> queryingByCustomFields)
         {
             var dbContext = await GetDbContextAsync();
             var fields = await dbContext.Fields

@@ -5,15 +5,15 @@ using System.Linq;
 using Dignite.Cms.Entries;
 
 namespace Dignite.Abp.Data;
-public class SelectCustomFieldQuerying : CustomFieldQueryingBase<SelectFormControl>
+public class SelectFieldQuerying : FieldQueryingBase<SelectFormControl>
 {
 
-    public SelectCustomFieldQuerying() : base()
+    public SelectFieldQuerying() : base()
     {
     }
 
 
-    public override IEnumerable<Entry> Query([NotNull] IEnumerable<Entry> source, [NotNull] QueryingByCustomField customField)
+    public override IEnumerable<Entry> Query([NotNull] IEnumerable<Entry> source, [NotNull] QueryingByField customField)
     {
         var value = customField.Value.Split(',');
         return source.Where(e => e.ExtraProperties.ContainsKey(customField.Name) &&

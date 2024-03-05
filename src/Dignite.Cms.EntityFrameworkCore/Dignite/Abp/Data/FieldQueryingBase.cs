@@ -6,11 +6,11 @@ using JetBrains.Annotations;
 using Volo.Abp.DependencyInjection;
 
 namespace Dignite.Abp.Data;
-public abstract class CustomFieldQueryingBase<TFormControl> : ICustomFieldQuerying, ITransientDependency
+public abstract class FieldQueryingBase<TFormControl> : IFieldQuerying, ITransientDependency
     where TFormControl : IFormControl
 {
 
-    protected CustomFieldQueryingBase()
+    protected FieldQueryingBase()
     {
         FormControlType = typeof(TFormControl);
     }
@@ -18,5 +18,5 @@ public abstract class CustomFieldQueryingBase<TFormControl> : ICustomFieldQueryi
     public Type FormControlType { get; private set; }
 
 
-    public abstract IEnumerable<Entry> Query([NotNull] IEnumerable<Entry> source, [NotNull] QueryingByCustomField customField);
+    public abstract IEnumerable<Entry> Query([NotNull] IEnumerable<Entry> source, [NotNull] QueryingByField customField);
 }

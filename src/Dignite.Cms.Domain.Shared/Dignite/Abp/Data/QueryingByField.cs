@@ -1,11 +1,11 @@
 ﻿namespace Dignite.Abp.Data;
-public class QueryingByCustomField
+public class QueryingByField
 {
-    public QueryingByCustomField()
+    public QueryingByField()
     {
     }
 
-    public QueryingByCustomField(string name, string value)
+    public QueryingByField(string name, string value)
     {
         Name = name;
         Value = value;

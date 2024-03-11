@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	<PackageReference Include="Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme" Version="2.0.6" />
+	<PackageReference Include="Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme" Version="2.0.7" />
     <PackageReference Include="Volo.Abp.Autofac.WebAssembly" Version="7.4.5" />
   </ItemGroup>
 

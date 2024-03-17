@@ -1,0 +1,14 @@
+﻿@page
+@using Dignite.Cms.Public.Web.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@model Dignite.Cms.Pages.RazorPageModel
+@inject IHtmlLocalizer<CmsPublicWebResource> localizer;
+@{
+}
+<h1>
+    This is Razor Page
+</h1>
+<p>
+    Example of Host localization: 
+    @localizer["home"]
+</p>

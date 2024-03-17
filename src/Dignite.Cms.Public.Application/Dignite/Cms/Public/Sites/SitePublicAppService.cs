@@ -2,16 +2,20 @@
 using Dignite.Cms.Sites;
 using System;
 using System.Threading.Tasks;
+using Volo.Abp.Data;
+using Volo.Abp.MultiTenancy;
 
 namespace Dignite.Cms.Public.Pages
 {
     public class SitePublicAppService : CmsPublicAppService, ISitePublicAppService
     {
         private readonly ISiteRepository _siteRepository;
+        private readonly IDataFilter _dataFilter;
 
-        public SitePublicAppService(ISiteRepository siteRepository)
+        public SitePublicAppService(ISiteRepository siteRepository, IDataFilter dataFilter)
         {
             _siteRepository = siteRepository;
+            _dataFilter = dataFilter;
         }
 
 
@@ -23,8 +27,11 @@ namespace Dignite.Cms.Public.Pages
 
         public async Task<SiteDto> FindByHostAsync(string host)
         {
-            var result = await _siteRepository.FindByHostAsync(host.RemovePostFix("/"));
-            return ObjectMapper.Map<Site, SiteDto>(result);
+            using (_dataFilter.Disable<IMultiTenant>())
+            {
+                var result = await _siteRepository.FindByHostAsync(host.RemovePostFix("/"));
+                return ObjectMapper.Map<Site, SiteDto>(result);
+            }
         }
     }
 }

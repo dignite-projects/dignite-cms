@@ -85,11 +85,16 @@ namespace Dignite.Cms.Public.Entries
             {
                 if (section.Type == Cms.Sections.SectionType.Single)
                 {
-                    result = await _entryRepository.GetListAsync(input.Culture, input.SectionId, input.EntryTypeId, null, EntryStatus.Published, null, null, null, null, 100, 0);
+                    result = (await _entryRepository.GetListAsync(input.Culture, input.SectionId, input.EntryTypeId, null, EntryStatus.Published, null, null, null, null, 100, 0))
+                        .OrderBy(e => e.Order)
+                        .ToList();
+                    count = result.Count;
                 }
                 else if (section.Type == Cms.Sections.SectionType.Structure)
                 {
-                    result = await _entryRepository.GetListAsync(input.Culture, input.SectionId, input.EntryTypeId, null, EntryStatus.Published, null, null, null, null, 1000, 0);
+                    result = (await _entryRepository.GetListAsync(input.Culture, input.SectionId, input.EntryTypeId, null, EntryStatus.Published, null, null, null, null, 1000, 0))
+                        .OrderBy(e=>e.Order)
+                        .ToList();
                     count = result.Count;
                 }
                 else

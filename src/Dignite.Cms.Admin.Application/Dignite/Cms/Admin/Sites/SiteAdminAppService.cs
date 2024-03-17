@@ -5,8 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Data;
+using Volo.Abp.MultiTenancy;
 
 namespace Dignite.Cms.Admin.Pages
 {
@@ -15,11 +16,13 @@ namespace Dignite.Cms.Admin.Pages
     {
         private readonly ISiteRepository _siteRepository;
         private readonly SiteManager _siteManager;
+        private readonly IDataFilter _dataFilter;
 
-        public SiteAdminAppService(ISiteRepository siteRepository, SiteManager siteManager)
+        public SiteAdminAppService(ISiteRepository siteRepository, SiteManager siteManager, IDataFilter dataFilter)
         {
             _siteRepository = siteRepository;
             _siteManager = siteManager;
+            _dataFilter = dataFilter;
         }
 
         [Authorize(Permissions.CmsAdminPermissions.Site.Create)]
@@ -62,7 +65,10 @@ namespace Dignite.Cms.Admin.Pages
         [Authorize(Permissions.CmsAdminPermissions.Site.Default)]
         public async Task<bool> HostExistsAsync(string host)
         {
-            return await _siteRepository.HostExistsAsync(host);
+            using (_dataFilter.Disable<IMultiTenant>())
+            {
+                return await _siteRepository.HostExistsAsync(host);
+            }
         }
 
         [Authorize(Permissions.CmsAdminPermissions.Site.Default)]

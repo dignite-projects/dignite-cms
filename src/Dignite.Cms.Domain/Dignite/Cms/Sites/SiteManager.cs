@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Data;
 using Volo.Abp.Domain.Services;
+using Volo.Abp.MultiTenancy;
 
 namespace Dignite.Cms.Sites
 {
     public class SiteManager:DomainService
     {
         protected readonly ISiteRepository _siteRepository;
+        private readonly IDataFilter _dataFilter;
 
-        public SiteManager(ISiteRepository siteRepository)
+        public SiteManager(ISiteRepository siteRepository, IDataFilter dataFilter)
         {
             _siteRepository = siteRepository;
+            _dataFilter = dataFilter;
         }
 
         public async Task<Site> CreateAsync(string displayName, string name, string host, bool isActive, List<SiteLanguage> languages, Guid? tenantId=null)
@@ -65,9 +68,12 @@ namespace Dignite.Cms.Sites
         }
         protected virtual async Task CheckHostExistenceAsync(string host)
         {
-            if (await _siteRepository.HostExistsAsync(host))
+            using (_dataFilter.Disable<IMultiTenant>())
             {
-                throw new SiteHostAlreadyExistException(host);
+                if (await _siteRepository.HostExistsAsync(host))
+                {
+                    throw new SiteHostAlreadyExistException(host);
+                }
             }
         }
     }

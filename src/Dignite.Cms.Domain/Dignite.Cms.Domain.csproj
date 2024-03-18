@@ -17,7 +17,7 @@
     <PackageReference Include="Volo.Abp.Ddd.Domain" Version="7.4.5" />
 	<PackageReference Include="Volo.Abp.AutoMapper" Version="7.4.5" />
 	<PackageReference Include="Volo.CmsKit.Domain" Version="7.4.5" />
-	<PackageReference Include="Dignite.FileExplorer.Domain" Version="2.0.8" />
+	<PackageReference Include="Dignite.FileExplorer.Domain" Version="2.0.9" />
     <ProjectReference Include="..\Dignite.Cms.Domain.Shared\Dignite.Cms.Domain.Shared.csproj" />
   </ItemGroup>
 

@@ -51,7 +51,8 @@ namespace Dignite.Cms;
     typeof(AbpSettingManagementEntityFrameworkCoreModule),
     typeof(AbpTenantManagementEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreSerilogModule),
-    typeof(AbpSwashbuckleModule)
+    typeof(AbpSwashbuckleModule),
+    typeof(AbpBlobStoringFileSystemModule)
     )]
 public class CmsHttpApiHostModule : AbpModule
 {

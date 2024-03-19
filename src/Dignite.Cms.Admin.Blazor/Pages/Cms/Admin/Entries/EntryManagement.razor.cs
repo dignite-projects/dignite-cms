@@ -177,6 +177,8 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                         SiteId = CurrentSite.Id,
                         MaxResultCount = 1000
                     })).Items;
+
+                await SetToolbarItemsAsync();
             }
             else
             {

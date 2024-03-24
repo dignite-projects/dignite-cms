@@ -3,8 +3,14 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+	  <TargetFrameworks>netstandard2.0;netstandard2.1;net7.0</TargetFrameworks>
+	  <AssemblyName>Dignite.Cms.Domain.Shared</AssemblyName>
+	  <PackageId>Dignite.Cms.Domain.Shared</PackageId>
+	  <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+	  <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+	  <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+	  <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+	  <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
 	<RootNamespace />
   </PropertyGroup>
 

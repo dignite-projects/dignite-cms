@@ -6,10 +6,6 @@
 	  <TargetFramework>net7.0</TargetFramework>
 	  <AssemblyName>Dignite.Cms.Admin.Application</AssemblyName>
 	  <PackageId>Dignite.Cms.Admin.Application</PackageId>
-	  <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
-	  <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-	  <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-	  <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
 	  <RootNamespace />
   </PropertyGroup>
 

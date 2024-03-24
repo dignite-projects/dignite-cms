@@ -125,6 +125,7 @@ namespace Dignite.Cms.Public.Entries
                 if (input.EntryIds.Any())
                 {
                     result = await _entryRepository.GetListAsync(section.Id, input.EntryIds);
+                    count = result.Count;   
                 }
                 else
                 {

@@ -178,7 +178,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
         private async Task ValidateEntryTypeExistsAsync(ValidatorEventArgs e)
         {
-            e.Status = await AppService.EntryTypeExistsAsync(new EntryTypeExistsInput(Entry.Culture, Section.Id, Entry.EntryTypeId))
+            e.Status = await AppService.CultureExistWithSingleSectionAsync(new CultureExistWithSingleSectionInput(Entry.Culture, Section.Id, Entry.EntryTypeId))
                 ? ValidationStatus.Error
                 : ValidationStatus.Success;
 

@@ -6,10 +6,6 @@
 	  <TargetFramework>net7.0</TargetFramework>
 	  <AssemblyName>Dignite.Cms.EntityFrameworkCore</AssemblyName>
 	  <PackageId>Dignite.Cms.EntityFrameworkCore</PackageId>
-	  <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
-	  <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-	  <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-	  <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
 	  <RootNamespace />
   </PropertyGroup>
 
@@ -18,10 +14,6 @@
     <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="7.4.5" />
 	<PackageReference Include="Volo.CmsKit.EntityFrameworkCore" Version="7.4.5" />
     <ProjectReference Include="..\Dignite.Cms.Domain\Dignite.Cms.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Dignite\Abp\DynamicForms\" />
   </ItemGroup>
 
 </Project>

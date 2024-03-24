@@ -43,7 +43,7 @@ namespace Dignite.Cms.Admin.Entries
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<bool> EntryTypeExistsAsync(EntryTypeExistsInput input);
+        Task<bool> CultureExistWithSingleSectionAsync(CultureExistWithSingleSectionInput input);
 
         Task<ListResultDto<EntryDto>> GetListByIdsAsync(Guid sectionId, IEnumerable<Guid> ids);
     }

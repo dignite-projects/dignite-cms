@@ -4,7 +4,13 @@
 
   <PropertyGroup>
 	  <TargetFramework>net7.0</TargetFramework>
-    <RootNamespace>Dignite.Cms</RootNamespace>
+	  <AssemblyName>Dignite.Cms.TestBase</AssemblyName>
+	  <PackageId>Dignite.Cms.TestBase</PackageId>
+	  <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+	  <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+	  <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+	  <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+	  <RootNamespace>Dignite.Cms</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

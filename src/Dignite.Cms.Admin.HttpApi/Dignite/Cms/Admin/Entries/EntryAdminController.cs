@@ -132,10 +132,10 @@ namespace Dignite.Cms.Admin.Entries
         }
 
         [HttpGet]
-        [Route("can-create-for-entry-type")]
-        public Task<bool> EntryTypeExistsAsync(EntryTypeExistsInput input)
+        [Route("culture-exists-with-single-section")]
+        public Task<bool> CultureExistWithSingleSectionAsync(CultureExistWithSingleSectionInput input)
         {
-            return _entryAppService.EntryTypeExistsAsync(input);
+            return _entryAppService.CultureExistWithSingleSectionAsync(input);
         }
 
         [HttpGet]

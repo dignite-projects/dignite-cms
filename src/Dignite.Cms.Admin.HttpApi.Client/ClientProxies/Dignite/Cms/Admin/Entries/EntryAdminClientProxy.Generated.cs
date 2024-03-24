@@ -91,11 +91,11 @@ public partial class EntryAdminClientProxy : ClientProxyBase<IEntryAdminAppServi
         });
     }
 
-    public virtual async Task<bool> EntryTypeExistsAsync(EntryTypeExistsInput input)
+    public virtual async Task<bool> CultureExistWithSingleSectionAsync(CultureExistWithSingleSectionInput input)
     {
-        return await RequestAsync<bool>(nameof(EntryTypeExistsAsync), new ClientProxyRequestTypeValue
+        return await RequestAsync<bool>(nameof(CultureExistWithSingleSectionAsync), new ClientProxyRequestTypeValue
         {
-            { typeof(EntryTypeExistsInput), input }
+            { typeof(CultureExistWithSingleSectionInput), input }
         });
     }
 

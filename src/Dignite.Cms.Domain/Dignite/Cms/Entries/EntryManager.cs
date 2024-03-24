@@ -30,14 +30,26 @@ namespace Dignite.Cms.Entries
             Guid? initialVersionId, string versionNotes,Guid? tenantId)
         {
             var entryType = await _entryTypeRepository.GetAsync(entryTypeId);
-            if (!initialVersionId.HasValue)
+            int order;
+            if (initialVersionId.HasValue)
             {
-                await ExistForTypeAsync(culture, entryType);
+                var initialVersionEntry = await _entryRepository.GetAsync(initialVersionId.Value);
+                if(!initialVersionEntry.Culture.Equals(culture,StringComparison.CurrentCultureIgnoreCase)
+                    || initialVersionEntry.EntryTypeId!=entryTypeId
+                    || initialVersionEntry.ParentId!=parentId)
+                {
+                    throw new EntryInformationInconsistentException(culture,entryTypeId,parentId);
+                }
+                order = initialVersionEntry.Order;
+            }
+            else
+            {
+                await CheckCultureExistenceAsync(culture, entryType);
                 await CheckSlugExistenceAsync(culture, entryType.SectionId, slug);
+                order = (await _entryRepository.GetMaxOrderAsync(culture, entryType.SectionId, parentId)) + 1;
             }
             await CheckExtraPropertiesAsync(entryType,extraProperties);
 
-            var order = (await _entryRepository.GetMaxOrderAsync(culture,entryType.SectionId,  parentId)) + 1;
             var entry = new Entry(
                 GuidGenerator.Create(),
                 entryType.SectionId,
@@ -72,28 +84,22 @@ namespace Dignite.Cms.Entries
         }
 
         public virtual async Task<Entry> UpdateAsync(
-            Guid id, string culture, string title, string slug,
+            Guid id, string title, string slug,Guid? parentId,
             DateTime publishTime, EntryStatus status, ExtraPropertyDictionary extraProperties,
             string versionNotes,
             string concurrencyStamp)
         {
             var entry = await _entryRepository.GetAsync(id, false);
-            entry.SetConcurrencyStampIfNotNull(concurrencyStamp);
-            var entryType = await _entryTypeRepository.GetAsync(entry.EntryTypeId);
+            var section = await _sectionRepository.GetAsync(entry.SectionId);
+            var entryType = section.EntryTypes.Single(et => et.Id == entry.EntryTypeId);
             await CheckExtraPropertiesAsync(entryType, extraProperties);
-
-            if (!culture.Equals(entry.Culture, StringComparison.OrdinalIgnoreCase) ||
-                !slug.Equals(entry.Slug, StringComparison.OrdinalIgnoreCase))
-            {
-                await CheckSlugExistenceAsync(culture,entry.SectionId,  slug);
-            }
+            entry.SetConcurrencyStampIfNotNull(concurrencyStamp);
 
             //
             entry.Title = title;
             entry.Slug = slug;
             entry.PublishTime = publishTime;
             entry.SetStatus(status);
-            entry.Culture = culture;
             entry.VersionNotes = versionNotes;
 
             entry.ExtraProperties.Clear();
@@ -108,6 +114,13 @@ namespace Dignite.Cms.Entries
             {
                 await ActivateAsync(entry);
             }
+
+            if (section.Type== SectionType.Structure && parentId != entry.ParentId)
+            {
+                await MoveAsync(entry, parentId, entry.Order);
+            }
+
+
             return entry;
         }
 
@@ -135,28 +148,30 @@ namespace Dignite.Cms.Entries
 
         public virtual async Task MoveAsync(Entry entry, Guid? parentId,int order)
         {
-            var allEntries = (await _entryRepository.GetListAsync(entry.Culture,entry.SectionId))
-                .Where(e => e.ParentId == parentId && e.Order >= order);
-            var allVisions = await GetAllVisionsAsync(entry);
-
-            foreach (var item in allEntries)
+            if (entry.Order != order)
             {
-                item.SetOrder(item.ParentId,item.Order + 1);
+                var allEntries = (await _entryRepository.GetListAsync(entry.Culture, entry.SectionId))
+                    .Where(e => e.ParentId == parentId && e.Order >= order);
+                foreach (var item in allEntries)
+                {
+                    item.SetOrder(item.ParentId, item.Order + 1);
+                }
             }
             
+            var allVisions = await GetAllVisionsAsync(entry);
             foreach (var item in allVisions)
             {
                 item.SetOrder(parentId,order);
             }
         }
-        protected virtual async Task ExistForTypeAsync(string culture, EntryType entryType)
+        protected virtual async Task CheckCultureExistenceAsync(string culture, EntryType entryType)
         {
             var section = await _sectionRepository.GetAsync(entryType.SectionId);
             if (section.Type == SectionType.Single)
             {
-                if (await _entryRepository.ExistForEntryTypeAsync(culture, entryType.SectionId, entryType.Id))
+                if (await _entryRepository.CultureExistWithSingleSectionAsync(culture, entryType.SectionId, entryType.Id))
                 {
-                    throw new EntryExistForTypeException(culture, entryType.DisplayName);
+                    throw new EntryCultureAlreadyExistException(culture, entryType.Id);
                 }
             }
         }

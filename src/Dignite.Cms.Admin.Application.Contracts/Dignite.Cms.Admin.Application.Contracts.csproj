@@ -3,13 +3,9 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-	  <TargetFramework>netstandard2.0</TargetFramework>
+	  <TargetFrameworks>netstandard2.0;netstandard2.1;net7.0</TargetFrameworks>
 	  <AssemblyName>Dignite.Cms.Admin.Application.Contracts</AssemblyName>
 	  <PackageId>Dignite.Cms.Admin.Application.Contracts</PackageId>
-	  <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
-	  <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-	  <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-	  <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
 	  <RootNamespace />
   </PropertyGroup>
 

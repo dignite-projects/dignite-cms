@@ -27,5 +27,7 @@ public static class CmsErrorCodes
     public static class Entries
     {
         public const string SlugAlreadyExist = "Cms:Entry:0001";
+        public const string CultureAlreadyExist = "Cms:Entry:0002";
+        public const string InformationInconsistent = "Cms:Entry:0003";
     }
 }

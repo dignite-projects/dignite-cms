@@ -79,7 +79,7 @@ public class ClientDemoService : ITransientDependency
             httpClient.SetBearerToken(accessToken);
 
             var url = _configuration["RemoteServices:Cms:BaseUrl"] +
-                      "api/Cms/sample/authorized";
+                      "api/cms-admin/sites";
 
             var responseMessage = await httpClient.GetAsync(url);
             if (responseMessage.IsSuccessStatusCode)
@@ -140,7 +140,7 @@ public class ClientDemoService : ITransientDependency
             httpClient.SetBearerToken(tokenResponse.AccessToken);
 
             var url = _configuration["RemoteServices:Cms:BaseUrl"] +
-                      "api/Cms/sample/authorized";
+                      "api/cms-admin/sites";
 
             var responseMessage = await httpClient.GetAsync(url);
             if (responseMessage.IsSuccessStatusCode)

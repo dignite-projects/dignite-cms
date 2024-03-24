@@ -67,7 +67,7 @@ namespace Dignite.Cms.Admin.Entries
         public async Task<EntryDto> UpdateAsync(Guid id, UpdateEntryInput input)
         {
             var entry = await _entryManager.UpdateAsync(
-                id, input.Culture, input.Title, input.Slug, input.PublishTime,
+                id, input.Title, input.Slug, input.ParentId, input.PublishTime,
                 input.Draft ? EntryStatus.Draft : EntryStatus.Published,
                 input.ExtraProperties, input.VersionNotes,input.ConcurrencyStamp
                 );
@@ -174,9 +174,9 @@ namespace Dignite.Cms.Admin.Entries
         }
 
         [Authorize(Permissions.CmsAdminPermissions.Entry.Default)]
-        public async Task<bool> EntryTypeExistsAsync(EntryTypeExistsInput input)
+        public async Task<bool> CultureExistWithSingleSectionAsync(CultureExistWithSingleSectionInput input)
         {
-            return await _entryRepository.ExistForEntryTypeAsync(input.Culture, input.SectionId, input.EntryTypeId);
+            return await _entryRepository.CultureExistWithSingleSectionAsync(input.Culture, input.SectionId, input.EntryTypeId);
         }
 
         [Authorize(Permissions.CmsAdminPermissions.Entry.Default)]

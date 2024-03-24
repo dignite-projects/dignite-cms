@@ -36,6 +36,10 @@ namespace Dignite.Cms.Entries
                        .AnyAsync(e =>e.Culture==culture &&  e.SectionId== sectionId && e.Slug == slug && e.IsActivatedVersion, GetCancellationToken(cancellationToken));
         }
 
+        public async Task<bool> CultureExistWithSingleSectionAsync(string culture, Guid sectionId, Guid entryTypeId)
+        {
+            return await (await GetQueryableAsync(culture, sectionId, entryTypeId)).AnyAsync();
+        }
 
         public async Task<List<Entry>> GetListAsync(
             string culture,
@@ -204,11 +208,6 @@ namespace Dignite.Cms.Entries
             }
 
             return source;
-        }
-
-        public async Task<bool> ExistForEntryTypeAsync(string culture, Guid sectionId, Guid entryTypeId)
-        {
-            return await(await GetQueryableAsync(culture, sectionId, entryTypeId)).AnyAsync();
         }
     }
 }

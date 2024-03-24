@@ -43,7 +43,7 @@ namespace Dignite.Cms.Admin
 
             Configure<AbpBlobStoringOptions>(options =>
             {
-                options.Containers
+                _ = options.Containers
                     .Configure<CommonFileBlobContainer>(container =>
                     {
                         container.AddFileSizeLimitHandler(handler =>
@@ -52,7 +52,7 @@ namespace Dignite.Cms.Admin
                         });
                         container.AddFileTypeCheckHandler(handler =>
                         {
-                            handler.AllowedFileTypeNames = new string[] { ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".zip", ".7z", ".rar", ".mp4", ".mp3", ".pdf", ".jpg", ".jpeg", ".png", ".webp" };
+                            handler.AllowedFileTypeNames = [".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".zip", ".7z", ".rar", ".mp4", ".mp3", ".pdf", ".gif", ".jpg", ".jpeg", ".png", ".webp"];
                         });
                         container.AddImageResizeHandler(handler =>
                         {
@@ -65,10 +65,10 @@ namespace Dignite.Cms.Admin
                             config.CreateFilePermissionName = CmsAdminPermissions.Entry.Create;
                             config.UpdateFilePermissionName = CmsAdminPermissions.Entry.Update;
                             config.DeleteFilePermissionName = CmsAdminPermissions.Entry.Delete;
-                            config.SetAuthorizationHandler<EntryResourceAuthorizationHandler>(); 
+                            config.SetAuthorizationHandler<EntryResourceAuthorizationHandler>();
                         });
                     });
-                options.Containers
+                _ = options.Containers
                     .Configure<ImageBlobContainer>(container =>
                     {
                         container.AddFileSizeLimitHandler(handler =>
@@ -77,7 +77,7 @@ namespace Dignite.Cms.Admin
                         });
                         container.AddFileTypeCheckHandler(handler =>
                         {
-                            handler.AllowedFileTypeNames = new string[] { ".jpg", ".jpeg", ".png",".webp" };
+                            handler.AllowedFileTypeNames = [".gif", ".jpg", ".jpeg", ".png", ".webp"];
                         });
                         container.AddImageResizeHandler(handler =>
                         {
@@ -90,7 +90,7 @@ namespace Dignite.Cms.Admin
                             config.CreateFilePermissionName = CmsAdminPermissions.Entry.Create;
                             config.UpdateFilePermissionName = CmsAdminPermissions.Entry.Update;
                             config.DeleteFilePermissionName = CmsAdminPermissions.Entry.Delete;
-                            config.SetAuthorizationHandler<EntryResourceAuthorizationHandler>(); 
+                            config.SetAuthorizationHandler<EntryResourceAuthorizationHandler>();
                         });
                     });
             });

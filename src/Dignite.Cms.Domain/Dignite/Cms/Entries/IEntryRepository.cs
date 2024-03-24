@@ -11,6 +11,15 @@ namespace Dignite.Cms.Entries
     {
         Task<bool> SlugExistsAsync(string culture, Guid sectionId, string slug, CancellationToken cancellationToken = default);
 
+        /// <summary>
+        /// This method is only needed if the section type is a single type
+        /// </summary>
+        /// <param name="culture"></param>
+        /// <param name="sectionId"></param>
+        /// <param name="entryTypeId"></param>
+        /// <returns></returns>
+        Task<bool> CultureExistWithSingleSectionAsync(string culture, Guid sectionId, Guid entryTypeId);
+
 
         Task<List<Entry>> GetListAsync(
             string culture,
@@ -38,8 +47,6 @@ namespace Dignite.Cms.Entries
             IList<QueryingByField> queryingByCustomFields = null,
             CancellationToken cancellationToken = default
             );
-
-        Task<bool> ExistForEntryTypeAsync(string culture, Guid sectionId, Guid entryTypeId);
 
         Task<List<Entry>> GetListAsync(Guid sectionId, IEnumerable<Guid> ids, CancellationToken cancellationToken = default);
 

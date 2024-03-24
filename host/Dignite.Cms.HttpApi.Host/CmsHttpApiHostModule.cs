@@ -35,6 +35,8 @@ using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.VirtualFileSystem;
 using Volo.Abp.BlobStoring;
 using Volo.Abp.BlobStoring.FileSystem;
+using Volo.Abp.Threading;
+using Volo.Abp.Data;
 
 namespace Dignite.Cms;
 
@@ -160,6 +162,8 @@ public class CmsHttpApiHostModule : AbpModule
         var app = context.GetApplicationBuilder();
         var env = context.GetEnvironment();
 
+        SeedTestData(context);
+
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
@@ -194,5 +198,20 @@ public class CmsHttpApiHostModule : AbpModule
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
+    }
+
+
+
+    private static void SeedTestData(ApplicationInitializationContext context)
+    {
+        AsyncHelper.RunSync(async () =>
+        {
+            using (var scope = context.ServiceProvider.CreateScope())
+            {
+                await scope.ServiceProvider
+                    .GetRequiredService<IDataSeeder>()
+                    .SeedAsync();
+            }
+        });
     }
 }

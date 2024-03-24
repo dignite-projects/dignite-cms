@@ -2,7 +2,7 @@
 
 namespace Dignite.Cms.Public.Web.Localization
 {
-    [MultiTenancyLocalizationResourceName("CmsPublicWeb")]
+    [MultiTenancyLocalizationResourceName]
     public class CmsPublicWebResource
     {
     }

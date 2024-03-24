@@ -5,24 +5,20 @@ using Dignite.Cms.Entries;
 using Dignite.Cms.Fields;
 using Dignite.Cms.Sections;
 using Dignite.Cms.Sites;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.Timing;
-using Volo.Abp.Users;
-using Volo.CmsKit.Users;
 
 namespace Dignite.Cms;
 
 public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
 {
     private readonly IClock _clock;
-    private readonly ICmsUserRepository _cmsUserRepository;
     private readonly ICurrentTenant _currentTenant;
-    private readonly CmsTestData _cmsTestData;
+    private readonly CmsDataSeedData _cmsData;
     private readonly ISiteRepository _siteRepository;
     private readonly ISectionRepository _sectionRepository;
     private readonly IEntryTypeRepository _entryTypeRepository;
@@ -30,14 +26,13 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
     private readonly IFieldRepository _fieldRepository;
     private readonly IEntryRepository _entryRepository;
 
-    public CmsDataSeedContributor(IClock clock, ICmsUserRepository cmsUserRepository, ICurrentTenant currentTenant, CmsTestData cmsTestData, 
+    public CmsDataSeedContributor(IClock clock, ICurrentTenant currentTenant, CmsDataSeedData cmsData, 
         ISiteRepository siteRepository, ISectionRepository sectionRepository, IEntryTypeRepository entryTypeRepository, 
         IFieldGroupRepository fieldGroupRepository, IFieldRepository fieldRepository, IEntryRepository entryRepository)
     {
         _clock = clock;
-        _cmsUserRepository = cmsUserRepository;
         _currentTenant = currentTenant;
-        _cmsTestData = cmsTestData;
+        _cmsData = cmsData;
         _siteRepository = siteRepository;
         _sectionRepository = sectionRepository;
         _entryTypeRepository = entryTypeRepository;
@@ -50,7 +45,6 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
     {
         using (_currentTenant.Change(context?.TenantId))
         {
-            await SeedUsersAsync();
             await SeedFieldGroupAsync();
             await SeedFieldsAsync();
             await SeedSitesAsync();
@@ -60,22 +54,10 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
         }
     }
 
-    private async Task SeedUsersAsync()
-    {
-        await _cmsUserRepository.InsertAsync(new CmsUser(new UserData(_cmsTestData.User1Id, "user1",
-            "user1@dignite.com",
-            "user", "1")),
-            autoSave: true);
-
-        await _cmsUserRepository.InsertAsync(new CmsUser(new UserData(_cmsTestData.User2Id, "user2",
-            "user2@dignite.com",
-            "user", "2")),
-            autoSave: true);
-    }
 
     private async Task SeedFieldGroupAsync()
     { 
-        await _fieldGroupRepository.InsertAsync(new FieldGroup(_cmsTestData.FieldGroupId, "FieldGroup", null), autoSave: true);
+        await _fieldGroupRepository.InsertAsync(new FieldGroup(_cmsData.FieldGroupId, "FieldGroup", null), autoSave: true);
     }
 
     private async Task SeedFieldsAsync()
@@ -85,9 +67,9 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
         textboxFormConfiguration.Mode = TextEditMode.SingleLine;
         await _fieldRepository.InsertAsync(
             new Field(
-                _cmsTestData.TextboxFieldId,
-                _cmsTestData.FieldGroupId,
-                _cmsTestData.TextboxFieldName,
+                _cmsData.TextboxFieldId,
+                _cmsData.FieldGroupId,
+                _cmsData.TextboxFieldName,
                 "Textbox Field","", 
                 TextEditFormControl.ControlName,
                 textboxFormConfiguration.ConfigurationDictionary,
@@ -97,15 +79,15 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
         var selectFormConfiguration = new SelectConfiguration();
         selectFormConfiguration.Multiple = false;
         selectFormConfiguration.Options = new List<SelectListItem> {
-            new SelectListItem("Item 1",_cmsTestData.SelectFieldItem1Value,true),
-            new SelectListItem("Item 2",_cmsTestData.SelectFieldItem2Value,false),
-            new SelectListItem("Item 2",_cmsTestData.SelectFieldItem3Value,false)
+            new SelectListItem("Item 1",_cmsData.SelectFieldItem1Value,true),
+            new SelectListItem("Item 2",_cmsData.SelectFieldItem2Value,false),
+            new SelectListItem("Item 2",_cmsData.SelectFieldItem3Value,false)
         };
         await _fieldRepository.InsertAsync(
             new Field(
-                _cmsTestData.SelectFieldId,
-                _cmsTestData.FieldGroupId,
-                _cmsTestData.SelectFieldName,
+                _cmsData.SelectFieldId,
+                _cmsData.FieldGroupId,
+                _cmsData.SelectFieldName,
                 "Select Field","",
                 SelectFormControl.ControlName,
                 selectFormConfiguration.ConfigurationDictionary,
@@ -118,10 +100,10 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
     private async Task SeedSitesAsync()
     {
         var site = new Site(
-                _cmsTestData.SiteId,
+                _cmsData.SiteId,
                 "Site",
-                _cmsTestData.SiteName,
-                _cmsTestData.SiteHost,
+                _cmsData.SiteName,
+                _cmsData.SiteHost,
                 true, null);
         site.AddLanguage(new SiteLanguage(true, "en"));
         site.AddLanguage(new SiteLanguage(false, "ja"));
@@ -135,11 +117,11 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
     {
         await _sectionRepository.InsertAsync(
             new Section(
-                _cmsTestData.SingleSectionId,
-                _cmsTestData.SiteId, 
+                _cmsData.SingleSectionId,
+                _cmsData.SiteId, 
                 SectionType.Single, 
                 "Single Section", 
-                _cmsTestData.SingleSectionName,
+                _cmsData.SingleSectionName,
                 true,
                 true,
                 "/","home", null),
@@ -147,27 +129,27 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
 
         await _sectionRepository.InsertAsync(
             new Section(
-                _cmsTestData.ChannelSectionId,
-                _cmsTestData.SiteId,
+                _cmsData.ChannelSectionId,
+                _cmsData.SiteId,
                 SectionType.Channel,
                 "Channel Section",
-                _cmsTestData.ChannelSectionName,
+                _cmsData.ChannelSectionName,
                 false,
                 true,
-                _cmsTestData.ChannelSectionRoute,
+                _cmsData.ChannelSectionRoute,
                 "blog/entry",null),
             autoSave: true);
 
         await _sectionRepository.InsertAsync(
             new Section(
-                _cmsTestData.StructureSectionId,
-                _cmsTestData.SiteId,
+                _cmsData.StructureSectionId,
+                _cmsData.SiteId,
                 SectionType.Structure,
                 "Channel Section",
-                _cmsTestData.StructureSectionName,
+                _cmsData.StructureSectionName,
                 false,
                 true,
-                _cmsTestData.StructureSectionRoute,
+                _cmsData.StructureSectionRoute,
                 "blog/entry", null),
             autoSave: true);
     }
@@ -175,22 +157,22 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
     {
         await _entryTypeRepository.InsertAsync(
             new EntryType(
-                _cmsTestData.SingleSectionEntryTypeId,
-                _cmsTestData.SingleSectionId,
+                _cmsData.SingleSectionEntryTypeId,
+                _cmsData.SingleSectionId,
                 "Single Section Entry Type",
-                _cmsTestData.SingleSectionEntryTypeName,
+                _cmsData.SingleSectionEntryTypeName,
                 new List<EntryFieldTab> { 
                     new EntryFieldTab(
                         "Entry Field Tab", 
                         new List<EntryField>{ 
                             new EntryField(
-                                _cmsTestData.TextboxFieldId,
+                                _cmsData.TextboxFieldId,
                                 "Textbox Field",
                                 true,
                                 true
                                 ),
                             new EntryField(
-                                _cmsTestData.SelectFieldId,
+                                _cmsData.SelectFieldId,
                                 "Select Field",
                                 true,
                                 true
@@ -202,22 +184,22 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
 
         await _entryTypeRepository.InsertAsync(
             new EntryType(
-                _cmsTestData.ChannelSectionEntryTypeId,
-                _cmsTestData.ChannelSectionId,
+                _cmsData.ChannelSectionEntryTypeId,
+                _cmsData.ChannelSectionId,
                 "Channel Section Entry Type",
-                _cmsTestData.ChannelSectionEntryTypeName,
+                _cmsData.ChannelSectionEntryTypeName,
                 new List<EntryFieldTab> {
                     new EntryFieldTab(
                         "Entry Field Tab",
                         new List<EntryField>{
                             new EntryField(
-                                _cmsTestData.TextboxFieldId,
+                                _cmsData.TextboxFieldId,
                                 "Author",
                                 true,
                                 true
                                 ),
                             new EntryField(
-                                _cmsTestData.SelectFieldId,
+                                _cmsData.SelectFieldId,
                                 "Select Field",
                                 true,
                                 true
@@ -230,22 +212,22 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
 
         await _entryTypeRepository.InsertAsync(
             new EntryType(
-                _cmsTestData.StructureSectionEntryTypeId,
-                _cmsTestData.StructureSectionId,
+                _cmsData.StructureSectionEntryTypeId,
+                _cmsData.StructureSectionId,
                 "Structure Section Entry Type",
-                _cmsTestData.StructureSectionEntryTypeName,
+                _cmsData.StructureSectionEntryTypeName,
                 new List<EntryFieldTab> {
                     new EntryFieldTab(
                         "Entry Field Tab",
                         new List<EntryField>{
                             new EntryField(
-                                _cmsTestData.TextboxFieldId,
+                                _cmsData.TextboxFieldId,
                                 "Author",
                                 true,
                                 true
                                 ),
                             new EntryField(
-                                _cmsTestData.SelectFieldId,
+                                _cmsData.SelectFieldId,
                                 "Select Field",
                                 true,
                                 true
@@ -258,12 +240,12 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
     private async Task SeedEntriesAsync()
     {
         var singleSection_Entry = new Entry(
-                _cmsTestData.SingleSection_EntryId,
-                _cmsTestData.SingleSectionId,
-                _cmsTestData.SingleSectionEntryTypeId,
-                _cmsTestData.EntryDefaultCulture,
+                _cmsData.SingleSection_EntryId,
+                _cmsData.SingleSectionId,
+                _cmsData.SingleSectionEntryTypeId,
+                _cmsData.EntryDefaultCulture,
                 "Home Page",
-                _cmsTestData.SingleSection_EntrySlug,
+                _cmsData.SingleSection_EntrySlug,
                 _clock.Now,
                 EntryStatus.Published,
                 null,
@@ -272,12 +254,12 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
                 "",
                 null
                 );
-        singleSection_Entry.SetField(_cmsTestData.TextboxFieldName, "An excellent program.");
+        singleSection_Entry.SetField(_cmsData.TextboxFieldName, "An excellent program.");
         singleSection_Entry.SetField(
-            _cmsTestData.SelectFieldName, 
+            _cmsData.SelectFieldName, 
             new List<string> 
             { 
-                _cmsTestData.SelectFieldItem1Value 
+                _cmsData.SelectFieldItem1Value 
             });
 
         await _entryRepository.InsertAsync(
@@ -287,12 +269,12 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
 
 
         var channelSection_Entry1 = new Entry(
-                _cmsTestData.ChannelSection_Entry1Id,
-                _cmsTestData.ChannelSectionId,
-                _cmsTestData.ChannelSectionEntryTypeId,
-                _cmsTestData.EntryDefaultCulture,
+                _cmsData.ChannelSection_Entry1Id,
+                _cmsData.ChannelSectionId,
+                _cmsData.ChannelSectionEntryTypeId,
+                _cmsData.EntryDefaultCulture,
                 "A blog post",
-                _cmsTestData.ChannelSection_Entry1Slug,
+                _cmsData.ChannelSection_Entry1Slug,
                 _clock.Now,
                 EntryStatus.Published,
                 null,
@@ -301,13 +283,13 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
                 "",
                 null
                 );
-        channelSection_Entry1.SetField(_cmsTestData.TextboxFieldName, "Tanaka");
+        channelSection_Entry1.SetField(_cmsData.TextboxFieldName, "Tanaka");
         channelSection_Entry1.SetField(
-            _cmsTestData.SelectFieldName,
+            _cmsData.SelectFieldName,
             new List<string>
             {
-                _cmsTestData.SelectFieldItem2Value,
-                _cmsTestData.SelectFieldItem3Value
+                _cmsData.SelectFieldItem2Value,
+                _cmsData.SelectFieldItem3Value
             });
 
         await _entryRepository.InsertAsync(
@@ -319,12 +301,12 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
 
 
         var channelSection_Entry2 = new Entry(
-                _cmsTestData.ChannelSection_Entry2Id,
-                _cmsTestData.ChannelSectionId,
-                _cmsTestData.ChannelSectionEntryTypeId,
-                _cmsTestData.EntryDefaultCulture,
+                _cmsData.ChannelSection_Entry2Id,
+                _cmsData.ChannelSectionId,
+                _cmsData.ChannelSectionEntryTypeId,
+                _cmsData.EntryDefaultCulture,
                 "The second blog post",
-                _cmsTestData.ChannelSection_Entry2Slug,
+                _cmsData.ChannelSection_Entry2Slug,
                 _clock.Now.AddSeconds(1),
                 EntryStatus.Published,
                 null,
@@ -333,14 +315,14 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
                 "",
                 null
                 );
-        channelSection_Entry2.SetField(_cmsTestData.TextboxFieldName, "Tanaka");
+        channelSection_Entry2.SetField(_cmsData.TextboxFieldName, "Tanaka");
         channelSection_Entry2.SetField(
-            _cmsTestData.SelectFieldName,
+            _cmsData.SelectFieldName,
             new List<string>
             {
-                _cmsTestData.SelectFieldItem1Value,
-                _cmsTestData.SelectFieldItem2Value,
-                _cmsTestData.SelectFieldItem3Value
+                _cmsData.SelectFieldItem1Value,
+                _cmsData.SelectFieldItem2Value,
+                _cmsData.SelectFieldItem3Value
             });
 
         await _entryRepository.InsertAsync(
@@ -349,28 +331,28 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
             );
 
         var channelSection_Entry3VisionEntry = new Entry(
-                _cmsTestData.ChannelSection_Entry2VisionEntryId,
-                _cmsTestData.ChannelSectionId,
-                _cmsTestData.ChannelSectionEntryTypeId,
-                _cmsTestData.EntryDefaultCulture,
+                _cmsData.ChannelSection_Entry2VisionEntryId,
+                _cmsData.ChannelSectionId,
+                _cmsData.ChannelSectionEntryTypeId,
+                _cmsData.EntryDefaultCulture,
                 "The second blog post",
-                _cmsTestData.ChannelSection_Entry2Slug,
+                _cmsData.ChannelSection_Entry2Slug,
                 _clock.Now.AddSeconds(1),
                 EntryStatus.Published,
                 null,
                 2,
-                _cmsTestData.ChannelSection_Entry2Id,
+                _cmsData.ChannelSection_Entry2Id,
                 "",
                 null
                 );
-        channelSection_Entry3VisionEntry.SetField(_cmsTestData.TextboxFieldName, "Tanaka");
+        channelSection_Entry3VisionEntry.SetField(_cmsData.TextboxFieldName, "Tanaka");
         channelSection_Entry3VisionEntry.SetField(
-            _cmsTestData.SelectFieldName,
+            _cmsData.SelectFieldName,
             new List<string>
             {
-                _cmsTestData.SelectFieldItem1Value,
-                _cmsTestData.SelectFieldItem2Value,
-                _cmsTestData.SelectFieldItem3Value
+                _cmsData.SelectFieldItem1Value,
+                _cmsData.SelectFieldItem2Value,
+                _cmsData.SelectFieldItem3Value
             });
         channelSection_Entry3VisionEntry.SetIsActivatedVersion(false);
         await _entryRepository.InsertAsync(
@@ -381,12 +363,12 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
 
 
         var structureSection_Entry1 = new Entry(
-                _cmsTestData.StructureSection_Entry1Id,
-                _cmsTestData.StructureSectionId,
-                _cmsTestData.StructureSectionEntryTypeId,
-                _cmsTestData.EntryDefaultCulture,
+                _cmsData.StructureSection_Entry1Id,
+                _cmsData.StructureSectionId,
+                _cmsData.StructureSectionEntryTypeId,
+                _cmsData.EntryDefaultCulture,
                 "A document",
-                _cmsTestData.StructureSection_Entry1Slug,
+                _cmsData.StructureSection_Entry1Slug,
                 _clock.Now,
                 EntryStatus.Published,
                 null,
@@ -395,13 +377,13 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
                 "",
                 null
                 );
-        structureSection_Entry1.SetField(_cmsTestData.TextboxFieldName, "Tanaka");
+        structureSection_Entry1.SetField(_cmsData.TextboxFieldName, "Tanaka");
         structureSection_Entry1.SetField(
-            _cmsTestData.SelectFieldName,
+            _cmsData.SelectFieldName,
             new List<string>
             {
-                _cmsTestData.SelectFieldItem2Value,
-                _cmsTestData.SelectFieldItem3Value
+                _cmsData.SelectFieldItem2Value,
+                _cmsData.SelectFieldItem3Value
             });
 
         await _entryRepository.InsertAsync(
@@ -411,12 +393,12 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
 
 
         var structureSection_Entry2 = new Entry(
-                _cmsTestData.StructureSection_Entry2Id,
-                _cmsTestData.StructureSectionId,
-                _cmsTestData.StructureSectionEntryTypeId,
-                _cmsTestData.EntryDefaultCulture,
+                _cmsData.StructureSection_Entry2Id,
+                _cmsData.StructureSectionId,
+                _cmsData.StructureSectionEntryTypeId,
+                _cmsData.EntryDefaultCulture,
                 "A document",
-                _cmsTestData.StructureSection_Entry2Slug,
+                _cmsData.StructureSection_Entry2Slug,
                 _clock.Now,
                 EntryStatus.Published,
                 null,
@@ -425,13 +407,13 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
                 "",
                 null
                 );
-        structureSection_Entry2.SetField(_cmsTestData.TextboxFieldName, "Tanaka");
+        structureSection_Entry2.SetField(_cmsData.TextboxFieldName, "Tanaka");
         structureSection_Entry2.SetField(
-            _cmsTestData.SelectFieldName,
+            _cmsData.SelectFieldName,
             new List<string>
             {
-                _cmsTestData.SelectFieldItem2Value,
-                _cmsTestData.SelectFieldItem3Value
+                _cmsData.SelectFieldItem2Value,
+                _cmsData.SelectFieldItem3Value
             });
 
         await _entryRepository.InsertAsync(

@@ -102,8 +102,8 @@ public class CmsHttpApiHostModule : AbpModule
         {
             options.Languages.Add(new LanguageInfo("en", "en", "English"));
             options.Languages.Add(new LanguageInfo("ja", "ja", "日本語"));
-            options.Languages.Add(new LanguageInfo("zh-hans", "zh-Hans", "简体中文"));
-            options.Languages.Add(new LanguageInfo("zh-hant", "zh-Hant", "繁體中文"));
+            options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
+            options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
         });
 
         context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

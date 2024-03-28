@@ -1,0 +1,48 @@
+﻿@using Dignite.Abp.Data
+@using Dignite.Cms.Public.Web.Models;
+@using Dignite.Cms.Public.Sites;
+@model EntryViewModel
+@{
+    PageLayout.Content.Title = Model.Entry.Title;
+    ViewBag.FluidLayout = true;
+
+    //
+    IList<QueryingByField> queryParameters = new List<QueryingByField>
+        {
+            new QueryingByField("switch","true")
+        };
+}
+
+<section class="container my-5">
+    <h1>
+        <cms-entry-field field-name="TextboxFieldName" entry="Model"></cms-entry-field>
+    </h1>
+</section>
+
+<div class="text-center mb-5">
+    <cms-entry-field field-name="image" entry="Model" partial-name="cms/fields/_banner"></cms-entry-field>
+</div>
+
+<section class="container mb-5">
+    <h1 class="fs-1 fw-semibold mb-3">
+        @localizer["description"]
+    </h1>
+    <div class="rich-text">
+        <cms-entry-field field-name="Ckeditor" entry="Model"></cms-entry-field>
+    </div>
+</section>
+
+
+<section class="container mb-5">
+    <h1 class="fs-1 fw-semibold mb-3">
+        @localizer["blog"]
+    </h1>
+    <cms-entry-list site-id="Model.Section.SiteId"
+                    section-name="blog-post"
+                    current-page="1"
+                    max-result-count="4"
+                    culture="@Model.Entry.Culture"
+                    querying-by-fields="queryParameters"
+                    partial-name="blog/_recommended-for-home">
+    </cms-entry-list>
+</section>

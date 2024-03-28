@@ -5,53 +5,60 @@ namespace Dignite.Cms;
 
 public class CmsDataSeedData : ISingletonDependency
 {
-    public Guid FieldGroupId { get; } = Guid.NewGuid();
-
     public Guid TextboxFieldId { get; } = Guid.NewGuid();
     public string TextboxFieldName = "TextboxFieldName";
-    public Guid SelectFieldId { get; } = Guid.NewGuid();
-    public string SelectFieldName = "SelectFieldName";
-    public string SelectFieldItem1Value = "item1";
-    public string SelectFieldItem2Value = "item2";
-    public string SelectFieldItem3Value = "item3";
+    public Guid SwitchFieldId { get; } = Guid.NewGuid();
+    public string SwitchFieldName = "switch";
+
+    public Guid ImageFieldId { get; } = Guid.NewGuid();
+    public string ImageFieldName = "image";
+
+    public Guid BlogCategoryFieldId { get; } = Guid.NewGuid();
+    public string BlogCategoryFieldName = "BlogCategory";
+    public string BlogCategoryFieldItem1Value = "company-news";
+    public string BlogCategoryFieldItem2Value = "tutorials";
+    public string BlogCategoryFieldItem3Value = "essays";
+
+    public Guid CkeditorFieldId { get; } = Guid.NewGuid();
+    public string CkeditorFieldName = "Ckeditor";
+
+    public Guid ServiceMatrixFieldId { get; }= Guid.NewGuid();
+    public string ServiceMatrixFieldName = "Services";
+    public string ServiceItemBlockName = "service-item";
+    public string ServiceItemName = "name";
+    public string ServiceItemDescription = "description";
 
     public Guid SiteId { get; } = Guid.NewGuid();
     public string SiteName = "SiteName";
     public string SiteHost = "https://localhost:44339";
 
 
-    public Guid SingleSectionId { get; } = Guid.NewGuid();
-    public string SingleSectionName = "SingleSectionName";
-    public Guid ChannelSectionId { get; } = Guid.NewGuid();
-    public string ChannelSectionName = "ChannelSectionName";
-    public string ChannelSectionRoute = "blog/{slug}";
-    public Guid StructureSectionId { get; } = Guid.NewGuid();
-    public string StructureSectionName = "StructureSectionName";
-    public string StructureSectionRoute = "doc/{slug}";
+    public Guid HomeSectionId { get; } = Guid.NewGuid();
+    public string HomeSectionName = "home";
+    public string HomeSectionRoute = "/";
+    public string HomeSectionTemplate = "HomePage";
+    public Guid BlogSectionId { get; } = Guid.NewGuid();
+    public string BlogSectionName = "blog-index";
+    public string BlogSectionRoute = "blog";
+    public string BlogSectionTemplate = "Blog/Index";
+    public Guid BlogPostSectionId { get; } = Guid.NewGuid();
+    public string BlogPostSectionName = "blog-post";
+    public string BlogPostSectionRoute = "blog/{publishTime:yyyy}/{publishTime:MM}/{slug}";
+    public string BlogPostSectionTemplate = "Blog/Entry";
+    public Guid ServiceSectionId { get; } = Guid.NewGuid();
+    public string ServiceSectionName = "service";
+    public string ServiceSectionRoute = "service/{slug}";
+    public string ServiceEntryTemplate = "Service/Entry";
 
-    public Guid SingleSectionEntryTypeId { get; } = Guid.NewGuid();
-    public string SingleSectionEntryTypeName = "SingleSectionEntryTypeName";
-    public Guid ChannelSectionEntryTypeId { get; } = Guid.NewGuid();
-    public string ChannelSectionEntryTypeName = "ChannelSectionEntryTypeName";
+    public Guid HomeSectionEntryTypeId { get; } = Guid.NewGuid();
+    public string HomeSectionEntryTypeName = "home";
+    public Guid BlogSectionEntryTypeId { get; } = Guid.NewGuid();
+    public string BlogSectionEntryTypeName = "blog-index";
+    public Guid BlogPostSectionEntryTypeId { get; } = Guid.NewGuid();
+    public string BlogPostSectionEntryTypeName = "blog-post";
 
-    public Guid StructureSectionEntryTypeId { get; } = Guid.NewGuid();
-    public string StructureSectionEntryTypeName = "StructureSectionEntryTypeName";
+    public Guid ServiceSectionEntryTypeId { get; } = Guid.NewGuid();
+    public string ServiceSectionEntryTypeName = "service";
 
     public string EntryDefaultCulture = "en";
-    public Guid SingleSection_EntryId { get; } = Guid.NewGuid();
-    public string SingleSection_EntrySlug = "index";
-    public Guid ChannelSection_Entry1Id { get; } = Guid.NewGuid();
-    public string ChannelSection_Entry1Slug = "entry-1-slug";
-
-    public Guid ChannelSection_Entry2Id { get; } = Guid.NewGuid();
-    public string ChannelSection_Entry2Slug = "entry-2-slug";
-    public Guid ChannelSection_Entry2VisionEntryId { get; }=Guid.NewGuid();
-
-
-    public Guid StructureSection_Entry1Id { get; } = Guid.NewGuid();
-    public string StructureSection_Entry1Slug = "entry-1-slug";
-
-    public Guid StructureSection_Entry2Id { get; } = Guid.NewGuid();
-    public string StructureSection_Entry2Slug = "entry-2-slug";
-
 }

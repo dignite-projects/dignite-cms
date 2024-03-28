@@ -1,0 +1,14 @@
+﻿@using Volo.Abp.Ui.Branding
+@addTagHelper *, Dignite.Cms.Public.Web
+@inject IBrandingProvider BrandingProvider
+@{
+}
+<a entry-path="~/" class="navbar-brand">
+    @if (!BrandingProvider.LogoUrl.IsNullOrWhiteSpace())
+    {
+        <img src="@BrandingProvider.LogoUrl" alt="@BrandingProvider.AppName">
+    }
+    <span class="navbar-brand-name">
+        @BrandingProvider.AppName Cms
+    </span>
+</a>

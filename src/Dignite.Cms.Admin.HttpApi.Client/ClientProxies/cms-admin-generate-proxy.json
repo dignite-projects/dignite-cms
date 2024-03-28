@@ -2129,13 +2129,13 @@
                   }
                 },
                 {
-                  "name": "EntryTypeExistsAsync",
+                  "name": "CultureExistWithSingleSectionAsync",
                   "parametersOnMethod": [
                     {
                       "name": "input",
-                      "typeAsString": "Dignite.Cms.Admin.Entries.EntryTypeExistsInput, Dignite.Cms.Admin.Application.Contracts",
-                      "type": "Dignite.Cms.Admin.Entries.EntryTypeExistsInput",
-                      "typeSimple": "Dignite.Cms.Admin.Entries.EntryTypeExistsInput",
+                      "typeAsString": "Dignite.Cms.Admin.Entries.CultureExistWithSingleSectionInput, Dignite.Cms.Admin.Application.Contracts",
+                      "type": "Dignite.Cms.Admin.Entries.CultureExistWithSingleSectionInput",
+                      "typeSimple": "Dignite.Cms.Admin.Entries.CultureExistWithSingleSectionInput",
                       "isOptional": false,
                       "defaultValue": null
                     }
@@ -2794,18 +2794,18 @@
               "allowAnonymous": false,
               "implementFrom": "Dignite.Cms.Admin.Entries.IEntryAdminAppService"
             },
-            "EntryTypeExistsAsyncByInput": {
-              "uniqueName": "EntryTypeExistsAsyncByInput",
-              "name": "EntryTypeExistsAsync",
+            "CultureExistWithSingleSectionAsyncByInput": {
+              "uniqueName": "CultureExistWithSingleSectionAsyncByInput",
+              "name": "CultureExistWithSingleSectionAsync",
               "httpMethod": "GET",
-              "url": "api/cms-admin/entries/can-create-for-entry-type",
+              "url": "api/cms-admin/entries/culture-exists-with-single-section",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
                   "name": "input",
-                  "typeAsString": "Dignite.Cms.Admin.Entries.EntryTypeExistsInput, Dignite.Cms.Admin.Application.Contracts",
-                  "type": "Dignite.Cms.Admin.Entries.EntryTypeExistsInput",
-                  "typeSimple": "Dignite.Cms.Admin.Entries.EntryTypeExistsInput",
+                  "typeAsString": "Dignite.Cms.Admin.Entries.CultureExistWithSingleSectionInput, Dignite.Cms.Admin.Application.Contracts",
+                  "type": "Dignite.Cms.Admin.Entries.CultureExistWithSingleSectionInput",
+                  "typeSimple": "Dignite.Cms.Admin.Entries.CultureExistWithSingleSectionInput",
                   "isOptional": false,
                   "defaultValue": null
                 }

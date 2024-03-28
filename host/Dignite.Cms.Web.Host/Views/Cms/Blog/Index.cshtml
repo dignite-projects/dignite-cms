@@ -1,0 +1,43 @@
+﻿@using Dignite.Abp.Data;
+@using Dignite.Cms.Public.Web.Models;
+@using Dignite.Cms.Public.Sites;
+
+@model EntryViewModel
+@{
+    PageLayout.Content.Title = Model.Entry.Title;
+
+    //查询条件
+    var filter = Context.Request.Query["filter"].ToString();
+    var category = Context.Request.Query["category"].ToString();
+    IList<QueryingByField> parameters = null;
+    if (!category.IsNullOrWhiteSpace())
+    {
+        parameters = new List<QueryingByField>
+        {
+            new QueryingByField("BlogCategory",category)
+        };
+    }
+
+    //获取分页数
+    int currentPage;
+    if (!int.TryParse(Context.Request.Query["currentPage"], out currentPage))
+    {
+        currentPage = 1;
+    }
+}
+@section content_toolbar {
+    <partial name="blog/_blog-toolbar" model="Model"></partial>
+}
+<h1 class="fs-1 text-primary fw-semibold my-5">
+    @Model.Entry.Title
+</h1>
+<cms-entry-list 
+                site-id="Model.Section.SiteId" 
+                section-name="blog-post"
+                current-page="currentPage"
+                max-result-count="20" 
+                culture="@Model.Entry.Culture" 
+                querying-by-fields="parameters"
+                filter="@filter"
+                partial-name="blog/_post-list">
+</cms-entry-list>

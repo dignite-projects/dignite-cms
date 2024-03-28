@@ -1,4 +1,5 @@
-﻿using Dignite.Cms.Public.Sections;
+﻿using Dignite.Cms.Entries;
+using Dignite.Cms.Public.Sections;
 using Dignite.Cms.Public.Sites;
 using JetBrains.Annotations;
 using System;
@@ -44,7 +45,7 @@ namespace Dignite.Cms.Public.Entries
                 url = source.Culture + url.EnsureStartsWith('/');
             }
 
-            url = section.Site.Host.EnsureEndsWith('/') + url.RemovePreFix("/");
+            url = section.Site.Host.EnsureEndsWith('/') + url.RemovePreFix("/").RemovePostFix($"/{EntryConsts.DefaultSlug}");
 
             return url;
         }

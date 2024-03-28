@@ -55,6 +55,10 @@ using Dignite.Cms.Public.Web.Builder;
 using Dignite.Cms.Public.Web.Localization;
 using CmsResource = Dignite.Cms.Localization.CmsResource;
 using Volo.Abp.Localization;
+using Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure;
+using Volo.Abp.AspNetCore.Mvc.UI.Theming;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.Toolbars;
+using Dignite.Cms.Menus;
 
 namespace Dignite.Cms;
 
@@ -65,7 +69,7 @@ namespace Dignite.Cms;
     typeof(AbpAspNetCoreAuthenticationOpenIdConnectModule),
     typeof(AbpAspNetCoreMvcClientModule),
     typeof(AbpHttpClientWebModule),
-    typeof(AbpAspNetCoreMvcUiBasicThemeModule),
+    typeof(DigniteAbpAspNetCoreMvcUiPureThemeModule),
     typeof(AbpAutofacModule),
     typeof(AbpCachingStackExchangeRedisModule),
     typeof(AbpHttpClientIdentityModelWebModule),
@@ -121,6 +125,13 @@ public class CmsWebHostModule : AbpModule
         ConfigureSwaggerServices(context.Services);
         ConfigureMultiTenancy();
         ConfigureDataProtection(context, configuration, hostingEnvironment);
+        ConfigureNavigationServices(configuration);
+
+
+        Configure<AbpThemingOptions>(options =>
+        {
+            options.DefaultThemeName = PureTheme.Name;
+        });
     }
 
     private void ConfigureMenu(IConfiguration configuration)
@@ -231,6 +242,19 @@ public class CmsWebHostModule : AbpModule
         }
     }
 
+    private void ConfigureNavigationServices(IConfiguration configuration)
+    {
+        Configure<AbpNavigationOptions>(options =>
+        {
+            options.MenuContributors.Add(new WebsitePublicMenuContributor(configuration));
+        });
+
+        Configure<AbpToolbarOptions>(options =>
+        {
+            options.Contributors.Add(new WebsiteToolbarContributor());
+        });
+    }
+
     public override void OnApplicationInitialization(ApplicationInitializationContext context)
     {
         var app = context.GetApplicationBuilder();
@@ -249,6 +273,12 @@ public class CmsWebHostModule : AbpModule
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
+        app.UseAbpRequestLocalization(options =>
+        {
+            options.AddInitialRequestCultureProvider(
+                new CmsRouteRequestCultureProvider() //Read regions from CMS routing and convert to localization
+            );
+        });
 
         app.UseAuthentication();
 
@@ -257,12 +287,6 @@ public class CmsWebHostModule : AbpModule
             app.UseMultiTenancy();
         }
 
-        app.UseAbpRequestLocalization(options =>
-        {
-            options.AddInitialRequestCultureProvider(
-                new CmsRouteRequestCultureProvider() //Read regions from CMS routing and convert to localization
-            );
-        });
         
 
         //Configuring CMS Routing

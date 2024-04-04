@@ -1,18 +1,18 @@
 {
   "items": [
     {
-      "text": "快速入门",
+      "text": "Quick Start",
       "path": "quick-start.md"
     },   
     {
-      "text": "基本概念",
+      "text": "Basic Concepts",
       "path": "basic-concept.md"
     },  
     {
-      "text": "Mvc网站开发",
+      "text": "Mvc Website Development",
       "items": [
         {
-          "text": "基础知识",
+          "text": "Fundamentals",
           "path": "fundamentals.md"
         },
         {
@@ -22,15 +22,15 @@
       ]
     },    
     {
-      "text": "进阶开发",
+      "text": "Advanced Development",
       "path": "advanced-development.md"
     },  
     {
-      "text": "如何安装",
+      "text": "How to Install",
       "path": "how-to-install.md"
     },  
     {
-      "text": "贡献指南",
+      "text": "Contribution Guide",
       "path": "contribution.md"
     }
   ]

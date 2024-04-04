@@ -1,36 +1,36 @@
 {
   "items": [
     {
-      "text": "快速入门",
+      "text": "クイックスタート",
       "path": "quick-start.md"
     },   
     {
-      "text": "基本概念",
+      "text": "基本コンセプト",
       "path": "basic-concept.md"
     },  
     {
-      "text": "Mvc网站开发",
+      "text": "Mvcウェブサイト開発",
       "items": [
         {
-          "text": "基础知识",
+          "text": "基礎",
           "path": "fundamentals.md"
         },
         {
-          "text": "Tag Helpers",
+          "text": "タグヘルパー",
           "path": "tag-helpers.md"
         }
       ]
     },    
     {
-      "text": "进阶开发",
+      "text": "高度な開発",
       "path": "advanced-development.md"
     },  
     {
-      "text": "如何安装",
+      "text": "インストール方法",
       "path": "how-to-install.md"
     },  
     {
-      "text": "贡献指南",
+      "text": "貢献ガイド",
       "path": "contribution.md"
     }
   ]

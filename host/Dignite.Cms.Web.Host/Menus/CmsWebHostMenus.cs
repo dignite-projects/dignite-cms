@@ -1,7 +1,7 @@
 ﻿
 namespace Dignite.Cms.Menus;
 
-public class WebsitePublicMenus
+public class CmsWebHostMenus
 {
     private const string Prefix = "Website.Public";
 
@@ -10,4 +10,5 @@ public class WebsitePublicMenus
     public const string Services_WebDesign = Services + ".WebDesign";
     public const string Services_Ecommerce = Services + ".Ecommerce";
     public const string Blog = Prefix + ".Blog";
+    public const string Contact = Prefix + ".Contact";
 }

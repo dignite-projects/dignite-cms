@@ -20,7 +20,7 @@
 </section>
 
 <div class="text-center mb-5">
-    <cms-entry-field field-name="image" entry="Model" partial-name="cms/fields/_banner"></cms-entry-field>
+    <cms-entry-field field-name="image" entry="Model" partial-name="_banner"></cms-entry-field>
 </div>
 
 <section class="container mb-5">
@@ -46,3 +46,11 @@
                     partial-name="blog/_recommended-for-home">
     </cms-entry-list>
 </section>
+
+<cms-entry 
+    site-id="Model.Section.SiteId" 
+    section-name="contact" 
+    culture="@Model.Entry.Culture" 
+    slug="index" 
+    partial-name="_contact-section">
+</cms-entry>

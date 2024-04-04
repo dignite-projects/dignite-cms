@@ -3,7 +3,7 @@
 
 @model EntryListViewModel
 @{
-    var pagerModel = new PagerModel(Model.TotalCount, 10, Model.CurrentPage-1, Model.PageSize, Context.Request.Path);
+    var pagerModel = new PagerModel(Model.TotalCount, 10, Model.PageIndex, Model.PageSize, Context.Request.Path);
 }
 
 

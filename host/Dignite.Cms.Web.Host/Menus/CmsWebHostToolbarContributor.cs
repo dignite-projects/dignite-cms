@@ -6,7 +6,7 @@ using Dignite.Cms.Public.Web.Components.CultureSwitch;
 
 namespace Dignite.Cms.Menus;
 
-public class WebsiteToolbarContributor : IToolbarContributor
+public class CmsWebHostToolbarContributor : IToolbarContributor
 {
     public virtual Task ConfigureToolbarAsync(IToolbarConfigurationContext context)
     {

@@ -20,9 +20,9 @@ using Volo.Abp.Text.Formatting;
 namespace Dignite.Cms.Public.Web.Controllers
 {
     [ControllerName(ControllerName)]
-    public class CmsPublicWebController : AbpController
+    public class EntryController : AbpController
     {
-        public const string ControllerName = "Cms";
+        public const string ControllerName = "Entry";
 
         private readonly ISitePublicAppService _sitePublicAppService;
         private readonly ISectionPublicAppService _sectionPublicAppService;
@@ -30,7 +30,7 @@ namespace Dignite.Cms.Public.Web.Controllers
         private readonly IOptions<AbpLocalizationOptions> _localizationOptions;
 
 
-        public CmsPublicWebController(ISitePublicAppService sitePublicAppService, ISectionPublicAppService sectionPublicAppService, IEntryPublicAppService entryPublicAppService,
+        public EntryController(ISitePublicAppService sitePublicAppService, ISectionPublicAppService sectionPublicAppService, IEntryPublicAppService entryPublicAppService,
             IOptions<AbpLocalizationOptions> localizationOptions)
         {
             LocalizationResource = typeof(CmsResource);
@@ -40,36 +40,34 @@ namespace Dignite.Cms.Public.Web.Controllers
             _localizationOptions = localizationOptions;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> HomePage()
         {
-            return await EntryViewResult();
+            return await EntryResult();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entryPath"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> EntryPage(string entryPath)
+        {
+            return await EntryResult(null, entryPath);
+        }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="culture"></param>
-        /// <param name="path">
+        /// <param name="entryPath">
         /// There are several formats:
         /// 1.{culture}
-        /// 2.{culture}/{path}
+        /// 2.{culture}/{entryPath}
         /// </param>
         /// <returns></returns>
-        public async Task<IActionResult> EntryWithCulture(string culture, string path = "/")
+        public async Task<IActionResult> EntryPageWithCulture(string culture, string entryPath)
         {
-            return await EntryViewResult(culture, path);
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Entry(string path = "/")
-        {
-            return await EntryViewResult(null, path);
+            return await EntryResult(culture, entryPath);
         }
 
         /// <summary>
@@ -78,7 +76,7 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// <param name="culture"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        protected async Task<IActionResult> EntryViewResult(string culture = null, string path = "/")
+        protected async Task<IActionResult> EntryResult(string culture = null, string path = "/")
         {
             var section = await GetSection(path);
             if (section == null)

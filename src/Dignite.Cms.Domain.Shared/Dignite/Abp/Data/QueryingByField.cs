@@ -16,5 +16,5 @@ public class QueryingByField
     /// </summary>
     public string Name { get; set; }
 
-    public virtual string Value { get; set; }
+    public string Value { get; set; }
 }

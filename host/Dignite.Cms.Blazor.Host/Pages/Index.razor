@@ -1,10 +1,13 @@
 ﻿@page "/"
+@using Dignite.Cms.Localization
+@using Microsoft.Extensions.Localization
 @using Volo.Abp.Users
 @using Volo.Abp.MultiTenancy
 @using System.Security.Claims
 @inject ICurrentUser CurrentUser
 @inject ICurrentTenant CurrentTenant
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IStringLocalizer<CmsResource> L
 
 <h1>Welcome to Cms!</h1>
 
@@ -23,6 +26,10 @@
         <li>PhoneNumberVerified: <strong>@CurrentUser.PhoneNumberVerified</strong></li>
         <li>Roles: <strong>@CurrentUser.Roles.JoinAsString(", ")</strong></li>
     </ul>
+}
+else
+{
+    <a class="btn btn-primary" href="/authentication/Login"><i class="fa fa-sign-in"></i> @L["Login"]</a>
 }
 
 @if (_claims != null)

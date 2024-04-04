@@ -2,6 +2,7 @@
   "description": "Description",
   "blog": "Blog",
   "Menu:HomePage": "Home Page",
+  "Menu:Contact": "Contact",
   "Menu:Services": "Services",
   "Menu:WebDesign": "Web Design",
   "Menu:eCommerce": "E-Commerce",
@@ -13,5 +14,6 @@
   "Menu:Blog-essays": "Essays",
   "no-data-text": "No matching data found!",
   "search-text-box-placeholder": "Enter search keywords",
-  "updated-on": "Updated on"
+  "updated-on": "Updated on",
+  "contact-us": "Contact Us"
 }

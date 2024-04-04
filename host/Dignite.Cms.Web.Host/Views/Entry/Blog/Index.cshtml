@@ -1,13 +1,11 @@
 ﻿@using Dignite.Abp.Data;
 @using Dignite.Cms.Public.Web.Models;
-@using Dignite.Cms.Public.Sites;
 
 @model EntryViewModel
 @{
     PageLayout.Content.Title = Model.Entry.Title;
 
-    //查询条件
-    var filter = Context.Request.Query["filter"].ToString();
+    //current category
     var category = Context.Request.Query["category"].ToString();
     IList<QueryingByField> parameters = null;
     if (!category.IsNullOrWhiteSpace())
@@ -18,12 +16,15 @@
         };
     }
 
-    //获取分页数
+    //current paging number
     int currentPage;
     if (!int.TryParse(Context.Request.Query["currentPage"], out currentPage))
     {
         currentPage = 1;
     }
+
+    //
+    var filter = Context.Request.Query["filter"].ToString();
 }
 @section content_toolbar {
     <partial name="blog/_blog-toolbar" model="Model"></partial>

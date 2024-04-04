@@ -252,6 +252,19 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
                 _cmsData.ServiceSectionRoute,
                 _cmsData.ServiceEntryTemplate, null),
             autoSave: true);
+
+        await _sectionRepository.InsertAsync(
+            new Section(
+                _cmsData.ContactSectionId,
+                _cmsData.SiteId,
+                SectionType.Single,
+                "Contact",
+                _cmsData.ContactSectionName,
+                false,
+                true,
+                _cmsData.ContactSectionRoute,
+                _cmsData.ContactEntryTemplate, null),
+            autoSave: true);
     }
     private async Task SeedEntryTypesAsync()
     {
@@ -375,6 +388,35 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
                     },
                 null),
             autoSave: true);
+
+
+
+        await _entryTypeRepository.InsertAsync(
+            new EntryType(
+                _cmsData.ContactSectionEntryTypeId,
+                _cmsData.ContactSectionId,
+                "Contact",
+                _cmsData.ContactSectionEntryTypeName,
+                new List<EntryFieldTab> {
+                    new EntryFieldTab(
+                        "Entry Field Tab",
+                        new List<EntryField>{
+                            new EntryField(
+                                _cmsData.TextboxFieldId,
+                                "Contact Slogan",
+                                true,
+                                true
+                                ),
+                            new EntryField(
+                                _cmsData.CkeditorFieldId,
+                                "Contact",
+                                true,
+                                false
+                                )
+                        })
+                    },
+                null),
+            autoSave: true);
     }
     private async Task SeedEntriesAsync()
     {
@@ -480,6 +522,11 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
         await CreateService("ja", "電子商取引", "ecommerce", "「サービス項目", "<p>サービス項目 説明</p>", 2);
         await CreateService("zh-Hant", "頁面設計", "web-design", "服務項目","服務說明", 1);
         await CreateService("zh-Hant", "電子商務", "ecommerce", "服務項目", "服務說明", 2);
+
+        // Contact
+        await CreateContact(_cmsData.EntryDefaultCulture, "Contact", "Let's ignite your digital journey, Together!", "<ul><li>Office Location:3-11-23 0IMAZATO HIGASHINARI WARD，OSAKA OSAKA JPN</li><li>Email Us:hello@dignite.com</li></ul>");
+        await CreateContact("ja", "お問い合わせ", "デジタルエンジンに火をつけましょう!", "<ul><li>事務所所在地:大阪府大阪市東成区大今里3-11-23</li><li>メールでご連絡:hello@dignite.com</li></ul>");
+        await CreateContact("zh-Hant", "聯繫", "讓我們一起點燃你的數字化引擎!", "<ul><li>公司所在地:3-11-23 0IMAZATO HIGASHINARI WARD，OSAKA OSAKA JPN</li><li>發郵件:hello@dignite.com</li></ul>");
     }
 
     private async Task<FileDescriptorDto> UploadImage()
@@ -610,6 +657,32 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
 
         await _entryRepository.InsertAsync(
             serviceEntry,
+            autoSave: true
+            );
+    }
+
+
+    private async Task CreateContact(string language, string title, string slogan, string contact)
+    {
+        var contactEntry = new Entry(
+                Guid.NewGuid(),
+                _cmsData.ContactSectionId,
+                _cmsData.ContactSectionEntryTypeId,
+                language,
+                title,
+                EntryConsts.DefaultSlug,
+                _clock.Now,
+                EntryStatus.Published,
+                null,
+                1,
+                null,
+                "",
+                null
+                );
+        contactEntry.SetField(_cmsData.TextboxFieldName, slogan);
+        contactEntry.SetField(_cmsData.CkeditorFieldName, contact);
+        await _entryRepository.InsertAsync(
+            contactEntry,
             autoSave: true
             );
     }

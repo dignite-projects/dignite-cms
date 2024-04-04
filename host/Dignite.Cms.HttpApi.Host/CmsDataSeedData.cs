@@ -46,9 +46,13 @@ public class CmsDataSeedData : ISingletonDependency
     public string BlogPostSectionRoute = "blog/{publishTime:yyyy}/{publishTime:MM}/{slug}";
     public string BlogPostSectionTemplate = "Blog/Entry";
     public Guid ServiceSectionId { get; } = Guid.NewGuid();
-    public string ServiceSectionName = "service";
+    public string ServiceSectionName = "services";
     public string ServiceSectionRoute = "service/{slug}";
     public string ServiceEntryTemplate = "Service/Entry";
+    public Guid ContactSectionId { get; } = Guid.NewGuid();
+    public string ContactSectionName = "contact";
+    public string ContactSectionRoute = "contact";
+    public string ContactEntryTemplate = "Contact/Page";
 
     public Guid HomeSectionEntryTypeId { get; } = Guid.NewGuid();
     public string HomeSectionEntryTypeName = "home";
@@ -59,6 +63,9 @@ public class CmsDataSeedData : ISingletonDependency
 
     public Guid ServiceSectionEntryTypeId { get; } = Guid.NewGuid();
     public string ServiceSectionEntryTypeName = "service";
+
+    public Guid ContactSectionEntryTypeId { get; } = Guid.NewGuid();
+    public string ContactSectionEntryTypeName = "contact";
 
     public string EntryDefaultCulture = "en";
 }

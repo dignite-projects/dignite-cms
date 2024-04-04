@@ -40,7 +40,7 @@ public class CmsRouteRequestCultureProvider : RequestCultureProvider
         culture = httpContext.GetRouteValue(RouteDataStringKey)?.ToString();
 
         //Skip if it is not a CMS route
-        if (controller == null || controller != CmsPublicWebController.ControllerName)
+        if (controller == null || controller != EntryController.ControllerName)
         {
             // No values specified for either so no match
             return NullProviderCultureResult.Result;

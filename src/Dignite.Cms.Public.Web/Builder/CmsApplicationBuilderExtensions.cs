@@ -16,17 +16,17 @@ namespace Dignite.Cms.Public.Web.Builder
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: RouteConsts.HomeRouteName,
+                    name: CmsWebRouteConsts.HomePageRouteName,
                     pattern: "/",
-                    defaults: new { controller = CmsPublicWebController.ControllerName, action = nameof(CmsPublicWebController.Index) });
+                    defaults: new { controller = EntryController.ControllerName, action = nameof(EntryController.HomePage) });
                 endpoints.MapControllerRoute(
-                    name: RouteConsts.EntryWithCultureRouteName,
-                    pattern: "{"+ CultureRouteSegmentConstraint.RouteSegmentName + ":"+ CultureRouteSegmentConstraint.RouteConstraintName + "}/{*path}",
-                    defaults: new { controller = CmsPublicWebController.ControllerName, action = nameof(CmsPublicWebController.EntryWithCulture) });
+                    name: CmsWebRouteConsts.EntryPageWithCultureRouteName,
+                    pattern: "{"+ CultureRouteSegmentConstraint.RouteSegmentName + ":"+ CultureRouteSegmentConstraint.RouteConstraintName + "}/{*entryPath}",
+                    defaults: new { controller = EntryController.ControllerName, action = nameof(EntryController.EntryPageWithCulture) });
                 endpoints.MapControllerRoute(
-                    name: RouteConsts.EntryRouteName,
-                    pattern: "{*path:regex(^(?!swagger/).*)}", //TODO: Use an options to configure the regular expression for the path
-                    defaults: new { controller = CmsPublicWebController.ControllerName, action = nameof(CmsPublicWebController.Entry) });
+                    name: CmsWebRouteConsts.EntryPageRouteName,
+                    pattern: "{*entryPath:regex(^(?!swagger/).*)}", //TODO: Use an options to configure the regular expression for the entryPath
+                    defaults: new { controller = EntryController.ControllerName, action = nameof(EntryController.EntryPage) });
             });
 
             return app;

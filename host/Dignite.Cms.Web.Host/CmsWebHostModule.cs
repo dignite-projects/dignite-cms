@@ -105,7 +105,6 @@ public class CmsWebHostModule : AbpModule
         var hostingEnvironment = context.Services.GetHostingEnvironment();
         var configuration = context.Services.GetConfiguration();
 
-        ConfigureMenu(configuration);
         ConfigureCache(configuration);
         ConfigureUrls(configuration);
 
@@ -134,13 +133,6 @@ public class CmsWebHostModule : AbpModule
         });
     }
 
-    private void ConfigureMenu(IConfiguration configuration)
-    {
-        Configure<AbpNavigationOptions>(options =>
-        {
-            options.MenuContributors.Add(new CmsWebHostMenuContributor(configuration));
-        });
-    }
 
     private void ConfigureCache(IConfiguration configuration)
     {
@@ -246,12 +238,12 @@ public class CmsWebHostModule : AbpModule
     {
         Configure<AbpNavigationOptions>(options =>
         {
-            options.MenuContributors.Add(new WebsitePublicMenuContributor(configuration));
+            options.MenuContributors.Add(new CmsWebHostMenuContributor(configuration));
         });
 
         Configure<AbpToolbarOptions>(options =>
         {
-            options.Contributors.Add(new WebsiteToolbarContributor());
+            options.Contributors.Add(new CmsWebHostToolbarContributor());
         });
     }
 

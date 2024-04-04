@@ -4,5 +4,5 @@ namespace Dignite.Cms.Blazor.Host;
 
 public class CmsHostBrandingProvider : DefaultBrandingProvider
 {
-    public override string AppName => "Cms";
+    public override string AppName => "Dignite Cms";
 }

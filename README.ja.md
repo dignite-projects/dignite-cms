@@ -15,36 +15,36 @@ Dignite Cmsは、[Abp Framework](https://github.com/abpframework)に基づくCMS
 
 Dignite Cmsのバックエンド管理機能やMVCウェブサイト開発の方法を素早く理解するために、シードデータのセットを作成しました。
 
-- [クイックスタートドキュメント](quick-start.md)
+- [クイックスタートドキュメント](https://learn.dignite.com/ja/cms/latest/quick-start)
 
 ### 基本コンセプト
 
 Dignite Cmsの基本コンセプトの詳細な説明は、Dignite Cmsを使用したウェブサイトの開発方法をよりよく理解するのに役立ちます。
 
-- [基本コンセプトドキュメント](basic-concept.md)
+- [基本コンセプトドキュメント](https://learn.dignite.com/ja/cms/latest/basic-concept)
 
 ### MVCウェブサイト開発
 
 Dignite Cmsは、MVCウェブサイトを迅速に開発するための一連のタグヘルパーを提供しています。
 
-- [基礎ドキュメント](fundamentals.md)
-- [タグヘルパードキュメント](tag-helpers.md)
+- [基礎ドキュメント](https://learn.dignite.com/ja/cms/latest/fundamentals)
+- [タグヘルパードキュメント](https://learn.dignite.com/ja/cms/latest/tag-helpers)
 
 ### 高度な開発
 
 フィールドでエントリをクエリするなど、Dignite Cmsの高度な開発技術を学びます。
 
-- [高度な開発ドキュメント](advanced-development.md)
+- [高度な開発ドキュメント](https://learn.dignite.com/ja/cms/latest/advanced-development)
 
 ### インストール方法
 
 Dignite Cmsは標準のAbpモジュールです。以下のドキュメントでは、AbpプロジェクトにDignite Cmsをインストールして設定する方法を案内します。
 
-- [インストールガイド](how-to-install.md)
+- [インストールガイド](https://learn.dignite.com/ja/cms/latest/how-to-install)
 
 ## 貢献したいですか？
 
-このプロジェクトに参加したい場合は、[貢献ガイドライン](contribution.md)を参照してください。
+このプロジェクトに参加したい場合は、[貢献ガイドライン](https://learn.dignite.com/ja/cms/latest/contribution)を参照してください。
 
 ## 公式リンク
 

@@ -1,6 +1,8 @@
 ﻿using Dignite.Abp.Data;
 using Dignite.Cms.Public.Entries;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shouldly;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -88,7 +90,10 @@ public class EntryPublicAppService_Tests : CmsApplicationTestBase
             {
                 SectionId = testData.ChannelSectionId,
                 Culture = testData.EntryDefaultCulture,
-                EntryIds = [testData.ChannelSection_Entry1Id, testData.ChannelSection_Entry2Id]
+                EntryIds = new Guid[] { 
+                    testData.ChannelSection_Entry1Id, 
+                    testData.ChannelSection_Entry2Id 
+                }
             }
             );
 

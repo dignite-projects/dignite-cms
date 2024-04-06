@@ -34,6 +34,10 @@ Dignite Cms的後台系統基於Blazor技術，提供了Blazor WebAssembly和Bla
     ```
 
     ```bash
+    abp install-libs
+    ```
+
+    ```bash
     dotnet run
     ```
 

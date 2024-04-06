@@ -34,6 +34,10 @@ Dignite Cms管理システムはBlazor技術をベースにしており、Blazor
     ```
 
     ```bash
+    abp install-libs
+    ```
+
+    ```bash
     dotnet run
     ```
 
@@ -56,6 +60,10 @@ Dignite Cms管理システムはBlazor技術をベースにしており、Blazor
 4. **MVCウェブサイトの起動**
 
     ターミナルで`host\Dignite.Cms.Web.Host`ディレクトリに移動し、次のコマンドを実行します：
+
+    ```bash
+    abp install-libs
+    ```
 
     ```bash
     dotnet run

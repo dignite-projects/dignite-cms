@@ -34,6 +34,10 @@ The Dignite Cms admin system is based on Blazor technology, providing two runnin
     ```
 
     ```bash
+    abp install-libs
+    ```
+
+    ```bash
     dotnet run
     ```
 
@@ -56,6 +60,10 @@ The Dignite Cms admin system is based on Blazor technology, providing two runnin
 4. **Start MVC Website**
 
     In the terminal, navigate to the `host\Dignite.Cms.Web.Host` directory and execute the following command:
+
+    ```bash
+    abp install-libs
+    ```
 
     ```bash
     dotnet run

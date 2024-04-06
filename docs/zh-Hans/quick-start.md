@@ -34,6 +34,10 @@ Dignite Cms的后台系统基于Blazor技术，提供了Blazor WebAssembly和Bla
     ```
 
     ```bash
+    abp install-libs
+    ```
+
+    ```bash
     dotnet run
     ```
 
@@ -56,6 +60,10 @@ Dignite Cms的后台系统基于Blazor技术，提供了Blazor WebAssembly和Bla
 4. **启动MVC网站**
 
     在终端中，进入`host\Dignite.Cms.Web.Host`目录，并执行以下命令：
+
+    ```bash
+    abp install-libs
+    ```
 
     ```bash
     dotnet run

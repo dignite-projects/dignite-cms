@@ -98,7 +98,7 @@ namespace Dignite.Cms.Public.Web.Controllers
                 if (culture.Equals(defaultCulture, StringComparison.OrdinalIgnoreCase) 
                     && Request.Path.Value.EnsureEndsWith('/').StartsWith($"/{culture}/"))
                 {
-                    return RedirectPermanent(Request.GetEncodedPathAndQuery().EnsureEndsWith('/').RemovePreFix($"/{culture}/").EnsureStartsWith('/'));
+                    return RedirectPermanent(Request.GetEncodedPathAndQuery().RemovePreFix($"/{culture}/").EnsureStartsWith('/'));
                 }
 
                 if (!culture.Equals(defaultCulture, StringComparison.OrdinalIgnoreCase) 

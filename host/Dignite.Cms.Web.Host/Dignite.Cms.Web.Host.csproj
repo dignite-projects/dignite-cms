@@ -21,7 +21,7 @@
     <PackageReference Include="Volo.Abp.Http.Client.IdentityModel.Web" Version="7.4.5" />
     <PackageReference Include="Volo.Abp.Http.Client.Web" Version="7.4.5" />
     <PackageReference Include="Volo.Abp.Swashbuckle" Version="7.4.5" />
-	  <PackageReference Include="Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure" Version="2.1.0" />
+	  <PackageReference Include="Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure" Version="2.1.1" />
     <PackageReference Include="Volo.Abp.Identity.Web" Version="7.4.5" />
     <PackageReference Include="Volo.Abp.Identity.HttpApi.Client" Version="7.4.5" />
     <PackageReference Include="Volo.Abp.FeatureManagement.Web" Version="7.4.5" />

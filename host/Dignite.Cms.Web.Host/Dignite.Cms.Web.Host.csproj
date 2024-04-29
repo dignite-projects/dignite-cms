@@ -7,6 +7,7 @@
     <RootNamespace>Dignite.Cms</RootNamespace>
     <PreserveCompilationReferences>true</PreserveCompilationReferences>
     <UserSecretsId>Dignite.Cms-c2d31439-b723-48e2-b061-5ebd7aeb6010</UserSecretsId>
+	<GenerateRuntimeConfigDevFile>true</GenerateRuntimeConfigDevFile>
   </PropertyGroup>
 
   <ItemGroup>

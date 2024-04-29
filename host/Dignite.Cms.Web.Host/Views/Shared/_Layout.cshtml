@@ -4,6 +4,10 @@
     Layout = ThemeManager.CurrentTheme.GetPublicLayout();
 }
 @section styles {
+    <script>
+        document.documentElement.setAttribute('data-bs-theme', 'light');
+    </script>
+
     <!-- Dignite global css -->
     <abp-style-bundle name="website-style">
         <abp-style src="/website.css"></abp-style>

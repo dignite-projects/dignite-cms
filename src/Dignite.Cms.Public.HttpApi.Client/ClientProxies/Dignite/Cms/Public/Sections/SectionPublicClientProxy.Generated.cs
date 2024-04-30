@@ -50,4 +50,12 @@ public partial class SectionPublicClientProxy : ClientProxyBase<ISectionPublicAp
             { typeof(Guid), siteId }
         });
     }
+
+    public virtual async Task<ListResultDto<SectionDto>> GetListAsync(GetSectionsInput input)
+    {
+        return await RequestAsync<ListResultDto<SectionDto>>(nameof(GetListAsync), new ClientProxyRequestTypeValue
+        {
+            { typeof(GetSectionsInput), input }
+        });
+    }
 }

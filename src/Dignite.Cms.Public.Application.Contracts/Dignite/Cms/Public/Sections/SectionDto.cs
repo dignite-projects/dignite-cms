@@ -2,6 +2,7 @@
 using Dignite.Cms.Sections;
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Cms.Public.Sections
@@ -17,6 +18,7 @@ namespace Dignite.Cms.Public.Sections
         /// <summary>
         /// 
         /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public SiteDto Site { get; set; }
 
         /// <summary>
@@ -61,6 +63,7 @@ namespace Dignite.Cms.Public.Sections
         public string Template { get; set; }
 
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public ICollection<EntryTypeDto> EntryTypes { get; set; }
     }
 }

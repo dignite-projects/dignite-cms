@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
 namespace Dignite.Cms.Public.Sections
 {
     public interface ISectionPublicAppService : IApplicationService
     {
-        Task<SectionDto> GetAsync(Guid id);
         Task<SectionDto> FindByNameAsync(Guid siteId,string name);
 
         /// <summary>
@@ -18,6 +18,10 @@ namespace Dignite.Cms.Public.Sections
         /// </param>
         /// <returns></returns>
         Task<SectionDto> FindByEntryPathAsync(Guid siteId, string entryPath);
+
+        Task<ListResultDto<SectionDto>> GetListAsync(GetSectionsInput input);
+
+        Task<SectionDto> GetAsync(Guid sectionId);
 
         Task<SectionDto> GetDefaultAsync(Guid siteId);
     }

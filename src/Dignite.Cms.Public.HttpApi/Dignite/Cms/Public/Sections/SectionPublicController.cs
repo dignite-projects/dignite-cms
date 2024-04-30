@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using Volo.Abp;
+using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Cms.Public.Sections
 {
@@ -38,6 +39,12 @@ namespace Dignite.Cms.Public.Sections
         public async Task<SectionDto> FindByEntryPathAsync(Guid siteId, string entryPath)
         {
             return await _sectionAppService.FindByEntryPathAsync(siteId, entryPath);
+        }
+
+        [HttpGet]
+        public async Task<ListResultDto<SectionDto>> GetListAsync(GetSectionsInput input)
+        {
+            return await _sectionAppService.GetListAsync(input);
         }
 
         [HttpGet]

@@ -16,6 +16,7 @@ namespace Dignite.Cms.Public.Entries
         /// <summary>
         /// 
         /// </summary>
+        [Required]
         public string Culture { get; set; }
 
         [Required]

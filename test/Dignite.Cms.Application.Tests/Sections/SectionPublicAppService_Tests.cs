@@ -18,6 +18,19 @@ public class SectionPublicAppService_Tests : CmsApplicationTestBase
 
 
     [Fact]
+    public async Task GetListAsync()
+    {
+        var entries = await sectionPublicAppService.GetListAsync(
+            new GetSectionsInput
+            {
+                SiteId = testData.SiteId
+            }
+            );
+
+        entries.Items.Count.ShouldBeGreaterThan(0);
+    }
+
+    [Fact]
     public async Task GetAsync()
     {
         var section = await sectionPublicAppService.GetAsync(testData.ChannelSectionId);

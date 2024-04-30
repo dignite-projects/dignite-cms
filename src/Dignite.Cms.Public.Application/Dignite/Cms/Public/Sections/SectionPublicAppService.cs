@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
 using Volo.Abp.Text.Formatting;
 
 namespace Dignite.Cms.Public.Sections
@@ -20,19 +21,6 @@ namespace Dignite.Cms.Public.Sections
             _fieldRepository= fieldRepository;
         }
 
-        public async Task<SectionDto> GetAsync(Guid sectionId)
-        {
-            var dto = ObjectMapper.Map<Section, SectionDto>(
-                await _sectionRepository.GetAsync(sectionId)
-                );
-
-            if (dto != null)
-            {
-                await FillSectionFields(dto);
-            }
-            return dto;
-        }
-
         public async Task<SectionDto> FindByNameAsync(Guid siteId, string name)
         {
             var dto = ObjectMapper.Map<Section, SectionDto>(
@@ -40,7 +28,7 @@ namespace Dignite.Cms.Public.Sections
                 );
             if (dto != null)
             {
-                await FillSectionFields(dto);
+                await FillFields(dto);
             }
             return dto;
         }
@@ -71,6 +59,32 @@ namespace Dignite.Cms.Public.Sections
             return section;
         }
 
+
+        public async Task<ListResultDto<SectionDto>> GetListAsync(GetSectionsInput input)
+        { 
+            var list = await _sectionRepository.GetListAsync(
+                input.SiteId,
+                isActive:true,
+                includeDetails:false
+                );
+            var dto = ObjectMapper.Map<List<Section>, List<SectionDto>>(list);
+
+            return new ListResultDto<SectionDto>(dto);
+        }
+
+        public async Task<SectionDto> GetAsync(Guid sectionId)
+        {
+            var dto = ObjectMapper.Map<Section, SectionDto>(
+                await _sectionRepository.GetAsync(sectionId)
+                );
+
+            if (dto != null)
+            {
+                await FillFields(dto);
+            }
+            return dto;
+        }
+
         public async Task<SectionDto> GetDefaultAsync(Guid siteId)
         {
             var result = await _sectionRepository.GetDefaultAsync(siteId);
@@ -85,7 +99,7 @@ namespace Dignite.Cms.Public.Sections
                     result
                     );
 
-                await FillSectionFields(dto);
+                await FillFields(dto);
                 return dto;
             }
         }
@@ -106,7 +120,7 @@ namespace Dignite.Cms.Public.Sections
                     var dto = ObjectMapper.Map<Section, SectionDto>(
                         section
                         );
-                    await FillSectionFields(dto);
+                    await FillFields(dto);
                     return dto;
                 }
             }
@@ -114,7 +128,7 @@ namespace Dignite.Cms.Public.Sections
             return null;
         }
 
-        protected async Task FillSectionFields(SectionDto dto)
+        protected async Task FillFields(SectionDto dto)
         { 
             var allFields = await _fieldRepository.GetListAsync(false);
             var fieldsDto = ObjectMapper.Map<List<Field>, List<FieldDto>>(allFields);

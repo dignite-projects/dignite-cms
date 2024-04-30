@@ -76,11 +76,7 @@ namespace Dignite.Cms.Public.Entries
             int count = 0;
             List<Entry> result = new List<Entry>();
             var section = await _sectionPublicAppService.GetAsync(input.SectionId);
-            if (input.Culture.IsNullOrEmpty())
-            {
-                input.Culture = section.Site.GetDefaultLanguage().CultureName;
-            }
-
+            
             if (input.EntryIds == null)
             {
                 if (section.Type == Cms.Sections.SectionType.Single)

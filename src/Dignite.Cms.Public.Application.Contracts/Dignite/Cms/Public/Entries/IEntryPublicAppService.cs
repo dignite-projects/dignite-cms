@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
 namespace Dignite.Cms.Public.Entries
 {
-    public interface IEntryPublicAppService : IApplicationService
+    public interface IEntryPublicAppService : IReadOnlyAppService<EntryDto, Guid, GetEntriesInput>
     {
         /// <summary>
         /// 
@@ -27,14 +26,5 @@ namespace Dignite.Cms.Public.Entries
         /// <param name="id"></param>
         /// <returns></returns>
         Task<EntryDto> FindNextAsync(Guid id);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        Task<PagedResultDto<EntryDto>> GetListAsync(GetEntriesInput input);
-
-        Task<EntryDto> GetAsync(Guid id);
     }
 }

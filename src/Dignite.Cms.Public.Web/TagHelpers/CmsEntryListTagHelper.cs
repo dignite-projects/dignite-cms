@@ -4,7 +4,6 @@ using Dignite.Cms.Public.Sections;
 using Dignite.Cms.Public.Sites;
 using Dignite.Cms.Public.Web.Models;
 using Dignite.Cms.Public.Web.Razor;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
 using System.Collections.Generic;

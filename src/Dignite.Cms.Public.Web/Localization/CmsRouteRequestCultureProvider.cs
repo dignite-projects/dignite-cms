@@ -1,9 +1,7 @@
 ﻿using Dignite.Cms.Public.Sites;
-using Dignite.Cms.Public.Web.Controllers;
-using Dignite.Cms.Public.Web.Routing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Localization.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
@@ -14,47 +12,25 @@ using Volo.Abp.Localization;
 namespace Dignite.Cms.Public.Web.Localization;
 
 /// <summary>
-/// Reading <see cref="RouteDataStringKey"/> data from CMS routes and converting to <see cref="ProviderCultureResult"/>
 /// </summary>
-public class CmsRouteRequestCultureProvider : RequestCultureProvider
+public class CmsRouteRequestCultureProvider : RouteDataRequestCultureProvider
 {
-    /// <summary>
-    /// The key that contains the Culture name.
-    /// Defaults to "Culture".
-    /// </summary>
-    public string RouteDataStringKey { get; set; } = CultureRouteSegmentConstraint.RouteSegmentName;
-
     /// <inheritdoc />
     public override async Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
     {
-        if (httpContext == null)
+        var providerResultCulture = await base.DetermineProviderCultureResult (httpContext);
+        string culture;
+        if (providerResultCulture == NullProviderCultureResult.Result)
         {
-            throw new ArgumentNullException(nameof(httpContext));
-        }
-
-        string culture = null;
-        string uiCulture = null;
-        string controller = null;
-
-        controller = httpContext.GetRouteValue("Controller")?.ToString();
-        culture = httpContext.GetRouteValue(RouteDataStringKey)?.ToString();
-
-        //Skip if it is not a CMS route
-        if (controller == null || controller != EntryController.ControllerName)
-        {
-            // No values specified for either so no match
-            return NullProviderCultureResult.Result;
+            //Getting the default Culture from the Cms site
+            var _siteAppService = httpContext.RequestServices.GetRequiredService<ISitePublicAppService>();
+            var host = $"{httpContext.Request.Scheme}://{httpContext.Request.Host.Value}";
+            var site = await _siteAppService.FindByHostAsync(host);
+            culture = site.GetDefaultLanguage().CultureName;
         }
         else
         {
-            if (culture == null)
-            {
-                //Getting the default Culture from the Cms site
-                var _siteAppService = httpContext.RequestServices.GetRequiredService<ISitePublicAppService>();
-                var host = $"{httpContext.Request.Scheme}://{httpContext.Request.Host.Value}";
-                var site = await _siteAppService.FindByHostAsync(host);
-                culture = site.GetDefaultLanguage().CultureName;
-            }
+            culture = providerResultCulture.Cultures.First().Value;
         }
 
 
@@ -65,10 +41,8 @@ public class CmsRouteRequestCultureProvider : RequestCultureProvider
          */
         var localizationOptions = httpContext.RequestServices.GetRequiredService<IOptions<AbpLocalizationOptions>>();
         var languages = localizationOptions.Value.Languages;
-        uiCulture = languages.FirstOrDefault(l => l.CultureName.Equals(culture, StringComparison.OrdinalIgnoreCase))?.UiCultureName ?? culture;
+        var uiCulture = languages.FirstOrDefault(l => l.CultureName.Equals(culture, StringComparison.OrdinalIgnoreCase))?.UiCultureName ?? culture;
 
-        var providerResultCulture = new ProviderCultureResult(culture, uiCulture);
-
-        return providerResultCulture;
+        return new ProviderCultureResult(culture, uiCulture);
     }
 }

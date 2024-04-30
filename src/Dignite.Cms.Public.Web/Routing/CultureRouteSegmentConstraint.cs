@@ -16,7 +16,7 @@ namespace Dignite.Cms.Public.Web.Routing;
 public class CultureRouteSegmentConstraint : IRouteConstraint
 {
     public const string RouteConstraintName = "CultureConstraint";
-    public const string RouteSegmentName = "Culture";
+    public const string RouteSegmentName = "culture";
 
     public bool Match(HttpContext httpContext, IRouter route, string routeKey, RouteValueDictionary values, RouteDirection routeDirection)
     {

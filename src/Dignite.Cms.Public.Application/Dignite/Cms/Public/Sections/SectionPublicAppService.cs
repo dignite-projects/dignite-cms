@@ -72,10 +72,10 @@ namespace Dignite.Cms.Public.Sections
             return new ListResultDto<SectionDto>(dto);
         }
 
-        public async Task<SectionDto> GetAsync(Guid sectionId)
+        public async Task<SectionDto> GetAsync(Guid id)
         {
             var dto = ObjectMapper.Map<Section, SectionDto>(
-                await _sectionRepository.GetAsync(sectionId)
+                await _sectionRepository.GetAsync(id)
                 );
 
             if (dto != null)

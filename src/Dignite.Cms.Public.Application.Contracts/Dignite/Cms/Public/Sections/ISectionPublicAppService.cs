@@ -21,7 +21,7 @@ namespace Dignite.Cms.Public.Sections
 
         Task<ListResultDto<SectionDto>> GetListAsync(GetSectionsInput input);
 
-        Task<SectionDto> GetAsync(Guid sectionId);
+        Task<SectionDto> GetAsync(Guid id);
 
         Task<SectionDto> GetDefaultAsync(Guid siteId);
     }

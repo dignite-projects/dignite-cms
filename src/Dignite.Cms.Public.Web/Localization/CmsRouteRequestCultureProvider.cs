@@ -1,7 +1,10 @@
 ﻿using Dignite.Cms.Public.Sites;
+using Dignite.Cms.Public.Web.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Localization.Routing;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
@@ -19,14 +22,24 @@ public class CmsRouteRequestCultureProvider : RouteDataRequestCultureProvider
     public override async Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
     {
         var providerResultCulture = await base.DetermineProviderCultureResult (httpContext);
+        var controller = httpContext.GetRouteValue("Controller")?.ToString();
         string culture;
         if (providerResultCulture == NullProviderCultureResult.Result)
         {
-            //Getting the default Culture from the Cms site
-            var _siteAppService = httpContext.RequestServices.GetRequiredService<ISitePublicAppService>();
-            var host = $"{httpContext.Request.Scheme}://{httpContext.Request.Host.Value}";
-            var site = await _siteAppService.FindByHostAsync(host);
-            culture = site.GetDefaultLanguage().CultureName;
+            //Skip if it is not a CMS route
+            if (controller == null || controller != EntryController.ControllerName)
+            {
+                // No values specified for either so no match
+                return NullProviderCultureResult.Result;
+            }
+            else
+            {
+                //Getting the default Culture from the Cms site
+                var _siteAppService = httpContext.RequestServices.GetRequiredService<ISitePublicAppService>();
+                var host = $"{httpContext.Request.Scheme}://{httpContext.Request.Host.Value}";
+                var site = await _siteAppService.FindByHostAsync(host);
+                culture = site.GetDefaultLanguage().CultureName;
+            }
         }
         else
         {

@@ -12,6 +12,12 @@
             new QueryingByField("switch","true")
         };
 }
+@section scripts
+{
+    <script>
+        console.info("Current Culture Name:" + abp.localization.currentCulture.twoLetterIsoLanguageName);
+    </script>
+}
 
 <section class="container my-5">
     <h1>

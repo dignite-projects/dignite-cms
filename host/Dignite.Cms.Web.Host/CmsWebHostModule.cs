@@ -59,6 +59,7 @@ using Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure;
 using Volo.Abp.AspNetCore.Mvc.UI.Theming;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.Toolbars;
 using Dignite.Cms.Menus;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Dignite.Cms;
 
@@ -130,6 +131,12 @@ public class CmsWebHostModule : AbpModule
         Configure<AbpThemingOptions>(options =>
         {
             options.DefaultThemeName = PureTheme.Name;
+        });
+
+
+        Configure<RazorPagesOptions>(options =>
+        {
+            options.Conventions.AddPageRoute("/RazorPageTest", "/{culture:CultureConstraint}/razor-page-test");
         });
     }
 

@@ -49,10 +49,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\RazorPageTest.cshtml" />
     <Content Remove="Views\Entry\Contact\Page.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Pages\RazorPageTest.cshtml" />
     <None Include="Themes\Pure\Components\Brand\Default.cshtml" />
     <None Include="Themes\Pure\Components\Menu\Default.cshtml" />
     <None Include="Themes\Pure\Components\Menu\_MenuItem.cshtml" />
@@ -74,6 +76,14 @@
     <None Update="Pages\**\*.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\RazorPageTest.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\RazorPageTest.cshtml" />
   </ItemGroup>
 
 </Project>

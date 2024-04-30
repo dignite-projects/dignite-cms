@@ -66,6 +66,9 @@ public class CmsWebHostMenuContributor : IMenuContributor
         // contact
         context.Menu.AddItem(new ApplicationMenuItem(CmsWebHostMenus.Contact, l["Menu:Contact"], "~/contact"));
 
+        // Razor page
+        context.Menu.AddItem(new ApplicationMenuItem(CmsWebHostMenus.RazorPageTest, "Razor Page", "~/razor-page-test"));
+
 
         return Task.CompletedTask;
     }

@@ -11,4 +11,5 @@ public class CmsWebHostMenus
     public const string Services_Ecommerce = Services + ".Ecommerce";
     public const string Blog = Prefix + ".Blog";
     public const string Contact = Prefix + ".Contact";
+    public const string RazorPageTest = Prefix + ".RazorPageTest";
 }

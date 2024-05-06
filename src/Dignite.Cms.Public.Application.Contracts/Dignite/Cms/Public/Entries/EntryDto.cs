@@ -11,7 +11,7 @@ namespace Dignite.Cms.Public.Entries
     /// <summary>
     /// Entry
     /// </summary>
-    public class EntryDto: ExtensibleEntityDto<Guid>, IHasCustomFields, IMayHaveCreator
+    public class EntryDto: ExtensibleEntityDto<Guid>, IHasCustomFields, IMayHaveCreator, IHasModificationTime
     {
         /// <summary>
         /// 
@@ -74,5 +74,7 @@ namespace Dignite.Cms.Public.Entries
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public CmsUserDto Author { get; set; }
+
+        public DateTime? LastModificationTime { get; set; }
     }
 }

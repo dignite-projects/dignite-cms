@@ -6,18 +6,5 @@
 @{
     var configuration = new TextEditConfiguration(Model.Field.FormConfiguration);
 }
-@if (configuration.Mode == TextEditMode.MultipleLine)
-{
-    var value = Model.Entry.GetField(Model.Field.Name);
-    if (value != null)
-    {
-        value = value.ToString().Replace("\r\n", "<br/>")    // Windows
-                                .Replace("\r", "<br/>")      // Old MAC
-                                .Replace("\n", "<br/>");     // Linux / UNIX
-        @Html.Raw(value)
-    }
-}
-else
-{
-    @Model.Entry.GetField(Model.Field.Name)
-}
+
+@Model.Entry.GetField(Model.Field.Name)

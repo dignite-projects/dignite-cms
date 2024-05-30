@@ -14,13 +14,6 @@
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="Menu_CultureSwitch">
             @foreach (var language in Model.AllLanguages)
             {
-                var currentPageUrl = Context.Request.GetEncodedPathAndQuery().EnsureEndsWith('/');
-                if (currentPageUrl.StartsWith($"/{Model.CurrentLanguage.CultureName}/", StringComparison.OrdinalIgnoreCase))
-                {
-                    currentPageUrl = currentPageUrl.RemovePreFix(StringComparison.OrdinalIgnoreCase, $"/{Model.CurrentLanguage.CultureName}/");
-                    currentPageUrl = "/" + currentPageUrl;
-                }
-                currentPageUrl = language.CultureName + currentPageUrl.RemovePostFix("/");
                 if (Model.CurrentLanguage.CultureName == language.CultureName)
                 {
                     <span class="dropdown-item active">
@@ -29,6 +22,20 @@
                 }
                 else
                 {
+                    var currentPageUrl = Context.Request.Path.Value;
+                    if (language.CultureName.Equals(Model.Default.CultureName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        currentPageUrl = currentPageUrl.EnsureEndsWith('/')
+                        .RemovePreFix(StringComparison.OrdinalIgnoreCase, $"/{Model.CurrentLanguage.CultureName}/")
+                        .RemovePreFix("/");
+                    }
+                    else
+                    {
+                        currentPageUrl = language.CultureName + currentPageUrl.EnsureEndsWith('/')
+                        .RemovePreFix(StringComparison.OrdinalIgnoreCase, $"/{Model.CurrentLanguage.CultureName}/")
+                        .EnsureStartsWith('/');
+                    }
+                    currentPageUrl = currentPageUrl.RemovePostFix("/") + Context.Request.QueryString.Value;
                     <a class="dropdown-item" href="~/@currentPageUrl">
                         @language.DisplayName
                     </a>

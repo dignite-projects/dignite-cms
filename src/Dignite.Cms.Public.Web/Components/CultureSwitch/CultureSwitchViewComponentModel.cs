@@ -5,6 +5,8 @@ namespace Dignite.Cms.Public.Web.Components.CultureSwitch;
 
 public class CultureSwitchViewComponentModel
 {
+    public LanguageInfo Default { get; set; }
+
     public LanguageInfo CurrentLanguage { get; set; }
 
     public IReadOnlyList<LanguageInfo> AllLanguages { get; set; }

@@ -38,6 +38,7 @@ public class CultureSwitchViewComponent : AbpViewComponent
 
         var model = new CultureSwitchViewComponentModel
         {
+            Default = languages.First(l => l.CultureName.Equals(site.GetDefaultLanguage().CultureName, System.StringComparison.OrdinalIgnoreCase)),
             CurrentLanguage = languages.First(l=>l.CultureName.Equals(currentCulture,System.StringComparison.OrdinalIgnoreCase)),
             AllLanguages = languages
         };

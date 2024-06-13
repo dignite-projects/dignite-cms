@@ -25,7 +25,7 @@ namespace Dignite.Cms.Public.Web.Builder
                     defaults: new { controller = EntryController.ControllerName, action = nameof(EntryController.EntryPageWithCulture) });
                 endpoints.MapControllerRoute(
                     name: CmsWebRouteConsts.EntryPageRouteName,
-                    pattern: "{*entryPath:regex(^(?!swagger/).*)}", //TODO: Use an options to configure the regular expression for the entryPath
+                    pattern: "{*entryPath:regex(^(?!swagger/|account/).*)}", //TODO: Use an options to configure the regular expression for the entryPath
                     defaults: new { controller = EntryController.ControllerName, action = nameof(EntryController.EntryPage) });
             });
 

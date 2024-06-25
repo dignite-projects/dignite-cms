@@ -10,8 +10,8 @@
   </PropertyGroup>
 	
   <ItemGroup>
-	  <PackageReference Include="Dignite.Abp.DynamicForms.FileExplorer" Version="2.1.1" />
-	  <PackageReference Include="Dignite.FileExplorer.Application.Contracts" Version="2.1.1" />
+	  <PackageReference Include="Dignite.Abp.DynamicForms.FileExplorer" Version="2.1.4" />
+	  <PackageReference Include="Dignite.FileExplorer.Application.Contracts" Version="2.1.4" />
 	  <PackageReference Include="Volo.CmsKit.Public.Application.Contracts" Version="7.4.5" />
 	  <ProjectReference Include="..\Dignite.Cms.Common.Application.Contracts\Dignite.Cms.Common.Application.Contracts.csproj" />
   </ItemGroup>

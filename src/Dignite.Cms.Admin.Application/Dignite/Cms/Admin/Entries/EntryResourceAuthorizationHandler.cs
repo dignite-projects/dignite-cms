@@ -17,7 +17,7 @@ namespace Dignite.Cms.Admin.Entries
             _entryRepository = entryRepository;
         }
 
-        public override async Task<Entry> GetResourceAsync(FileDescriptor file)
+        protected override async Task<Entry> GetResourceAsync(FileDescriptor file)
         {
             var entryId = Guid.Parse(file.EntityId);
             var entry = await _entryRepository.GetAsync(entryId,false);

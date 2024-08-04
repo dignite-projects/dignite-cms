@@ -1,4 +1,5 @@
 ﻿using Dignite.Abp.DynamicForms;
+using Dignite.Cms.Domains;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Fields;
 using Dignite.Cms.Sections;
@@ -22,6 +23,19 @@ public static class CmsDbContextModelCreatingExtensions
 
         builder.ConfigureCmsKit();
         builder.ConfigureFileExplorer();
+
+        builder.Entity<Domain>(site =>
+        {
+            //Configure table & schema name
+            site.ToTable(CmsDbProperties.DbTablePrefix + "Domains", CmsDbProperties.DbSchema);
+
+            site.ConfigureByConvention();
+
+            //Properties
+            site.Property(s => s.DomainName).IsRequired().HasMaxLength(DomainConsts.MaxDomainNameLength);
+            //Indexs
+            site.HasIndex(s => s.DomainName);
+        });
 
         builder.Entity<Site>(site =>
         {

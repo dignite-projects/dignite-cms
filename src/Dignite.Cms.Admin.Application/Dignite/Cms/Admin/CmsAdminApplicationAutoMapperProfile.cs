@@ -3,6 +3,8 @@ using Dignite.Cms.Admin.Entries;
 using Dignite.Cms.Admin.Fields;
 using Dignite.Cms.Admin.Sections;
 using Dignite.Cms.Admin.Sites;
+using Dignite.Cms.Admin.Domains;
+using Dignite.Cms.Domains;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Sections;
 using Dignite.Cms.Sites;
@@ -15,6 +17,9 @@ namespace Dignite.Cms.Admin
     {
         public CmsAdminApplicationAutoMapperProfile()
         {
+            /**** domain *****************************************/
+            CreateMap<Domain, DomainDto>();
+
             /**** site *****************************************/
             CreateMap<Site, SiteDto>();
             CreateMap<SiteLanguage, SiteLanguageDto>();

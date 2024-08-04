@@ -35,6 +35,14 @@ public partial class SectionPublicClientProxy : ClientProxyBase<ISectionPublicAp
         });
     }
 
+    public virtual async Task<ListResultDto<SectionDto>> GetListAsync(GetSectionsInput input)
+    {
+        return await RequestAsync<ListResultDto<SectionDto>>(nameof(GetListAsync), new ClientProxyRequestTypeValue
+        {
+            { typeof(GetSectionsInput), input }
+        });
+    }
+
     public virtual async Task<SectionDto> GetAsync(Guid id)
     {
         return await RequestAsync<SectionDto>(nameof(GetAsync), new ClientProxyRequestTypeValue
@@ -48,14 +56,6 @@ public partial class SectionPublicClientProxy : ClientProxyBase<ISectionPublicAp
         return await RequestAsync<SectionDto>(nameof(GetDefaultAsync), new ClientProxyRequestTypeValue
         {
             { typeof(Guid), siteId }
-        });
-    }
-
-    public virtual async Task<ListResultDto<SectionDto>> GetListAsync(GetSectionsInput input)
-    {
-        return await RequestAsync<ListResultDto<SectionDto>>(nameof(GetListAsync), new ClientProxyRequestTypeValue
-        {
-            { typeof(GetSectionsInput), input }
         });
     }
 }

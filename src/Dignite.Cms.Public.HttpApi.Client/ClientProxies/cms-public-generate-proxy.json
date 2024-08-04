@@ -143,23 +143,6 @@
               "name": "ISectionPublicAppService",
               "methods": [
                 {
-                  "name": "GetAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "id",
-                      "typeAsString": "System.Guid, System.Private.CoreLib",
-                      "type": "System.Guid",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
-                  "returnValue": {
-                    "type": "Dignite.Cms.Public.Sections.SectionDto",
-                    "typeSimple": "Dignite.Cms.Public.Sections.SectionDto"
-                  }
-                },
-                {
                   "name": "FindByNameAsync",
                   "parametersOnMethod": [
                     {
@@ -199,6 +182,40 @@
                       "name": "entryPath",
                       "typeAsString": "System.String, System.Private.CoreLib",
                       "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "Dignite.Cms.Public.Sections.SectionDto",
+                    "typeSimple": "Dignite.Cms.Public.Sections.SectionDto"
+                  }
+                },
+                {
+                  "name": "GetListAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "Dignite.Cms.Public.Sections.GetSectionsInput, Dignite.Cms.Public.Application.Contracts",
+                      "type": "Dignite.Cms.Public.Sections.GetSectionsInput",
+                      "typeSimple": "Dignite.Cms.Public.Sections.GetSectionsInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Cms.Public.Sections.SectionDto>",
+                    "typeSimple": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Cms.Public.Sections.SectionDto>"
+                  }
+                },
+                {
+                  "name": "GetAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "id",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
                       "typeSimple": "string",
                       "isOptional": false,
                       "defaultValue": null
@@ -340,6 +357,43 @@
               "returnValue": {
                 "type": "Dignite.Cms.Public.Sections.SectionDto",
                 "typeSimple": "Dignite.Cms.Public.Sections.SectionDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Cms.Public.Sections.ISectionPublicAppService"
+            },
+            "GetListAsyncByInput": {
+              "uniqueName": "GetListAsyncByInput",
+              "name": "GetListAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-public/sections",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "Dignite.Cms.Public.Sections.GetSectionsInput, Dignite.Cms.Public.Application.Contracts",
+                  "type": "Dignite.Cms.Public.Sections.GetSectionsInput",
+                  "typeSimple": "Dignite.Cms.Public.Sections.GetSectionsInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "SiteId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Cms.Public.Sections.SectionDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Cms.Public.Sections.SectionDto>"
               },
               "allowAnonymous": null,
               "implementFrom": "Dignite.Cms.Public.Sections.ISectionPublicAppService"
@@ -560,23 +614,6 @@
                   }
                 },
                 {
-                  "name": "GetListAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "input",
-                      "typeAsString": "Dignite.Cms.Public.Entries.GetEntriesInput, Dignite.Cms.Public.Application.Contracts",
-                      "type": "Dignite.Cms.Public.Entries.GetEntriesInput",
-                      "typeSimple": "Dignite.Cms.Public.Entries.GetEntriesInput",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
-                  "returnValue": {
-                    "type": "Volo.Abp.Application.Dtos.PagedResultDto<Dignite.Cms.Public.Entries.EntryDto>",
-                    "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<Dignite.Cms.Public.Entries.EntryDto>"
-                  }
-                },
-                {
                   "name": "GetAsync",
                   "parametersOnMethod": [
                     {
@@ -591,6 +628,23 @@
                   "returnValue": {
                     "type": "Dignite.Cms.Public.Entries.EntryDto",
                     "typeSimple": "Dignite.Cms.Public.Entries.EntryDto"
+                  }
+                },
+                {
+                  "name": "GetListAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "Dignite.Cms.Public.Entries.GetEntriesInput, Dignite.Cms.Public.Application.Contracts",
+                      "type": "Dignite.Cms.Public.Entries.GetEntriesInput",
+                      "typeSimple": "Dignite.Cms.Public.Entries.GetEntriesInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "Volo.Abp.Application.Dtos.PagedResultDto<Dignite.Cms.Public.Entries.EntryDto>",
+                    "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<Dignite.Cms.Public.Entries.EntryDto>"
                   }
                 }
               ]
@@ -773,7 +827,7 @@
                 "typeSimple": "Dignite.Cms.Public.Entries.EntryDto"
               },
               "allowAnonymous": null,
-              "implementFrom": "Dignite.Cms.Public.Entries.IEntryPublicAppService"
+              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Dignite.Cms.Public.Entries.EntryDto,Dignite.Cms.Public.Entries.EntryDto,System.Guid,Dignite.Cms.Public.Entries.GetEntriesInput>"
             },
             "GetListAsyncByInput": {
               "uniqueName": "GetListAsyncByInput",
@@ -930,7 +984,79 @@
                 "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<Dignite.Cms.Public.Entries.EntryDto>"
               },
               "allowAnonymous": null,
-              "implementFrom": "Dignite.Cms.Public.Entries.IEntryPublicAppService"
+              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Dignite.Cms.Public.Entries.EntryDto,Dignite.Cms.Public.Entries.EntryDto,System.Guid,Dignite.Cms.Public.Entries.GetEntriesInput>"
+            }
+          }
+        },
+        "Dignite.Cms.Public.Domains.DomainPublicController": {
+          "controllerName": "DomainPublic",
+          "controllerGroupName": "DomainPublic",
+          "isRemoteService": true,
+          "isIntegrationService": false,
+          "apiVersion": null,
+          "type": "Dignite.Cms.Public.Domains.DomainPublicController",
+          "interfaces": [
+            {
+              "type": "Dignite.Cms.Public.Domains.IDomainPublicAppService",
+              "name": "IDomainPublicAppService",
+              "methods": [
+                {
+                  "name": "FindByNameAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "domainName",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "Dignite.Cms.Public.Domains.DomainDto",
+                    "typeSimple": "Dignite.Cms.Public.Domains.DomainDto"
+                  }
+                }
+              ]
+            }
+          ],
+          "actions": {
+            "FindByNameAsyncByDomainName": {
+              "uniqueName": "FindByNameAsyncByDomainName",
+              "name": "FindByNameAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-public/domains/find-by-name",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "domainName",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "domainName",
+                  "name": "domainName",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Dignite.Cms.Public.Domains.DomainDto",
+                "typeSimple": "Dignite.Cms.Public.Domains.DomainDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Cms.Public.Domains.IDomainPublicAppService"
             }
           }
         }

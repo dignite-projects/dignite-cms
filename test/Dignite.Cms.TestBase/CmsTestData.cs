@@ -25,6 +25,9 @@ public class CmsTestData : ISingletonDependency
     public string SiteName = "SiteName";
     public string SiteHost = "https://localhost:44370";
 
+    public Guid TenantId { get; } = Guid.NewGuid();
+    public string DomainName = "https://localhost:44370";
+
 
     public Guid SingleSectionId { get; } = Guid.NewGuid();
     public string SingleSectionName = "SingleSectionName";

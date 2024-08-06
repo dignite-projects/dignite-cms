@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 using Volo.Abp;
 
@@ -19,12 +18,6 @@ namespace Dignite.Cms.Admin.Domains
             _entryAppService = entryAppService;
         }
 
-        [HttpPost]
-        public async Task<DomainDto> CreateAsync(CreateDomainInput input)
-        {
-            return await _entryAppService.CreateAsync(input);
-        }
-
         [HttpGet]
         [Route("bound")]
         public async Task<DomainDto> GetBoundAsync()
@@ -39,11 +32,10 @@ namespace Dignite.Cms.Admin.Domains
             return await _entryAppService.NameExistsAsync(domainName);
         }
 
-        [HttpPut]
-        [Route("{id:Guid}")]
-        public async Task<DomainDto> UpdateAsync(Guid id, UpdateDomainInput input)
+        [HttpPost]
+        public async Task<DomainDto> UpdateAsync(UpdateDomainInput input)
         {
-            return await _entryAppService.UpdateAsync(id, input);   
+            return await _entryAppService.UpdateAsync(input);   
         }
     }
 }

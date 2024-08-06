@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp;
-using Volo.Abp.Authorization;
 using Volo.Abp.Data;
 using Volo.Abp.MultiTenancy;
 
 namespace Dignite.Cms.Admin.Domains
 {
+    [Authorize(Permissions.CmsAdminPermissions.Domain.Default)]
     public class DomainAdminAppService : CmsAdminAppServiceBase, IDomainAdminAppService
     {
         private readonly IDomainRepository _domainRepository;
@@ -22,34 +22,12 @@ namespace Dignite.Cms.Admin.Domains
             _dataFilter = dataFilter;
         }
 
-        [Authorize(Permissions.CmsAdminPermissions.Domain.Create)]
-        public async Task<DomainDto> CreateAsync(CreateDomainInput input)
-        {
-            if (!CurrentTenant.Id.HasValue)
-            {
-                throw new BusinessException(message: "The primary site does not need to be configured with a domain name!");
-            }
-
-            var boundDomain = await _domainRepository.FindByTenantIdAsync(CurrentTenant.Id.Value);
-            if (boundDomain == null)
-            {
-                boundDomain = await _domainManager.CreateAsync(input.DomainName, CurrentTenant.Id.Value);
-                return ObjectMapper.Map<Domain, DomainDto>(boundDomain);
-            }
-            else
-            {
-                throw new BusinessException(message: "The tenant has bound the domain name, please use UpdateAsync method to update the domain name.");
-            }
-        }
-
-        [Authorize(Permissions.CmsAdminPermissions.Domain.Default)]
         public async Task<DomainDto> GetBoundAsync()
         {
             var boundDomain = await _domainRepository.FindByTenantIdAsync(CurrentTenant.Id.Value);
             return ObjectMapper.Map<Domain, DomainDto>(boundDomain);
         }
 
-        [Authorize(Permissions.CmsAdminPermissions.Domain.Default)]
         public async Task<bool> NameExistsAsync(string domainName)
         {
             var boundDomain = await _domainRepository.FindByTenantIdAsync(CurrentTenant.Id.Value);
@@ -76,22 +54,28 @@ namespace Dignite.Cms.Admin.Domains
             }
         }
 
+
         [Authorize(Permissions.CmsAdminPermissions.Domain.Update)]
-        public async Task<DomainDto> UpdateAsync(Guid id, UpdateDomainInput input)
+        public async Task<DomainDto> UpdateAsync(UpdateDomainInput input)
         {
+            if (!CurrentTenant.Id.HasValue)
+            {
+                throw new BusinessException(message: "The primary site does not need to be configured with a domain name!");
+            }
+
             var boundDomain = await _domainRepository.FindByTenantIdAsync(CurrentTenant.Id.Value);
-
-            if (boundDomain.Id != id)
+            if (boundDomain == null)
             {
-                throw new AbpAuthorizationException("You do not have permission to modify the domain information of other tenants!");
+                boundDomain = await _domainManager.CreateAsync(input.DomainName, CurrentTenant.Id.Value);
             }
-
-            if (!boundDomain.DomainName.Equals(input.DomainName, StringComparison.OrdinalIgnoreCase))
+            else
             {
-                boundDomain = await _domainManager.UpdateAsync(boundDomain.Id, input.DomainName, input.ConcurrencyStamp);
+                if (!boundDomain.DomainName.Equals(input.DomainName, StringComparison.OrdinalIgnoreCase))
+                {
+                    boundDomain = await _domainManager.UpdateAsync(boundDomain.Id, input.DomainName, boundDomain.ConcurrencyStamp);
+                }
             }
-
-            return ObjectMapper.Map<Domain, DomainDto>(boundDomain);
+            return ObjectMapper.Map<Domain, DomainDto>(boundDomain); 
         }
     }
 }

@@ -11,7 +11,6 @@ namespace Dignite.Cms.Permissions
             var group = context.AddGroup(CmsAdminPermissions.GroupName, L("Permission:CmsAdmin"));
 
             var domains = group.AddPermission(CmsAdminPermissions.Domain.Default, L("Permission:Domain"));
-            domains.AddChild(CmsAdminPermissions.Domain.Create, L("Permission:Create"));
             domains.AddChild(CmsAdminPermissions.Domain.Update, L("Permission:Edit"));
 
             var fields = group.AddPermission(CmsAdminPermissions.Field.Default, L("Permission:Field"));

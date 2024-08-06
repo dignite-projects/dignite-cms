@@ -2515,33 +2515,8 @@
                   }
                 },
                 {
-                  "name": "CreateAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "input",
-                      "typeAsString": "Dignite.Cms.Admin.Domains.CreateDomainInput, Dignite.Cms.Admin.Application.Contracts",
-                      "type": "Dignite.Cms.Admin.Domains.CreateDomainInput",
-                      "typeSimple": "Dignite.Cms.Admin.Domains.CreateDomainInput",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
-                  "returnValue": {
-                    "type": "Dignite.Cms.Admin.Domains.DomainDto",
-                    "typeSimple": "Dignite.Cms.Admin.Domains.DomainDto"
-                  }
-                },
-                {
                   "name": "UpdateAsync",
                   "parametersOnMethod": [
-                    {
-                      "name": "id",
-                      "typeAsString": "System.Guid, System.Private.CoreLib",
-                      "type": "System.Guid",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    },
                     {
                       "name": "input",
                       "typeAsString": "Dignite.Cms.Admin.Domains.UpdateDomainInput, Dignite.Cms.Admin.Application.Contracts",
@@ -2560,43 +2535,6 @@
             }
           ],
           "actions": {
-            "CreateAsyncByInput": {
-              "uniqueName": "CreateAsyncByInput",
-              "name": "CreateAsync",
-              "httpMethod": "POST",
-              "url": "api/cms-admin/domains",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "input",
-                  "typeAsString": "Dignite.Cms.Admin.Domains.CreateDomainInput, Dignite.Cms.Admin.Application.Contracts",
-                  "type": "Dignite.Cms.Admin.Domains.CreateDomainInput",
-                  "typeSimple": "Dignite.Cms.Admin.Domains.CreateDomainInput",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "input",
-                  "name": "input",
-                  "jsonName": null,
-                  "type": "Dignite.Cms.Admin.Domains.CreateDomainInput",
-                  "typeSimple": "Dignite.Cms.Admin.Domains.CreateDomainInput",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "Body",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "Dignite.Cms.Admin.Domains.DomainDto",
-                "typeSimple": "Dignite.Cms.Admin.Domains.DomainDto"
-              },
-              "allowAnonymous": false,
-              "implementFrom": "Volo.Abp.Application.Services.ICreateAppService<Dignite.Cms.Admin.Domains.DomainDto,Dignite.Cms.Admin.Domains.CreateDomainInput>"
-            },
             "GetBoundAsync": {
               "uniqueName": "GetBoundAsync",
               "name": "GetBoundAsync",
@@ -2649,21 +2587,13 @@
               "allowAnonymous": false,
               "implementFrom": "Dignite.Cms.Admin.Domains.IDomainAdminAppService"
             },
-            "UpdateAsyncByIdAndInput": {
-              "uniqueName": "UpdateAsyncByIdAndInput",
+            "UpdateAsyncByInput": {
+              "uniqueName": "UpdateAsyncByInput",
               "name": "UpdateAsync",
-              "httpMethod": "PUT",
-              "url": "api/cms-admin/domains/{id}",
+              "httpMethod": "POST",
+              "url": "api/cms-admin/domains",
               "supportedVersions": [],
               "parametersOnMethod": [
-                {
-                  "name": "id",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
                 {
                   "name": "input",
                   "typeAsString": "Dignite.Cms.Admin.Domains.UpdateDomainInput, Dignite.Cms.Admin.Application.Contracts",
@@ -2674,20 +2604,6 @@
                 }
               ],
               "parameters": [
-                {
-                  "nameOnMethod": "id",
-                  "name": "id",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [
-                    "GuidRouteConstraint"
-                  ],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                },
                 {
                   "nameOnMethod": "input",
                   "name": "input",
@@ -2706,7 +2622,7 @@
                 "typeSimple": "Dignite.Cms.Admin.Domains.DomainDto"
               },
               "allowAnonymous": false,
-              "implementFrom": "Volo.Abp.Application.Services.IUpdateAppService<Dignite.Cms.Admin.Domains.DomainDto,System.Guid,Dignite.Cms.Admin.Domains.UpdateDomainInput>"
+              "implementFrom": "Dignite.Cms.Admin.Domains.IDomainAdminAppService"
             }
           }
         }

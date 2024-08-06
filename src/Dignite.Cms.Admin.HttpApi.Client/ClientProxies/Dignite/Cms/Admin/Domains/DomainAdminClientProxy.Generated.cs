@@ -17,14 +17,6 @@ namespace Dignite.Cms.Admin.Domains;
 [ExposeServices(typeof(IDomainAdminAppService), typeof(DomainAdminClientProxy))]
 public partial class DomainAdminClientProxy : ClientProxyBase<IDomainAdminAppService>, IDomainAdminAppService
 {
-    public virtual async Task<DomainDto> CreateAsync(CreateDomainInput input)
-    {
-        return await RequestAsync<DomainDto>(nameof(CreateAsync), new ClientProxyRequestTypeValue
-        {
-            { typeof(CreateDomainInput), input }
-        });
-    }
-
     public virtual async Task<DomainDto> GetBoundAsync()
     {
         return await RequestAsync<DomainDto>(nameof(GetBoundAsync));
@@ -38,11 +30,10 @@ public partial class DomainAdminClientProxy : ClientProxyBase<IDomainAdminAppSer
         });
     }
 
-    public virtual async Task<DomainDto> UpdateAsync(Guid id, UpdateDomainInput input)
+    public virtual async Task<DomainDto> UpdateAsync(UpdateDomainInput input)
     {
         return await RequestAsync<DomainDto>(nameof(UpdateAsync), new ClientProxyRequestTypeValue
         {
-            { typeof(Guid), id },
             { typeof(UpdateDomainInput), input }
         });
     }

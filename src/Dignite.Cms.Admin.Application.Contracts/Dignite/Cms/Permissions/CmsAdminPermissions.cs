@@ -10,7 +10,6 @@ namespace Dignite.Cms.Permissions
         public static class Domain
         {
             public const string Default = GroupName + ".Domain";
-            public const string Create = Default + ".Create";
             public const string Update = Default + ".Update";
         }
 

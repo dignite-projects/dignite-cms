@@ -1,6 +1,5 @@
 ﻿using Shouldly;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -24,7 +23,7 @@ public class SectionManager_Tests : CmsDomainTestBase
     public async Task CreateAsync_ShouldWorkProperly()
     {
         var section = await sectionManager.CreateAsync(
-            testData.SiteId, SectionType.Single,
+            SectionType.Single,
             "New Section",
             "new-section-name",
             false, true, "news", "news/index",
@@ -46,7 +45,6 @@ public class SectionManager_Tests : CmsDomainTestBase
     {
         var exception = await Should.ThrowAsync<SectionNameAlreadyExistException>(
             async () => await sectionManager.CreateAsync(
-                testData.SiteId,
                 SectionType.Single,
                 "New Section",
                 testData.SingleSectionName,
@@ -66,7 +64,6 @@ public class SectionManager_Tests : CmsDomainTestBase
     {
         var exception = await Should.ThrowAsync<SectionRouteAlreadyExistException>(
             async () => await sectionManager.CreateAsync(
-                testData.SiteId,
                 SectionType.Single,
                 "New Section",
                 "new-section-new-route",
@@ -86,7 +83,6 @@ public class SectionManager_Tests : CmsDomainTestBase
     {
         var exception = await Should.ThrowAsync<DefaultSectionMustBeSingleTypeException>(
             async () => await sectionManager.CreateAsync(
-                testData.SiteId,
                 SectionType.Channel,
                 "Default Section",
                 "default-section",
@@ -106,7 +102,6 @@ public class SectionManager_Tests : CmsDomainTestBase
     {
         var exception = await Should.ThrowAsync<MissingSlugRoutingParameterException>(
             async () => await sectionManager.CreateAsync(
-                testData.SiteId,
                 SectionType.Structure,
                 "Section",
                 "structure-section",

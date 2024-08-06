@@ -1,4 +1,4 @@
-using Dignite.Cms.Public.Sites;
+using Dignite.Cms.Public.Settings;
 using Dignite.Cms.Public.Web.Routing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,32 +13,32 @@ namespace Dignite.Cms.Public.Web.Components.CultureSwitch;
 
 public class CultureSwitchViewComponent : AbpViewComponent
 {
-    protected ISitePublicAppService _sitePublicAppService { get; }
+    protected ISiteSettingsPublicAppService _siteSettingsPublicAppService { get; }
     protected IOptions<AbpLocalizationOptions> _localizationOptions { get; }
 
-    public CultureSwitchViewComponent(ISitePublicAppService sitePublicAppService,
+    public CultureSwitchViewComponent(ISiteSettingsPublicAppService siteSettingsPublicAppService,
         IOptions<AbpLocalizationOptions> localizationOptions)
     {
-        _sitePublicAppService = sitePublicAppService;
+        _siteSettingsPublicAppService = siteSettingsPublicAppService;
         _localizationOptions = localizationOptions;
     }
 
     public virtual async Task<IViewComponentResult> InvokeAsync()
     {
-        var host = $"{Request.Scheme}://{Request.Host.Value}";
-        var site = await _sitePublicAppService.FindByHostAsync(host);
+        var siteDefaultLanguage = await _siteSettingsPublicAppService.GetDefaultLanguageAsync();
+        var siteAllLanguages = await _siteSettingsPublicAppService.GetAllLanguagesAsync();
         var languages = _localizationOptions.Value.Languages
-            .Where(l=>site.Languages.Any(r=>r.CultureName.Equals(l.CultureName,System.StringComparison.OrdinalIgnoreCase)))
+            .Where(l=> siteAllLanguages.Any(r=>r.Equals(l.CultureName,System.StringComparison.OrdinalIgnoreCase)))
             .ToList();
         var culture = HttpContext.GetRouteValue(CultureRouteSegmentConstraint.RouteSegmentName)?.ToString();
-        var currentCulture = culture==null? 
-            site.GetDefaultLanguage().CultureName:
-            site.Languages.FirstOrDefault(r=>r.CultureName.Equals(culture,System.StringComparison.OrdinalIgnoreCase))?.CultureName;
-        currentCulture = currentCulture == null ? site.GetDefaultLanguage().CultureName : currentCulture;
+        var currentCulture = culture==null?
+            siteDefaultLanguage :
+            siteAllLanguages.FirstOrDefault(r=>r.Equals(culture,System.StringComparison.OrdinalIgnoreCase));
+        currentCulture = currentCulture == null ? siteDefaultLanguage : currentCulture;
 
         var model = new CultureSwitchViewComponentModel
         {
-            Default = languages.First(l => l.CultureName.Equals(site.GetDefaultLanguage().CultureName, System.StringComparison.OrdinalIgnoreCase)),
+            Default = languages.First(l => l.CultureName.Equals(siteDefaultLanguage, System.StringComparison.OrdinalIgnoreCase)),
             CurrentLanguage = languages.First(l=>l.CultureName.Equals(currentCulture,System.StringComparison.OrdinalIgnoreCase)),
             AllLanguages = languages
         };

@@ -32,7 +32,7 @@ namespace Dignite.Cms.Admin.Sections
         [Authorize(Permissions.CmsAdminPermissions.Section.Create)]
         public async Task<SectionDto> CreateAsync(CreateSectionInput input)
         {
-            var section = await _sectionManager.CreateAsync(input.SiteId, input.Type, input.DisplayName, input.Name, input.IsDefault, input.IsActive, input.Route, input.Template, CurrentTenant.Id);
+            var section = await _sectionManager.CreateAsync( input.Type, input.DisplayName, input.Name, input.IsDefault, input.IsActive, input.Route, input.Template, CurrentTenant.Id);
             return ObjectMapper.Map<Section, SectionDto>(section);
         }
 
@@ -58,11 +58,8 @@ namespace Dignite.Cms.Admin.Sections
         [Authorize(Permissions.CmsAdminPermissions.Section.Default)]
         public async Task<PagedResultDto<SectionDto>> GetListAsync(GetSectionsInput input)
         {
-            if (input.SiteId == Guid.Empty)
-                return new PagedResultDto<SectionDto>(0, new List<SectionDto>());
-
-            var count = await _sectionRepository.GetCountAsync(input.SiteId, input.Filter, input.IsActive);
-            var result = await _sectionRepository.GetListAsync(input.SiteId, input.Filter, input.IsActive,true, input.MaxResultCount, input.SkipCount, input.Sorting);
+            var count = await _sectionRepository.GetCountAsync(input.Filter, input.IsActive);
+            var result = await _sectionRepository.GetListAsync(input.Filter, input.IsActive,true, input.MaxResultCount, input.SkipCount, input.Sorting);
 
             var dto = ObjectMapper.Map<List<Section>, List<SectionDto>>(result);
 
@@ -99,12 +96,12 @@ namespace Dignite.Cms.Admin.Sections
         [Authorize(Permissions.CmsAdminPermissions.Section.Default)]
         public async Task<bool> NameExistsAsync(SectionNameExistsInput input)
         {
-            return await _sectionRepository.NameExistsAsync(input.SiteId,input.Name);
+            return await _sectionRepository.NameExistsAsync(input.Name);
         }
         [Authorize(Permissions.CmsAdminPermissions.Section.Default)]
         public async Task<bool> RouteExistsAsync(SectionRouteExistsInput input)
         {
-            return await _sectionRepository.RouteExistsAsync(input.SiteId, input.Route);
+            return await _sectionRepository.RouteExistsAsync(input.Route);
         }
     }
 }

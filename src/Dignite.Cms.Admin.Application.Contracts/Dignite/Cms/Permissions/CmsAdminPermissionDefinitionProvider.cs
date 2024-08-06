@@ -14,11 +14,6 @@ namespace Dignite.Cms.Permissions
             domains.AddChild(CmsAdminPermissions.Domain.Create, L("Permission:Create"));
             domains.AddChild(CmsAdminPermissions.Domain.Update, L("Permission:Edit"));
 
-            var sites = group.AddPermission(CmsAdminPermissions.Site.Default, L("Permission:Site"));
-            sites.AddChild(CmsAdminPermissions.Site.Create, L("Permission:Create"));
-            sites.AddChild(CmsAdminPermissions.Site.Update, L("Permission:Edit"));
-            sites.AddChild(CmsAdminPermissions.Site.Delete, L("Permission:Delete"));
-
             var fields = group.AddPermission(CmsAdminPermissions.Field.Default, L("Permission:Field"));
             fields.AddChild(CmsAdminPermissions.Field.Create, L("Permission:Create"));
             fields.AddChild(CmsAdminPermissions.Field.Update, L("Permission:Edit"));

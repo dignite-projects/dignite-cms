@@ -5,7 +5,6 @@ using Dignite.Cms.Domains;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Fields;
 using Dignite.Cms.Sections;
-using Dignite.Cms.Sites;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,7 +23,6 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
     private readonly ICmsUserRepository _cmsUserRepository;
     private readonly ICurrentTenant _currentTenant;
     private readonly CmsTestData _cmsTestData;
-    private readonly ISiteRepository _siteRepository;
     private readonly IDomainRepository _domainRepository;
     private readonly ISectionRepository _sectionRepository;
     private readonly IEntryTypeRepository _entryTypeRepository;
@@ -33,14 +31,13 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
     private readonly IEntryRepository _entryRepository;
 
     public CmsDataSeedContributor(IClock clock, ICmsUserRepository cmsUserRepository, ICurrentTenant currentTenant, CmsTestData cmsTestData, 
-        ISiteRepository siteRepository, IDomainRepository domainRepository, ISectionRepository sectionRepository, IEntryTypeRepository entryTypeRepository, 
+        IDomainRepository domainRepository, ISectionRepository sectionRepository, IEntryTypeRepository entryTypeRepository, 
         IFieldGroupRepository fieldGroupRepository, IFieldRepository fieldRepository, IEntryRepository entryRepository)
     {
         _clock = clock;
         _cmsUserRepository = cmsUserRepository;
         _currentTenant = currentTenant;
         _cmsTestData = cmsTestData;
-        _siteRepository = siteRepository;
         _domainRepository = domainRepository;
         _sectionRepository = sectionRepository;
         _entryTypeRepository = entryTypeRepository;
@@ -56,7 +53,6 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
             await SeedUsersAsync();
             await SeedFieldGroupAsync();
             await SeedFieldsAsync();
-            await SeedSitesAsync();
             await SeedTenantDomainAsync();
             await SeedSectionsAsync();
             await SeedEntryTypesAsync();
@@ -119,22 +115,6 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
             );
     }
 
-    private async Task SeedSitesAsync()
-    {
-        var site = new Site(
-                _cmsTestData.SiteId,
-                "Site",
-                _cmsTestData.SiteName,
-                _cmsTestData.SiteHost,
-                true, null);
-        site.AddLanguage(new SiteLanguage(true, "en"));
-        site.AddLanguage(new SiteLanguage(false, "ja"));
-        site.AddLanguage(new SiteLanguage(false, "zh-Hant"));
-
-        await _siteRepository.InsertAsync(
-            site,
-            autoSave: true);
-    }
     private async Task SeedTenantDomainAsync()
     {
         var domain = new Domain(Guid.NewGuid(), _cmsTestData.DomainName,_cmsTestData.TenantId);
@@ -148,7 +128,6 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
         await _sectionRepository.InsertAsync(
             new Section(
                 _cmsTestData.SingleSectionId,
-                _cmsTestData.SiteId, 
                 SectionType.Single, 
                 "Single Section", 
                 _cmsTestData.SingleSectionName,
@@ -160,7 +139,6 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
         await _sectionRepository.InsertAsync(
             new Section(
                 _cmsTestData.ChannelSectionId,
-                _cmsTestData.SiteId,
                 SectionType.Channel,
                 "Channel Section",
                 _cmsTestData.ChannelSectionName,
@@ -173,7 +151,6 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
         await _sectionRepository.InsertAsync(
             new Section(
                 _cmsTestData.StructureSectionId,
-                _cmsTestData.SiteId,
                 SectionType.Structure,
                 "Channel Section",
                 _cmsTestData.StructureSectionName,

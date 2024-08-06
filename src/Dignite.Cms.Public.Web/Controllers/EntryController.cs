@@ -2,7 +2,7 @@
 using Dignite.Cms.Localization;
 using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
-using Dignite.Cms.Public.Sites;
+using Dignite.Cms.Public.Settings;
 using Dignite.Cms.Public.Web.Models;
 using Dignite.Cms.Public.Web.Routing;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -24,19 +24,19 @@ namespace Dignite.Cms.Public.Web.Controllers
     {
         public const string ControllerName = "Entry";
 
-        private readonly ISitePublicAppService _sitePublicAppService;
+        private readonly ISiteSettingsPublicAppService _siteSettingsPublicAppService;
         private readonly ISectionPublicAppService _sectionPublicAppService;
         private readonly IEntryPublicAppService _entryPublicAppService;
         private readonly IOptions<AbpLocalizationOptions> _localizationOptions;
 
 
-        public EntryController(ISitePublicAppService sitePublicAppService, ISectionPublicAppService sectionPublicAppService, IEntryPublicAppService entryPublicAppService,
+        public EntryController(ISiteSettingsPublicAppService siteSettingsPublicAppService, ISectionPublicAppService sectionPublicAppService, IEntryPublicAppService entryPublicAppService,
             IOptions<AbpLocalizationOptions> localizationOptions)
         {
             LocalizationResource = typeof(CmsResource);
             _sectionPublicAppService = sectionPublicAppService;
             _entryPublicAppService = entryPublicAppService;
-            _sitePublicAppService = sitePublicAppService;
+            _siteSettingsPublicAppService = siteSettingsPublicAppService;
             _localizationOptions = localizationOptions;
         }
 
@@ -85,7 +85,7 @@ namespace Dignite.Cms.Public.Web.Controllers
             }
 
             //
-            var defaultCulture = section.Site.GetDefaultLanguage().CultureName;
+            var defaultCulture = await _siteSettingsPublicAppService.GetDefaultLanguageAsync();
             if (culture.IsNullOrEmpty())
             {
                 culture = defaultCulture;
@@ -139,19 +139,13 @@ namespace Dignite.Cms.Public.Web.Controllers
 
         protected async Task<SectionDto> GetSection(string path)
         {
-            var host = $"{Request.Scheme}://{Request.Host.Value}";
-            var site = await _sitePublicAppService.FindByHostAsync(host);
-
-            if (site == null)
-                return null;
-
             if (path.IsNullOrEmpty() || path == "/")
             {
-                return await _sectionPublicAppService.GetDefaultAsync(site.Id);
+                return await _sectionPublicAppService.GetDefaultAsync();
             }
             else
             {
-                return await _sectionPublicAppService.FindByEntryPathAsync(site.Id, path);
+                return await _sectionPublicAppService.FindByEntryPathAsync(path);
             }
         }
 

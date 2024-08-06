@@ -16,17 +16,16 @@ namespace Dignite.Cms.Sections
             _sectionRepository = sectionRepository;
         }
 
-        public async Task<Section> CreateAsync(Guid siteId, SectionType type, string displayName, string name, bool isDefault, bool isActive, string route, string template, Guid? tenantId)
+        public async Task<Section> CreateAsync( SectionType type, string displayName, string name, bool isDefault, bool isActive, string route, string template, Guid? tenantId)
         {
-            await CheckNameExistenceAsync(siteId, name);
+            await CheckNameExistenceAsync(name);
 
             if(!route.IsNullOrWhiteSpace())
-                await CheckRouteExistenceAsync(siteId, route);
+                await CheckRouteExistenceAsync(route);
 
             //
             var section = new Section(
                 GuidGenerator.Create(),
-                siteId,
                 type,
                 displayName, name,
                 isDefault,
@@ -42,7 +41,7 @@ namespace Dignite.Cms.Sections
             //
             if (section.IsDefault)
             {
-                var sections = await _sectionRepository.GetListAsync(section.SiteId);
+                var sections = await _sectionRepository.GetListAsync();
                 foreach (var item in sections)
                 {
                     section.SetDefault(false);
@@ -60,17 +59,17 @@ namespace Dignite.Cms.Sections
             section.SetConcurrencyStampIfNotNull(concurrencyStamp);
             if (!section.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
             {
-                await CheckNameExistenceAsync(section.SiteId, name);
+                await CheckNameExistenceAsync( name);
             }
             if (!section.Route.IsNullOrWhiteSpace() && !section.Route.Equals(route, StringComparison.OrdinalIgnoreCase))
             {
-                await CheckRouteExistenceAsync(section.SiteId, route);
+                await CheckRouteExistenceAsync( route);
             }
 
             //
             if (isDefault && !section.IsDefault)
             {
-                var sections = await _sectionRepository.GetListAsync(section.SiteId);
+                var sections = await _sectionRepository.GetListAsync();
                 foreach (var item in sections.Where(s=>s.Id!=id))
                 {
                     item.SetDefault(false);
@@ -95,16 +94,16 @@ namespace Dignite.Cms.Sections
         }
 
 
-        protected virtual async Task CheckNameExistenceAsync(Guid siteId, string name)
+        protected virtual async Task CheckNameExistenceAsync( string name)
         {
-            if (await _sectionRepository.NameExistsAsync(siteId, name))
+            if (await _sectionRepository.NameExistsAsync( name))
             {
                 throw new SectionNameAlreadyExistException(name);
             }
         }
-        protected virtual async Task CheckRouteExistenceAsync(Guid siteId, string route)
+        protected virtual async Task CheckRouteExistenceAsync(string route)
         {
-            if (await _sectionRepository.RouteExistsAsync(siteId, route))
+            if (await _sectionRepository.RouteExistsAsync(route))
             {
                 throw new SectionRouteAlreadyExistException(route);
             }

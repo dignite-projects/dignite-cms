@@ -7,12 +7,14 @@
 @using Dignite.Cms.Localization;
 @using Volo.Abp.BlazoriseUI.Components.ObjectExtending
 @using Volo.Abp.Localization;
+@using Volo.Abp.Settings
 @inject NavigationManager Navigation
 @inject IEntryAdminAppService AppService
 @inject ISectionAdminAppService SectionAppService
 @inject IFormControlComponentSelector FormControlComponentSelector
 @inject ILanguageProvider LanguageProvider
 @inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
+@inject ISettingProvider SettingProvider
 @inherits AbpComponentBase
 
 <Row>
@@ -72,9 +74,9 @@
                 <Blazorise.FieldLabel>@L["Language"]</Blazorise.FieldLabel>
                     <Select TValue="string" SelectedValue="Entry.Culture" SelectedValueChanged="@OnCultureSelectedValueChanged" Disabled>
                     <ChildContent>
-                        @foreach (var item in Section.Site.Languages)
+                        @foreach (var item in SiteLanguages)
                         {
-                            <SelectItem Value="@item.CultureName">@AllLanguages.FirstOrDefault(l => l.CultureName == item.CultureName)?.DisplayName</SelectItem>
+                            <SelectItem Value="@item">@AllLanguages.FirstOrDefault(l => l.CultureName == item)?.DisplayName</SelectItem>
                         }
                     </ChildContent>
                     <Feedback>

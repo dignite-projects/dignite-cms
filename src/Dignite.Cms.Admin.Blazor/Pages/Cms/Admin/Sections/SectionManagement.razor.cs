@@ -1,12 +1,10 @@
 ﻿using Blazorise;
 using Dignite.Cms.Admin.Sections;
-using Dignite.Cms.Admin.Sites;
 using Dignite.Cms.Localization;
 using Dignite.Cms.Permissions;
 using Dignite.Cms.Sections;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Components.Web.Extensibility.EntityActions;
 using Volo.Abp.AspNetCore.Components.Web.Extensibility.TableColumns;
@@ -16,8 +14,6 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
 {
     public partial class SectionManagement
     {
-        protected IReadOnlyList<SiteDto> AllSites = new List<SiteDto>();
-        protected SiteDto CurrentSite=null;
         protected PageToolbar Toolbar { get; } = new();
         protected List<TableColumn> SectionManagementTableColumns => TableColumns.Get<SectionManagement>();
 
@@ -33,30 +29,10 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
 
         protected override async Task OnInitializedAsync()
         {
-            try
-            {
-                AllSites = (await SiteAdminAppService.GetListAsync(new GetSitesInput())).Items;
-                if (AllSites.Any())
-                {
-                    await OnSiteChangedAsync(AllSites[0].Name);
-                }
-            }
-            catch (Exception ex)
-            {
-                await HandleErrorAsync(ex);
-            }
             await base.OnInitializedAsync();
         }
 
 
-        protected override async Task UpdateGetListInputAsync()
-        {
-            if (CurrentSite != null)
-            {
-                GetListInput.SiteId = CurrentSite.Id;
-            }            
-            await base.UpdateGetListInputAsync();
-        }
 
         protected override ValueTask SetToolbarItemsAsync()
         {
@@ -139,28 +115,6 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
                 });
 
             return base.SetTableColumnsAsync();
-        }
-
-
-
-        protected override async Task OpenCreateModalAsync()
-        {
-            if (CurrentSite != null)
-            {
-                await base.OpenCreateModalAsync();
-                NewEntity.SiteId = CurrentSite.Id;
-            }
-            else
-            {
-                await Notify.Error(L["PleaseSelectSite"]);
-            }
-        }
-
-        protected async Task OnSiteChangedAsync(string name)
-        {
-            CurrentSite = AllSites.Single(s => s.Name == name);
-
-            await SearchEntitiesAsync();
         }
     }
 }

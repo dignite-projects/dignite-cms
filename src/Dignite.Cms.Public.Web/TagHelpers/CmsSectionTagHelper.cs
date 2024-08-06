@@ -1,15 +1,12 @@
 ﻿using Dignite.Cms.Public.Sections;
 using Dignite.Cms.Public.Web.Razor;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using System;
 using System.Threading.Tasks;
 
 namespace Dignite.Cms.Public.Web.TagHelpers
 {
     public class CmsSectionTagHelper : TagHelper
     {
-        public Guid SiteId { get; set; }
-
         public string SectionName{ get; set; }
 
         /// <summary>
@@ -32,7 +29,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
-            var model = await _sectionAppService.FindByNameAsync(SiteId,SectionName);
+            var model = await _sectionAppService.FindByNameAsync(SectionName);
             var body = await _renderer.RenderAsync(PartialName, model);
 
             output.TagName = null;

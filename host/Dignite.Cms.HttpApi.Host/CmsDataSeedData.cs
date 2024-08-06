@@ -28,11 +28,6 @@ public class CmsDataSeedData : ISingletonDependency
     public string ServiceItemName = "name";
     public string ServiceItemDescription = "description";
 
-    public Guid SiteId { get; } = Guid.NewGuid();
-    public string SiteName = "SiteName";
-    public string SiteHost = "https://localhost:44339";
-
-
     public Guid HomeSectionId { get; } = Guid.NewGuid();
     public string HomeSectionName = "home";
     public string HomeSectionRoute = "/";

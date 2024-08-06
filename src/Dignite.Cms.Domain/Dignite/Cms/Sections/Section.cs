@@ -1,5 +1,4 @@
 ﻿using Dignite.Cms.Entries;
-using Dignite.Cms.Sites;
 using System;
 using System.Collections.Generic;
 using Volo.Abp.Domain.Entities.Auditing;
@@ -12,10 +11,9 @@ namespace Dignite.Cms.Sections
     /// </summary>
     public class Section : FullAuditedAggregateRoot<Guid>,IMultiTenant
     {
-        public Section(Guid id, Guid siteId, SectionType type, string displayName, string name, bool isDefault, bool isActive, string route, string template, Guid? tenantId)
+        public Section(Guid id, SectionType type, string displayName, string name, bool isDefault, bool isActive, string route, string template, Guid? tenantId)
             :base(id)
         {
-            SiteId = siteId;
             Type = type;
             DisplayName = displayName;
             Name = name;
@@ -24,17 +22,12 @@ namespace Dignite.Cms.Sections
             Route = route;
             Template = template;
             TenantId = tenantId;
-            this.EntryTypes = new List<EntryType>();
+            EntryTypes = new List<EntryType>();
         }
 
         protected Section()
         {
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public virtual Guid SiteId { get; protected set; }
 
         /// <summary>
         /// 
@@ -76,8 +69,6 @@ namespace Dignite.Cms.Sections
         /// TenantId of this section.
         /// </summary>
         public virtual Guid? TenantId { get; protected set; }
-
-        public virtual Site Site { get; protected set; }
 
         public virtual ICollection<EntryType> EntryTypes { get; protected set; }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Dignite.Cms.Admin.Sections
 {
@@ -9,14 +8,11 @@ namespace Dignite.Cms.Admin.Sections
         {
         }
 
-        public SectionNameExistsInput(Guid siteId, string name)
+        public SectionNameExistsInput(string name)
         {
-            SiteId = siteId;
             Name = name;
         }
-
-        [Required]
-        public Guid SiteId { get; set; }
+        
         [Required]
         public string Name { get; set; }
     }

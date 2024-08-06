@@ -1,6 +1,6 @@
 ﻿using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
-using Dignite.Cms.Public.Sites;
+using Dignite.Cms.Public.Settings;
 using Dignite.Cms.Public.Web.Models;
 using Dignite.Cms.Public.Web.Razor;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -11,8 +11,6 @@ namespace Dignite.Cms.Public.Web.TagHelpers
 {
     public class CmsEntryTagHelper : TagHelper
     {
-        public Guid SiteId { get; set; }
-
         /// <summary>
         /// The culture corresponding to the entry
         /// </summary>
@@ -34,22 +32,25 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         private readonly IRazorPartialRenderer _renderer;
         private readonly IEntryPublicAppService _entryAppService;
         private readonly ISectionPublicAppService _sectionAppService;
+        private readonly ISiteSettingsPublicAppService _siteSettingsPublicAppService;
 
         public CmsEntryTagHelper(
             IRazorPartialRenderer renderer,
             IEntryPublicAppService entryAppService, 
-            ISectionPublicAppService sectionAppService
+            ISectionPublicAppService sectionAppService,
+            ISiteSettingsPublicAppService siteSettingsPublicAppService
             )
         {
             _renderer = renderer;
             _entryAppService = entryAppService;
             _sectionAppService = sectionAppService;
+            _siteSettingsPublicAppService = siteSettingsPublicAppService;
         }
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
-            var section = await _sectionAppService.FindByNameAsync(SiteId, SectionName);
-            var defaultLanguageCulture = section.Site.GetDefaultLanguage().CultureName;
+            var section = await _sectionAppService.FindByNameAsync(SectionName);
+            var defaultLanguageCulture = await _siteSettingsPublicAppService.GetDefaultLanguageAsync();
             if (Culture.IsNullOrEmpty())
             {
                 Culture= defaultLanguageCulture;

@@ -267,12 +267,6 @@ public class CmsWebHostModule : AbpModule
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
-        app.UseAbpRequestLocalization(options =>
-        {
-            options.AddInitialRequestCultureProvider(
-                new CmsRouteRequestCultureProvider() //Read regions from CMS routing and convert to localization
-            );
-        });
 
         app.UseAuthentication();
 
@@ -280,6 +274,12 @@ public class CmsWebHostModule : AbpModule
         {
             app.UseMultiTenancy();
         }
+        app.UseAbpRequestLocalization(options =>
+        {
+            options.AddInitialRequestCultureProvider(
+                new CmsRouteRequestCultureProvider() //Read regions from CMS routing and convert to localization
+            );
+        });
 
         
 

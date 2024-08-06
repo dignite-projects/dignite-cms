@@ -10,7 +10,6 @@ using Dignite.Abp.DynamicForms.TextEdit;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Fields;
 using Dignite.Cms.Sections;
-using Dignite.Cms.Sites;
 using Dignite.FileExplorer.Files;
 using System;
 using System.Collections.Generic;
@@ -30,7 +29,6 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
     private readonly IClock _clock;
     private readonly ICurrentTenant _currentTenant;
     private readonly CmsDataSeedData _cmsData;
-    private readonly ISiteRepository _siteRepository;
     private readonly ISectionRepository _sectionRepository;
     private readonly IEntryTypeRepository _entryTypeRepository;
     private readonly IFieldRepository _fieldRepository;
@@ -38,13 +36,12 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
     private readonly FileDescriptorManager _fileManager;
 
     public CmsDataSeedContributor(IClock clock, ICurrentTenant currentTenant, CmsDataSeedData cmsData, 
-        ISiteRepository siteRepository, ISectionRepository sectionRepository, IEntryTypeRepository entryTypeRepository, 
+        ISectionRepository sectionRepository, IEntryTypeRepository entryTypeRepository, 
         IFieldRepository fieldRepository, IEntryRepository entryRepository, FileDescriptorManager fileManager)
     {
         _clock = clock;
         _currentTenant = currentTenant;
         _cmsData = cmsData;
-        _siteRepository = siteRepository;
         _sectionRepository = sectionRepository;
         _entryTypeRepository = entryTypeRepository;
         _fieldRepository = fieldRepository;
@@ -56,16 +53,14 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
     {
         using (_currentTenant.Change(context?.TenantId))
         {
-            var sites = await _siteRepository.GetListAsync();
             var fields = await _fieldRepository.GetListAsync();
             var sections = await _sectionRepository.GetListAsync();
-            if (sites.Any() || fields.Any() || sections.Any())
+            if (fields.Any() || sections.Any())
             {
                 return;
             }
 
             await SeedFieldsAsync();
-            await SeedSitesAsync();
             await SeedSectionsAsync();
             await SeedEntryTypesAsync();
             await SeedEntriesAsync();
@@ -183,28 +178,11 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
             );
     }
 
-    private async Task SeedSitesAsync()
-    {
-        var site = new Site(
-                _cmsData.SiteId,
-                "Site",
-                _cmsData.SiteName,
-                _cmsData.SiteHost,
-                true, null);
-        site.AddLanguage(new SiteLanguage(true, "en"));
-        site.AddLanguage(new SiteLanguage(false, "ja"));
-        site.AddLanguage(new SiteLanguage(false, "zh-Hant"));
-
-        await _siteRepository.InsertAsync(
-            site,
-            autoSave: true);
-    }
     private async Task SeedSectionsAsync()
     {
         await _sectionRepository.InsertAsync(
             new Section(
                 _cmsData.HomeSectionId,
-                _cmsData.SiteId, 
                 SectionType.Single, 
                 "Home Page", 
                 _cmsData.HomeSectionName,
@@ -217,7 +195,6 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
         await _sectionRepository.InsertAsync(
             new Section(
                 _cmsData.BlogSectionId,
-                _cmsData.SiteId,
                 SectionType.Single,
                 "Blog Home",
                 _cmsData.BlogSectionName,
@@ -230,7 +207,6 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
         await _sectionRepository.InsertAsync(
             new Section(
                 _cmsData.BlogPostSectionId,
-                _cmsData.SiteId,
                 SectionType.Channel,
                 "Blog Post",
                 _cmsData.BlogPostSectionName,
@@ -243,7 +219,6 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
         await _sectionRepository.InsertAsync(
             new Section(
                 _cmsData.ServiceSectionId,
-                _cmsData.SiteId,
                 SectionType.Structure,
                 "Services",
                 _cmsData.ServiceSectionName,
@@ -256,7 +231,6 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
         await _sectionRepository.InsertAsync(
             new Section(
                 _cmsData.ContactSectionId,
-                _cmsData.SiteId,
                 SectionType.Single,
                 "Contact",
                 _cmsData.ContactSectionName,

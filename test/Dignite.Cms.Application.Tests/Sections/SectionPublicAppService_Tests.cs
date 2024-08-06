@@ -23,7 +23,6 @@ public class SectionPublicAppService_Tests : CmsApplicationTestBase
         var entries = await sectionPublicAppService.GetListAsync(
             new GetSectionsInput
             {
-                SiteId = testData.SiteId
             }
             );
 
@@ -42,7 +41,7 @@ public class SectionPublicAppService_Tests : CmsApplicationTestBase
     [Fact]
     public async Task FindByNameAsync_ShouldWorkProperly_WithExistingName()
     {
-        var section = await sectionPublicAppService.FindByNameAsync(testData.SiteId,testData.ChannelSectionName);
+        var section = await sectionPublicAppService.FindByNameAsync(testData.ChannelSectionName);
 
         section.Name.ShouldBe(testData.ChannelSectionName);
         section.EntryTypes.ShouldNotBeEmpty();
@@ -51,7 +50,7 @@ public class SectionPublicAppService_Tests : CmsApplicationTestBase
     [Fact]
     public async Task FindByEntryPathAsync_ShouldWorkProperly_WithEntryPath()
     {
-        var section = await sectionPublicAppService.FindByEntryPathAsync(testData.SiteId, "blog/a-post-slug");
+        var section = await sectionPublicAppService.FindByEntryPathAsync( "blog/a-post-slug");
 
         section.Name.ShouldBe(testData.ChannelSectionName);
         section.EntryTypes.ShouldNotBeEmpty();
@@ -60,7 +59,7 @@ public class SectionPublicAppService_Tests : CmsApplicationTestBase
     [Fact]
     public async Task GetDefaultAsync()
     {
-        var section = await sectionPublicAppService.GetDefaultAsync(testData.SiteId);
+        var section = await sectionPublicAppService.GetDefaultAsync();
 
         section.Name.ShouldBe(testData.SingleSectionName);
         section.EntryTypes.ShouldNotBeEmpty();

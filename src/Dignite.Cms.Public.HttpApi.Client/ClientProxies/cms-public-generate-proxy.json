@@ -4,129 +4,67 @@
       "rootPath": "cms-public",
       "remoteServiceName": "CmsPublic",
       "controllers": {
-        "Dignite.Cms.Public.Sites.SitePublicController": {
-          "controllerName": "SitePublic",
-          "controllerGroupName": "SitePublic",
+        "Dignite.Cms.Public.Settings.SiteSettingsPublicController": {
+          "controllerName": "SiteSettingsPublic",
+          "controllerGroupName": "SiteSettingsPublic",
           "isRemoteService": true,
           "isIntegrationService": false,
           "apiVersion": null,
-          "type": "Dignite.Cms.Public.Sites.SitePublicController",
+          "type": "Dignite.Cms.Public.Settings.SiteSettingsPublicController",
           "interfaces": [
             {
-              "type": "Dignite.Cms.Public.Sites.ISitePublicAppService",
-              "name": "ISitePublicAppService",
+              "type": "Dignite.Cms.Public.Settings.ISiteSettingsPublicAppService",
+              "name": "ISiteSettingsPublicAppService",
               "methods": [
                 {
-                  "name": "FindByNameAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "name",
-                      "typeAsString": "System.String, System.Private.CoreLib",
-                      "type": "System.String",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
+                  "name": "GetDefaultLanguageAsync",
+                  "parametersOnMethod": [],
                   "returnValue": {
-                    "type": "Dignite.Cms.Public.Sites.SiteDto",
-                    "typeSimple": "Dignite.Cms.Public.Sites.SiteDto"
+                    "type": "System.String",
+                    "typeSimple": "string"
                   }
                 },
                 {
-                  "name": "FindByHostAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "host",
-                      "typeAsString": "System.String, System.Private.CoreLib",
-                      "type": "System.String",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
+                  "name": "GetAllLanguagesAsync",
+                  "parametersOnMethod": [],
                   "returnValue": {
-                    "type": "Dignite.Cms.Public.Sites.SiteDto",
-                    "typeSimple": "Dignite.Cms.Public.Sites.SiteDto"
+                    "type": "System.Collections.Generic.IEnumerable<System.String>",
+                    "typeSimple": "[string]"
                   }
                 }
               ]
             }
           ],
           "actions": {
-            "FindByNameAsyncByName": {
-              "uniqueName": "FindByNameAsyncByName",
-              "name": "FindByNameAsync",
+            "GetDefaultLanguageAsync": {
+              "uniqueName": "GetDefaultLanguageAsync",
+              "name": "GetDefaultLanguageAsync",
               "httpMethod": "GET",
-              "url": "api/cms-public/sites/find-by-name",
+              "url": "api/cms-public/site-settings/default-language",
               "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "name",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "name",
-                  "name": "name",
-                  "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                }
-              ],
+              "parametersOnMethod": [],
+              "parameters": [],
               "returnValue": {
-                "type": "Dignite.Cms.Public.Sites.SiteDto",
-                "typeSimple": "Dignite.Cms.Public.Sites.SiteDto"
+                "type": "System.String",
+                "typeSimple": "string"
               },
               "allowAnonymous": null,
-              "implementFrom": "Dignite.Cms.Public.Sites.ISitePublicAppService"
+              "implementFrom": "Dignite.Cms.Public.Settings.ISiteSettingsPublicAppService"
             },
-            "FindByHostAsyncByHost": {
-              "uniqueName": "FindByHostAsyncByHost",
-              "name": "FindByHostAsync",
+            "GetAllLanguagesAsync": {
+              "uniqueName": "GetAllLanguagesAsync",
+              "name": "GetAllLanguagesAsync",
               "httpMethod": "GET",
-              "url": "api/cms-public/sites/find-by-host",
+              "url": "api/cms-public/site-settings/all-languages",
               "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "host",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "host",
-                  "name": "host",
-                  "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                }
-              ],
+              "parametersOnMethod": [],
+              "parameters": [],
               "returnValue": {
-                "type": "Dignite.Cms.Public.Sites.SiteDto",
-                "typeSimple": "Dignite.Cms.Public.Sites.SiteDto"
+                "type": "System.Collections.Generic.IEnumerable<System.String>",
+                "typeSimple": "[string]"
               },
               "allowAnonymous": null,
-              "implementFrom": "Dignite.Cms.Public.Sites.ISitePublicAppService"
+              "implementFrom": "Dignite.Cms.Public.Settings.ISiteSettingsPublicAppService"
             }
           }
         },
@@ -146,14 +84,6 @@
                   "name": "FindByNameAsync",
                   "parametersOnMethod": [
                     {
-                      "name": "siteId",
-                      "typeAsString": "System.Guid, System.Private.CoreLib",
-                      "type": "System.Guid",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    },
-                    {
                       "name": "name",
                       "typeAsString": "System.String, System.Private.CoreLib",
                       "type": "System.String",
@@ -170,14 +100,6 @@
                 {
                   "name": "FindByEntryPathAsync",
                   "parametersOnMethod": [
-                    {
-                      "name": "siteId",
-                      "typeAsString": "System.Guid, System.Private.CoreLib",
-                      "type": "System.Guid",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    },
                     {
                       "name": "entryPath",
                       "typeAsString": "System.String, System.Private.CoreLib",
@@ -228,16 +150,7 @@
                 },
                 {
                   "name": "GetDefaultAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "siteId",
-                      "typeAsString": "System.Guid, System.Private.CoreLib",
-                      "type": "System.Guid",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
+                  "parametersOnMethod": [],
                   "returnValue": {
                     "type": "Dignite.Cms.Public.Sections.SectionDto",
                     "typeSimple": "Dignite.Cms.Public.Sections.SectionDto"
@@ -247,21 +160,13 @@
             }
           ],
           "actions": {
-            "FindByNameAsyncBySiteIdAndName": {
-              "uniqueName": "FindByNameAsyncBySiteIdAndName",
+            "FindByNameAsyncByName": {
+              "uniqueName": "FindByNameAsyncByName",
               "name": "FindByNameAsync",
               "httpMethod": "GET",
               "url": "api/cms-public/sections/find-by-name",
               "supportedVersions": [],
               "parametersOnMethod": [
-                {
-                  "name": "siteId",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
                 {
                   "name": "name",
                   "typeAsString": "System.String, System.Private.CoreLib",
@@ -272,18 +177,6 @@
                 }
               ],
               "parameters": [
-                {
-                  "nameOnMethod": "siteId",
-                  "name": "siteId",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                },
                 {
                   "nameOnMethod": "name",
                   "name": "name",
@@ -304,21 +197,13 @@
               "allowAnonymous": null,
               "implementFrom": "Dignite.Cms.Public.Sections.ISectionPublicAppService"
             },
-            "FindByEntryPathAsyncBySiteIdAndEntryPath": {
-              "uniqueName": "FindByEntryPathAsyncBySiteIdAndEntryPath",
+            "FindByEntryPathAsyncByEntryPath": {
+              "uniqueName": "FindByEntryPathAsyncByEntryPath",
               "name": "FindByEntryPathAsync",
               "httpMethod": "GET",
               "url": "api/cms-public/sections/find-by-entry-path",
               "supportedVersions": [],
               "parametersOnMethod": [
-                {
-                  "name": "siteId",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
                 {
                   "name": "entryPath",
                   "typeAsString": "System.String, System.Private.CoreLib",
@@ -329,18 +214,6 @@
                 }
               ],
               "parameters": [
-                {
-                  "nameOnMethod": "siteId",
-                  "name": "siteId",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                },
                 {
                   "nameOnMethod": "entryPath",
                   "name": "entryPath",
@@ -380,15 +253,15 @@
               "parameters": [
                 {
                   "nameOnMethod": "input",
-                  "name": "SiteId",
+                  "name": "input",
                   "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
+                  "type": "Dignite.Cms.Public.Sections.GetSectionsInput",
+                  "typeSimple": "Dignite.Cms.Public.Sections.GetSectionsInput",
                   "isOptional": false,
                   "defaultValue": null,
                   "constraintTypes": null,
                   "bindingSourceId": "ModelBinding",
-                  "descriptorName": "input"
+                  "descriptorName": ""
                 }
               ],
               "returnValue": {
@@ -437,38 +310,14 @@
               "allowAnonymous": null,
               "implementFrom": "Dignite.Cms.Public.Sections.ISectionPublicAppService"
             },
-            "GetDefaultAsyncBySiteId": {
-              "uniqueName": "GetDefaultAsyncBySiteId",
+            "GetDefaultAsync": {
+              "uniqueName": "GetDefaultAsync",
               "name": "GetDefaultAsync",
               "httpMethod": "GET",
-              "url": "api/cms-public/sections/get-default-by-siteId/{siteId}",
+              "url": "api/cms-public/sections/default",
               "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "siteId",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "siteId",
-                  "name": "siteId",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [
-                    "GuidRouteConstraint"
-                  ],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                }
-              ],
+              "parametersOnMethod": [],
+              "parameters": [],
               "returnValue": {
                 "type": "Dignite.Cms.Public.Sections.SectionDto",
                 "typeSimple": "Dignite.Cms.Public.Sections.SectionDto"

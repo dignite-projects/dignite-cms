@@ -97,7 +97,7 @@ public abstract class EntryRepository_Tests<TStartupModule> : CmsTestBase<TStart
     }
 
     [Fact]
-    public async Task GetPagedListAsync_ShouldWorkProperly_WithSiteId_WhileGetting10_WithoutSorting()
+    public async Task GetPagedListAsync_ShouldWorkProperly_WithSection_WhileGetting10_WithoutSorting()
     {
         var result = await entryRepository.GetListAsync(
             testData.EntryDefaultCulture,
@@ -109,7 +109,7 @@ public abstract class EntryRepository_Tests<TStartupModule> : CmsTestBase<TStart
     }
 
     [Fact]
-    public async Task GetPagedListAsync_ShouldWorkProperly_WithSiteId_WhileGetting1_WithoutSorting()
+    public async Task GetPagedListAsync_ShouldWorkProperly_WithSection_WhileGetting1_WithoutSorting()
     {
         var result = await entryRepository.GetListAsync(
             testData.EntryDefaultCulture,
@@ -122,7 +122,7 @@ public abstract class EntryRepository_Tests<TStartupModule> : CmsTestBase<TStart
     }
 
     [Fact]
-    public async Task GetPagedListAsync_ShouldWorkProperly_WithSiteId_WhileGetting1InPage2_WithoutSorting()
+    public async Task GetPagedListAsync_ShouldWorkProperly_WithSection_WhileGetting1InPage2_WithoutSorting()
     {
         var result = await entryRepository.GetListAsync(
             testData.EntryDefaultCulture,
@@ -136,7 +136,7 @@ public abstract class EntryRepository_Tests<TStartupModule> : CmsTestBase<TStart
     }
 
     [Fact]
-    public async Task GetPagedListAsync_ShouldWorkProperly_WithSiteId_WhileGetting10_WithSortingByName()
+    public async Task GetPagedListAsync_ShouldWorkProperly_WithSection_WhileGetting10_WithSortingByName()
     {
         var result = await entryRepository.GetListAsync(
             testData.EntryDefaultCulture,

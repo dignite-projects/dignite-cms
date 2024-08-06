@@ -1,4 +1,6 @@
-﻿using Volo.Abp.Settings;
+﻿using Dignite.Cms.Localization;
+using Volo.Abp.Localization;
+using Volo.Abp.Settings;
 
 namespace Dignite.Cms.Settings;
 
@@ -6,8 +8,17 @@ public class CmsSettingDefinitionProvider : SettingDefinitionProvider
 {
     public override void Define(ISettingDefinitionContext context)
     {
-        /* Define module settings here.
-         * Use names from CmsSettings class.
-         */
+        context.Add(
+            new SettingDefinition(CmsSettings.Site.Languages,
+                "en",
+                L("DisplayName:Cms.Site.Languages"),
+                isVisibleToClients:true
+                )
+        );
+    }
+
+    private static LocalizableString L(string name)
+    {
+        return LocalizableString.Create<CmsResource>(name);
     }
 }

@@ -32,7 +32,6 @@ public class SectionAdminAppService_Tests : CmsApplicationTestBase
     public async Task GetListAsync()
     {
         var sections = await sectionAdminAppService.GetListAsync(new GetSectionsInput() { 
-            SiteId = testData.SiteId,
         });
 
         sections.TotalCount.ShouldBeGreaterThan(0);
@@ -43,7 +42,6 @@ public class SectionAdminAppService_Tests : CmsApplicationTestBase
     public async Task NameExistsAsync()
     {
         var result = await sectionAdminAppService.NameExistsAsync(new SectionNameExistsInput { 
-            SiteId=testData.SiteId,
             Name=testData.SingleSectionName
         });
 
@@ -56,7 +54,6 @@ public class SectionAdminAppService_Tests : CmsApplicationTestBase
         var result = await sectionAdminAppService.RouteExistsAsync(
             new SectionRouteExistsInput
             {
-                SiteId = testData.SiteId,
                 Route = testData.ChannelSectionRoute
             }
             );
@@ -75,7 +72,6 @@ public class SectionAdminAppService_Tests : CmsApplicationTestBase
             DisplayName = "New section",
             Route = route,
             IsActive = true,
-            SiteId = testData.SiteId,
             IsDefault = false,
             Type = SectionType.Channel,
             Template = "product/entry"
@@ -97,7 +93,6 @@ public class SectionAdminAppService_Tests : CmsApplicationTestBase
                     DisplayName = "New section",
                     Route = "product",
                     IsActive = true,
-                    SiteId = testData.SiteId,
                     IsDefault = false,
                     Type = SectionType.Channel,
                     Template = "product/index"
@@ -116,7 +111,6 @@ public class SectionAdminAppService_Tests : CmsApplicationTestBase
                     DisplayName = "New section",
                     Route = testData.ChannelSectionRoute,
                     IsActive = true,
-                    SiteId = testData.SiteId,
                     IsDefault = false,
                     Type = SectionType.Channel,
                     Template = "product/index"

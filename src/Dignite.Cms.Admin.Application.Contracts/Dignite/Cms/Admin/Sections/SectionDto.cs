@@ -1,5 +1,4 @@
-﻿using Dignite.Cms.Admin.Sites;
-using Dignite.Cms.Sections;
+﻿using Dignite.Cms.Sections;
 using System;
 using System.Collections.Generic;
 using Volo.Abp.Application.Dtos;
@@ -13,13 +12,6 @@ namespace Dignite.Cms.Admin.Sections
         public SectionDto():base()
         {
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Guid SiteId { get; set; }
-
-        public SiteDto Site { get; set; }
 
         /// <summary>
         /// 

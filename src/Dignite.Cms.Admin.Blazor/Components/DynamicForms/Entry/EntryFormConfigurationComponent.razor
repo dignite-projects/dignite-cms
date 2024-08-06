@@ -4,15 +4,7 @@
 @inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
 @inherits FormConfigurationComponentBase<EntryFormControl,EntryConfiguration>
 
-<Field>
-    <FieldLabel>@L["Sites"]</FieldLabel>
-    <Select TValue="Guid" SelectedValue="@CurrentSite.Id" SelectedValueChanged="OnSiteChangedAsync">
-        @foreach (var item in AllSites)
-        {
-            <SelectItem Value="@item.Id">@item.DisplayName</SelectItem>
-        }
-    </Select>
-</Field>
+
 <Validation MessageLocalizer="@LH.Localize" Validator="SectionSelectedValidator">
     <Field>
         <FieldLabel>@L["Sections"]</FieldLabel>

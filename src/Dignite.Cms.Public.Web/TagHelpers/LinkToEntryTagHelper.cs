@@ -1,9 +1,12 @@
 ﻿using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
+using Dignite.Cms.Public.Web.Routing;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.AspNetCore.Routing;
 using System;
+using System.Globalization;
 
 namespace Dignite.Cms.Public.Web.TagHelpers
 {
@@ -36,13 +39,15 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         /// <param name="section"></param>
         private string GetEntryUrl(EntryDto entry, SectionDto section)
         {
-            var hostAddress = ViewContext.HttpContext.Request.Scheme + "://" + ViewContext.HttpContext.Request.Host;
+            var culture = ViewContext.HttpContext.GetRouteValue(CultureRouteSegmentConstraint.RouteSegmentName)?.ToString();
+            var currentCulture = CultureInfo.CurrentUICulture.Name;
             var url = entry.GetUrl(section);
 
-            if (url.StartsWith(hostAddress, StringComparison.OrdinalIgnoreCase))
+            if (culture.IsNullOrEmpty())
             {
-                url = url.RemovePreFix(StringComparison.OrdinalIgnoreCase, hostAddress);
+                url = url.RemovePreFix(StringComparison.OrdinalIgnoreCase, "/" + currentCulture + "/").EnsureStartsWith('/');
             }
+
             return url;
         }
     }

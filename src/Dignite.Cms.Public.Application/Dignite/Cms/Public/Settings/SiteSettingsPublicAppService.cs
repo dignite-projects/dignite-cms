@@ -21,5 +21,14 @@ namespace Dignite.Cms.Public.Settings
         {
             return await SettingProvider.GetOrNullAsync(LocalizationSettingNames.DefaultLanguage);
         }
+
+        public async Task<BrandDto> GetBrandAsync()
+        {
+            var appName = await SettingProvider.GetOrNullAsync(CmsSettings.Site.Name);
+            var logoUrl = await SettingProvider.GetOrNullAsync(CmsSettings.Site.LogoUrl);
+            var logoReverseUrl = await SettingProvider.GetOrNullAsync(CmsSettings.Site.LogoReverseUrl);
+
+            return new BrandDto(appName,logoUrl,logoReverseUrl);
+        }
     }
 }

@@ -31,6 +31,14 @@
                     "type": "System.Collections.Generic.IEnumerable<System.String>",
                     "typeSimple": "[string]"
                   }
+                },
+                {
+                  "name": "GetBrandAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "Dignite.Cms.Public.Settings.BrandDto",
+                    "typeSimple": "Dignite.Cms.Public.Settings.BrandDto"
+                  }
                 }
               ]
             }
@@ -62,6 +70,21 @@
               "returnValue": {
                 "type": "System.Collections.Generic.IEnumerable<System.String>",
                 "typeSimple": "[string]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Cms.Public.Settings.ISiteSettingsPublicAppService"
+            },
+            "GetBrandAsync": {
+              "uniqueName": "GetBrandAsync",
+              "name": "GetBrandAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-public/site-settings/brand",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "Dignite.Cms.Public.Settings.BrandDto",
+                "typeSimple": "Dignite.Cms.Public.Settings.BrandDto"
               },
               "allowAnonymous": null,
               "implementFrom": "Dignite.Cms.Public.Settings.ISiteSettingsPublicAppService"

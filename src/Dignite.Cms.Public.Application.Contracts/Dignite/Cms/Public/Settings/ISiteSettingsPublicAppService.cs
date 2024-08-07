@@ -13,5 +13,7 @@ namespace Dignite.Cms.Public.Settings
         Task<string> GetDefaultLanguageAsync();
 
         Task<IEnumerable<string>> GetAllLanguagesAsync();
+
+        Task<BrandDto> GetBrandAsync();
     }
 }

@@ -30,5 +30,12 @@ namespace Dignite.Cms.Public.Settings
         {
             return await _siteSettingsPublicAppService.GetAllLanguagesAsync();
         }
+
+        [HttpGet]
+        [Route("brand")]
+        public async Task<BrandDto> GetBrandAsync()
+        {
+            return await _siteSettingsPublicAppService.GetBrandAsync();
+        }
     }
 }

@@ -26,4 +26,9 @@ public partial class SiteSettingsPublicClientProxy : ClientProxyBase<ISiteSettin
     {
         return await RequestAsync<IEnumerable<String>>(nameof(GetAllLanguagesAsync));
     }
+
+    public virtual async Task<BrandDto> GetBrandAsync()
+    {
+        return await RequestAsync<BrandDto>(nameof(GetBrandAsync));
+    }
 }

@@ -14,7 +14,7 @@ namespace Dignite.Cms.Admin.Settings
         public async Task<IEnumerable<string>> GetAllLanguagesAsync()
         {
             var languages = await SettingProvider.GetOrNullAsync(CmsSettings.Site.Languages);
-            return languages.Split(';');
+            return languages.Split(',');
         }
 
         public async Task<string> GetDefaultLanguageAsync()

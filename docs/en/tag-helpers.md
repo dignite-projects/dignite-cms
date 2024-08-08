@@ -11,8 +11,7 @@ To assist web developers in quickly developing websites, Dignite Cms provides a 
 Basic usage:
 
 ```xml
-<cms-entry-list 
-                site-id="Model.Section.SiteId" 
+<cms-entry-list                 
                 section-name="blog-post"
                 partial-name="blog/_post-list">
 </cms-entry-list>
@@ -48,8 +47,7 @@ Basic usage:
 Return 10 entries:
 
 ```xml
-<cms-entry-list 
-                site-id="Model.Section.SiteId" 
+<cms-entry-list                 
                 section-name="blog-post"
                 current-page="10"
                 partial-name="blog/_post-list">
@@ -59,8 +57,7 @@ Return 10 entries:
 Specify the current language:
 
 ```xml
-<cms-entry-list 
-                site-id="Model.Section.SiteId" 
+<cms-entry-list                 
                 section-name="blog-post"
                 culture="@Model.Entry.Culture"
                 partial-name="blog/_post-list">
@@ -90,8 +87,7 @@ Query by field value:
 ```
 
 ```xml
-<cms-entry-list 
-                site-id="Model.Section.SiteId" 
+<cms-entry-list                 
                 section-name="blog-post"
                 querying-by-fields="parameters"
                 partial-name="blog/_post-list">
@@ -126,8 +122,7 @@ Query by field value:
 ### Example of `cms-entry`
 
 ```xml
-<cms-entry 
-    site-id="Model.Section.SiteId" 
+<cms-entry     
     section-name="contact" 
     culture="@Model.Entry.Culture" 
     slug="index" 
@@ -287,6 +282,6 @@ Optional parameters:
 `cms-section` is used to call section data, passing the `SectionDto` type view model to the view.
 
 ```xml
-<cms-section site-id="Model.Section.SiteId" section-name="blog-post" partial-name="_blog-post-index">
+<cms-section section-name="blog-post" partial-name="_blog-post-index">
 </cms-section>
 ```

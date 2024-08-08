@@ -99,12 +99,6 @@ Fields are used to define the properties of entries, and the system provides som
 
 ![Field Management Screenshot](images/fields.png)
 
-### Site Management
-
-Sites are used to configure the accessible features of the website, and the system automatically creates a site that supports multiple languages.
-
-![Site Management Screenshot](images/sites.png)
-
 ### Section Management
 
 Sections are the backbone of the site, used to support the structural layout of entries, and the system automatically creates some commonly used sections.

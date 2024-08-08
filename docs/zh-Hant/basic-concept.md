@@ -1,5 +1,23 @@
 # Dignite Cms基本概念解析
 
+## 站點設置項
+
+Dignite Cms 的設置基於 [Abp Settings](https://abp.io/docs/latest/framework/infrastructure/settings) 模塊，為主站和租戶網站設置語言、品牌信息。
+
+以下是主站的基本設置示例：
+
+```json
+"Settings": {
+  "Abp.Localization.DefaultLanguage": "en",
+  "CmsSettings.Site.Languages": "en,ja,zh-Hant",
+  "CmsSettings.Site.Name": "My Dignite",
+  "CmsSettings.Site.LogoUrl": "/images/logo.png",
+  "CmsSettings.Site.LogoReverseUrl": "/images/logo-reverse.png"
+}
+```
+
+關於租戶的設置請參見 [Setting Management](https://abp.io/docs/latest/modules/setting-management) 文檔。
+
 ## 字段
 
 字段是Dignite Abp中的[動態表單](https://learn.dignite.com/zh-Hans/abp/latest/Dynamic-Forms)實現，通過不同類型的字段和配置，滿足各種頁面展示需求。
@@ -30,20 +48,6 @@
 - 表格：通過配置表格頭，規範用戶輸入的數據
 
 >欲了解更多關於表單的使用，請查看快速入門教程以啟動Dignite Cms Blazor WebAssembly，並在後臺管理中體驗。
-
-## 站點
-
-站點即網站，用於配置一個網站的可訪問特徵。
-
-Dignite Cms支持多站點特性，滿足二級域名或多域名站點的應用。
-
-![編輯站點](images/site-edit.png)
-
-- 顯示名稱：站點的顯示文本
-- 名稱：站點的唯一標識符
-- 主機地址：網站的域名地址，在整個系統中具有唯一性
-- 是否激活：開啟或禁止用戶對網站的訪問
-- 語言：選擇網站內容支持的語言
 
 ## 版塊
 

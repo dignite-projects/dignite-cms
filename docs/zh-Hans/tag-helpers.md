@@ -11,8 +11,7 @@
 基本用法：
 
 ```xml
-<cms-entry-list 
-                site-id="Model.Section.SiteId" 
+<cms-entry-list                 
                 section-name="blog-post"
                 partial-name="blog/_post-list">
 </cms-entry-list>
@@ -48,8 +47,7 @@
 返回10条条目：
 
 ```xml
-<cms-entry-list 
-                site-id="Model.Section.SiteId" 
+<cms-entry-list                 
                 section-name="blog-post"
                 current-page="10"
                 partial-name="blog/_post-list">
@@ -59,8 +57,7 @@
 指定当前语言：
 
 ```xml
-<cms-entry-list 
-                site-id="Model.Section.SiteId" 
+<cms-entry-list                
                 section-name="blog-post"
                 culture="@Model.Entry.Culture"
                 partial-name="blog/_post-list">
@@ -90,8 +87,7 @@
 ```
 
 ```xml
-<cms-entry-list 
-                site-id="Model.Section.SiteId" 
+<cms-entry-list                
                 section-name="blog-post"
                 querying-by-fields="parameters"
                 partial-name="blog/_post-list">
@@ -126,8 +122,7 @@
 ### `cms-entry`示例
 
 ```xml
-<cms-entry 
-    site-id="Model.Section.SiteId" 
+<cms-entry    
     section-name="contact" 
     culture="@Model.Entry.Culture" 
     slug="index" 
@@ -287,6 +282,6 @@ Dignite Cms Mvc为动态字段内置了视图文件，以动态字段类型命�
 `cms-section`用于版块数据的调用，向视图传递`SectionDto`类型viewmodel。
 
 ```xml
-<cms-section site-id="Model.Section.SiteId" section-name="blog-post" partial-name="_blog-post-index">
+<cms-section section-name="blog-post" partial-name="_blog-post-index">
 </cms-section>
 ```

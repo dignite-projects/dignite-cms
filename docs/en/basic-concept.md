@@ -1,5 +1,23 @@
 # Dignite Cms Basic Concepts
 
+## Site Settings
+
+Dignite Cms settings are based on the [Abp Settings](https://abp.io/docs/latest/framework/infrastructure/settings) module, which sets the language and branding information for the master and tenant sites.
+
+Below is an example of basic settings for the master site:
+
+```json
+"Settings": {
+  "Abp.Localization.DefaultLanguage": "en",
+  "CmsSettings.Site.Languages": "en,ja,zh-Hant",
+  "CmsSettings.Site.Name": "My Dignite", 
+  "CmsSettings.Site.LogoUrl":"/images/logo.png",
+  "CmsSettings.Site.LogoReverseUrl":"/images/logo-reverse.png"
+}
+```
+
+See the [Setting Management](https://abp.io/docs/latest/modules/setting-management) documentation for tenant settings.
+
 ## Fields
 
 Fields in Dignite CMS are implemented using [Dynamic Forms](https://learn.dignite.com/zh-Hans/abp/latest/Dynamic-Forms) in Dignite ABP. They allow developers to define fields online to meet various frontend content display needs.
@@ -30,20 +48,6 @@ In addition to common types of dynamic forms, Dignite CMS also provides three ad
 - Table: Standardizes user input data by configuring table headers.
 
 > For more information on form usage, please refer to the quick start tutorial to launch Dignite CMS Blazor WebAssembly and experience it in the admin backend.
-
-## Sites
-
-A site represents a website and is used to configure its accessible features.
-
-Dignite CMS supports multi-site features, catering to applications with subdomain or multi-domain sites.
-
-![Edit Site](images/site-edit.png)
-
-- Display Name: The display text of the site.
-- Name: The unique identifier of the site.
-- Host Address: The domain address of the website, unique throughout the system.
-- Is Active: Enables or disables user access to the website.
-- Language: Selects the languages supported by the website content.
 
 ## Sections
 

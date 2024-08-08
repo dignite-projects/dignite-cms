@@ -168,8 +168,8 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
         protected async Task InitializePageDataAsync()
         {
-            DefaultLanguage = await SettingProvider.GetOrNullAsync(LocalizationSettingNames.DefaultLanguage);
-            SiteLanguages = (await SettingProvider.GetOrNullAsync(CmsSettings.Site.Languages)).Split(";");
+            DefaultLanguage = await SiteSettingsAdminAppService.GetDefaultLanguageAsync();
+            SiteLanguages = await SiteSettingsAdminAppService.GetAllLanguagesAsync();
             AllLanguages = await LanguageProvider.GetLanguagesAsync();
             if (SectionId.HasValue)
             {

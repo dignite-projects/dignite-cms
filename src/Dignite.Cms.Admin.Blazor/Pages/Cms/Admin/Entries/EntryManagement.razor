@@ -1,6 +1,7 @@
 ﻿@page "/cms/admin/entries"
 @using Dignite.Cms.Admin.Entries;
 @using Dignite.Cms.Admin.Sections;
+@using Dignite.Cms.Admin.Settings
 @using Dignite.Cms.Localization;
 @using Dignite.Cms.Permissions;
 @using Microsoft.AspNetCore.Authorization;
@@ -10,7 +11,7 @@
 @inject ISectionAdminAppService SectionAppService
 @inject NavigationManager Navigation
 @inject ILanguageProvider LanguageProvider
-@inject ISettingProvider SettingProvider
+@inject ISiteSettingsAdminAppService SiteSettingsAdminAppService
 @attribute [Authorize(CmsAdminPermissions.Entry.Default)]
 @inherits AbpCrudPageBase<IEntryAdminAppService, EntryDto, Guid, GetEntriesInput, CreateEntryInput, UpdateEntryInput>
 

@@ -54,7 +54,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
             await base.OnInitializedAsync();
             CurrentEntryType = Section.EntryTypes.FirstOrDefault(et => et.Id == Entry.EntryTypeId);
             AllLanguages = await LanguageProvider.GetLanguagesAsync();
-            SiteLanguages = (await SettingProvider.GetOrNullAsync(CmsSettings.Site.Languages)).Split(";");
+            SiteLanguages = await SiteSettingsAdminAppService.GetAllLanguagesAsync();
             await SetCultureAsync(Entry.Culture);
             await GetVersionsAsync();
         }

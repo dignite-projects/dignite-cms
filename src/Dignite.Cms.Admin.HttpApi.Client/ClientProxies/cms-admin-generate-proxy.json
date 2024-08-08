@@ -4,6 +4,93 @@
       "rootPath": "cms-admin",
       "remoteServiceName": "CmsAdmin",
       "controllers": {
+        "Dignite.Cms.Admin.Settings.SiteSettingsAdminController": {
+          "controllerName": "SiteSettingsAdmin",
+          "controllerGroupName": "SiteSettingsAdmin",
+          "isRemoteService": true,
+          "isIntegrationService": false,
+          "apiVersion": null,
+          "type": "Dignite.Cms.Admin.Settings.SiteSettingsAdminController",
+          "interfaces": [
+            {
+              "type": "Dignite.Cms.Admin.Settings.ISiteSettingsAdminAppService",
+              "name": "ISiteSettingsAdminAppService",
+              "methods": [
+                {
+                  "name": "GetDefaultLanguageAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "System.String",
+                    "typeSimple": "string"
+                  }
+                },
+                {
+                  "name": "GetAllLanguagesAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.IEnumerable<System.String>",
+                    "typeSimple": "[string]"
+                  }
+                },
+                {
+                  "name": "GetBrandAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "Dignite.Cms.Settings.BrandDto",
+                    "typeSimple": "Dignite.Cms.Settings.BrandDto"
+                  }
+                }
+              ]
+            }
+          ],
+          "actions": {
+            "GetDefaultLanguageAsync": {
+              "uniqueName": "GetDefaultLanguageAsync",
+              "name": "GetDefaultLanguageAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-Admin/site-settings/default-language",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.String",
+                "typeSimple": "string"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Cms.Admin.Settings.ISiteSettingsAdminAppService"
+            },
+            "GetAllLanguagesAsync": {
+              "uniqueName": "GetAllLanguagesAsync",
+              "name": "GetAllLanguagesAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-Admin/site-settings/all-languages",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Collections.Generic.IEnumerable<System.String>",
+                "typeSimple": "[string]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Cms.Admin.Settings.ISiteSettingsAdminAppService"
+            },
+            "GetBrandAsync": {
+              "uniqueName": "GetBrandAsync",
+              "name": "GetBrandAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-Admin/site-settings/brand",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "Dignite.Cms.Settings.BrandDto",
+                "typeSimple": "Dignite.Cms.Settings.BrandDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Cms.Admin.Settings.ISiteSettingsAdminAppService"
+            }
+          }
+        },
         "Dignite.Cms.Admin.Sections.EntryTypeAdminController": {
           "controllerName": "EntryTypeAdmin",
           "controllerGroupName": "EntryTypeAdmin",

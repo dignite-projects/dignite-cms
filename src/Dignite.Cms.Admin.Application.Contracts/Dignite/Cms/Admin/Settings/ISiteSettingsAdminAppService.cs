@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
 
-namespace Dignite.Cms.Public.Settings
+namespace Dignite.Cms.Admin.Settings
 {
-    public interface ISiteSettingsPublicAppService: IApplicationService
+    public interface ISiteSettingsAdminAppService : IApplicationService
     {
         /// <summary>
         /// Get the default language of the site

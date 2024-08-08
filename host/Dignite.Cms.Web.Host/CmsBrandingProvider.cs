@@ -1,4 +1,5 @@
 ﻿using Dignite.Cms.Public.Settings;
+using Dignite.Cms.Settings;
 using Microsoft.Extensions.Caching.Distributed;
 using System;
 using Volo.Abp.Caching;

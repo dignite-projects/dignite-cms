@@ -1,4 +1,4 @@
-﻿namespace Dignite.Cms.Public.Settings
+﻿namespace Dignite.Cms.Settings
 {
     public class BrandDto
     {

@@ -4,6 +4,7 @@
 @using Dignite.Cms.Admin.Blazor.Components
 @using Dignite.Cms.Admin.Entries;
 @using Dignite.Cms.Admin.Sections;
+@using Dignite.Cms.Admin.Settings
 @using Dignite.Cms.Localization;
 @using Volo.Abp.BlazoriseUI.Components.ObjectExtending
 @using Volo.Abp.Localization;
@@ -14,7 +15,7 @@
 @inject IFormControlComponentSelector FormControlComponentSelector
 @inject ILanguageProvider LanguageProvider
 @inject AbpBlazorMessageLocalizerHelper<CmsResource> LH
-@inject ISettingProvider SettingProvider
+@inject ISiteSettingsAdminAppService SiteSettingsAdminAppService
 @inherits AbpComponentBase
 
 <Row>

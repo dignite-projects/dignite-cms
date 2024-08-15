@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Volo.Abp;
 
@@ -7,7 +6,6 @@ namespace Dignite.Cms.Admin.Domains
 {
     [RemoteService(Name = CmsAdminRemoteServiceConsts.RemoteServiceName)]
     [Area(CmsAdminRemoteServiceConsts.ModuleName)]
-    [Authorize(Permissions.CmsAdminPermissions.Entry.Default)]
     [Route("api/cms-admin/domains")]
     public class DomainAdminController : CmsAdminController, IDomainAdminAppService
     {

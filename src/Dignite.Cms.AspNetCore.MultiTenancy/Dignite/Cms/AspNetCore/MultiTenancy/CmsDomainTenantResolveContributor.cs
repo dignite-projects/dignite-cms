@@ -24,7 +24,7 @@ namespace Dignite.Cms.Public.Web.MultiTenancy
                 return null;
             }
 
-            var hostName = httpContext.Request.Host.Host;
+            var hostName = httpContext.Request.Host.Value;
             using (var scope = context.ServiceProvider.CreateScope())
             {
                 var domainPublicAppService = scope.ServiceProvider.GetRequiredService<IDomainPublicAppService>();

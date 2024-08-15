@@ -8,7 +8,7 @@ namespace Dignite.Cms.Admin.Domains
     {
         [Required]
         [DynamicMaxLength(typeof(DomainConsts), nameof(DomainConsts.MaxDomainNameLength))]
-        [RegularExpression(@"^(?!-)[A-Za-z0-9-]{1,63}(?<!-)\.[A-Za-z]{2,6}$")]
+        [RegularExpression(DomainConsts.NameRegularExpression)]
         public string DomainName { get; set; }
     }
 }

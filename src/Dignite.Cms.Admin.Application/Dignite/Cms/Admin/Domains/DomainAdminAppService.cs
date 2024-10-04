@@ -22,6 +22,17 @@ namespace Dignite.Cms.Admin.Domains
             _dataFilter = dataFilter;
         }
 
+        [AllowAnonymous]
+        public async Task<DomainDto> FindByNameAsync(string domainName)
+        {
+            using (_dataFilter.Disable<IMultiTenant>())
+            {
+                var domain = await _domainRepository.FindByNameAsync(domainName);
+
+                return ObjectMapper.Map<Domain, DomainDto>(domain);
+            }
+        }
+
         public async Task<DomainDto> GetBoundAsync()
         {
             var boundDomain = await _domainRepository.FindByTenantIdAsync(CurrentTenant.Id.Value);

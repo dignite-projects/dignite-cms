@@ -17,6 +17,13 @@ namespace Dignite.Cms.Admin.Domains
         }
 
         [HttpGet]
+        [Route("find-by-name")]
+        public async Task<DomainDto> FindByNameAsync(string domainName)
+        {
+            return await _entryAppService.FindByNameAsync(domainName);
+        }
+
+        [HttpGet]
         [Route("bound")]
         public async Task<DomainDto> GetBoundAsync()
         {

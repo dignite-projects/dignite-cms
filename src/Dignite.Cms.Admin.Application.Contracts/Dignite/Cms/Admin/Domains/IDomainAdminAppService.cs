@@ -5,6 +5,7 @@ namespace Dignite.Cms.Admin.Domains
 {
     public interface IDomainAdminAppService: IApplicationService
     {
+        Task<DomainDto> FindByNameAsync(string domainName);
         Task<bool> NameExistsAsync(string domainName);
 
         Task<DomainDto> GetBoundAsync();

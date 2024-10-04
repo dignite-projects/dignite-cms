@@ -48,7 +48,7 @@
               "uniqueName": "GetDefaultLanguageAsync",
               "name": "GetDefaultLanguageAsync",
               "httpMethod": "GET",
-              "url": "api/cms-Admin/site-settings/default-language",
+              "url": "api/cms-admin/site-settings/default-language",
               "supportedVersions": [],
               "parametersOnMethod": [],
               "parameters": [],
@@ -63,7 +63,7 @@
               "uniqueName": "GetAllLanguagesAsync",
               "name": "GetAllLanguagesAsync",
               "httpMethod": "GET",
-              "url": "api/cms-Admin/site-settings/all-languages",
+              "url": "api/cms-admin/site-settings/all-languages",
               "supportedVersions": [],
               "parametersOnMethod": [],
               "parameters": [],
@@ -78,7 +78,7 @@
               "uniqueName": "GetBrandAsync",
               "name": "GetBrandAsync",
               "httpMethod": "GET",
-              "url": "api/cms-Admin/site-settings/brand",
+              "url": "api/cms-admin/site-settings/brand",
               "supportedVersions": [],
               "parametersOnMethod": [],
               "parameters": [],
@@ -2577,6 +2577,23 @@
               "name": "IDomainAdminAppService",
               "methods": [
                 {
+                  "name": "FindByNameAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "domainName",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "Dignite.Cms.Admin.Domains.DomainDto",
+                    "typeSimple": "Dignite.Cms.Admin.Domains.DomainDto"
+                  }
+                },
+                {
                   "name": "NameExistsAsync",
                   "parametersOnMethod": [
                     {
@@ -2622,6 +2639,43 @@
             }
           ],
           "actions": {
+            "FindByNameAsyncByDomainName": {
+              "uniqueName": "FindByNameAsyncByDomainName",
+              "name": "FindByNameAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-admin/domains/find-by-name",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "domainName",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "domainName",
+                  "name": "domainName",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Dignite.Cms.Admin.Domains.DomainDto",
+                "typeSimple": "Dignite.Cms.Admin.Domains.DomainDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Cms.Admin.Domains.IDomainAdminAppService"
+            },
             "GetBoundAsync": {
               "uniqueName": "GetBoundAsync",
               "name": "GetBoundAsync",
@@ -2634,7 +2688,7 @@
                 "type": "Dignite.Cms.Admin.Domains.DomainDto",
                 "typeSimple": "Dignite.Cms.Admin.Domains.DomainDto"
               },
-              "allowAnonymous": false,
+              "allowAnonymous": null,
               "implementFrom": "Dignite.Cms.Admin.Domains.IDomainAdminAppService"
             },
             "NameExistsAsyncByDomainName": {
@@ -2671,7 +2725,7 @@
                 "type": "System.Boolean",
                 "typeSimple": "boolean"
               },
-              "allowAnonymous": false,
+              "allowAnonymous": null,
               "implementFrom": "Dignite.Cms.Admin.Domains.IDomainAdminAppService"
             },
             "UpdateAsyncByInput": {
@@ -2708,7 +2762,7 @@
                 "type": "Dignite.Cms.Admin.Domains.DomainDto",
                 "typeSimple": "Dignite.Cms.Admin.Domains.DomainDto"
               },
-              "allowAnonymous": false,
+              "allowAnonymous": null,
               "implementFrom": "Dignite.Cms.Admin.Domains.IDomainAdminAppService"
             }
           }

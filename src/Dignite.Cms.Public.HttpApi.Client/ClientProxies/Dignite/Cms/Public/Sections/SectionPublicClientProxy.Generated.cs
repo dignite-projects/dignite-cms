@@ -17,21 +17,27 @@ namespace Dignite.Cms.Public.Sections;
 [ExposeServices(typeof(ISectionPublicAppService), typeof(SectionPublicClientProxy))]
 public partial class SectionPublicClientProxy : ClientProxyBase<ISectionPublicAppService>, ISectionPublicAppService
 {
-    public virtual async Task<SectionDto> FindByNameAsync(Guid siteId, string name)
+    public virtual async Task<SectionDto> FindByNameAsync(string name)
     {
         return await RequestAsync<SectionDto>(nameof(FindByNameAsync), new ClientProxyRequestTypeValue
         {
-            { typeof(Guid), siteId },
             { typeof(string), name }
         });
     }
 
-    public virtual async Task<SectionDto> FindByEntryPathAsync(Guid siteId, string entryPath)
+    public virtual async Task<SectionDto> FindByEntryPathAsync(string entryPath)
     {
         return await RequestAsync<SectionDto>(nameof(FindByEntryPathAsync), new ClientProxyRequestTypeValue
         {
-            { typeof(Guid), siteId },
             { typeof(string), entryPath }
+        });
+    }
+
+    public virtual async Task<ListResultDto<SectionDto>> GetListAsync(GetSectionsInput input)
+    {
+        return await RequestAsync<ListResultDto<SectionDto>>(nameof(GetListAsync), new ClientProxyRequestTypeValue
+        {
+            { typeof(GetSectionsInput), input }
         });
     }
 
@@ -43,19 +49,8 @@ public partial class SectionPublicClientProxy : ClientProxyBase<ISectionPublicAp
         });
     }
 
-    public virtual async Task<SectionDto> GetDefaultAsync(Guid siteId)
+    public virtual async Task<SectionDto> GetDefaultAsync()
     {
-        return await RequestAsync<SectionDto>(nameof(GetDefaultAsync), new ClientProxyRequestTypeValue
-        {
-            { typeof(Guid), siteId }
-        });
-    }
-
-    public virtual async Task<ListResultDto<SectionDto>> GetListAsync(GetSectionsInput input)
-    {
-        return await RequestAsync<ListResultDto<SectionDto>>(nameof(GetListAsync), new ClientProxyRequestTypeValue
-        {
-            { typeof(GetSectionsInput), input }
-        });
+        return await RequestAsync<SectionDto>(nameof(GetDefaultAsync));
     }
 }

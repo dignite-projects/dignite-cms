@@ -6,13 +6,13 @@ namespace Dignite.Cms.Permissions
     {
         public const string GroupName = "CmsAdmin";
 
-        public static class Site
+
+        public static class Domain
         {
-            public const string Default = GroupName + ".Site";
-            public const string Create = Default + ".Create";
+            public const string Default = GroupName + ".Domain";
             public const string Update = Default + ".Update";
-            public const string Delete = Default + ".Delete";
         }
+
         public static class Field
         {
             public const string Default = GroupName + ".Field";

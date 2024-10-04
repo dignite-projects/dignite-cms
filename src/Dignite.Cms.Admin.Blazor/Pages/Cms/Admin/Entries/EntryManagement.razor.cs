@@ -1,8 +1,9 @@
 ﻿using Dignite.Cms.Admin.Entries;
 using Dignite.Cms.Admin.Sections;
-using Dignite.Cms.Admin.Sites;
+using Dignite.Cms.Entries;
 using Dignite.Cms.Localization;
 using Dignite.Cms.Permissions;
+using Dignite.Cms.Settings;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using Volo.Abp.AspNetCore.Components.Web.Extensibility.EntityActions;
 using Volo.Abp.AspNetCore.Components.Web.Extensibility.TableColumns;
 using Volo.Abp.AspNetCore.Components.Web.Theming.PageToolbars;
 using Volo.Abp.Localization;
-using Dignite.Cms.Entries;
+using Volo.Abp.Settings;
 
 namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 {
@@ -26,13 +27,15 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         [SupplyParameterFromQuery]
         public string CultureName { get; set; }
 
+        public string DefaultLanguage { get; private set; }
+
+        public IEnumerable<string> SiteLanguages { get; private set; } = Enumerable.Empty<string>();
+
         protected PageToolbar Toolbar { get; private set; } = new();
         protected List<TableColumn> EntryManagementTableColumns => TableColumns.Get<EntryManagement>();
 
         protected IReadOnlyList<LanguageInfo> AllLanguages = new List<LanguageInfo>();
-        protected IReadOnlyList<SiteDto> AllSites { get; set; }=new List<SiteDto>();
         protected IReadOnlyList<SectionDto> Sections { get; set; }=new List<SectionDto>();
-        protected SiteDto CurrentSite { get; set; } = new();
         protected SectionDto CurrentSection { get; set; }
 
         public EntryManagement()
@@ -157,7 +160,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         {
             GetListInput.SectionId = SectionId.HasValue ? SectionId.Value : Guid.Empty;
             GetListInput.Culture = CultureName.IsNullOrEmpty()
-                ? CurrentSite?.Languages.OrderByDescending(l => l.IsDefault).FirstOrDefault()?.CultureName 
+                ? DefaultLanguage
                 : CultureName;
             return base.UpdateGetListInputAsync();
         }
@@ -165,16 +168,15 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
         protected async Task InitializePageDataAsync()
         {
+            DefaultLanguage = await SiteSettingsAdminAppService.GetDefaultLanguageAsync();
+            SiteLanguages = await SiteSettingsAdminAppService.GetAllLanguagesAsync();
             AllLanguages = await LanguageProvider.GetLanguagesAsync();
-            AllSites = (await SiteAppService.GetListAsync(new GetSitesInput())).Items;
             if (SectionId.HasValue)
             {
                 CurrentSection = await SectionAppService.GetAsync(SectionId.Value);
-                CurrentSite = AllSites.First(s => s.Id == CurrentSection.SiteId);
                 Sections = (await SectionAppService.GetListAsync(
                     new GetSectionsInput()
                     {
-                        SiteId = CurrentSite.Id,
                         MaxResultCount = 1000
                     })).Items;
 
@@ -182,51 +184,38 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
             }
             else
             {
-                if (AllSites.Any())
+                Sections = (await SectionAppService.GetListAsync(
+                    new GetSectionsInput()
+                    {
+                        MaxResultCount = 1000
+                    })).Items;
+                CurrentSection = Sections
+                    .OrderByDescending(s => s.IsActive)
+                    .ThenByDescending(s => s.IsDefault)
+                    .FirstOrDefault();
+                SectionId = CurrentSection?.Id;
+
+
+                if (CurrentSection != null)
                 {
-                    await OnSiteChangedAsync(
-                        AllSites.
-                        OrderBy(s=>s.CreationTime)
-                        .First()
-                        .Id);
+                    await OnSectionChangedAsync(CurrentSection.Id);
+                }
+                else
+                {
+                    await SetToolbarItemsAsync();
+                    await SearchEntitiesAsync();
                 }
             }
         }
 
-        protected async Task OnSiteChangedAsync(Guid siteId)
-        {
-            CurrentSite = AllSites.First(s => s.Id == siteId);
-            Sections = (await SectionAppService.GetListAsync(
-                new GetSectionsInput()
-                {
-                    SiteId = siteId,
-                    MaxResultCount = 1000
-                })).Items;
-            CurrentSection = Sections
-                .OrderByDescending(s => s.IsActive)
-                .ThenByDescending(s => s.IsDefault)
-                .FirstOrDefault();
-            SectionId=CurrentSection?.Id;
-
-
-            if (CurrentSection != null)
-            {
-                await OnSectionChangedAsync(CurrentSection.Id);
-            }
-            else
-            {
-                await SetToolbarItemsAsync();
-                await SearchEntitiesAsync();
-            }
-        }
 
         protected async Task OnSectionChangedAsync(Guid sectionId)
         {
             SectionId = sectionId;
             CurrentSection = Sections.FirstOrDefault(s => s.Id == sectionId);
             CultureName = CultureName.IsNullOrEmpty()? 
-                CurrentSite.Languages.OrderByDescending(l => l.IsDefault).First().CultureName:
-                CurrentSite.Languages.Any(l=>l.CultureName== CultureName) ? CultureName : CurrentSite.Languages.OrderByDescending(l => l.IsDefault).First().CultureName;
+                DefaultLanguage:
+                SiteLanguages.Any(l=>l== CultureName) ? CultureName : SiteLanguages.First();
             
             await OnCultureChangedAsync(CultureName);
         }

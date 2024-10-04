@@ -7,7 +7,7 @@ namespace Dignite.Cms.EntityFrameworkCore;
 [ConnectionStringName(CmsDbProperties.ConnectionStringName)]
 public interface ICmsDbContext : IEfCoreDbContext
 {
-    DbSet<Sites.Site> Sites { get; }
+    DbSet<Domains.Domain> Domains { get; }
     DbSet<Sections.Section> Sections { get; }
     DbSet<Sections.EntryType> EntryTypes { get; }
     DbSet<Fields.FieldGroup> FieldGroups { get; }

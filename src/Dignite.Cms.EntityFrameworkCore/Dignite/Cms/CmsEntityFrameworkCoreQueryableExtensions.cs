@@ -15,7 +15,6 @@ namespace Dignite.Cms
             }
 
             return queryable
-                .Include(s => s.Site)
                 .Include(s => s.EntryTypes);
         }
         public static IQueryable<Entry> IncludeDetails(this IQueryable<Entry> queryable, bool include = true)

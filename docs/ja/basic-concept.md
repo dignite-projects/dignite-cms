@@ -1,5 +1,23 @@
 # Dignite Cms基本概念
 
+## サイト設定
+
+Dignite Cmsの設定は[Abp Settings](https://abp.io/docs/latest/framework/infrastructure/settings)モジュールに基づいており、マスターサイトとテナントサイトの言語とブランド情報を設定します。
+
+以下はマスターサイトの基本設定の例です：
+
+```json
+"Settings": {
+  "Abp.Localisation.DefaultLanguage": "en",
+  "CmsSettings.Site.Languages": "en,ja,zh-Hant",
+  "CmsSettings.Site.Name": "My Dignite",
+  "CmsSettings.Site.LogoUrl":"/images/logo.png",
+  "CmsSettings.Site.LogoReverseUrl":"/images/logo-reverse.png"
+}
+```
+
+テナントの設定については、[設定管理](https://abp.io/docs/latest/modules/setting-management)のドキュメントを参照してください。
+
 ## フィールド
 
 Dignite CMSのフィールドは、Dignite ABPで[ダイナミックフォーム](https://learn.dignite.com/zh-Hans/abp/latest/Dynamic-Forms)を使用して実装されています。これにより、開発者はさまざまなフロントエンドコンテンツ表示ニーズに応じてオンラインでフィールドを定義できます。
@@ -30,20 +48,6 @@ Dignite CMSのフィールドは、Dignite ABPで[ダイナミックフォーム
 - テーブル: テーブルヘッダーを構成することで、ユーザー入力データを標準化します。
 
 > フォームの使用方法についての詳細は、Dignite CMS Blazor WebAssemblyを起動して管理者バックエンドで体験するクイックスタートチュートリアルを参照してください。
-
-## サイト
-
-サイトはウェブサイトを表し、そのアクセス可能な機能を構成するために使用されます。
-
-Dignite CMSは、サブドメインまたはマルチドメインサイトを持つアプリケーションに対応する、マルチサイト機能をサポートしています。
-
-![サイトの編集](images/site-edit.png)
-
-- 表示名: サイトの表示テキスト。
-- 名前: サイトのユニークな識別子。
-- ホストアドレス: ウェブサイトのドメインアドレスで、システム全体で一意です。
-- 有効: ユーザーがウェブサイトにアクセスできるかどうかを有効または無効にします。
-- 言語: ウェブサイトコンテンツでサポートされる言語を選択します。
 
 ## セクション
 

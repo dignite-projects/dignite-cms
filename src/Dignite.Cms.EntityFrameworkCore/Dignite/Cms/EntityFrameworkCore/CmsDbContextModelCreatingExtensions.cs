@@ -1,8 +1,8 @@
 ﻿using Dignite.Abp.DynamicForms;
+using Dignite.Cms.Domains;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Fields;
 using Dignite.Cms.Sections;
-using Dignite.Cms.Sites;
 using Dignite.FileExplorer.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -23,21 +23,17 @@ public static class CmsDbContextModelCreatingExtensions
         builder.ConfigureCmsKit();
         builder.ConfigureFileExplorer();
 
-        builder.Entity<Site>(site =>
+        builder.Entity<Domain>(domain =>
         {
             //Configure table & schema name
-            site.ToTable(CmsDbProperties.DbTablePrefix + "Sites", CmsDbProperties.DbSchema);
+            domain.ToTable(CmsDbProperties.DbTablePrefix + "Domains", CmsDbProperties.DbSchema);
 
-            site.ConfigureByConvention();
+            domain.ConfigureByConvention();
 
             //Properties
-            site.Property(s => s.DisplayName).IsRequired().HasMaxLength(SiteConsts.MaxDisplayNameLength);
-            site.Property(s => s.Name).IsRequired().HasMaxLength(SiteConsts.MaxNameLength);
-            site.Property(s => s.Host).IsRequired().HasMaxLength(SiteConsts.MaxHostLength);
-            site.Property(s => s.Languages).HasConversion(new AbpJsonValueConverter<ICollection<SiteLanguage>>());
-
+            domain.Property(s => s.DomainName).IsRequired().HasMaxLength(DomainConsts.MaxDomainNameLength);
             //Indexs
-            site.HasIndex(s => s.Name);
+            domain.HasIndex(s => s.DomainName);
         });
 
         builder.Entity<Section>(section =>
@@ -56,10 +52,9 @@ public static class CmsDbContextModelCreatingExtensions
             //Relations
             section.HasMany(s => s.EntryTypes).WithOne().HasForeignKey(et => et.SectionId);
             section.HasMany(s => s.Entries).WithOne().HasForeignKey(e => e.SectionId);
-            section.HasOne(s => s.Site).WithMany().HasForeignKey(s => s.SiteId);
 
             //Indexs
-            section.HasIndex(s => s.SiteId);
+            section.HasIndex(s => s.Name);
         });
 
         builder.Entity<EntryType>(entryType =>
@@ -72,8 +67,7 @@ public static class CmsDbContextModelCreatingExtensions
             //Properties
             entryType.Property(et => et.DisplayName).IsRequired().HasMaxLength(EntryTypeConsts.MaxDisplayNameLength);
             entryType.Property(et => et.Name).IsRequired().HasMaxLength(EntryTypeConsts.MaxNameLength);
-            entryType.Property(et => et.FieldTabs).HasConversion(new AbpJsonValueConverter<IList<EntryFieldTab>>());
-                
+            entryType.Property(et => et.FieldTabs).HasConversion(new AbpJsonValueConverter<IList<EntryFieldTab>>());                
 
             //
             entryType.HasIndex(et=>et.SectionId);
@@ -112,7 +106,7 @@ public static class CmsDbContextModelCreatingExtensions
 
             entry.ConfigureByConvention();
 
-            entry.Property(e => e.Culture).IsRequired().HasMaxLength(SiteConsts.MaxLanguageCultureNameLength);
+            entry.Property(e => e.Culture).IsRequired().HasMaxLength(EntryConsts.MaxLanguageCultureNameLength);
             entry.Property(e => e.Title).IsRequired().HasMaxLength(EntryConsts.MaxTitleLength);
             entry.Property(e => e.Slug).IsRequired().HasMaxLength(EntryConsts.MaxSlugLength);
             entry.Property(e => e.VersionNotes).HasMaxLength(EntryConsts.MaxRevisionNotesLength);

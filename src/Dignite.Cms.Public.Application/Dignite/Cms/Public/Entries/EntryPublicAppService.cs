@@ -1,13 +1,14 @@
 ﻿using Dignite.Abp.Data;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Public.Sections;
-using Dignite.Cms.Public.Sites;
+using Dignite.Cms.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Localization;
 
 namespace Dignite.Cms.Public.Entries
 {
@@ -31,7 +32,8 @@ namespace Dignite.Cms.Public.Entries
 
             if (input.Culture.IsNullOrEmpty())
             {
-                input.Culture = section.Site.GetDefaultLanguage().CultureName;
+                var defaultLanguage = await SettingProvider.GetOrNullAsync(LocalizationSettingNames.DefaultLanguage);
+                input.Culture = defaultLanguage;
             }
             var entry = await _entryRepository.FindBySlugAsync(input.Culture,input.SectionId,input.Slug);
 

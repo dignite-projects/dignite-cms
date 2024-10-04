@@ -2,7 +2,6 @@
 using Dignite.Abp.DynamicForms;
 using Dignite.Cms.Admin.Sections;
 using Dignite.Cms.Entries;
-using Dignite.Cms.Sites;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -29,7 +28,7 @@ namespace Dignite.Cms.Admin.Entries
         /// The culture corresponding to the entry
         /// </summary>
         [Required]
-        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxLanguageCultureNameLength))]
+        [DynamicMaxLength(typeof(EntryConsts), nameof(EntryConsts.MaxLanguageCultureNameLength))]
         public string Culture { get; set; }
 
 

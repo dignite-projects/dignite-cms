@@ -1,7 +1,6 @@
 ﻿using Dignite.Abp.Data;
 using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
-using Dignite.Cms.Public.Sites;
 using Dignite.Cms.Public.Web.Models;
 using Dignite.Cms.Public.Web.Razor;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -18,17 +17,6 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         /// 
         /// </summary>
         public SectionDto Section { get; set; }
-
-        /// <summary>
-        /// If no <see cref="Section"/> is specified, entries can be queried by <see cref="SectionName"/>
-        /// </summary>
-
-        public Guid? SiteId { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string SiteName { get; set; }
 
         /// <summary>
         /// If no <see cref="Section"/> is specified, entries can be queried by <see cref="SectionName"/>
@@ -80,40 +68,23 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         private readonly IRazorPartialRenderer _renderer;
         private readonly IEntryPublicAppService _entryAppService;
         private readonly ISectionPublicAppService _sectionAppService;
-        private readonly ISitePublicAppService _siteAppService;
 
         public CmsEntryListTagHelper(
             IRazorPartialRenderer renderer,
             IEntryPublicAppService entryAppService,
-            ISectionPublicAppService sectionAppService,
-            ISitePublicAppService siteAppService
+            ISectionPublicAppService sectionAppService
             )
         {
             _renderer = renderer;
             _entryAppService = entryAppService;
             _sectionAppService = sectionAppService;
-            _siteAppService = siteAppService;
         }
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             if (Section == null)
             {
-                if ((!SiteId.HasValue && SiteName.IsNullOrEmpty()) || SectionName.IsNullOrEmpty())
-                {
-                    output.TagName = "p";
-                    output.Attributes.Add("class", "p-2 bg-warning text-dark");
-                    output.Content.SetContent($"Please set the value of Section, or set the values of SiteId and SectionName");
-                    return;
-                }
-
-                if (!SiteId.HasValue && !SiteName.IsNullOrEmpty())
-                {
-                    var site = await _siteAppService.FindByNameAsync(SiteName);
-                    SiteId = site.Id;
-                }
-
-                Section = await _sectionAppService.FindByNameAsync(SiteId.Value, SectionName);
+                Section = await _sectionAppService.FindByNameAsync(SectionName);
                 if (Section==null)
                 {
                     output.TagName = "p";

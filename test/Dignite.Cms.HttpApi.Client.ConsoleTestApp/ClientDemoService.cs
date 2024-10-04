@@ -1,26 +1,22 @@
-﻿using System;
+﻿using IdentityModel.Client;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using IdentityModel.Client;
-using Microsoft.Extensions.Configuration;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.IdentityModel;
-using Dignite.Cms.Public.Sites;
 
 namespace Dignite.Cms;
 
 public class ClientDemoService : ITransientDependency
 {
-    private readonly ISitePublicAppService _siteAppService;
     private readonly IIdentityModelAuthenticationService _authenticationService;
     private readonly IConfiguration _configuration;
 
     public ClientDemoService(
-        ISitePublicAppService siteAppService,
         IIdentityModelAuthenticationService authenticationService,
         IConfiguration configuration)
     {
-        _siteAppService = siteAppService;
         _authenticationService = authenticationService;
         _configuration = configuration;
     }
@@ -79,7 +75,7 @@ public class ClientDemoService : ITransientDependency
             httpClient.SetBearerToken(accessToken);
 
             var url = _configuration["RemoteServices:Cms:BaseUrl"] +
-                      "api/cms-admin/sites";
+                      "api/cms-admin/sections";
 
             var responseMessage = await httpClient.GetAsync(url);
             if (responseMessage.IsSuccessStatusCode)
@@ -140,7 +136,7 @@ public class ClientDemoService : ITransientDependency
             httpClient.SetBearerToken(tokenResponse.AccessToken);
 
             var url = _configuration["RemoteServices:Cms:BaseUrl"] +
-                      "api/cms-admin/sites";
+                      "api/cms-admin/sections";
 
             var responseMessage = await httpClient.GetAsync(url);
             if (responseMessage.IsSuccessStatusCode)

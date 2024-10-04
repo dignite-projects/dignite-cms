@@ -4,6 +4,24 @@
 
 ## 公開アプリケーション層
 
+### ISiteSettingsPublicAppService
+
+### API
+
+- `Task<string> GetDefaultLanguageAsync()`
+
+    ウェブサイトのデフォルト言語を取得します。
+
+- `Task<IEnumerable<string>> GetAllLanguagesAsync()`
+  
+    ウェブサイトの全ての言語を取得します。
+
+- `Task<BrandDto> GetBrandAsync()`
+
+    ウェブサイトのブランド情報を取得します。
+
+    `Dignite.Cms.Web.Host\CmsBrandingProvider.cs` ファイルは、ウェブサイトのブランド情報の取得方法を示しています。
+
 ### IFieldPublicAppService
 
 #### API
@@ -21,32 +39,6 @@
 - `FormControlName`: フィールドコントロールの名前です。
 - `FormConfiguration`: フィールドコントロールの構成です。
 
-### ISitePublicAppService
-
-#### API
-
-- `Task<SiteDto> FindByNameAsync(string name)`:
-
-    名前によってサイトを検索します。見つかった場合はサイト情報を返し、それ以外の場合は `null` を返します。
-
-- `Task<SiteDto> FindByHostAsync(string host)`:
-
-    ホストアドレスによってサイトを検索します。見つかった場合はサイト情報を返し、それ以外の場合は `null` を返します。
-
-#### `SiteDto` のプロパティ
-
-- `Id`: サイトの一意の識別子です。
-- `Name`: サイトの一意の名前です。
-- `DisplayName`: サイトの表示名です。
-- `Host`: サイトのホストアドレスです。例: `https://localhost:44339`。
-- `IsActive`: サイトがアクティブかどうかを示します。
-- `Languages`: サイトでサポートされている言語のリストです。
-
-#### `SiteDto` の拡張メソッド
-
-- `SiteLanguageDto GetDefaultLanguage()`: サイトのデフォルトの言語を取得します。
-- `bool LanguageCultureExists(string culture)`: 指定された言語のカルチャが有効かどうかをチェックします。
-
 ### ISectionPublicAppService
 
 #### API
@@ -55,17 +47,17 @@
 
     IDによってセクション情報を取得します。見つかった場合はセクション情報を返し、それ以外の場合は例外をスローします。
 
-- `Task<SectionDto> FindByNameAsync(Guid siteId, string name)`:
+- `Task<SectionDto> FindByNameAsync(string name)`:
 
-    名前とサイトIDによってセクションを検索します。見つかった場合はセクション情報を返し、それ以外の場合は `null` を返します。
+    セクション名からセクションを検索し、見つかればセクション情報を返し、見つからなければ `null` を返す。
 
-- `Task<SectionDto> FindByEntryPathAsync(Guid siteId, string entryPath)`:
+- `Task<SectionDto> FindByEntryPathAsync(string entryPath)`:
 
-    エントリパス（つまり、エントリのURLと一致する）とサイトIDによってセクションを検索します。見つかった場合はセクション情報を返し、それ以外の場合は `null` を返します。
+    移動先のUrl (つまり、エントリーのUrlにマッチするセクション)に基づいてセクションを検索し、見つかればそのセクション情報を返し、見つからなければ `null` を返す。
 
-- `Task<SectionDto> GetDefaultAsync(Guid siteId)`:
+- `Task<SectionDto> GetDefaultAsync()`:
 
-    指定されたサイトのデフォルトセクションを取得します。
+    デフォルトのセクションを取得する。
 
 #### `SectionDto` のプロパティ
 
@@ -74,8 +66,6 @@
 - `DisplayName`: セクションの表示名です。
 - `IsActive`: セクションがアクティブかどうかを示します。
 - `Type`: セクションのタイプ（詳細については [Sections](basic-concept.md#sections) を参照してください）。
-- `SiteId`: セクションが属するサイトの一意の識別子です。
-- `Site`: セクションが属するサイトのDTOです。
 - `Route`: セクションの下のエントリのURLルートです。
 - `Template`: エントリを表示するためのビューテンプレートです。
 - `EntryTypes`: セクション内のエントリタイプのリストです。

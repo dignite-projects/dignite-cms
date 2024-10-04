@@ -4,6 +4,24 @@ This document introduces the fundamental knowledge of developing MVC websites ba
 
 ## Public Application Layer
 
+### ISiteSettingsPublicAppService
+
+### API
+
+- `Task<string> GetDefaultLanguageAsync()`
+
+    Gets the default language of the website.
+
+- `Task<IEnumerable<string>> GetAllLanguagesAsync()`
+  
+    Gets all languages of the website.
+
+- `Task<BrandDto> GetBrandAsync()`
+
+    Gets the brand information of the website.
+
+    The `Dignite.Cms.Web.Host\CmsBrandingProvider.cs` file demonstrates how to get the brand information of the website.
+
 ### IFieldPublicAppService
 
 #### API
@@ -21,32 +39,6 @@ This document introduces the fundamental knowledge of developing MVC websites ba
 - `FormControlName`: The name of the field control.
 - `FormConfiguration`: The configuration of the field control.
 
-### ISitePublicAppService
-
-#### API
-
-- `Task<SiteDto> FindByNameAsync(string name)`:
-
-    Find a site by its name. Returns the site information if found, otherwise returns `null`.
-
-- `Task<SiteDto> FindByHostAsync(string host)`:
-
-    Find a site by its host address. Returns the site information if found, otherwise returns `null`.
-
-#### Properties of `SiteDto`
-
-- `Id`: The unique identifier of the site.
-- `Name`: The unique name of the site.
-- `DisplayName`: The display name of the site.
-- `Host`: The host address of the site, e.g., `https://localhost:44339`.
-- `IsActive`: Indicates whether the site is active.
-- `Languages`: The list of languages supported by the site.
-
-#### Extension Methods of `SiteDto`
-
-- `SiteLanguageDto GetDefaultLanguage()`: Get the default language of the site.
-- `bool LanguageCultureExists(string culture)`: Check if the specified language culture is enabled.
-
 ### ISectionPublicAppService
 
 #### API
@@ -55,17 +47,17 @@ This document introduces the fundamental knowledge of developing MVC websites ba
 
     Get the section information by id. Returns the section information if found, otherwise throws an exception.
 
-- `Task<SectionDto> FindByNameAsync(Guid siteId, string name)`:
+- `Task<SectionDto> FindByNameAsync(string name)`:
 
-    Find a section by its name and site id. Returns the section information if found, otherwise returns `null`.
+    Find a section by its name. Returns the section information if found, otherwise returns `null`.
 
-- `Task<SectionDto> FindByEntryPathAsync(Guid siteId, string entryPath)`:
+- `Task<SectionDto> FindByEntryPathAsync(string entryPath)`:
 
-    Find a section by its entry path (i.e., match the entry URL) and site id. Returns the section information if found, otherwise returns `null`.
+    Find a section by its entry path (i.e., match the entry URL). Returns the section information if found, otherwise returns `null`.
 
-- `Task<SectionDto> GetDefaultAsync(Guid siteId)`:
+- `Task<SectionDto> GetDefaultAsync()`:
 
-    Get the default section for the specified site.
+    Get the default section.
 
 #### Properties of `SectionDto`
 
@@ -74,8 +66,6 @@ This document introduces the fundamental knowledge of developing MVC websites ba
 - `DisplayName`: The display name of the section.
 - `IsActive`: Indicates whether the section is active.
 - `Type`: The type of the section (refer to [Sections](basic-concept.md#sections) for details).
-- `SiteId`: The unique identifier of the site to which the section belongs.
-- `Site`: The DTO of the site to which the section belongs.
 - `Route`: The URL route of the entries under the section.
 - `Template`: The view template for displaying entries.
 - `EntryTypes`: The list of entry types in the section.

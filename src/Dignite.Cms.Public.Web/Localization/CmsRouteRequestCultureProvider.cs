@@ -1,9 +1,8 @@
-﻿using Dignite.Cms.Public.Sites;
+﻿using Dignite.Cms.Public.Settings;
 using Dignite.Cms.Public.Web.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Localization.Routing;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -35,10 +34,9 @@ public class CmsRouteRequestCultureProvider : RouteDataRequestCultureProvider
             else
             {
                 //Getting the default Culture from the Cms site
-                var _siteAppService = httpContext.RequestServices.GetRequiredService<ISitePublicAppService>();
-                var host = $"{httpContext.Request.Scheme}://{httpContext.Request.Host.Value}";
-                var site = await _siteAppService.FindByHostAsync(host);
-                culture = site.GetDefaultLanguage().CultureName;
+                var _siteSettingsAppService = httpContext.RequestServices.GetRequiredService<ISiteSettingsPublicAppService>();
+                var defaultLanguage = await _siteSettingsAppService.GetDefaultLanguageAsync();
+                culture = defaultLanguage;
             }
         }
         else

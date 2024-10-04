@@ -12,7 +12,6 @@
 
 ```xml
 <cms-entry-list 
-                site-id="Model.Section.SiteId" 
                 section-name="blog-post"
                 partial-name="blog/_post-list">
 </cms-entry-list>
@@ -49,7 +48,6 @@
 
 ```xml
 <cms-entry-list 
-                site-id="Model.Section.SiteId" 
                 section-name="blog-post"
                 current-page="10"
                 partial-name="blog/_post-list">
@@ -60,7 +58,6 @@
 
 ```xml
 <cms-entry-list 
-                site-id="Model.Section.SiteId" 
                 section-name="blog-post"
                 culture="@Model.Entry.Culture"
                 partial-name="blog/_post-list">
@@ -91,7 +88,6 @@
 
 ```xml
 <cms-entry-list 
-                site-id="Model.Section.SiteId" 
                 section-name="blog-post"
                 querying-by-fields="parameters"
                 partial-name="blog/_post-list">
@@ -100,7 +96,6 @@
 
 ### `cms-entry-list`的參數
 
-- `site-id`：指定站點的Id
 - `section-name`：指定版塊的名稱
 - `current-page`：指定分頁數字，默认值：1
 - `max-result-count`：指定返回結果的數量，默认值：20
@@ -127,7 +122,6 @@
 
 ```xml
 <cms-entry 
-    site-id="Model.Section.SiteId" 
     section-name="contact" 
     culture="@Model.Entry.Culture" 
     slug="index" 
@@ -151,7 +145,6 @@
 
 ### `cms-entry`的參數
 
-- `site-id`：指定站點的Id
 - `section-name`：指定版塊的名稱
 - `culture`：指定語言，默认值：站點的默認語言
 - `slug`：指定條目的別名
@@ -289,6 +282,6 @@ Dignite Cms Mvc為動態字段內置了視圖文件，以動態字段類型命�
 `cms-section`用於版塊數據的調用，向視圖傳遞`SectionDto`類型的視圖模型。
 
 ```xml
-<cms-section site-id="Model.Section.SiteId" section-name="blog-post" partial-name="_blog-post-index">
+<cms-section section-name="blog-post" partial-name="_blog-post-index">
 </cms-section>
 ```

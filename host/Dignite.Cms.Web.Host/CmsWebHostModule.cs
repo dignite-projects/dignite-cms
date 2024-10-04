@@ -1,32 +1,29 @@
-using System;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
-using System.IO;
-using System.Reflection;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Dignite.Cms.Localization;
+using Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure;
+using Dignite.Cms.AspNetCore.MultiTenancy;
+using Dignite.Cms.Menus;
 using Dignite.Cms.MultiTenancy;
 using Dignite.Cms.Public.Web;
+using Dignite.Cms.Public.Web.Builder;
+using Dignite.Cms.Public.Web.Localization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
+using System;
+using System.IO;
 using Volo.Abp;
-using Volo.Abp.AspNetCore.Authentication.OAuth;
 using Volo.Abp.AspNetCore.Authentication.OpenIdConnect;
-using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc.Client;
 using Volo.Abp.AspNetCore.Mvc.Localization;
-using Volo.Abp.AspNetCore.Mvc.UI;
-using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.Toolbars;
+using Volo.Abp.AspNetCore.Mvc.UI.Theming;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
 using Volo.Abp.AutoMapper;
@@ -34,32 +31,22 @@ using Volo.Abp.Caching;
 using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Http.Client.IdentityModel.Web;
+using Volo.Abp.Http.Client.Web;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.Web;
-using Volo.Abp.Http.Client.Web;
+using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.PermissionManagement;
-using Volo.Abp.PermissionManagement.Web;
-using Volo.Abp.Security.Claims;
+using Volo.Abp.SettingManagement;
+using Volo.Abp.SettingManagement.Web;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.Web;
-using Volo.Abp.SettingManagement;
-using Volo.Abp.SettingManagement.Web;
-using Volo.Abp.UI.Navigation.Urls;
-using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
+using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
-using Dignite.Cms.Public.Web.Builder;
-using Dignite.Cms.Public.Web.Localization;
 using CmsResource = Dignite.Cms.Localization.CmsResource;
-using Volo.Abp.Localization;
-using Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure;
-using Volo.Abp.AspNetCore.Mvc.UI.Theming;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.Toolbars;
-using Dignite.Cms.Menus;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Dignite.Cms;
 
@@ -84,7 +71,8 @@ namespace Dignite.Cms;
     typeof(AbpSettingManagementHttpApiClientModule),
     typeof(AbpSettingManagementWebModule),
     typeof(AbpAspNetCoreSerilogModule),
-    typeof(AbpSwashbuckleModule)
+    typeof(AbpSwashbuckleModule),
+    typeof(CmsAspNetCoreMultiTenancyModule)
     )]
 public class CmsWebHostModule : AbpModule
 {
@@ -137,6 +125,13 @@ public class CmsWebHostModule : AbpModule
         Configure<RazorPagesOptions>(options =>
         {
             options.Conventions.AddPageRoute("/RazorPageTest", "/{culture:CultureConstraint}/razor-page-test");
+        });
+
+        
+        Configure<AbpTenantResolveOptions>(options =>
+        {
+            // Resolve current tenant by domain name
+            options.AddCmsDomainTenantResolver();
         });
     }
 
@@ -272,12 +267,6 @@ public class CmsWebHostModule : AbpModule
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
-        app.UseAbpRequestLocalization(options =>
-        {
-            options.AddInitialRequestCultureProvider(
-                new CmsRouteRequestCultureProvider() //Read regions from CMS routing and convert to localization
-            );
-        });
 
         app.UseAuthentication();
 
@@ -285,6 +274,12 @@ public class CmsWebHostModule : AbpModule
         {
             app.UseMultiTenancy();
         }
+        app.UseAbpRequestLocalization(options =>
+        {
+            options.AddInitialRequestCultureProvider(
+                new CmsRouteRequestCultureProvider() //Read regions from CMS routing and convert to localization
+            );
+        });
 
         
 

@@ -1,5 +1,4 @@
 ﻿using Dignite.Cms.Entries;
-using Dignite.Cms.Sites;
 using System;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Validation;
@@ -14,7 +13,7 @@ namespace Dignite.Cms.Public.Entries
         /// <summary>
         /// The Culture corresponding to the entry
         /// </summary>
-        [DynamicMaxLength(typeof(SiteConsts), nameof(SiteConsts.MaxLanguageCultureNameLength))]
+        [DynamicMaxLength(typeof(EntryConsts), nameof(EntryConsts.MaxLanguageCultureNameLength))]
         public string Culture { get; set; }
 
         /// <summary>

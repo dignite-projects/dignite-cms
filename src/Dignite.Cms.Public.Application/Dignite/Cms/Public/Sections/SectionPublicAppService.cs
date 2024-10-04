@@ -21,10 +21,10 @@ namespace Dignite.Cms.Public.Sections
             _fieldRepository= fieldRepository;
         }
 
-        public async Task<SectionDto> FindByNameAsync(Guid siteId, string name)
+        public async Task<SectionDto> FindByNameAsync(string name)
         {
             var dto = ObjectMapper.Map<Section, SectionDto>(
-                await _sectionRepository.FindByNameAsync(siteId, name)
+                await _sectionRepository.FindByNameAsync(name)
                 );
             if (dto != null)
             {
@@ -36,14 +36,13 @@ namespace Dignite.Cms.Public.Sections
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="siteId"></param>
         /// <param name="entryPath">
         /// The entry path does not contain culture.
         /// </param>
         /// <returns></returns>
-        public async Task<SectionDto> FindByEntryPathAsync(Guid siteId, string entryPath)
+        public async Task<SectionDto> FindByEntryPathAsync( string entryPath)
         {
-            var allSections = await _sectionRepository.GetListAsync(siteId, null, true, true);
+            var allSections = await _sectionRepository.GetListAsync(null, true, true);
             var section = await MatchingSectionWithEntryPath(allSections, entryPath);
 
             /**
@@ -63,7 +62,6 @@ namespace Dignite.Cms.Public.Sections
         public async Task<ListResultDto<SectionDto>> GetListAsync(GetSectionsInput input)
         { 
             var list = await _sectionRepository.GetListAsync(
-                input.SiteId,
                 isActive:true,
                 includeDetails:false
                 );
@@ -85,9 +83,9 @@ namespace Dignite.Cms.Public.Sections
             return dto;
         }
 
-        public async Task<SectionDto> GetDefaultAsync(Guid siteId)
+        public async Task<SectionDto> GetDefaultAsync()
         {
-            var result = await _sectionRepository.GetDefaultAsync(siteId);
+            var result = await _sectionRepository.GetDefaultAsync();
 
             if (result == null)
             {

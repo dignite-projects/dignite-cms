@@ -1,5 +1,4 @@
-﻿using Dignite.Cms.Public.Sites;
-using Dignite.Cms.Sections;
+﻿using Dignite.Cms.Sections;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
@@ -10,17 +9,6 @@ namespace Dignite.Cms.Public.Sections
     [Serializable]
     public class SectionDto : ExtensibleEntityDto<Guid>
     {
-        /// <summary>
-        /// SiteId of this section.
-        /// </summary>
-        public Guid SiteId { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public SiteDto Site { get; set; }
-
         /// <summary>
         /// 
         /// </summary>

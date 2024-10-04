@@ -2,11 +2,11 @@
 
 public static class CmsErrorCodes
 {
-    public static class Sites
+    public static class Domains
     {
-        public const string NameAlreadyExist = "Cms:Site:0001";
-        public const string HostAlreadyExist = "Cms:Site:0002";
+        public const string NameAlreadyExist = "Cms:Domain:0001";
     }
+
     public static class Sections
     {
         public const string NameAlreadyExist = "Cms:Section:0001";

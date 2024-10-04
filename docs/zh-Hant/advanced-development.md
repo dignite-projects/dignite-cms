@@ -22,3 +22,23 @@
 在`IEntryPublicAppService` `GetListAsync(GetEntriesInput input)`方法中有一個名為`QueryingByFieldsJson`字符串參數，該參數是`QueryingByField`列表序列化形式。
 
 事實上`cms-entry-list`內部是將`QueryingByField`列表序列化為JSON，傳遞給`IEntryPublicAppService` `GetListAsync(GetEntriesInput input)`方法中的`QueryingByFieldsJson`參數。
+
+## 根據域名解析當前租戶
+
+Dignite Cms 提供根據域名確定當前租戶的功能：
+
+1. 將 `Dignite.Cms.AspNetCore.MultiTenancy` NuGet 套件安裝到 `Web Site` 專案中。
+
+   將 `CmsAspNetCoreMultiTenancyModule` 添加到您的 [模組類](https://docs.abp.io/en/abp/latest/Module-Development-Basics) 的 `[DependsOn(...)]` 屬性列表中。
+
+2. 在 `Web Site` 的 `Module` 文件中添加如下配置：
+
+```csharp
+Configure<AbpTenantResolveOptions>(options =>
+{
+    // 根據域名解析當前租戶
+    options.AddCmsDomainTenantResolver();
+});
+```
+
+關於確定當前租戶的官方文檔請參見： [Determining the Current Tenant](https://abp.io/docs/latest/framework/architecture/multi-tenancy#determining-the-current-tenant)

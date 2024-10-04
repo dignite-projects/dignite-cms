@@ -4,6 +4,24 @@
 
 ## 公開應用層
 
+### ISiteSettingsPublicAppService
+
+### API
+
+- `Task<string> GetDefaultLanguageAsync()`
+
+    獲取網站的默認語言。
+
+- `Task<IEnumerable<string>> GetAllLanguagesAsync()`
+  
+    獲取網站的所有語言。
+
+- `Task<BrandDto> GetBrandAsync()`
+
+    獲取網站的品牌信息。
+
+    `Dignite.Cms.Web.Host\CmsBrandingProvider.cs` 文件示範如何獲取網站的品牌信息。
+
 ### IFieldPublicAppService
 
 #### API
@@ -21,32 +39,6 @@
 - `FormControlName`：字段控件的名稱
 - `FormConfiguration`：字段控件的配置
 
-### ISitePublicAppService
-
-#### API
-
-- `Task<SiteDto> FindByNameAsync(string name)`：
-
-    根據站點名稱查找站點，如果找到則返回站點信息，否則返回`null`。
-
-- `Task<SiteDto> FindByHostAsync(string host)`：
-
-    根據站點的主機地址查找站點，如果找到則返回站點信息，否則返回`null`。
-
-#### `SiteDto`屬性
-
-- `Id`：站點的唯一編號
-- `Name`：站點的唯一名稱
-- `DisplayName`：站點的顯示名稱
-- `Host`：站點的主機地址，例如：`https://localhost:44339`
-- `IsActive`：站點是否激活
-- `Languages`：站點支持的語言列表
-
-#### `SiteDto`擴展方法
-
-- `SiteLanguageDto GetDefaultLanguage()`：獲取站點的默認語言
-- `bool LanguageCultureExists(string culture)`：判斷是否啟用了指定的語言
-
 ### ISectionPublicAppService
 
 #### API
@@ -55,17 +47,17 @@
 
     根據id獲取版塊信息，如果找到則返回版塊信息，否則拋出異常。
 
-- `Task<SectionDto> FindByNameAsync(Guid siteId,string name)`：
+- `Task<SectionDto> FindByNameAsync(string name)`：
 
-    根據站點id和版塊名稱查找版塊，如果找到則返回版塊信息，否則返回`null`。
+    根據版塊名稱查找版塊，如果找到則返回版塊信息，否則返回`null`。
 
-- `Task<SectionDto> FindByEntryPathAsync(Guid siteId, string entryPath)`：
+- `Task<SectionDto> FindByEntryPathAsync(string entryPath)`：
 
-    根據站點id和條目的Url查找版塊（即匹配條目Url的版塊），如果找到則返回版塊信息，否則返回`null`。
+    根據和條目的Url查找版塊（即匹配條目Url的版塊），如果找到則返回版塊信息，否則返回`null`。
 
-- `Task<SectionDto> GetDefaultAsync(Guid siteId)`：
+- `Task<SectionDto> GetDefaultAsync()`：
 
-    獲取指定站點的默認版塊。
+    獲取默認版塊。
 
 #### `SectionDto`屬性
 
@@ -74,8 +66,6 @@
 - `DisplayName`：版塊的顯示名稱
 - `IsActive`：版塊是否激活
 - `Type`：版塊的類型（詳情請參閱[版塊](basic-concept.md#版塊)）
-- `SiteId`：所屬站點的唯一編號
-- `Site`：所屬站點的Dto
 - `Route`：版塊下條目的Url路由
 - `Template`：版塊下條目的視圖模板
 - `EntryTypes`：版塊的條目類型列表

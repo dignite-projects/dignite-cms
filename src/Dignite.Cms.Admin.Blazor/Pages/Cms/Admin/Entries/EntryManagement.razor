@@ -1,16 +1,17 @@
 ﻿@page "/cms/admin/entries"
 @using Dignite.Cms.Admin.Entries;
 @using Dignite.Cms.Admin.Sections;
-@using Dignite.Cms.Admin.Sites;
+@using Dignite.Cms.Admin.Settings
 @using Dignite.Cms.Localization;
 @using Dignite.Cms.Permissions;
 @using Microsoft.AspNetCore.Authorization;
 @using Volo.Abp.AspNetCore.Components.Web.Theming.Layout
 @using Volo.Abp.Localization;
+@using Volo.Abp.Settings
 @inject ISectionAdminAppService SectionAppService
-@inject ISiteAdminAppService SiteAppService
 @inject NavigationManager Navigation
 @inject ILanguageProvider LanguageProvider
+@inject ISiteSettingsAdminAppService SiteSettingsAdminAppService
 @attribute [Authorize(CmsAdminPermissions.Entry.Default)]
 @inherits AbpCrudPageBase<IEntryAdminAppService, EntryDto, Guid, GetEntriesInput, CreateEntryInput, UpdateEntryInput>
 
@@ -24,15 +25,7 @@
 <Card>
     <CardHeader>
         <Fields>
-            <Column ColumnSize="ColumnSize.Is2.OnDesktop">
-                <Select TValue="Guid" SelectedValue="@CurrentSite.Id" SelectedValueChanged="OnSiteChangedAsync">
-                    @foreach (var item in AllSites)
-                    {
-                        <SelectItem Value="@item.Id">@item.DisplayName</SelectItem>
-                    }
-                </Select>
-            </Column>
-            <Column ColumnSize="ColumnSize.Is2.OnDesktop">
+            <Column ColumnSize="ColumnSize.Is3.OnDesktop">
                 <Select TValue="Guid" SelectedValue="@GetListInput.SectionId" SelectedValueChanged="OnSectionChangedAsync">
                     @foreach (var item in Sections)
                     {
@@ -40,12 +33,12 @@
                     }
                 </Select>
             </Column>
-            <Column ColumnSize="ColumnSize.Is2.OnDesktop">
+            <Column ColumnSize="ColumnSize.Is3.OnDesktop">
                 <Select TValue="string" SelectedValue="@GetListInput.Culture" SelectedValueChanged="@OnCultureChangedAsync">
-                    @foreach(var sl in CurrentSite.Languages)
+                    @foreach(var sl in SiteLanguages)
                     {
-                        <SelectItem Value="sl.CultureName">
-                            @AllLanguages.First(l=>l.CultureName.Equals(sl.CultureName, StringComparison.OrdinalIgnoreCase)).DisplayName
+                        <SelectItem Value="sl">
+                            @AllLanguages.First(l=>l.CultureName.Equals(sl, StringComparison.OrdinalIgnoreCase)).DisplayName
                         </SelectItem>
                     }
                 </Select>

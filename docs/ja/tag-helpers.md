@@ -11,8 +11,7 @@ Web開発者がウェブサイトの迅速な開発を支援するために、Di
 基本的な使い方：
 
 ```xml
-<cms-entry-list 
-                site-id="Model.Section.SiteId" 
+<cms-entry-list                
                 section-name="blog-post"
                 partial-name="blog/_post-list">
 </cms-entry-list>
@@ -48,8 +47,7 @@ Web開発者がウェブサイトの迅速な開発を支援するために、Di
 10個のエントリーを返す：
 
 ```xml
-<cms-entry-list 
-                site-id="Model.Section.SiteId" 
+<cms-entry-list                
                 section-name="blog-post"
                 current-page="10"
                 partial-name="blog/_post-list">
@@ -59,8 +57,7 @@ Web開発者がウェブサイトの迅速な開発を支援するために、Di
 現在の言語を指定する：
 
 ```xml
-<cms-entry-list 
-                site-id="Model.Section.SiteId" 
+<cms-entry-list                 
                 section-name="blog-post"
                 culture="@Model.Entry.Culture"
                 partial-name="blog/_post-list">
@@ -90,8 +87,7 @@ Web開発者がウェブサイトの迅速な開発を支援するために、Di
 ```
 
 ```xml
-<cms-entry-list 
-                site-id="Model.Section.SiteId" 
+<cms-entry-list                 
                 section-name="blog-post"
                 querying-by-fields="parameters"
                 partial-name="blog/_post-list">
@@ -126,8 +122,7 @@ Web開発者がウェブサイトの迅速な開発を支援するために、Di
 ### `cms-entry`の例
 
 ```xml
-<cms-entry 
-    site-id="Model.Section.SiteId" 
+<cms-entry     
     section-name="contact" 
     culture="@Model.Entry.Culture" 
     slug="index" 
@@ -289,6 +284,6 @@ Dignite Cms Mvcには、動的フィールド用のビューファイルが組�
 `cms-section`はセクションデータを呼び出すために使用され、ビューに`SectionDto`型のビューモデルを渡します。
 
 ```xml
-<cms-section site-id="Model.Section.SiteId" section-name="blog-post" partial-name="_blog-post-index">
+<cms-section section-name="blog-post" partial-name="_blog-post-index">
 </cms-section>
 ```

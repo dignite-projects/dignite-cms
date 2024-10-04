@@ -1,6 +1,4 @@
 ﻿using Blazorise;
-using Dignite.Abp.DynamicForms.Matrix;
-using Dignite.Cms.Admin.Fields;
 using Dignite.Cms.Admin.Sections;
 using Dignite.Cms.Localization;
 using Dignite.Cms.Sections;
@@ -10,15 +8,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
 {
     public partial class CreateOrUpdateSectionComponent
     {
         [Parameter] public CreateOrUpdateSectionInputBase Entity { get; set; }
-
-        [Parameter] public Guid? SiteId { get; set; }
 
         protected IReadOnlyList<SectionType> SectionTypes { get; set; }
 
@@ -45,11 +40,11 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
         {
             cancellationToken.ThrowIfCancellationRequested();
             var name = Convert.ToString(e.Value);
-            if (SiteId.HasValue && !name.IsNullOrEmpty())
+            if (!name.IsNullOrEmpty())
             {
                 if (!name.Equals(sectionNameForValidation, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    e.Status = await _sectionAdminAppService.NameExistsAsync(new SectionNameExistsInput(SiteId.Value, name))
+                    e.Status = await _sectionAdminAppService.NameExistsAsync(new SectionNameExistsInput(name))
                         ? ValidationStatus.Error
                         : ValidationStatus.Success;
 
@@ -89,7 +84,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Sections
                 {
                     if (!route.Equals(sectionRouteForValidation, StringComparison.InvariantCultureIgnoreCase))
                     {
-                        e.Status = await _sectionAdminAppService.RouteExistsAsync(new SectionRouteExistsInput(SiteId.Value, route))
+                        e.Status = await _sectionAdminAppService.RouteExistsAsync(new SectionRouteExistsInput(route))
                             ? ValidationStatus.Error
                             : ValidationStatus.Success;
 

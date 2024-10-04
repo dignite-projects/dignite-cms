@@ -25,7 +25,7 @@ public abstract class SectionRepository_Tests<TStartupModule> : CmsTestBase<TSta
     [Fact]
     public async Task NameExistsAsync_ShouldReturnTrue_WithExistingName()
     {
-        var result = await sectionRepository.NameExistsAsync(testData.SiteId, testData.SingleSectionName);
+        var result = await sectionRepository.NameExistsAsync(testData.SingleSectionName);
 
         result.ShouldBeTrue();
     }
@@ -35,7 +35,7 @@ public abstract class SectionRepository_Tests<TStartupModule> : CmsTestBase<TSta
     {
         var nonExistingName = "any-other-name";
 
-        var result = await sectionRepository.NameExistsAsync(testData.SiteId, nonExistingName);
+        var result = await sectionRepository.NameExistsAsync(nonExistingName);
 
         result.ShouldBeFalse();
     }
@@ -43,7 +43,7 @@ public abstract class SectionRepository_Tests<TStartupModule> : CmsTestBase<TSta
     [Fact]
     public async Task RouteExistsAsync_ShouldReturnTrue_WithExistingRoute()
     {
-        var result = await sectionRepository.RouteExistsAsync(testData.SiteId, testData.ChannelSectionRoute);
+        var result = await sectionRepository.RouteExistsAsync(testData.ChannelSectionRoute);
 
         result.ShouldBeTrue();
     }
@@ -53,7 +53,7 @@ public abstract class SectionRepository_Tests<TStartupModule> : CmsTestBase<TSta
     {
         var nonExistingRoute = "about";
 
-        var result = await sectionRepository.RouteExistsAsync(testData.SiteId, nonExistingRoute);
+        var result = await sectionRepository.RouteExistsAsync(nonExistingRoute);
 
         result.ShouldBeFalse();
     }
@@ -61,7 +61,7 @@ public abstract class SectionRepository_Tests<TStartupModule> : CmsTestBase<TSta
     [Fact]
     public async Task FindByNameAsync_ShouldWorkProperly_WithCorrectParameters()
     {
-        var result = await sectionRepository.FindByNameAsync(testData.SiteId, testData.ChannelSectionName);
+        var result = await sectionRepository.FindByNameAsync(testData.ChannelSectionName);
 
         result.ShouldNotBeNull();
         result.Id.ShouldBe(testData.ChannelSectionId);
@@ -72,7 +72,7 @@ public abstract class SectionRepository_Tests<TStartupModule> : CmsTestBase<TSta
     public async Task ShouldNotFindByNameAsync()
     {
         var nonExistingName = "absolutely-non-existing-name";
-        var section = await sectionRepository.FindByNameAsync(testData.SiteId, nonExistingName);
+        var section = await sectionRepository.FindByNameAsync(nonExistingName);
 
         section.ShouldBeNull();
     }
@@ -81,7 +81,7 @@ public abstract class SectionRepository_Tests<TStartupModule> : CmsTestBase<TSta
     [Fact]
     public async Task GetDefaultAsync_ShouldWorkProperly_WithCorrectParameters()
     {
-        var result = await sectionRepository.GetDefaultAsync(testData.SiteId);
+        var result = await sectionRepository.GetDefaultAsync();
 
         result.ShouldNotBeNull();
         result.Id.ShouldBe(testData.SingleSectionId);
@@ -93,7 +93,7 @@ public abstract class SectionRepository_Tests<TStartupModule> : CmsTestBase<TSta
     [Fact]
     public async Task GetPagedListAsync_ShouldWorkProperly_WithSiteId_WhileGetting10_WithoutSorting()
     {
-        var result = await sectionRepository.GetListAsync(testData.SiteId);
+        var result = await sectionRepository.GetListAsync();
 
         result.ShouldNotBeNull();
         result.ShouldNotBeEmpty();
@@ -103,7 +103,7 @@ public abstract class SectionRepository_Tests<TStartupModule> : CmsTestBase<TSta
     [Fact]
     public async Task GetPagedListAsync_ShouldWorkProperly_WithSiteId_WhileGetting1_WithoutSorting()
     {
-        var result = await sectionRepository.GetListAsync(testData.SiteId, maxResultCount: 1);
+        var result = await sectionRepository.GetListAsync(maxResultCount: 1);
 
         result.ShouldNotBeNull();
         result.ShouldNotBeEmpty();
@@ -113,7 +113,7 @@ public abstract class SectionRepository_Tests<TStartupModule> : CmsTestBase<TSta
     [Fact]
     public async Task GetPagedListAsync_ShouldWorkProperly_WithSiteId_WhileGetting1InPage2_WithoutSorting()
     {
-        var result = await sectionRepository.GetListAsync(testData.SiteId, skipCount: 1, maxResultCount: 1);
+        var result = await sectionRepository.GetListAsync(skipCount: 1, maxResultCount: 1);
 
         result.ShouldNotBeNull();
         result.ShouldNotBeEmpty();
@@ -123,7 +123,7 @@ public abstract class SectionRepository_Tests<TStartupModule> : CmsTestBase<TSta
     [Fact]
     public async Task GetPagedListAsync_ShouldWorkProperly_WithSiteId_WhileGetting10_WithSortingByName()
     {
-        var result = await sectionRepository.GetListAsync(testData.SiteId, sorting: $"{nameof(Section.Name)} asc");
+        var result = await sectionRepository.GetListAsync(sorting: $"{nameof(Section.Name)} asc");
 
         result.ShouldNotBeNull();
         result.ShouldNotBeEmpty();

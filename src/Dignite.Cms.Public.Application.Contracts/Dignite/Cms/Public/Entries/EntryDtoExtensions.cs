@@ -1,6 +1,5 @@
 ﻿using Dignite.Cms.Entries;
 using Dignite.Cms.Public.Sections;
-using Dignite.Cms.Public.Sites;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,6 @@ namespace Dignite.Cms.Public.Entries
         public static string GetUrl([NotNull] this EntryDto source, SectionDto section)
         {
             var routeParameters = GetRouteParameters(section.Route).ToArray();
-            var siteDefaultLanguage = section.Site.GetDefaultLanguage();
             string url = section.Route;
 
             //If there is a routing parameter, get the routing parameter value and update the URL
@@ -39,13 +37,7 @@ namespace Dignite.Cms.Public.Entries
                 }
             }
 
-            //splice Culture path
-            if (!siteDefaultLanguage.CultureName.Equals(source.Culture, StringComparison.OrdinalIgnoreCase))
-            {
-                url = source.Culture + url.EnsureStartsWith('/');
-            }
-
-            url = section.Site.Host.EnsureEndsWith('/') + url.RemovePreFix("/").RemovePostFix($"/{EntryConsts.DefaultSlug}");
+            url = $"/{source.Culture}{url.EnsureStartsWith('/')}".RemovePostFix($"/{EntryConsts.DefaultSlug}");
 
             return url;
         }

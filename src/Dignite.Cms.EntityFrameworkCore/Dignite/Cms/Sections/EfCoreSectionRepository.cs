@@ -21,43 +21,41 @@ namespace Dignite.Cms.Sections
         {
         }
 
-        public async Task<Section> GetDefaultAsync(Guid siteId, bool includeDetails = true, CancellationToken cancellationToken = default)
+        public async Task<Section> GetDefaultAsync(bool includeDetails = true, CancellationToken cancellationToken = default)
         {
             return await(await GetQueryableAsync())
                 .IncludeDetails(includeDetails)
-                .FirstOrDefaultAsync(s => s.SiteId==siteId && s.IsActive && s.IsDefault && s.Type== SectionType.Single, GetCancellationToken(cancellationToken));
+                .FirstOrDefaultAsync(s => s.IsActive && s.IsDefault && s.Type== SectionType.Single, GetCancellationToken(cancellationToken));
         }
 
-        public async Task<bool> NameExistsAsync(Guid siteId, string name, CancellationToken cancellationToken = default)
+        public async Task<bool> NameExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await (await GetDbSetAsync()).Where(s=>s.SiteId==siteId)
+            return await (await GetDbSetAsync())
                        .AnyAsync(s => s.Name == name, GetCancellationToken(cancellationToken));
         }
 
-        public async Task<bool> RouteExistsAsync(Guid siteId, string route, CancellationToken cancellationToken = default)
+        public async Task<bool> RouteExistsAsync(string route, CancellationToken cancellationToken = default)
         {
-            return await (await GetDbSetAsync()).Where(s => s.SiteId == siteId)
+            return await (await GetDbSetAsync())
                        .AnyAsync(s => s.Route == route, GetCancellationToken(cancellationToken));
         }
 
-        public async Task<Section> FindByNameAsync(Guid siteId, string name, bool includeDetails = true, CancellationToken cancellationToken = default)
+        public async Task<Section> FindByNameAsync( string name, bool includeDetails = true, CancellationToken cancellationToken = default)
         {
-            return await ((await GetQueryableAsync()).Where(s => s.SiteId == siteId)
+            return await ((await GetQueryableAsync())
                 .IncludeDetails(includeDetails))
                 .FirstOrDefaultAsync(s => s.Name == name, GetCancellationToken(cancellationToken));
         }
         public async Task<int> GetCountAsync(
-            Guid siteId,
             string filter = null,
             bool? isActive = null,
             CancellationToken cancellationToken = default
             )
         {
-            return await (await GetQueryableAsync(siteId, filter, isActive)).CountAsync(GetCancellationToken(cancellationToken));
+            return await (await GetQueryableAsync(filter, isActive)).CountAsync(GetCancellationToken(cancellationToken));
         }
 
         public async Task<List<Section>> GetListAsync(
-            Guid siteId,
             string filter = null,
             bool? isActive = null, 
             bool includeDetails = true,
@@ -66,7 +64,7 @@ namespace Dignite.Cms.Sections
             string sorting = null,
             CancellationToken cancellationToken = default)
         {
-            return await (await GetQueryableAsync(siteId, filter, isActive))
+            return await (await GetQueryableAsync( filter, isActive))
                 .IncludeDetails(includeDetails)
                 .OrderBy(sorting.IsNullOrEmpty() ? $"{nameof(Section.CreationTime)} asc" : sorting)
                 .PageBy(skipCount, maxResultCount)
@@ -80,11 +78,10 @@ namespace Dignite.Cms.Sections
         }
 
         protected virtual async Task< IQueryable<Section>> GetQueryableAsync(
-            Guid siteId,
             string filter = null,
             bool? isActive = null)
         {
-            return (await GetDbSetAsync()).Where(s => s.SiteId == siteId)
+            return (await GetDbSetAsync())
                 .WhereIf(!filter.IsNullOrEmpty(), et => et.DisplayName.Contains(filter))
                 .WhereIf(isActive.HasValue, s => s.IsActive == isActive);
         }

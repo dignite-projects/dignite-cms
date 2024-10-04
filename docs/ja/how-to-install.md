@@ -85,7 +85,12 @@ Configure<AbpLocalizationOptions>(options =>
 
 `app.UseMultiTenancy();`の後にCMSルーティングミドルウェア`app.UseCmsRoute();`を追加します。
 
-さらに、CMSルーティング機能と連携するために、`app.UseAbpRequestLocalization();`ミドルウェアを削除し、`app.UseRouting();`ミドルウェアの後に次のコードを追加します：
+```csharp
+//Configuring CMS Routing
+app.UseCmsRoute();
+```
+
+さらに、CMSルーティング機能と連携するために、`app.UseAbpRequestLocalization();`ミドルウェアを削除し、`app.UseCmsRoute();`ミドルウェアの先に次のコードを追加します：
 
 ```csharp
 app.UseAbpRequestLocalization(options =>

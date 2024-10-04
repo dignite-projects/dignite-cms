@@ -22,3 +22,23 @@ The `cms-entry-list` component has a parameter for querying entries by field val
 The `GetListAsync(GetEntriesInput input)` method in `IEntryPublicAppService` accepts a string parameter named `QueryingByFieldsJson`, which represents a serialized list of `QueryingByField` objects.
 
 In fact, internally, the `cms-entry-list` component serializes the list of `QueryingByField` objects into JSON and passes it to the `QueryingByFieldsJson` parameter of the `GetListAsync(GetEntriesInput input)` method in `IEntryPublicAppService`.
+
+## Resolve Current Tenant by Domain Name
+
+Dignite Cms provides the functionality to determine the current tenant based on the domain name:
+
+1. Install the `Dignite.Cms.AspNetCore.MultiTenancy` NuGet package into the `Web Site` project.
+
+   Add `CmsAspNetCoreMultiTenancyModule` to the `[DependsOn(...)]` attribute list in your [module class](https://docs.abp.io/en/abp/latest/Module-Development-Basics).
+
+2. Add the following configuration to the `Module` file of the `Web Site`:
+
+```csharp
+Configure<AbpTenantResolveOptions>(options =>
+{
+    // Resolve current tenant by domain name
+    options.AddCmsDomainTenantResolver();
+});
+```
+
+For the official documentation on determining the current tenant, please refer to: [Determining the Current Tenant](https://abp.io/docs/latest/framework/architecture/multi-tenancy#determining-the-current-tenant)

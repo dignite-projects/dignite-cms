@@ -4,445 +4,90 @@
       "rootPath": "cms-admin",
       "remoteServiceName": "CmsAdmin",
       "controllers": {
-        "Dignite.Cms.Admin.Sites.SiteAdminController": {
-          "controllerName": "SiteAdmin",
-          "controllerGroupName": "SiteAdmin",
+        "Dignite.Cms.Admin.Settings.SiteSettingsAdminController": {
+          "controllerName": "SiteSettingsAdmin",
+          "controllerGroupName": "SiteSettingsAdmin",
           "isRemoteService": true,
           "isIntegrationService": false,
           "apiVersion": null,
-          "type": "Dignite.Cms.Admin.Sites.SiteAdminController",
+          "type": "Dignite.Cms.Admin.Settings.SiteSettingsAdminController",
           "interfaces": [
             {
-              "type": "Dignite.Cms.Admin.Sites.ISiteAdminAppService",
-              "name": "ISiteAdminAppService",
+              "type": "Dignite.Cms.Admin.Settings.ISiteSettingsAdminAppService",
+              "name": "ISiteSettingsAdminAppService",
               "methods": [
                 {
-                  "name": "NameExistsAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "name",
-                      "typeAsString": "System.String, System.Private.CoreLib",
-                      "type": "System.String",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
+                  "name": "GetDefaultLanguageAsync",
+                  "parametersOnMethod": [],
                   "returnValue": {
-                    "type": "System.Boolean",
-                    "typeSimple": "boolean"
+                    "type": "System.String",
+                    "typeSimple": "string"
                   }
                 },
                 {
-                  "name": "HostExistsAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "host",
-                      "typeAsString": "System.String, System.Private.CoreLib",
-                      "type": "System.String",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
+                  "name": "GetAllLanguagesAsync",
+                  "parametersOnMethod": [],
                   "returnValue": {
-                    "type": "System.Boolean",
-                    "typeSimple": "boolean"
+                    "type": "System.Collections.Generic.IEnumerable<System.String>",
+                    "typeSimple": "[string]"
                   }
                 },
                 {
-                  "name": "GetAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "id",
-                      "typeAsString": "System.Guid, System.Private.CoreLib",
-                      "type": "System.Guid",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
+                  "name": "GetBrandAsync",
+                  "parametersOnMethod": [],
                   "returnValue": {
-                    "type": "Dignite.Cms.Admin.Sites.SiteDto",
-                    "typeSimple": "Dignite.Cms.Admin.Sites.SiteDto"
-                  }
-                },
-                {
-                  "name": "GetListAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "input",
-                      "typeAsString": "Dignite.Cms.Admin.Sites.GetSitesInput, Dignite.Cms.Admin.Application.Contracts",
-                      "type": "Dignite.Cms.Admin.Sites.GetSitesInput",
-                      "typeSimple": "Dignite.Cms.Admin.Sites.GetSitesInput",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
-                  "returnValue": {
-                    "type": "Volo.Abp.Application.Dtos.PagedResultDto<Dignite.Cms.Admin.Sites.SiteDto>",
-                    "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<Dignite.Cms.Admin.Sites.SiteDto>"
-                  }
-                },
-                {
-                  "name": "CreateAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "input",
-                      "typeAsString": "Dignite.Cms.Admin.Sites.CreateSiteInput, Dignite.Cms.Admin.Application.Contracts",
-                      "type": "Dignite.Cms.Admin.Sites.CreateSiteInput",
-                      "typeSimple": "Dignite.Cms.Admin.Sites.CreateSiteInput",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
-                  "returnValue": {
-                    "type": "Dignite.Cms.Admin.Sites.SiteDto",
-                    "typeSimple": "Dignite.Cms.Admin.Sites.SiteDto"
-                  }
-                },
-                {
-                  "name": "UpdateAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "id",
-                      "typeAsString": "System.Guid, System.Private.CoreLib",
-                      "type": "System.Guid",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    },
-                    {
-                      "name": "input",
-                      "typeAsString": "Dignite.Cms.Admin.Sites.UpdateSiteInput, Dignite.Cms.Admin.Application.Contracts",
-                      "type": "Dignite.Cms.Admin.Sites.UpdateSiteInput",
-                      "typeSimple": "Dignite.Cms.Admin.Sites.UpdateSiteInput",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
-                  "returnValue": {
-                    "type": "Dignite.Cms.Admin.Sites.SiteDto",
-                    "typeSimple": "Dignite.Cms.Admin.Sites.SiteDto"
-                  }
-                },
-                {
-                  "name": "DeleteAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "id",
-                      "typeAsString": "System.Guid, System.Private.CoreLib",
-                      "type": "System.Guid",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
-                  "returnValue": {
-                    "type": "System.Void",
-                    "typeSimple": "System.Void"
+                    "type": "Dignite.Cms.Settings.BrandDto",
+                    "typeSimple": "Dignite.Cms.Settings.BrandDto"
                   }
                 }
               ]
             }
           ],
           "actions": {
-            "GetAsyncById": {
-              "uniqueName": "GetAsyncById",
-              "name": "GetAsync",
+            "GetDefaultLanguageAsync": {
+              "uniqueName": "GetDefaultLanguageAsync",
+              "name": "GetDefaultLanguageAsync",
               "httpMethod": "GET",
-              "url": "api/cms-admin/sites/{id}",
+              "url": "api/cms-admin/site-settings/default-language",
               "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "id",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "id",
-                  "name": "id",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [
-                    "GuidRouteConstraint"
-                  ],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                }
-              ],
+              "parametersOnMethod": [],
+              "parameters": [],
               "returnValue": {
-                "type": "Dignite.Cms.Admin.Sites.SiteDto",
-                "typeSimple": "Dignite.Cms.Admin.Sites.SiteDto"
+                "type": "System.String",
+                "typeSimple": "string"
               },
-              "allowAnonymous": false,
-              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Dignite.Cms.Admin.Sites.SiteDto,Dignite.Cms.Admin.Sites.SiteDto,System.Guid,Dignite.Cms.Admin.Sites.GetSitesInput>"
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Cms.Admin.Settings.ISiteSettingsAdminAppService"
             },
-            "GetListAsyncByInput": {
-              "uniqueName": "GetListAsyncByInput",
-              "name": "GetListAsync",
+            "GetAllLanguagesAsync": {
+              "uniqueName": "GetAllLanguagesAsync",
+              "name": "GetAllLanguagesAsync",
               "httpMethod": "GET",
-              "url": "api/cms-admin/sites",
+              "url": "api/cms-admin/site-settings/all-languages",
               "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "input",
-                  "typeAsString": "Dignite.Cms.Admin.Sites.GetSitesInput, Dignite.Cms.Admin.Application.Contracts",
-                  "type": "Dignite.Cms.Admin.Sites.GetSitesInput",
-                  "typeSimple": "Dignite.Cms.Admin.Sites.GetSitesInput",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "input",
-                  "name": "Filter",
-                  "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": "input"
-                },
-                {
-                  "nameOnMethod": "input",
-                  "name": "IsActive",
-                  "jsonName": null,
-                  "type": "System.Boolean?",
-                  "typeSimple": "boolean?",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": "input"
-                }
-              ],
+              "parametersOnMethod": [],
+              "parameters": [],
               "returnValue": {
-                "type": "Volo.Abp.Application.Dtos.PagedResultDto<Dignite.Cms.Admin.Sites.SiteDto>",
-                "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<Dignite.Cms.Admin.Sites.SiteDto>"
+                "type": "System.Collections.Generic.IEnumerable<System.String>",
+                "typeSimple": "[string]"
               },
-              "allowAnonymous": false,
-              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Dignite.Cms.Admin.Sites.SiteDto,Dignite.Cms.Admin.Sites.SiteDto,System.Guid,Dignite.Cms.Admin.Sites.GetSitesInput>"
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Cms.Admin.Settings.ISiteSettingsAdminAppService"
             },
-            "CreateAsyncByInput": {
-              "uniqueName": "CreateAsyncByInput",
-              "name": "CreateAsync",
-              "httpMethod": "POST",
-              "url": "api/cms-admin/sites",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "input",
-                  "typeAsString": "Dignite.Cms.Admin.Sites.CreateSiteInput, Dignite.Cms.Admin.Application.Contracts",
-                  "type": "Dignite.Cms.Admin.Sites.CreateSiteInput",
-                  "typeSimple": "Dignite.Cms.Admin.Sites.CreateSiteInput",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "input",
-                  "name": "input",
-                  "jsonName": null,
-                  "type": "Dignite.Cms.Admin.Sites.CreateSiteInput",
-                  "typeSimple": "Dignite.Cms.Admin.Sites.CreateSiteInput",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "Body",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "Dignite.Cms.Admin.Sites.SiteDto",
-                "typeSimple": "Dignite.Cms.Admin.Sites.SiteDto"
-              },
-              "allowAnonymous": false,
-              "implementFrom": "Volo.Abp.Application.Services.ICreateAppService<Dignite.Cms.Admin.Sites.SiteDto,Dignite.Cms.Admin.Sites.CreateSiteInput>"
-            },
-            "UpdateAsyncByIdAndInput": {
-              "uniqueName": "UpdateAsyncByIdAndInput",
-              "name": "UpdateAsync",
-              "httpMethod": "PUT",
-              "url": "api/cms-admin/sites/{id}",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "id",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                },
-                {
-                  "name": "input",
-                  "typeAsString": "Dignite.Cms.Admin.Sites.UpdateSiteInput, Dignite.Cms.Admin.Application.Contracts",
-                  "type": "Dignite.Cms.Admin.Sites.UpdateSiteInput",
-                  "typeSimple": "Dignite.Cms.Admin.Sites.UpdateSiteInput",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "id",
-                  "name": "id",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [
-                    "GuidRouteConstraint"
-                  ],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                },
-                {
-                  "nameOnMethod": "input",
-                  "name": "input",
-                  "jsonName": null,
-                  "type": "Dignite.Cms.Admin.Sites.UpdateSiteInput",
-                  "typeSimple": "Dignite.Cms.Admin.Sites.UpdateSiteInput",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "Body",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "Dignite.Cms.Admin.Sites.SiteDto",
-                "typeSimple": "Dignite.Cms.Admin.Sites.SiteDto"
-              },
-              "allowAnonymous": false,
-              "implementFrom": "Volo.Abp.Application.Services.IUpdateAppService<Dignite.Cms.Admin.Sites.SiteDto,System.Guid,Dignite.Cms.Admin.Sites.UpdateSiteInput>"
-            },
-            "DeleteAsyncById": {
-              "uniqueName": "DeleteAsyncById",
-              "name": "DeleteAsync",
-              "httpMethod": "DELETE",
-              "url": "api/cms-admin/sites/{id}",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "id",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "id",
-                  "name": "id",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [
-                    "GuidRouteConstraint"
-                  ],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "System.Void",
-                "typeSimple": "System.Void"
-              },
-              "allowAnonymous": false,
-              "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
-            },
-            "NameExistsAsyncByName": {
-              "uniqueName": "NameExistsAsyncByName",
-              "name": "NameExistsAsync",
+            "GetBrandAsync": {
+              "uniqueName": "GetBrandAsync",
+              "name": "GetBrandAsync",
               "httpMethod": "GET",
-              "url": "api/cms-admin/sites/name-exists/{name}",
+              "url": "api/cms-admin/site-settings/brand",
               "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "name",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "name",
-                  "name": "name",
-                  "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                }
-              ],
+              "parametersOnMethod": [],
+              "parameters": [],
               "returnValue": {
-                "type": "System.Boolean",
-                "typeSimple": "boolean"
+                "type": "Dignite.Cms.Settings.BrandDto",
+                "typeSimple": "Dignite.Cms.Settings.BrandDto"
               },
-              "allowAnonymous": false,
-              "implementFrom": "Dignite.Cms.Admin.Sites.ISiteAdminAppService"
-            },
-            "HostExistsAsyncByName": {
-              "uniqueName": "HostExistsAsyncByName",
-              "name": "HostExistsAsync",
-              "httpMethod": "GET",
-              "url": "api/cms-admin/sites/host-exists/{name}",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "name",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "name",
-                  "name": "name",
-                  "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "System.Boolean",
-                "typeSimple": "boolean"
-              },
-              "allowAnonymous": false,
-              "implementFrom": "Dignite.Cms.Admin.Sites.ISiteAdminAppService"
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Cms.Admin.Settings.ISiteSettingsAdminAppService"
             }
           }
         },
@@ -1077,18 +722,6 @@
               "parameters": [
                 {
                   "nameOnMethod": "input",
-                  "name": "SiteId",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": "input"
-                },
-                {
-                  "nameOnMethod": "input",
                   "name": "Filter",
                   "jsonName": null,
                   "type": "System.String",
@@ -1213,18 +846,6 @@
               "parameters": [
                 {
                   "nameOnMethod": "input",
-                  "name": "SiteId",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": "input"
-                },
-                {
-                  "nameOnMethod": "input",
                   "name": "Name",
                   "jsonName": null,
                   "type": "System.String",
@@ -1260,18 +881,6 @@
                 }
               ],
               "parameters": [
-                {
-                  "nameOnMethod": "input",
-                  "name": "SiteId",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": "input"
-                },
                 {
                   "nameOnMethod": "input",
                   "name": "Route",
@@ -2952,6 +2561,209 @@
               },
               "allowAnonymous": false,
               "implementFrom": "Dignite.Cms.Admin.DynamicForms.IFormAdminAppService"
+            }
+          }
+        },
+        "Dignite.Cms.Admin.Domains.DomainAdminController": {
+          "controllerName": "DomainAdmin",
+          "controllerGroupName": "DomainAdmin",
+          "isRemoteService": true,
+          "isIntegrationService": false,
+          "apiVersion": null,
+          "type": "Dignite.Cms.Admin.Domains.DomainAdminController",
+          "interfaces": [
+            {
+              "type": "Dignite.Cms.Admin.Domains.IDomainAdminAppService",
+              "name": "IDomainAdminAppService",
+              "methods": [
+                {
+                  "name": "FindByNameAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "domainName",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "Dignite.Cms.Admin.Domains.DomainDto",
+                    "typeSimple": "Dignite.Cms.Admin.Domains.DomainDto"
+                  }
+                },
+                {
+                  "name": "NameExistsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "domainName",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Boolean",
+                    "typeSimple": "boolean"
+                  }
+                },
+                {
+                  "name": "GetBoundAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "Dignite.Cms.Admin.Domains.DomainDto",
+                    "typeSimple": "Dignite.Cms.Admin.Domains.DomainDto"
+                  }
+                },
+                {
+                  "name": "UpdateAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "Dignite.Cms.Admin.Domains.UpdateDomainInput, Dignite.Cms.Admin.Application.Contracts",
+                      "type": "Dignite.Cms.Admin.Domains.UpdateDomainInput",
+                      "typeSimple": "Dignite.Cms.Admin.Domains.UpdateDomainInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "Dignite.Cms.Admin.Domains.DomainDto",
+                    "typeSimple": "Dignite.Cms.Admin.Domains.DomainDto"
+                  }
+                }
+              ]
+            }
+          ],
+          "actions": {
+            "FindByNameAsyncByDomainName": {
+              "uniqueName": "FindByNameAsyncByDomainName",
+              "name": "FindByNameAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-admin/domains/find-by-name",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "domainName",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "domainName",
+                  "name": "domainName",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Dignite.Cms.Admin.Domains.DomainDto",
+                "typeSimple": "Dignite.Cms.Admin.Domains.DomainDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Cms.Admin.Domains.IDomainAdminAppService"
+            },
+            "GetBoundAsync": {
+              "uniqueName": "GetBoundAsync",
+              "name": "GetBoundAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-admin/domains/bound",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "Dignite.Cms.Admin.Domains.DomainDto",
+                "typeSimple": "Dignite.Cms.Admin.Domains.DomainDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Cms.Admin.Domains.IDomainAdminAppService"
+            },
+            "NameExistsAsyncByDomainName": {
+              "uniqueName": "NameExistsAsyncByDomainName",
+              "name": "NameExistsAsync",
+              "httpMethod": "GET",
+              "url": "api/cms-admin/domains/name-exists",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "domainName",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "domainName",
+                  "name": "domainName",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Boolean",
+                "typeSimple": "boolean"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Cms.Admin.Domains.IDomainAdminAppService"
+            },
+            "UpdateAsyncByInput": {
+              "uniqueName": "UpdateAsyncByInput",
+              "name": "UpdateAsync",
+              "httpMethod": "POST",
+              "url": "api/cms-admin/domains",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "Dignite.Cms.Admin.Domains.UpdateDomainInput, Dignite.Cms.Admin.Application.Contracts",
+                  "type": "Dignite.Cms.Admin.Domains.UpdateDomainInput",
+                  "typeSimple": "Dignite.Cms.Admin.Domains.UpdateDomainInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "Dignite.Cms.Admin.Domains.UpdateDomainInput",
+                  "typeSimple": "Dignite.Cms.Admin.Domains.UpdateDomainInput",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Dignite.Cms.Admin.Domains.DomainDto",
+                "typeSimple": "Dignite.Cms.Admin.Domains.DomainDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Cms.Admin.Domains.IDomainAdminAppService"
             }
           }
         }

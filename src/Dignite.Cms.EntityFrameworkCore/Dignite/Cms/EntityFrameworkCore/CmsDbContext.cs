@@ -9,7 +9,7 @@ namespace Dignite.Cms.EntityFrameworkCore;
 [ConnectionStringName(CmsDbProperties.ConnectionStringName)]
 public class CmsDbContext : AbpDbContext<CmsDbContext>, ICmsDbContext
 {
-    public DbSet<Sites.Site> Sites { get; set; }
+    public DbSet<Domains.Domain> Domains { get; set; }
     public DbSet<Sections.Section> Sections { get; set; }
     public DbSet<Sections.EntryType> EntryTypes { get; set; }
     public DbSet<Fields.FieldGroup> FieldGroups { get; set; }

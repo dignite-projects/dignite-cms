@@ -21,9 +21,8 @@ public class CmsTestData : ISingletonDependency
     public string SelectFieldItem2Value = "item2";
     public string SelectFieldItem3Value = "item3";
 
-    public Guid SiteId { get; } = Guid.NewGuid();
-    public string SiteName = "SiteName";
-    public string SiteHost = "https://localhost:44370";
+    public Guid TenantId { get; } = Guid.NewGuid();
+    public string DomainName = "https://localhost:44370";
 
 
     public Guid SingleSectionId { get; } = Guid.NewGuid();

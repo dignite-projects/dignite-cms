@@ -38,7 +38,7 @@ namespace Dignite.Cms.Admin.Blazor.Menus
             var settingsMenuItem = new ApplicationMenuItem(
                     CmsAdminMenus.Settings,
                     l["Menu:Settings"],
-                    icon: "fas fa fa-cog").RequirePermissions(CmsAdminPermissions.Site.Default);
+                    icon: "fas fa fa-cog").RequirePermissions(CmsAdminPermissions.Field.Default);
             cmsAdminMenuItem.AddItem(settingsMenuItem);
 
             settingsMenuItem.AddItem(new ApplicationMenuItem(
@@ -46,12 +46,6 @@ namespace Dignite.Cms.Admin.Blazor.Menus
                     l["Fields"],
                     url: "~/cms/admin/fields",
                     icon: "far fa-edit").RequirePermissions(CmsAdminPermissions.Field.Default));
-
-            settingsMenuItem.AddItem(new ApplicationMenuItem(
-                    CmsAdminMenus.Sites,
-                    l["Sites"],
-                    url: "~/cms/admin/sites",
-                    icon: "fa fa-globe").RequirePermissions(CmsAdminPermissions.Site.Default));
 
             settingsMenuItem.AddItem(new ApplicationMenuItem(
                     CmsAdminMenus.Sections,

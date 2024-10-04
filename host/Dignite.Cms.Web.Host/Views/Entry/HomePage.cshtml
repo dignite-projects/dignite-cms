@@ -1,6 +1,6 @@
 ﻿@using Dignite.Abp.Data
 @using Dignite.Cms.Public.Web.Models;
-@using Dignite.Cms.Public.Sites;
+@using Volo.Abp.Settings
 @model EntryViewModel
 @{
     PageLayout.Content.Title = Model.Entry.Title;
@@ -43,7 +43,7 @@
     <h1 class="fs-1 fw-semibold mb-3">
         @localizer["blog"]
     </h1>
-    <cms-entry-list site-id="Model.Section.SiteId"
+    <cms-entry-list 
                     section-name="blog-post"
                     current-page="1"
                     max-result-count="4"
@@ -54,7 +54,6 @@
 </section>
 
 <cms-entry 
-    site-id="Model.Section.SiteId" 
     section-name="contact" 
     culture="@Model.Entry.Culture" 
     slug="index" 

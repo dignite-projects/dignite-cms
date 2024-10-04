@@ -6,5 +6,11 @@
 @{
     var configuration = new TextEditConfiguration(Model.Field.FormConfiguration);
 }
-
-@Model.Entry.GetField(Model.Field.Name)
+@if (configuration.Mode == TextEditMode.MultipleLine)
+{
+    <p style="white-space: pre-wrap;">@Model.Entry.GetField(Model.Field.Name)</p>
+}
+else
+{
+    @Model.Entry.GetField(Model.Field.Name)    
+}

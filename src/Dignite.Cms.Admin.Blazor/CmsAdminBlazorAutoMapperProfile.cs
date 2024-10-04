@@ -2,9 +2,7 @@
 using Dignite.Cms.Admin.Entries;
 using Dignite.Cms.Admin.Fields;
 using Dignite.Cms.Admin.Sections;
-using Dignite.Cms.Admin.Sites;
 using Dignite.Cms.Sections;
-using Dignite.Cms.Sites;
 using Volo.Abp.AutoMapper;
 
 namespace Dignite.Cms.Admin.Blazor
@@ -15,9 +13,6 @@ namespace Dignite.Cms.Admin.Blazor
         {
             CreateMap<FieldGroupDto, CreateOrUpdateFieldGroupInput>();
             CreateMap<FieldDto, UpdateFieldInput>();
-            CreateMap<SiteDto, UpdateSiteInput>()
-                .MapExtraProperties();
-            CreateMap<SiteLanguageDto, SiteLanguageInput>(); 
             CreateMap<SectionDto, UpdateSectionInput>()
                 .MapExtraProperties();
             CreateMap<EntryTypeDto, UpdateEntryTypeInput>();

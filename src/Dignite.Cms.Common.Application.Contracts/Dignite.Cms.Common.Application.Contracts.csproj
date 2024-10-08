@@ -3,15 +3,15 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-	  <TargetFrameworks>netstandard2.0;netstandard2.1;net7.0</TargetFrameworks>
+	  <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0</TargetFrameworks>
 	  <AssemblyName>Dignite.Cms.Common.Application.Contracts</AssemblyName>
 	  <PackageId>Dignite.Cms.Common.Application.Contracts</PackageId>
 	  <RootNamespace />
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.Authorization" Version="7.4.5" />
+    <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" />
+    <PackageReference Include="Volo.Abp.Authorization" />
     <ProjectReference Include="..\Dignite.Cms.Domain.Shared\Dignite.Cms.Domain.Shared.csproj" />
   </ItemGroup>
 

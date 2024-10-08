@@ -3,7 +3,7 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-	  <TargetFramework>net7.0</TargetFramework>
+	  <TargetFramework>net8.0</TargetFramework>
 	  <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
 	  <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
 	  <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
@@ -14,7 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Dignite.Cms.Application\Dignite.Cms.Application.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Domain.Tests\Dignite.Cms.Domain.Tests.csproj" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
 
 </Project>

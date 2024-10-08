@@ -3,7 +3,7 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>Dignite.Cms</RootNamespace>
     <PreserveCompilationReferences>true</PreserveCompilationReferences>
     <UserSecretsId>Dignite.Cms-c2d31439-b723-48e2-b061-5ebd7aeb6010</UserSecretsId>
@@ -11,27 +11,27 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
-	  <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
-	  <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.0" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.Autofac" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.Caching.StackExchangeRedis" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.Client" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Authentication.OpenIdConnect" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.Http.Client.IdentityModel.Web" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.Http.Client.Web" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.Swashbuckle" Version="7.4.5" />
-	  <PackageReference Include="Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure" Version="2.1.4" />
-    <PackageReference Include="Volo.Abp.Identity.Web" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.Identity.HttpApi.Client" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.FeatureManagement.Web" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.FeatureManagement.HttpApi.Client" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.TenantManagement.Web" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.TenantManagement.HttpApi.Client" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.PermissionManagement.HttpApi.Client" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.SettingManagement.Web" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.SettingManagement.HttpApi.Client" Version="7.4.5" />
+	  <PackageReference Include="Serilog.AspNetCore" />
+	  <PackageReference Include="Serilog.Sinks.Async" />
+	  <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Serilog" />
+    <PackageReference Include="Volo.Abp.Autofac" />
+    <PackageReference Include="Volo.Abp.Caching.StackExchangeRedis" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.Client" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Authentication.OpenIdConnect" />
+    <PackageReference Include="Volo.Abp.Http.Client.IdentityModel.Web" />
+    <PackageReference Include="Volo.Abp.Http.Client.Web" />
+    <PackageReference Include="Volo.Abp.Swashbuckle" />
+    <PackageReference Include="Volo.Abp.Identity.Web" />
+    <PackageReference Include="Volo.Abp.Identity.HttpApi.Client" />
+    <PackageReference Include="Volo.Abp.FeatureManagement.Web" />
+    <PackageReference Include="Volo.Abp.FeatureManagement.HttpApi.Client" />
+    <PackageReference Include="Volo.Abp.TenantManagement.Web" />
+    <PackageReference Include="Volo.Abp.TenantManagement.HttpApi.Client" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.HttpApi.Client" />
+    <PackageReference Include="Volo.Abp.SettingManagement.Web" />
+    <PackageReference Include="Volo.Abp.SettingManagement.HttpApi.Client" />
+	  <PackageReference Include="Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure" />
   </ItemGroup>
 
   <ItemGroup>

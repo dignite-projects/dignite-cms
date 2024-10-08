@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 	<Import Project="..\..\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
 	  <WarningsAsErrors>Nullable</WarningsAsErrors>
 	  <AssemblyName>Dignite.Cms.AspNetCore.MultiTenancy</AssemblyName>
@@ -17,7 +17,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="7.4.5" />
+		<PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Dignite.Cms.Public.Application.Contracts\Dignite.Cms.Public.Application.Contracts.csproj" />

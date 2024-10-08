@@ -3,16 +3,16 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-	  <TargetFrameworks>netstandard2.0;netstandard2.1;net7.0</TargetFrameworks>
+	  <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0</TargetFrameworks>
 	  <AssemblyName>Dignite.Cms.Public.Application.Contracts</AssemblyName>
 	  <PackageId>Dignite.Cms.Public.Application.Contracts</PackageId>
 	  <RootNamespace />
   </PropertyGroup>
 	
   <ItemGroup>
-	  <PackageReference Include="Dignite.Abp.DynamicForms.FileExplorer" Version="2.1.4" />
-	  <PackageReference Include="Dignite.FileExplorer.Application.Contracts" Version="2.1.4" />
-	  <PackageReference Include="Volo.CmsKit.Public.Application.Contracts" Version="7.4.5" />
+	  <PackageReference Include="Dignite.Abp.DynamicForms.FileExplorer" />
+	  <PackageReference Include="Dignite.FileExplorer.Application.Contracts" />
+	  <PackageReference Include="Volo.CmsKit.Public.Application.Contracts" />
 	  <ProjectReference Include="..\Dignite.Cms.Common.Application.Contracts\Dignite.Cms.Common.Application.Contracts.csproj" />
   </ItemGroup>
 

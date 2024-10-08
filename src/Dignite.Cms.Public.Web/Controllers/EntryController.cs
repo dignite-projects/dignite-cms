@@ -1,4 +1,5 @@
-﻿using Dignite.Cms.Entries;
+﻿using Asp.Versioning;
+using Dignite.Cms.Entries;
 using Dignite.Cms.Localization;
 using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;

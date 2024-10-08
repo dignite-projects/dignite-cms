@@ -3,12 +3,12 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-	  <TargetFramework>netstandard2.0</TargetFramework>
+	  <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0</TargetFrameworks>
 	  <RootNamespace />
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Volo.CmsKit.HttpApi.Client" Version="7.4.5" />
+	  <PackageReference Include="Volo.CmsKit.HttpApi.Client" />
     <ProjectReference Include="..\Dignite.Cms.Admin.HttpApi.Client\Dignite.Cms.Admin.HttpApi.Client.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Application.Contracts\Dignite.Cms.Application.Contracts.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Public.HttpApi.Client\Dignite.Cms.Public.HttpApi.Client.csproj" />

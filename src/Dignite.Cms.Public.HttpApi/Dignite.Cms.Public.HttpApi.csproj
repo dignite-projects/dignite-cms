@@ -3,7 +3,7 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-	  <TargetFramework>net7.0</TargetFramework>
+	  <TargetFramework>net8.0</TargetFramework>
 	  <AssemblyName>Dignite.Cms.Public.HttpApi</AssemblyName>
 	  <PackageId>Dignite.Cms.Public.HttpApi</PackageId>
 	  <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
@@ -16,9 +16,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="Dignite.FileExplorer.HttpApi" Version="2.1.4" />
-	<PackageReference Include="Volo.CmsKit.Public.HttpApi" Version="7.4.5" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="7.4.5" />
+	<PackageReference Include="Dignite.FileExplorer.HttpApi" />
+	<PackageReference Include="Volo.CmsKit.Public.HttpApi" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" />
     <ProjectReference Include="..\Dignite.Cms.Public.Application.Contracts\Dignite.Cms.Public.Application.Contracts.csproj" />
   </ItemGroup>
 

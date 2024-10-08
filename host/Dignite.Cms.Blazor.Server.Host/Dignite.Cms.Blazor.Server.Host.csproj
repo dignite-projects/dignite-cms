@@ -3,7 +3,7 @@
     <Import Project="..\..\common.props" />
 
     <PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
         <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
         <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
@@ -12,42 +12,42 @@
     </PropertyGroup>
 
     <ItemGroup>
-		<PackageReference Include="Blazorise.Bootstrap5" Version="1.3.1" />
-		<PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.3.1" />
-		<PackageReference Include="Dignite.Abp.AspNetCore.Components.Server.PureTheme" Version="2.1.4" />
-		<PackageReference Include="Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure" Version="2.1.4" />
-		<PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
-		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.14" />
-        <PackageReference Include="Sakura.AspNetCore.Mvc.PagedList" Version="3.0.2" />
+		<PackageReference Include="Blazorise.Bootstrap5" />
+		<PackageReference Include="Blazorise.Icons.FontAwesome" />
+		<PackageReference Include="Dignite.Abp.AspNetCore.Components.Server.PureTheme" />
+		<PackageReference Include="Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure" />
+		<PackageReference Include="Serilog.AspNetCore" />
+		<PackageReference Include="Serilog.Sinks.Async" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" />
+        <PackageReference Include="Sakura.AspNetCore.Mvc.PagedList" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\Dignite.Cms.Admin.Blazor.Server\Dignite.Cms.Admin.Blazor.Server.csproj" />
         <ProjectReference Include="..\..\src\Dignite.Cms.Application\Dignite.Cms.Application.csproj" />
-        <PackageReference Include="Volo.Abp.EntityFrameworkCore.SqlServer" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.Autofac" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.Swashbuckle" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.AuditLogging.EntityFrameworkCore" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.Account.Web.IdentityServer" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.Account.Application" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.FeatureManagement.EntityFrameworkCore" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.FeatureManagement.Application" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.Identity.Blazor.Server" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.Identity.EntityFrameworkCore" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.Identity.Application" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.TenantManagement.Blazor.Server" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.TenantManagement.EntityFrameworkCore" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.TenantManagement.Application" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.SettingManagement.Blazor.Server" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.SettingManagement.EntityFrameworkCore" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.SettingManagement.Application" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.PermissionManagement.Application" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.PermissionManagement.EntityFrameworkCore" Version="7.4.5" />
-        <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Identity" Version="7.4.5" />
-		<PackageReference Include="Volo.Abp.BlobStoring.FileSystem" Version="7.4.5" />
+        <PackageReference Include="Volo.Abp.EntityFrameworkCore.SqlServer" />
+        <PackageReference Include="Volo.Abp.Autofac" />
+        <PackageReference Include="Volo.Abp.Swashbuckle" />
+        <PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" />
+        <PackageReference Include="Volo.Abp.AspNetCore.Serilog" />
+        <PackageReference Include="Volo.Abp.AuditLogging.EntityFrameworkCore" />
+        <PackageReference Include="Volo.Abp.Account.Web.IdentityServer" />
+        <PackageReference Include="Volo.Abp.Account.Application" />
+        <PackageReference Include="Volo.Abp.FeatureManagement.EntityFrameworkCore" />
+        <PackageReference Include="Volo.Abp.FeatureManagement.Application" />
+        <PackageReference Include="Volo.Abp.Identity.Blazor.Server" />
+        <PackageReference Include="Volo.Abp.Identity.EntityFrameworkCore" />
+        <PackageReference Include="Volo.Abp.Identity.Application" />
+        <PackageReference Include="Volo.Abp.TenantManagement.Blazor.Server" />
+        <PackageReference Include="Volo.Abp.TenantManagement.EntityFrameworkCore" />
+        <PackageReference Include="Volo.Abp.TenantManagement.Application" />
+        <PackageReference Include="Volo.Abp.SettingManagement.Blazor.Server" />
+        <PackageReference Include="Volo.Abp.SettingManagement.EntityFrameworkCore" />
+        <PackageReference Include="Volo.Abp.SettingManagement.Application" />
+        <PackageReference Include="Volo.Abp.PermissionManagement.Application" />
+        <PackageReference Include="Volo.Abp.PermissionManagement.EntityFrameworkCore" />
+        <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Identity" />
+		<PackageReference Include="Volo.Abp.BlobStoring.FileSystem" />
         <ProjectReference Include="..\..\src\Dignite.Cms.EntityFrameworkCore\Dignite.Cms.EntityFrameworkCore.csproj" />
         <ProjectReference Include="..\..\src\Dignite.Cms.HttpApi\Dignite.Cms.HttpApi.csproj" />
         <ProjectReference Include="..\Dignite.Cms.Host.Shared\Dignite.Cms.Host.Shared.csproj" />

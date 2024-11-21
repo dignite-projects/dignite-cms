@@ -1,8 +1,7 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.Toolbars;
-using Volo.Abp.Users;
+﻿using Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure.Themes.Pure.Components.Toolbar.LanguageSwitch;
 using Dignite.Cms.Public.Web.Components.CultureSwitch;
+using System.Threading.Tasks;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.Toolbars;
 
 namespace Dignite.Cms.Menus;
 
@@ -16,11 +15,7 @@ public class CmsWebHostToolbarContributor : IToolbarContributor
         }
 
         context.Toolbar.Items.Add(new ToolbarItem(typeof(CultureSwitchViewComponent)));
-
-        if (!context.ServiceProvider.GetRequiredService<ICurrentUser>().IsAuthenticated)
-        {
-            //context.Toolbar.Items.Add(new ToolbarItem(typeof(LoginLinkViewComponent)));
-        }
+        context.Toolbar.Items.RemoveAll(m => m.ComponentType == typeof(LanguageSwitchViewComponent));
 
         return Task.CompletedTask;
     }

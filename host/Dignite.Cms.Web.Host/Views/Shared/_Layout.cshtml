@@ -1,13 +1,9 @@
 ﻿@using Volo.Abp.AspNetCore.Mvc.UI.Theming
 @inject IThemeManager ThemeManager
 @{
-    Layout = ThemeManager.CurrentTheme.GetPublicLayout();
+    Layout = ThemeManager.CurrentTheme.GetApplicationLayout();
 }
-@section seotags{
-    <title>
-        cms page test
-    </title>
-}
+
 @section styles {
     <script>
         document.documentElement.setAttribute('data-bs-theme', 'light');

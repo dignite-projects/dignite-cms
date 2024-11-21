@@ -1,6 +1,5 @@
 using Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure;
 using Dignite.Cms.Public.Web.Localization;
-using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
@@ -20,11 +19,11 @@ public class CmsWebHostMenuContributor : IMenuContributor
 
     public async Task ConfigureMenuAsync(MenuConfigurationContext context)
     {
-        if (context.Menu.Name == StandardMenus.Main)
+        if (context.Menu.Name == PureMenus.Main)
         {
             await ConfigureMainMenuAsync(context);
         }
-        else if (context.Menu.Name == PureMenus.SiteMap)
+        else if (context.Menu.Name == PureMenus.Shortcut)
         {
             await ConfigureSiteMapMenuAsync(context);
         }

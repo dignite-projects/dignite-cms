@@ -23,7 +23,11 @@ public static class CmsDbContextModelCreatingExtensions
         builder.ConfigureCmsKit();
         builder.ConfigureFileExplorer();
 
-        builder.Entity<Domain>(domain =>
+
+		builder.Ignore<EntryFieldTab>();
+		builder.Ignore<EntryField>();
+
+		builder.Entity<Domain>(domain =>
         {
             //Configure table & schema name
             domain.ToTable(CmsDbProperties.DbTablePrefix + "Domains", CmsDbProperties.DbSchema);
@@ -67,7 +71,7 @@ public static class CmsDbContextModelCreatingExtensions
             //Properties
             entryType.Property(et => et.DisplayName).IsRequired().HasMaxLength(EntryTypeConsts.MaxDisplayNameLength);
             entryType.Property(et => et.Name).IsRequired().HasMaxLength(EntryTypeConsts.MaxNameLength);
-            entryType.Property(et => et.FieldTabs).HasConversion(new AbpJsonValueConverter<IList<EntryFieldTab>>());                
+            entryType.Property(et => et.FieldTabs).HasConversion(new AbpJsonValueConverter<ICollection<EntryFieldTab>>());                
 
             //
             entryType.HasIndex(et=>et.SectionId);

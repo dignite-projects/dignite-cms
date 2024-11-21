@@ -132,22 +132,16 @@ public class EntryTypeAdminAppService_Tests : CmsApplicationTestBase
                                             ShowOnList = true,
                                             DisplayName = "Textbox Field",
                                             Required = true,
-                                        },
-                                        new EntryFieldInput
-                                        {
-                                            FieldId=testData.SelectFieldId,
-                                            ShowOnList = true,
-                                            DisplayName = "Select Field",
-                                            Required = true,
                                         }
                                     }
                                 }
                             }
             });
 
-        var updatedentryType = await entryTypeAdminAppService.GetAsync(testData.ChannelSectionEntryTypeId);
+        var updatedEntryType = await entryTypeAdminAppService.GetAsync(testData.ChannelSectionEntryTypeId);
 
-        updatedentryType.DisplayName.ShouldBe(newDisplayName);
+        updatedEntryType.DisplayName.ShouldBe(newDisplayName);
+        updatedEntryType.FieldTabs[0].Fields.Count.ShouldBe(1);
     }
 
     [Fact]

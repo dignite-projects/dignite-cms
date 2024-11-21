@@ -7,7 +7,7 @@ namespace Dignite.Cms.Sections
 {
     public class EntryType: FullAuditedEntity<Guid>, IMultiTenant
     {
-        public EntryType(Guid id, Guid sectionId, string displayName, string name, IList<EntryFieldTab> fieldTabs, Guid? tenantId)
+        public EntryType(Guid id, Guid sectionId, string displayName, string name, ICollection<EntryFieldTab> fieldTabs, Guid? tenantId)
             :base(id)
         {
             SectionId = sectionId;
@@ -25,7 +25,7 @@ namespace Dignite.Cms.Sections
         /// <summary>
         /// 
         /// </summary>
-        public Guid SectionId { get; protected set; }
+        public virtual Guid SectionId { get; protected set; }
 
         /// <summary>
         /// Display Name of this entry type.
@@ -38,20 +38,18 @@ namespace Dignite.Cms.Sections
         /// </summary>
         public virtual string Name { get; protected set; }
 
-        public IList<EntryFieldTab> FieldTabs { get; protected set; }
+        public virtual ICollection<EntryFieldTab> FieldTabs { get; protected set; }
 
         /// <summary>
         /// TenantId of this entry type.
         /// </summary>
         public virtual Guid? TenantId { get; protected set; }
 
-        public virtual void SetDisplayName(string displayName)
+        public virtual void Set(string displayName, string name, ICollection<EntryFieldTab> fieldTabs)
         {
-            DisplayName = displayName;
+            this.DisplayName = displayName;
+            this.Name = name;
+            this.FieldTabs = fieldTabs;
         }
-        public virtual void SetName(string name)
-        {
-            Name = name;
-        }
-    }
+	}
 }

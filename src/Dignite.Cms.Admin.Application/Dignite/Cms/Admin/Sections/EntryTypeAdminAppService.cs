@@ -41,6 +41,7 @@ namespace Dignite.Cms.Admin.Sections
                         )
                     ).ToList()
                 );
+            entity = await _entryTypeRepository.InsertAsync( entity );
 
             return ObjectMapper.Map<EntryType, EntryTypeDto>(entity);
         }
@@ -79,9 +80,10 @@ namespace Dignite.Cms.Admin.Sections
         [Authorize(Permissions.CmsAdminPermissions.Section.Update)]
         public async Task<EntryTypeDto> UpdateAsync(Guid id, UpdateEntryTypeInput input)
         {
-            var entity = await _entryTypeManager.UpdateAsync(
-                id,
-                input.DisplayName,
+            var entity = await _entryTypeRepository.GetAsync(id);
+			entity = await _entryTypeManager.UpdateAsync(
+				entity,
+				input.DisplayName,
                 input.Name,
                 input.FieldTabs.Select(ft =>
                     new EntryFieldTab(
@@ -97,7 +99,8 @@ namespace Dignite.Cms.Admin.Sections
                         )
                     ).ToList()
                 );
-            return ObjectMapper.Map<EntryType, EntryTypeDto>(entity);
+
+			return ObjectMapper.Map<EntryType, EntryTypeDto>(entity);
         }
     }
 }

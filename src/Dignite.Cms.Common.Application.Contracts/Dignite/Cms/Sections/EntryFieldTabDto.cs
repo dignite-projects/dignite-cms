@@ -6,6 +6,6 @@ namespace Dignite.Cms.Sections
     {
         public string Name { get; set; }
 
-        public IList<EntryFieldDto> Fields { get; set; }
+        public ICollection<EntryFieldDto> Fields { get; set; }
     }
 }

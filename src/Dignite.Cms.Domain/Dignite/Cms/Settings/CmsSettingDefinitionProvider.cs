@@ -10,7 +10,7 @@ public class CmsSettingDefinitionProvider : SettingDefinitionProvider
     {
         context.Add(
             new SettingDefinition(CmsSettings.Site.Languages,
-                "en",
+                "en,zh-Hant,ja",
                 L("DisplayName:Cms.Site.Languages"),
                 isVisibleToClients:true
                 ),

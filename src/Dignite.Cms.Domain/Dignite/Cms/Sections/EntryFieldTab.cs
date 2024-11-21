@@ -4,7 +4,7 @@ namespace Dignite.Cms.Sections
 {
     public class EntryFieldTab
     {
-        public EntryFieldTab(string name, IList<EntryField> fields)
+        public EntryFieldTab(string name, ICollection<EntryField> fields)
         {
             Name = name;
             Fields = fields;
@@ -12,6 +12,6 @@ namespace Dignite.Cms.Sections
 
         public string Name { get; protected set; }
 
-        public IList<EntryField> Fields { get; protected set; }
+        public ICollection<EntryField> Fields { get; protected set; }
     }
 }

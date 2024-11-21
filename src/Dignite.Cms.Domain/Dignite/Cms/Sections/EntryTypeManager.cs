@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Services;
 
 namespace Dignite.Cms.Sections
@@ -14,7 +15,7 @@ namespace Dignite.Cms.Sections
             _entryTypeRepository = entryTypeRepository;
         }
 
-        public virtual async Task<EntryType> CreateAsync(Guid sectionId, string displayName, string name,IList<EntryFieldTab> fieldTabs)
+        public virtual async Task<EntryType> CreateAsync(Guid sectionId, string displayName, string name, ICollection<EntryFieldTab> fieldTabs)
         {
             await CheckNameExistenceAsync(sectionId, name);
 
@@ -25,26 +26,19 @@ namespace Dignite.Cms.Sections
                 name,
                 fieldTabs,
                 CurrentTenant.Id);
-            return await _entryTypeRepository.InsertAsync(entity);
+            return entity;
         }
-        public virtual async Task<EntryType> UpdateAsync(Guid id, string displayName, string name, IList<EntryFieldTab> fieldTabs)
+        public virtual async Task<EntryType> UpdateAsync(EntryType entryType, string displayName, string name, ICollection<EntryFieldTab> fieldTabs)
         {
-            var entity = await _entryTypeRepository.GetAsync(id, false);
-            if (!entity.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+            if (!entryType.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
             {
-                await CheckNameExistenceAsync(entity.Id, name);
+                await CheckNameExistenceAsync(entryType.Id, name);
             }
-            entity.SetDisplayName(displayName);
-            entity.SetName(name);
-            entity.FieldTabs.Clear();
-            foreach (var ft in fieldTabs)
-            {
-                entity.FieldTabs.Add(ft);
-            }
+            entryType.Set(displayName,name,fieldTabs);
 
-            //
-            return await _entryTypeRepository.UpdateAsync(entity);
-        }
+			//
+			return await _entryTypeRepository.UpdateAsync(entryType);
+		}
 
         protected virtual async Task CheckNameExistenceAsync(Guid sectionId, string name)
         {

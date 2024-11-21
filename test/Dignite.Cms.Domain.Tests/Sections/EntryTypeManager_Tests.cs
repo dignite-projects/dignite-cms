@@ -46,6 +46,7 @@ public class EntryTypeManager_Tests : CmsDomainTestBase
                         })
                     }
         );
+        await entryTypeRepository.InsertAsync( entryType );
 
         entryType.Id.ShouldNotBe(Guid.Empty);
         var entryTypeFromDb = await entryTypeRepository.GetAsync(entryType.Id);

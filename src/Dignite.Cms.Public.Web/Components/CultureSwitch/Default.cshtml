@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Http.Extensions;
 @using Dignite.Cms.Public.Web.Components.CultureSwitch;
 @model CultureSwitchViewComponentModel
-@if (Model.AllLanguages.Any())
+@if (Model.AllLanguages.Any()&&Model.AllLanguages.Count>1)
 {
     <div class="dropdown">
         <a class="btn" href="#" id="Menu_CultureSwitch" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="@Model.CurrentLanguage.DisplayName">

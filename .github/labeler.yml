@@ -1,0 +1,11 @@
+ui-angular:
+  - npm/ng-packs/*
+  - npm/ng-packs/**/*
+  - npm/ng-packs/**/**/*
+  - npm/ng-packs/**/**/**/*
+  - npm/ng-packs/**/**/**/**/*
+  - npm/ng-packs/**/**/**/**/**/*
+  - templates/app/angular/*
+  - templates/app/angular/**/*
+  - templates/app/angular/**/**/*
+  - templates/app/angular/**/**/**/*

@@ -26,7 +26,7 @@ public class CmsRouteRequestCultureProvider : RouteDataRequestCultureProvider
         if (providerResultCulture == NullProviderCultureResult.Result)
         {
             //Skip if it is not a CMS route
-            if (controller == null || controller != EntryController.ControllerName)
+            if (controller == null || controller != CmsController.ControllerName)
             {
                 // No values specified for either so no match
                 return NullProviderCultureResult.Result;

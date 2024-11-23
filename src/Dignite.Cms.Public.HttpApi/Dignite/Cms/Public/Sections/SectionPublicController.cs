@@ -29,15 +29,15 @@ namespace Dignite.Cms.Public.Sections
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="entryPath">
-        /// The entry path does not contain culture.
+        /// <param name="route">
+        /// The entry route does not contain culture.
         /// </param>
         /// <returns></returns>
         [HttpGet]
-        [Route("find-by-entry-path")]
-        public async Task<SectionDto> FindByEntryPathAsync(string entryPath)
+        [Route("find-by-route")]
+        public async Task<SectionDto> FindByRouteAsync(string route)
         {
-            return await _sectionAppService.FindByEntryPathAsync(entryPath);
+            return await _sectionAppService.FindByRouteAsync(route);
         }
 
         [HttpGet]

@@ -51,7 +51,7 @@
 
   <ItemGroup>
     <Content Remove="Pages\RazorPageTest.cshtml" />
-    <Content Remove="Views\Entry\Contact\Page.cshtml" />
+    <Content Remove="Views\Cms\Contact\Page.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,13 +60,13 @@
     <None Include="Themes\Pure\Components\Menu\Default.cshtml" />
     <None Include="Themes\Pure\Components\Menu\_MenuItem.cshtml" />
     <None Include="Themes\Pure\Components\PageFooter\Default.cshtml" />
-    <None Include="Views\Entry\Blog\Index.cshtml" />
-    <None Include="Views\Entry\Blog\Entry.cshtml" />
-    <None Include="Views\Entry\Blog\_blog-toolbar.cshtml" />
-    <None Include="Views\Entry\Contact\Page.cshtml" />
-    <None Include="Views\Entry\HomePage.cshtml" />
-    <None Include="Views\Entry\Service\Entry.cshtml" />
-    <None Include="Views\Shared\Fields\Matrix\service-item.cshtml" />
+    <None Include="Views\Cms\Blog\Index.cshtml" />
+    <None Include="Views\Cms\Blog\Entry.cshtml" />
+    <None Include="Views\Cms\Blog\_blog-toolbar.cshtml" />
+    <None Include="Views\Cms\Contact\Page.cshtml" />
+    <None Include="Views\Cms\HomePage.cshtml" />
+    <None Include="Views\Cms\Service\Entry.cshtml" />
+    <None Include="Views\Shared\Cms\Fields\Matrix\service-item.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
 

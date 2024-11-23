@@ -51,7 +51,7 @@
 
     根据版块名称查找版块，如果找到则返回版块信息，否则返回`null`。
 
-- `Task<SectionDto> FindByEntryPathAsync( string entryPath)`：
+- `Task<SectionDto> FindByRouteAsync( string route)`：
 
     根据目的Url查找版块（即匹配条目Url的版块），如果找到则返回版块信息，否则返回`null`。
 
@@ -148,15 +148,15 @@
 
   以[快速入门](quick-start.md)中`Home Page`版块为例，访问`https://localhost:44339`，将获取`Home Page`版块下语言为`en`、`slug`为`index`的条目，并使用`/Views/Entry/HomePage.cshtml`视图呈现页面。
 
-- `EntryPageWithCulture(string culture, string entryPath)`
+- `EntryPageWithCulture(string culture, string route)`
 
-  查找指定`Culture`和匹配`entryPath`值的条目，并传递 `EntryViewModel` 视图模型给模板页面。
+  查找指定`Culture`和匹配`route`值的条目，并传递 `EntryViewModel` 视图模型给模板页面。
 
   以[快速入门](quick-start.md)中`Blog Post`版块为例，访问`https://localhost:44339/ja/blog/2024/03/first-blog-post`，将获取`Blog Post`版块下语言为`ja`、`slug`为`first-blog-post`的条目，并使用`/Views/Entry/Blog/Entry.cshtml`视图呈现页面。
 
-- `EntryPage(string entryPath)`
+- `EntryPage(string route)`
 
-  查找匹配`entryPath`值的条目，并传递 `EntryViewModel` 视图模型给模板页面。
+  查找匹配`route`值的条目，并传递 `EntryViewModel` 视图模型给模板页面。
 
   以[快速入门](quick-start.md)中`Blog Home`版块为例，访问`https://localhost:44339/blog`，将获取`Blog Home`版块下语言为`en`、`slug`为`index`的条目，并使用`/Views/Entry/Blog/Index.cshtml`视图呈现页面。
 

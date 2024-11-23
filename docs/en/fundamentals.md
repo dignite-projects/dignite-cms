@@ -51,7 +51,7 @@ This document introduces the fundamental knowledge of developing MVC websites ba
 
     Find a section by its name. Returns the section information if found, otherwise returns `null`.
 
-- `Task<SectionDto> FindByEntryPathAsync(string entryPath)`:
+- `Task<SectionDto> FindByRouteAsync(string route)`:
 
     Find a section by its entry path (i.e., match the entry URL). Returns the section information if found, otherwise returns `null`.
 
@@ -148,17 +148,17 @@ The `EntryController` contains the following actions:
 
   For example, for the `Home Page` section in [Quick Start](quick-start.md), accessing `https://localhost:44339` will retrieve the entry with the language `en` and the slug `index` under the `Home Page` section and render the page using the `/Views/Entry/HomePage.cshtml` view.
 
-- `EntryPageWithCulture(string culture, string entryPath)`
+- `EntryPageWithCulture(string culture, string route)`
 
-  Find the entry with the specified `Culture` and matching `entryPath` value, and pass the `EntryViewModel` view model to the template page.
+  Find the entry with the specified `Culture` and matching `route` value, and pass the `EntryViewModel` view model to the template page.
 
   For example, for the `Blog Post` section in [Quick Start](quick-start.md), accessing `https://localhost:44339/ja/blog/2024/03/first-blog-post` will retrieve the entry
 
  with the language `ja` and the slug `first-blog-post` under the `Blog Post` section and render the page using the `/Views/Entry/Blog/Entry.cshtml` view.
 
-- `EntryPage(string entryPath)`
+- `EntryPage(string route)`
 
-  Find the entry with the matching `entryPath` value and pass the `EntryViewModel` view model to the template page.
+  Find the entry with the matching `route` value and pass the `EntryViewModel` view model to the template page.
 
   For example, for the `Blog Home` section in [Quick Start](quick-start.md), accessing `https://localhost:44339/blog` will retrieve the entry with the language `en` and the slug `index` under the `Blog Home` section and render the page using the `/Views/Entry/Blog/Index.cshtml` view.
 

@@ -81,14 +81,14 @@ Configure<AbpLocalizationOptions>(options =>
 
 ### 启用Cms路由
 
-在`app.UseMultiTenancy();`中间件后面加入Cms路由中间件`app.UseCmsRoute();`
+在`app.UseMultiTenancy();`中间件后面加入Cms路由中间件`app.UseCmsControllerRoute();`
 
 ```csharp
 //Configuring CMS Routing
-app.UseCmsRoute();
+app.UseCmsControllerRoute();
 ```
 
-另外为配合Cms路由中当前语言，请移除`app.UseAbpRequestLocalization();`中间件，然后在`app.UseCmsRoute();`中间件前面加入如下代码：
+另外为配合Cms路由中当前语言，请移除`app.UseAbpRequestLocalization();`中间件，然后在`app.UseCmsControllerRoute();`中间件前面加入如下代码：
 
 ```csharp
 app.UseAbpRequestLocalization(options =>

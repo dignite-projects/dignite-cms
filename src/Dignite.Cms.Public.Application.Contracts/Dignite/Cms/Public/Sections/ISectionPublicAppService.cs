@@ -12,11 +12,11 @@ namespace Dignite.Cms.Public.Sections
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="entryPath">
-        /// The entry path does not contain culture.
+        /// <param name="route">
+        /// The entry route does not contain culture.
         /// </param>
         /// <returns></returns>
-        Task<SectionDto> FindByEntryPathAsync(string entryPath);
+        Task<SectionDto> FindByRouteAsync(string route);
 
         Task<ListResultDto<SectionDto>> GetListAsync(GetSectionsInput input);
 

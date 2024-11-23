@@ -81,14 +81,14 @@ Configure<AbpLocalizationOptions>(options =>
 
 ### Enable CMS Routing
 
-Add the CMS routing middleware `app.UseCmsRoute();` after the `app.UseMultiTenancy();` middleware.
+Add the CMS routing middleware `app.UseCmsControllerRoute();` after the `app.UseMultiTenancy();` middleware.
 
 ```csharp
 //Configuring CMS Routing
-app.UseCmsRoute();
+app.UseCmsControllerRoute();
 ```
 
-Additionally, to work with the CMS routing feature, please remove the `app.UseAbpRequestLocalization();` middleware and then add the following code befor the `app.UseCmsRoute();` middleware:
+Additionally, to work with the CMS routing feature, please remove the `app.UseAbpRequestLocalization();` middleware and then add the following code befor the `app.UseCmsControllerRoute();` middleware:
 
 ```csharp
 app.UseAbpRequestLocalization(options =>

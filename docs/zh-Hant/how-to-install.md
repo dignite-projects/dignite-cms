@@ -81,14 +81,14 @@ Configure<AbpLocalizationOptions>(options =>
 
 ### 啟用Cms路由
 
-在 `app.UseMultiTenancy();` 中間件後面加入 Cms 路由中間件 `app.UseCmsRoute();`
+在 `app.UseMultiTenancy();` 中間件後面加入 Cms 路由中間件 `app.UseCmsControllerRoute();`
 
 ```csharp
 //Configuring CMS Routing
-app.UseCmsRoute();
+app.UseCmsControllerRoute();
 ```
 
-另外為配合 Cms 路由功能，請移除 `app.UseAbpRequestLocalization();` 中間件，然後在 `app.UseCmsRoute();` 中間件前面加入如下代碼：
+另外為配合 Cms 路由功能，請移除 `app.UseAbpRequestLocalization();` 中間件，然後在 `app.UseCmsControllerRoute();` 中間件前面加入如下代碼：
 
 ```csharp
 app.UseAbpRequestLocalization(options =>

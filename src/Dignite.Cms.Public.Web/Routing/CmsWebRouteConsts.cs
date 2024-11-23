@@ -3,18 +3,18 @@
     public static class CmsWebRouteConsts
     {
         /// <summary>
-        /// Value: home-page
+        /// Value: default
         /// </summary>
-        public const string HomePageRouteName = "home-page";
+        public const string DefaultRouteName = "default";
 
         /// <summary>
-        /// Value: entry-page
+        /// Value: entry
         /// </summary>
-        public const string EntryPageRouteName = "entry-page";
+        public const string EntryRouteName = "entry";
 
         /// <summary>
-        /// Value: entry-page-with-culture
+        /// Value: culture-entry
         /// </summary>
-        public const string EntryPageWithCultureRouteName = "entry-page-with-culture";
+        public const string CultureEntryRouteName = "culture-entry";
     }
 }

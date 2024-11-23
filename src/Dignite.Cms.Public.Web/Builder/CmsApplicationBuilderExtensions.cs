@@ -11,22 +11,22 @@ namespace Dignite.Cms.Public.Web.Builder
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseCmsRoute(this IApplicationBuilder app)
+        public static IApplicationBuilder UseCmsControllerRoute(this IApplicationBuilder app)
         {
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: CmsWebRouteConsts.HomePageRouteName,
+                    name: CmsWebRouteConsts.DefaultRouteName,
                     pattern: "/",
-                    defaults: new { controller = EntryController.ControllerName, action = nameof(EntryController.HomePage) });
+                    defaults: new { controller = CmsController.ControllerName, action = nameof(CmsController.Default) });
                 endpoints.MapControllerRoute(
-                    name: CmsWebRouteConsts.EntryPageWithCultureRouteName,
-                    pattern: "{"+ CultureRouteSegmentConstraint.RouteSegmentName + ":"+ CultureRouteSegmentConstraint.RouteConstraintName + "}/{*entryPath}",
-                    defaults: new { controller = EntryController.ControllerName, action = nameof(EntryController.EntryPageWithCulture) });
+                    name: CmsWebRouteConsts.CultureEntryRouteName,
+                    pattern: "{"+ CultureRouteSegmentConstraint.RouteSegmentName + ":"+ CultureRouteSegmentConstraint.RouteConstraintName + "}/{*route}",
+                    defaults: new { controller = CmsController.ControllerName, action = nameof(CmsController.CultureEntry) });
                 endpoints.MapControllerRoute(
-                    name: CmsWebRouteConsts.EntryPageRouteName,
-                    pattern: "{*entryPath:regex(^(?!swagger/|account/).*)}", //TODO: Use an options to configure the regular expression for the entryPath
-                    defaults: new { controller = EntryController.ControllerName, action = nameof(EntryController.EntryPage) });
+                    name: CmsWebRouteConsts.EntryRouteName,
+                    pattern: "{*route:regex(^(?!swagger/|account/).*)}", //TODO: Use an options to configure the regular expression for the route
+                    defaults: new { controller = CmsController.ControllerName, action = nameof(CmsController.Entry) });
             });
 
             return app;

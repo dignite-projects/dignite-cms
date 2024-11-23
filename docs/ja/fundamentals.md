@@ -51,7 +51,7 @@
 
     セクション名からセクションを検索し、見つかればセクション情報を返し、見つからなければ `null` を返す。
 
-- `Task<SectionDto> FindByEntryPathAsync(string entryPath)`:
+- `Task<SectionDto> FindByRouteAsync(string route)`:
 
     移動先のUrl (つまり、エントリーのUrlにマッチするセクション)に基づいてセクションを検索し、見つかればそのセクション情報を返し、見つからなければ `null` を返す。
 
@@ -150,15 +150,15 @@
 
   たとえば、[クイックスタート](quick-start.md) の `Home Page` セクションでは、 `https://localhost:44339` にアクセスすると、 `Home Page` セクションの下の言語が `en` でスラッグが `index` のエントリが取得され、 `/Views/Entry/HomePage.cshtml` ビューを使用してページがレンダリングされます。
 
-- `EntryPageWithCulture(string culture, string entryPath)`
+- `EntryPageWithCulture(string culture, string route)`
 
-  指定された `Culture` と一致する `entryPath` 値のエントリを検索し、 `EntryViewModel` ビューモデルをテンプレートページに渡します。
+  指定された `Culture` と一致する `route` 値のエントリを検索し、 `EntryViewModel` ビューモデルをテンプレートページに渡します。
 
   たとえば、[クイックスタート](quick-start.md) の `Blog Post` セクションでは、 `https://localhost:44339/ja/blog/2024/03/first-blog-post` にアクセスすると、言語が `ja` でスラッグが `first-blog-post` のエントリが取得され、 `Entry/Blog/Entry.cshtml` ビューを使用してページがレンダリングされます。
 
-- `EntryPage(string entryPath)`
+- `EntryPage(string route)`
 
-  一致する `entryPath` 値のエント
+  一致する `route` 値のエント
 
 リを検索し、 `EntryViewModel` ビューモデルをテンプレートページに渡します。
 

@@ -66,8 +66,7 @@
     <None Include="Views\Cms\Contact\Page.cshtml" />
     <None Include="Views\Cms\HomePage.cshtml" />
     <None Include="Views\Cms\Service\Entry.cshtml" />
-    <None Include="Views\Shared\Cms\Fields\Matrix\service-item.cshtml" />
-    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Cms\Fields\Matrix\service-item.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

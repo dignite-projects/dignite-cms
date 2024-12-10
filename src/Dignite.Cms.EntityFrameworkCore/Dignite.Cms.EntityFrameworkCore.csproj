@@ -10,9 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dignite.FileExplorer.EntityFrameworkCore" />
-    <PackageReference Include="Volo.Abp.EntityFrameworkCore" />
-	<PackageReference Include="Volo.CmsKit.EntityFrameworkCore" />
+	<PackageReference Include="Dignite.CmsKit.EntityFrameworkCore" />
     <ProjectReference Include="..\Dignite.Cms.Domain\Dignite.Cms.Domain.csproj" />
   </ItemGroup>
 

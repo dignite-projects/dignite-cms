@@ -10,15 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="Dignite.Abp.DynamicForms.CkEditor" />
-	<PackageReference Include="Dignite.Abp.DynamicForms.FileExplorer" />
-	<PackageReference Include="Dignite.FileExplorer.Application.Contracts" />
-	<PackageReference Include="Volo.CmsKit.Admin.Application.Contracts" />
-    <ProjectReference Include="..\Dignite.Cms.Common.Application.Contracts\Dignite.Cms.Common.Application.Contracts.csproj" />
+    <Compile Remove="Dignite\Abp\**" />
+    <Content Remove="Dignite\Abp\**" />
+    <EmbeddedResource Remove="Dignite\Abp\**" />
+    <None Remove="Dignite\Abp\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dignite\Abp\" />
+	<PackageReference Include="Dignite.Abp.DynamicForms.CkEditor" />
+	<PackageReference Include="Dignite.Abp.DynamicForms.FileExplorer" />
+	<PackageReference Include="Dignite.CmsKit.Admin.Application.Contracts" />
+    <ProjectReference Include="..\Dignite.Cms.Common.Application.Contracts\Dignite.Cms.Common.Application.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

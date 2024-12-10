@@ -16,14 +16,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dignite.FileExplorer.HttpApi" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" />
-	<PackageReference Include="Volo.CmsKit.Admin.HttpApi" />
-    <ProjectReference Include="..\Dignite.Cms.Admin.Application.Contracts\Dignite.Cms.Admin.Application.Contracts.csproj" />
+    <Compile Remove="Dignite\Abp\**" />
+    <Content Remove="Dignite\Abp\**" />
+    <EmbeddedResource Remove="Dignite\Abp\**" />
+    <None Remove="Dignite\Abp\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dignite\Abp\" />
+	<PackageReference Include="Dignite.CmsKit.Admin.HttpApi" />
+    <ProjectReference Include="..\Dignite.Cms.Admin.Application.Contracts\Dignite.Cms.Admin.Application.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

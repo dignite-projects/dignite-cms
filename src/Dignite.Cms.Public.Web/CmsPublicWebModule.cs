@@ -1,21 +1,18 @@
 ﻿using Dignite.Abp.Localization;
 using Dignite.Cms.Localization;
 using Dignite.Cms.Public.Web.Routing;
+using Dignite.CmsKit.Public.Web;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AspNetCore.Mvc.Localization;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
 using Volo.Abp.VirtualFileSystem;
-using Volo.CmsKit.Public.Web;
 
 namespace Dignite.Cms.Public.Web;
 
 [DependsOn(
     typeof(CmsPublicApplicationContractsModule),
-    typeof(AbpAspNetCoreMvcUiThemeSharedModule),
-    typeof(AbpAutoMapperModule),
-    typeof(CmsKitPublicWebModule),
+    typeof(DigniteCmsKitPublicWebModule),
     typeof(DigniteAbpLocalizationModule)
     )]
 public class CmsPublicWebModule : AbpModule

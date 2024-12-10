@@ -1,15 +1,13 @@
 ﻿using Dignite.Abp.DynamicForms.FileExplorer;
-using Dignite.FileExplorer;
+using Dignite.CmsKit.Public;
 using Volo.Abp.Modularity;
-using Volo.CmsKit.Public;
 
 namespace Dignite.Cms.Public;
 
 [DependsOn(
     typeof(CmsCommonApplicationContractsModule),
-    typeof(FileExplorerApplicationContractsModule),
     typeof(DigniteAbpDynamicFormsFileExplorerModule),
-    typeof(CmsKitPublicApplicationContractsModule)
+    typeof(DigniteCmsKitPublicApplicationContractsModule)
     )]
 public class CmsPublicApplicationContractsModule : AbpModule
 {

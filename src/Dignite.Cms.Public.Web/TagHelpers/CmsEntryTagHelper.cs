@@ -1,6 +1,6 @@
 ﻿using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
-using Dignite.Cms.Public.Settings;
+using Dignite.Cms.Public.Sites;
 using Dignite.Cms.Public.Web.Models;
 using Dignite.Cms.Public.Web.Razor;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -32,13 +32,13 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         private readonly IRazorPartialRenderer _renderer;
         private readonly IEntryPublicAppService _entryAppService;
         private readonly ISectionPublicAppService _sectionAppService;
-        private readonly ISiteSettingsPublicAppService _siteSettingsPublicAppService;
+        private readonly ISitePublicAppService _siteSettingsPublicAppService;
 
         public CmsEntryTagHelper(
             IRazorPartialRenderer renderer,
             IEntryPublicAppService entryAppService, 
             ISectionPublicAppService sectionAppService,
-            ISiteSettingsPublicAppService siteSettingsPublicAppService
+            ISitePublicAppService siteSettingsPublicAppService
             )
         {
             _renderer = renderer;
@@ -50,7 +50,8 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             var section = await _sectionAppService.FindByNameAsync(SectionName);
-            var defaultLanguageCulture = await _siteSettingsPublicAppService.GetDefaultLanguageAsync();
+            var site = await _siteSettingsPublicAppService.GetAsync();
+            var defaultLanguageCulture = site.DefaultLanguage;
             if (Culture.IsNullOrEmpty())
             {
                 Culture= defaultLanguageCulture;

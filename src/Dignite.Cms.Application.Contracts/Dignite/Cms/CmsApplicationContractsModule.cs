@@ -1,14 +1,14 @@
 ﻿using Dignite.Cms.Admin;
 using Dignite.Cms.Public;
+using Dignite.CmsKit;
 using Volo.Abp.Modularity;
-using Volo.CmsKit;
 
 namespace Dignite.Cms;
 
 [DependsOn(
     typeof(CmsAdminApplicationContractsModule),
     typeof(CmsPublicApplicationContractsModule),
-    typeof(CmsKitApplicationContractsModule)
+    typeof(DigniteCmsKitApplicationContractsModule)
     )]
 public class CmsApplicationContractsModule : AbpModule
 {

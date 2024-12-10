@@ -1,19 +1,14 @@
-﻿using Dignite.FileExplorer;
+﻿using Dignite.CmsKit.Public;
 using Microsoft.Extensions.DependencyInjection;
-using Volo.Abp.Application;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
-using Volo.CmsKit.Public;
 
 namespace Dignite.Cms.Public;
 
 [DependsOn(
     typeof(CmsDomainModule),
     typeof(CmsPublicApplicationContractsModule),
-    typeof(AbpDddApplicationModule),
-    typeof(AbpAutoMapperModule),
-    typeof(FileExplorerApplicationModule),
-    typeof(CmsKitPublicApplicationModule)
+    typeof(DigniteCmsKitPublicApplicationModule)
     )]
 public class CmsPublicApplicationModule : AbpModule
 {

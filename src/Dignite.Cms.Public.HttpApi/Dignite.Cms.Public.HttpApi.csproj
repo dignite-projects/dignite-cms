@@ -16,9 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="Dignite.FileExplorer.HttpApi" />
-	<PackageReference Include="Volo.CmsKit.Public.HttpApi" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" />
+	<PackageReference Include="Dignite.CmsKit.Public.HttpApi" />
     <ProjectReference Include="..\Dignite.Cms.Public.Application.Contracts\Dignite.Cms.Public.Application.Contracts.csproj" />
   </ItemGroup>
 

@@ -10,16 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dignite.FileExplorer.Application" />
-    <PackageReference Include="Volo.Abp.AutoMapper" />
-    <PackageReference Include="Volo.Abp.Ddd.Application" />
-	<PackageReference Include="Volo.CmsKit.Admin.Application" />
+	<PackageReference Include="Dignite.CmsKit.Admin.Application" />
     <ProjectReference Include="..\Dignite.Cms.Admin.Application.Contracts\Dignite.Cms.Admin.Application.Contracts.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Domain\Dignite.Cms.Domain.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Dignite\Abp\BlobStoring\" />
-  </ItemGroup>
-
 </Project>

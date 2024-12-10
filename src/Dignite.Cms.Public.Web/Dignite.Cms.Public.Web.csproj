@@ -11,9 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.AutoMapper" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared" />
-	<PackageReference Include="Volo.CmsKit.Public.Web" />
+	<PackageReference Include="Dignite.CmsKit.Public.Web" />
 	<PackageReference Include="Dignite.Abp.Localization" />
   </ItemGroup>
 

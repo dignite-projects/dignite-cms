@@ -1,24 +1,19 @@
 ﻿using Dignite.Abp.BlobStoring;
 using Dignite.Cms.Admin.Entries;
 using Dignite.Cms.Permissions;
-using Dignite.FileExplorer;
+using Dignite.CmsKit.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
-using Volo.Abp.Application;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.BlobStoring;
 using Volo.Abp.Modularity;
-using Volo.CmsKit.Admin;
 
 namespace Dignite.Cms.Admin
 {
     [DependsOn(
         typeof(CmsDomainModule),
         typeof(CmsAdminApplicationContractsModule),
-        typeof(CmsKitAdminApplicationModule),
-        typeof(AbpDddApplicationModule),
-        typeof(AbpAutoMapperModule),
-        typeof(FileExplorerApplicationModule)
+        typeof(DigniteCmsKitAdminApplicationModule)
         )]
     public class CmsAdminApplicationModule : AbpModule
     {

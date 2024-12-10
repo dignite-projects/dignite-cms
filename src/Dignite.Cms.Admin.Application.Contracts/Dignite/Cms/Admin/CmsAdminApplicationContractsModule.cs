@@ -1,15 +1,13 @@
 ﻿using Dignite.Abp.DynamicForms.CkEditor;
 using Dignite.Abp.DynamicForms.FileExplorer;
-using Dignite.FileExplorer;
+using Dignite.CmsKit.Admin;
 using Volo.Abp.Modularity;
-using Volo.CmsKit.Admin;
 
 namespace Dignite.Cms.Admin
 {
     [DependsOn(
         typeof(CmsCommonApplicationContractsModule),
-        typeof(FileExplorerApplicationContractsModule),
-        typeof(CmsKitAdminApplicationContractsModule),
+        typeof(DigniteCmsKitAdminApplicationContractsModule),
         typeof(DigniteAbpDynamicFormsFileExplorerModule),
         typeof(DigniteAbpDynamicFormsCkEditorModule)
         )]

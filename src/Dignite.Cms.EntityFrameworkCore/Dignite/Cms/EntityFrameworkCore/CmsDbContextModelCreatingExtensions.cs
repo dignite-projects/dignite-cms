@@ -3,13 +3,12 @@ using Dignite.Cms.Domains;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Fields;
 using Dignite.Cms.Sections;
-using Dignite.FileExplorer.EntityFrameworkCore;
+using Dignite.CmsKit.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using Volo.Abp;
 using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.EntityFrameworkCore.ValueConverters;
-using Volo.CmsKit.EntityFrameworkCore;
 
 namespace Dignite.Cms.EntityFrameworkCore;
 
@@ -20,8 +19,7 @@ public static class CmsDbContextModelCreatingExtensions
     {
         Check.NotNull(builder, nameof(builder));
 
-        builder.ConfigureCmsKit();
-        builder.ConfigureFileExplorer();
+        builder.ConfigureDigniteCmsKit();
 
 
 		builder.Ignore<EntryFieldTab>();

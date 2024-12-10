@@ -1,22 +1,18 @@
-﻿using Dignite.FileExplorer;
+﻿using Dignite.CmsKit;
 using Microsoft.Extensions.DependencyInjection;
-using Volo.Abp.Http.Client;
 using Volo.Abp.Modularity;
 using Volo.Abp.VirtualFileSystem;
-using Volo.CmsKit.Admin;
 
 namespace Dignite.Cms.Admin
 {
     [DependsOn(
         typeof(CmsAdminApplicationContractsModule),
-        typeof(AbpHttpClientModule),
-        typeof(FileExplorerHttpApiClientModule),
-        typeof(CmsKitAdminHttpApiClientModule))]
+        typeof(DigniteCmsKitAdminHttpApiClientModule))]
     public class CmsAdminHttpApiClientModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
-            context.Services.AddStaticHttpClientProxies(
+            context.Services.AddHttpClientProxies(
                 typeof(CmsAdminApplicationContractsModule).Assembly,
                 CmsAdminRemoteServiceConsts.RemoteServiceName
             );

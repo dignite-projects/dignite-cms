@@ -1,6 +1,6 @@
 ﻿namespace Dignite.Abp.BlobStoring
 {
-    public static class BlobContainerConsts
+    public static class CmsBlobContainerConsts
     {
         /// <summary>
         /// 

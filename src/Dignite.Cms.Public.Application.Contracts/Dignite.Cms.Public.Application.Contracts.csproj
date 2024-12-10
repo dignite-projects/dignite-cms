@@ -11,8 +11,7 @@
 	
   <ItemGroup>
 	  <PackageReference Include="Dignite.Abp.DynamicForms.FileExplorer" />
-	  <PackageReference Include="Dignite.FileExplorer.Application.Contracts" />
-	  <PackageReference Include="Volo.CmsKit.Public.Application.Contracts" />
+	  <PackageReference Include="Dignite.CmsKit.Public.Application.Contracts" />
 	  <ProjectReference Include="..\Dignite.Cms.Common.Application.Contracts\Dignite.Cms.Common.Application.Contracts.csproj" />
   </ItemGroup>
 

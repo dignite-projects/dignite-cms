@@ -1,19 +1,15 @@
-﻿using Localization.Resources.AbpUi;
-using Dignite.Cms.Localization;
-using Volo.Abp.AspNetCore.Mvc;
+﻿using Dignite.Cms.Localization;
+using Dignite.CmsKit.Public;
+using Localization.Resources.AbpUi;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
-using Microsoft.Extensions.DependencyInjection;
-using Dignite.FileExplorer;
-using Volo.CmsKit.Public;
 
 namespace Dignite.Cms.Public;
 
 [DependsOn(
     typeof(CmsPublicApplicationContractsModule),
-    typeof(AbpAspNetCoreMvcModule),
-    typeof(FileExplorerHttpApiModule),
-    typeof(CmsKitPublicHttpApiModule))]
+    typeof(DigniteCmsKitPublicHttpApiModule))]
 public class CmsPublicHttpApiModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)

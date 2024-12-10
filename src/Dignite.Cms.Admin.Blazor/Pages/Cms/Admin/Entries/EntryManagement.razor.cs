@@ -4,6 +4,7 @@ using Dignite.Cms.Entries;
 using Dignite.Cms.Localization;
 using Dignite.Cms.Permissions;
 using Dignite.Cms.Settings;
+using Dignite.Cms.Sites;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -27,9 +28,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         [SupplyParameterFromQuery]
         public string CultureName { get; set; }
 
-        public string DefaultLanguage { get; private set; }
-
-        public IEnumerable<string> SiteLanguages { get; private set; } = Enumerable.Empty<string>();
+        public SiteDto Site { get; private set; } = new SiteDto();
 
         protected PageToolbar Toolbar { get; private set; } = new();
         protected List<TableColumn> EntryManagementTableColumns => TableColumns.Get<EntryManagement>();
@@ -160,7 +159,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         {
             GetListInput.SectionId = SectionId.HasValue ? SectionId.Value : Guid.Empty;
             GetListInput.Culture = CultureName.IsNullOrEmpty()
-                ? DefaultLanguage
+                ? Site.DefaultLanguage
                 : CultureName;
             return base.UpdateGetListInputAsync();
         }
@@ -168,8 +167,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 
         protected async Task InitializePageDataAsync()
         {
-            DefaultLanguage = await SiteSettingsAdminAppService.GetDefaultLanguageAsync();
-            SiteLanguages = await SiteSettingsAdminAppService.GetAllLanguagesAsync();
+            Site = await SiteAdminAppService.GetAsync();
             AllLanguages = await LanguageProvider.GetLanguagesAsync();
             if (SectionId.HasValue)
             {
@@ -214,8 +212,8 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
             SectionId = sectionId;
             CurrentSection = Sections.FirstOrDefault(s => s.Id == sectionId);
             CultureName = CultureName.IsNullOrEmpty()? 
-                DefaultLanguage:
-                SiteLanguages.Any(l=>l== CultureName) ? CultureName : SiteLanguages.First();
+                Site.DefaultLanguage:
+                Site.AllLanguages.Any(l=>l== CultureName) ? CultureName : Site.AllLanguages.First();
             
             await OnCultureChangedAsync(CultureName);
         }

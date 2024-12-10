@@ -15,15 +15,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Dignite.Abp.DynamicForms" />
-    <PackageReference Include="Dignite.FileExplorer.Domain.Shared" />
+	<PackageReference Include="Dignite.CmsKit.Domain.Shared" />
     <PackageReference Include="Slugify.Core" />
     <PackageReference Include="Unidecode.NET" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Volo.Abp.Validation" />
-	<PackageReference Include="Volo.CmsKit.Domain.Shared" />
+	<PackageReference Include="Dignite.Abp.DynamicForms" />
   </ItemGroup>
 
   <ItemGroup>

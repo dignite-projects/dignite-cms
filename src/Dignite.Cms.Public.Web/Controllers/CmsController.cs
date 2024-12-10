@@ -3,7 +3,7 @@ using Dignite.Cms.Entries;
 using Dignite.Cms.Localization;
 using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
-using Dignite.Cms.Public.Settings;
+using Dignite.Cms.Public.Sites;
 using Dignite.Cms.Public.Web.Models;
 using Dignite.Cms.Public.Web.Routing;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -25,19 +25,19 @@ namespace Dignite.Cms.Public.Web.Controllers
     {
         public const string ControllerName = "Cms";
 
-        private readonly ISiteSettingsPublicAppService _siteSettingsPublicAppService;
+        private readonly ISitePublicAppService _sitePublicAppService;
         private readonly ISectionPublicAppService _sectionPublicAppService;
         private readonly IEntryPublicAppService _entryPublicAppService;
         private readonly IOptions<AbpLocalizationOptions> _localizationOptions;
 
 
-        public CmsController(ISiteSettingsPublicAppService siteSettingsPublicAppService, ISectionPublicAppService sectionPublicAppService, IEntryPublicAppService entryPublicAppService,
+        public CmsController(ISitePublicAppService sitePublicAppService, ISectionPublicAppService sectionPublicAppService, IEntryPublicAppService entryPublicAppService,
             IOptions<AbpLocalizationOptions> localizationOptions)
         {
             LocalizationResource = typeof(CmsResource);
             _sectionPublicAppService = sectionPublicAppService;
             _entryPublicAppService = entryPublicAppService;
-            _siteSettingsPublicAppService = siteSettingsPublicAppService;
+            _sitePublicAppService = sitePublicAppService;
             _localizationOptions = localizationOptions;
         }
 
@@ -86,7 +86,8 @@ namespace Dignite.Cms.Public.Web.Controllers
             }
 
             //
-            var defaultCulture = await _siteSettingsPublicAppService.GetDefaultLanguageAsync();
+            var site = await _sitePublicAppService.GetAsync();
+            var defaultCulture = site.DefaultLanguage;
             if (culture.IsNullOrEmpty())
             {
                 culture = defaultCulture;

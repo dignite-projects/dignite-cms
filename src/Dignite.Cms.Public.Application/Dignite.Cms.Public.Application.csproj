@@ -10,10 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="Dignite.FileExplorer.Application" />
-    <PackageReference Include="Volo.Abp.AutoMapper" />
-    <PackageReference Include="Volo.Abp.Ddd.Application" />
-	<PackageReference Include="Volo.CmsKit.Public.Application" />
+	<PackageReference Include="Dignite.CmsKit.Public.Application" />
     <ProjectReference Include="..\Dignite.Cms.Public.Application.Contracts\Dignite.Cms.Public.Application.Contracts.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Domain\Dignite.Cms.Domain.csproj" />
   </ItemGroup>

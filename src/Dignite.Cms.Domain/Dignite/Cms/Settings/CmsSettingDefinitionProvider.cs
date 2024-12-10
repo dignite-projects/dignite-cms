@@ -13,21 +13,6 @@ public class CmsSettingDefinitionProvider : SettingDefinitionProvider
                 "en,zh-Hant,ja",
                 L("DisplayName:Cms.Site.Languages"),
                 isVisibleToClients:true
-                ),
-            new SettingDefinition(CmsSettings.Site.Name,
-                "My Dignite",
-                L("DisplayName:Cms.Site.Name"),
-                isVisibleToClients: true
-                ),
-            new SettingDefinition(CmsSettings.Site.LogoUrl,
-                null,
-                L("DisplayName:Cms.Site.LogoUrl"),
-                isVisibleToClients: true
-                ),
-            new SettingDefinition(CmsSettings.Site.LogoReverseUrl,
-                null,
-                L("DisplayName:Cms.Site.LogoReverseUrl"),
-                isVisibleToClients: true
                 )
         );
     }

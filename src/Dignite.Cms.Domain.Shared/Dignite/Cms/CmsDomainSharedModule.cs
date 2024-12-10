@@ -1,20 +1,16 @@
 ﻿using Dignite.Abp.DynamicForms;
 using Dignite.Abp.DynamicForms.Localization;
 using Dignite.Cms.Localization;
-using Dignite.FileExplorer;
+using Dignite.CmsKit;
 using Volo.Abp.Localization;
 using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Modularity;
-using Volo.Abp.Validation;
 using Volo.Abp.VirtualFileSystem;
-using Volo.CmsKit;
 
 namespace Dignite.Cms;
 [DependsOn(
-    typeof(AbpValidationModule),
     typeof(DigniteAbpDynamicFormsModule),
-    typeof(FileExplorerDomainSharedModule),
-    typeof(CmsKitDomainSharedModule)
+    typeof(DigniteCmsKitDomainSharedModule)
 )]
 public class CmsDomainSharedModule : AbpModule
 {

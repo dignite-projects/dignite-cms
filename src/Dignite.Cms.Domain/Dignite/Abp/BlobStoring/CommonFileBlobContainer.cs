@@ -2,7 +2,7 @@
 
 namespace Dignite.Abp.BlobStoring
 {
-    [BlobContainerName(BlobContainerConsts.FileContainerName)]
+    [BlobContainerName(CmsBlobContainerConsts.FileContainerName)]
     public class CommonFileBlobContainer
     {
     }

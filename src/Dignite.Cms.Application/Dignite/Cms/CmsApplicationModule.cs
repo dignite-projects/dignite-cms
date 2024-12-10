@@ -1,7 +1,7 @@
 ﻿using Dignite.Cms.Admin;
 using Dignite.Cms.Public;
+using Dignite.CmsKit;
 using Volo.Abp.Modularity;
-using Volo.CmsKit;
 
 namespace Dignite.Cms;
 
@@ -9,7 +9,7 @@ namespace Dignite.Cms;
     typeof(CmsApplicationContractsModule),
     typeof(CmsPublicApplicationModule),
     typeof(CmsAdminApplicationModule),
-    typeof(CmsKitApplicationModule)
+    typeof(DigniteCmsKitApplicationModule)
     )]
 public class CmsApplicationModule : AbpModule
 {

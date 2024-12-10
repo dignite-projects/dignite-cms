@@ -14,9 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Ddd.Domain" />
-	<PackageReference Include="Volo.CmsKit.Domain" />
-	<PackageReference Include="Dignite.FileExplorer.Domain" />
+	<PackageReference Include="Dignite.CmsKit.Domain" />
     <ProjectReference Include="..\Dignite.Cms.Domain.Shared\Dignite.Cms.Domain.Shared.csproj" />
   </ItemGroup>
 

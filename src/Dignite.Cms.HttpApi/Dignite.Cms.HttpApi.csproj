@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Volo.CmsKit.HttpApi" />
+	  <PackageReference Include="Dignite.CmsKit.HttpApi" />
     <ProjectReference Include="..\Dignite.Cms.Admin.HttpApi\Dignite.Cms.Admin.HttpApi.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Application.Contracts\Dignite.Cms.Application.Contracts.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Public.HttpApi\Dignite.Cms.Public.HttpApi.csproj" />

@@ -12,7 +12,7 @@ using Dignite.Abp.Data;
 using System.Threading;
 using Blazorise;
 using Dignite.Cms.Sections;
-using Dignite.Cms.Settings;
+using Dignite.Cms.Sites;
 
 namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 {
@@ -29,7 +29,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         Guid? EditingEntryId { get; set; }
 
         protected EntryTypeDto CurrentEntryType { get; set; }
-        public IEnumerable<string> SiteLanguages { get; private set; } = Enumerable.Empty<string>();
+        public SiteDto Site{ get; private set; } = new SiteDto();
         protected IReadOnlyList<LanguageInfo> AllLanguages = new List<LanguageInfo>();
         protected IReadOnlyList<EntryDto> AllEntriesOfStructure;
         protected List<EntryDto> AllVersions = null;
@@ -54,7 +54,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
             await base.OnInitializedAsync();
             CurrentEntryType = Section.EntryTypes.FirstOrDefault(et => et.Id == Entry.EntryTypeId);
             AllLanguages = await LanguageProvider.GetLanguagesAsync();
-            SiteLanguages = await SiteSettingsAdminAppService.GetAllLanguagesAsync();
+            Site = await SiteAdminAppService.GetAsync();
             await SetCultureAsync(Entry.Culture);
             await GetVersionsAsync();
         }

@@ -59,7 +59,7 @@
     <None Include="Themes\Pure\Components\Brand\Default.cshtml" />
     <None Include="Themes\Pure\Components\Menu\Default.cshtml" />
     <None Include="Themes\Pure\Components\Menu\_MenuItem.cshtml" />
-    <None Include="Themes\Pure\Components\PageFooter\Default.cshtml" />
+    <None Include="Themes\Pure\Components\Footer\Default.cshtml" />
     <None Include="Views\Cms\Blog\Index.cshtml" />
     <None Include="Views\Cms\Blog\Entry.cshtml" />
     <None Include="Views\Cms\Blog\_blog-toolbar.cshtml" />

@@ -51,13 +51,13 @@ using CmsResource = Dignite.Cms.Localization.CmsResource;
 namespace Dignite.Cms;
 
 [DependsOn(
+    typeof(DigniteAbpAspNetCoreMvcUiPureThemeModule),
     typeof(CmsPublicWebModule),
     typeof(CmsHttpApiClientModule),
     typeof(CmsHttpApiModule),
     typeof(AbpAspNetCoreAuthenticationOpenIdConnectModule),
     typeof(AbpAspNetCoreMvcClientModule),
     typeof(AbpHttpClientWebModule),
-    typeof(DigniteAbpAspNetCoreMvcUiPureThemeModule),
     typeof(AbpAutofacModule),
     typeof(AbpCachingStackExchangeRedisModule),
     typeof(AbpHttpClientIdentityModelWebModule),

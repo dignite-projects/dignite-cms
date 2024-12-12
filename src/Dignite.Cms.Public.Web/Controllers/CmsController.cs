@@ -79,6 +79,7 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// <returns></returns>
         protected async Task<IActionResult> GetEntryActionResult(string culture = null, string route = "/")
         {
+            route = route.IsNullOrEmpty() ? "/" : route.EnsureStartsWith('/');
             var section = await GetSection(route);
             if (section == null)
             {
@@ -130,7 +131,7 @@ namespace Dignite.Cms.Public.Web.Controllers
             {
                 if (!culture.Equals(defaultCulture, StringComparison.OrdinalIgnoreCase))
                 {
-                    return Redirect(route.EnsureStartsWith('/'));
+                    return Redirect(route);
                 }
                 else
                 {

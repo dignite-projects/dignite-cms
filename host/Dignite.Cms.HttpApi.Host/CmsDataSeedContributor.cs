@@ -500,7 +500,7 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
         // Contact
         await CreateContact(_cmsData.EntryDefaultCulture, "Contact", "Let's ignite your digital journey, Together!", "<ul><li>Office Location:3-11-23 0IMAZATO HIGASHINARI WARD，OSAKA OSAKA JPN</li><li>Email Us:hello@dignite.com</li></ul>");
         await CreateContact("ja", "お問い合わせ", "デジタルエンジンに火をつけましょう!", "<ul><li>事務所所在地:大阪府大阪市東成区大今里3-11-23</li><li>メールでご連絡:hello@dignite.com</li></ul>");
-        await CreateContact("zh-Hant", "聯繫", "讓我們一起點燃你的數字化引擎!", "<ul><li>公司所在地:3-11-23 0IMAZATO HIGASHINARI WARD，OSAKA OSAKA JPN</li><li>發郵件:hello@dignite.com</li></ul>");
+        //await CreateContact("zh-Hant", "聯繫", "讓我們一起點燃你的數字化引擎!", "<ul><li>公司所在地:3-11-23 0IMAZATO HIGASHINARI WARD，OSAKA OSAKA JPN</li><li>發郵件:hello@dignite.com</li></ul>");
     }
 
     private async Task<FileDescriptorDto> UploadImage()

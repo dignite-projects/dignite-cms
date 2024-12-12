@@ -1,10 +1,10 @@
-﻿using Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure.Themes.Pure.Components.Toolbar.LanguageSwitch;
+﻿using Dignite.Cms.Public.Web.Components.CultureSwitch;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.Toolbars;
 
-namespace Dignite.Cms.Menus;
+namespace Dignite.Cms.Public.Web.Toolbars;
 
-public class CmsWebHostToolbarContributor : IToolbarContributor
+public class CmsToolbarContributor : IToolbarContributor
 {
     public virtual Task ConfigureToolbarAsync(IToolbarConfigurationContext context)
     {
@@ -13,7 +13,7 @@ public class CmsWebHostToolbarContributor : IToolbarContributor
             return Task.CompletedTask;
         }
 
-        context.Toolbar.Items.RemoveAll(m => m.ComponentType == typeof(LanguageSwitchViewComponent));
+        context.Toolbar.Items.Add(new ToolbarItem(typeof(CultureSwitchViewComponent)));
 
         return Task.CompletedTask;
     }

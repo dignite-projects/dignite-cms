@@ -4,17 +4,18 @@
 @model CultureSwitchViewComponentModel
 @if (Model.AllLanguages.Any()&&Model.AllLanguages.Count>1)
 {
+    var currentLanguage = Model.AllLanguages.First(l => l.CultureName.Equals(Model.CurrentCultureName, System.StringComparison.OrdinalIgnoreCase));
     <div class="dropdown">
-        <a class="btn" href="#" id="Menu_CultureSwitch" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="@Model.CurrentLanguage.DisplayName">
+        <a class="btn" href="#" id="Menu_CultureSwitch" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="@currentLanguage.DisplayName">
             <i class="fa fa-globe" aria-hidden="true"></i>
             <small class="d-none d-lg-inline">
-                @Model.CurrentLanguage.DisplayName
+                @currentLanguage.DisplayName
             </small>
         </a>
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="Menu_CultureSwitch">
             @foreach (var language in Model.AllLanguages)
             {
-                if (Model.CurrentLanguage.CultureName == language.CultureName)
+                if (Model.CurrentCultureName == language.CultureName)
                 {
                     <span class="dropdown-item active">
                         @language.DisplayName
@@ -22,21 +23,17 @@
                 }
                 else
                 {
-                    var currentPageUrl = Context.Request.Path.Value;
-                    if (language.CultureName.Equals(Model.Default.CultureName, StringComparison.OrdinalIgnoreCase))
+                    string url;
+                    if (Model.IsMatchingRoute)
                     {
-                        currentPageUrl = currentPageUrl.EnsureEndsWith('/')
-                        .RemovePreFix(StringComparison.OrdinalIgnoreCase, $"/{Model.CurrentLanguage.CultureName}/")
-                        .RemovePreFix("/");
+                        url = Model.InsertOrReplaceCultureParameter(Context, language.CultureName);
+                        url = url.Trim('/') + Context.Request.QueryString.Value;
                     }
                     else
                     {
-                        currentPageUrl = language.CultureName + currentPageUrl.EnsureEndsWith('/')
-                        .RemovePreFix(StringComparison.OrdinalIgnoreCase, $"/{Model.CurrentLanguage.CultureName}/")
-                        .EnsureStartsWith('/');
+                        url = $"Abp/Languages/Switch?culture={language.CultureName}&uiCulture={language.UiCultureName}&returnUrl={System.Net.WebUtility.UrlEncode(Context.Request.GetEncodedPathAndQuery())}"; 
                     }
-                    currentPageUrl = currentPageUrl.RemovePostFix("/") + Context.Request.QueryString.Value;
-                    <a class="dropdown-item" href="~/@currentPageUrl">
+                    <a class="dropdown-item" href="~/@url">
                         @language.DisplayName
                     </a>
                 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Options;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc;
@@ -15,32 +16,38 @@ public class CultureSwitchViewComponent : AbpViewComponent
 {
     protected ISitePublicAppService _sitePublicAppService { get; }
     protected IOptions<AbpLocalizationOptions> _localizationOptions { get; }
+    protected CultureRouteHelper _cultureRouteHelper { get; }
 
-    public CultureSwitchViewComponent(ISitePublicAppService sitePublicAppService,
-        IOptions<AbpLocalizationOptions> localizationOptions)
+    public CultureSwitchViewComponent(
+        ISitePublicAppService sitePublicAppService,
+        IOptions<AbpLocalizationOptions> localizationOptions,
+        CultureRouteHelper cultureRouteHelper)
     {
         _sitePublicAppService = sitePublicAppService;
         _localizationOptions = localizationOptions;
+        _cultureRouteHelper = cultureRouteHelper;
     }
 
     public virtual async Task<IViewComponentResult> InvokeAsync()
     {
         var site = await _sitePublicAppService.GetAsync();
-        var languages = _localizationOptions.Value.Languages
-            .Where(l=> site.AllLanguages.Any(r=>r.Equals(l.CultureName,System.StringComparison.OrdinalIgnoreCase)))
+        var siteLanguages = _localizationOptions.Value.Languages
+            .Where(l => site.AllLanguages.Any(r => r.Equals(l.CultureName, System.StringComparison.OrdinalIgnoreCase)))
             .ToList();
-        var culture = HttpContext.GetRouteValue(CultureRouteSegmentConstraint.RouteSegmentName)?.ToString();
-        var currentCulture = culture==null?
-            site.DefaultLanguage :
-            site.AllLanguages.FirstOrDefault(r=>r.Equals(culture,System.StringComparison.OrdinalIgnoreCase));
-        currentCulture = currentCulture == null ? site.DefaultLanguage : currentCulture;
+        var routeCultureName = HttpContext.GetRouteValue(CultureRouteSegmentConstraint.RouteSegmentName)?.ToString();
+        var isMatchingRoute = _cultureRouteHelper.TryMatchRoute(HttpContext,out string routePattern); //判断本页url是否匹配带有Culture路由参数的路由
+        var currentCultureName = routeCultureName == null ?
+            (isMatchingRoute ? site.DefaultLanguage : CultureInfo.CurrentCulture.Name) :
+            site.AllLanguages.FirstOrDefault(r => r.Equals(routeCultureName, System.StringComparison.OrdinalIgnoreCase));
 
         var model = new CultureSwitchViewComponentModel
-        {
-            Default = languages.First(l => l.CultureName.Equals(site.DefaultLanguage, System.StringComparison.OrdinalIgnoreCase)),
-            CurrentLanguage = languages.First(l=>l.CultureName.Equals(currentCulture,System.StringComparison.OrdinalIgnoreCase)),
-            AllLanguages = languages
-        };
+        (
+            site.DefaultLanguage,
+            currentCultureName,
+            siteLanguages,
+            isMatchingRoute,
+            routePattern
+        );
 
         return View(model);
     }

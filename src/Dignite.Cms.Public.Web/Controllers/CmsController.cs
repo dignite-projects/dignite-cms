@@ -21,7 +21,7 @@ using Volo.Abp.Text.Formatting;
 namespace Dignite.Cms.Public.Web.Controllers
 {
     [ControllerName(ControllerName)]
-    public class CmsController : AbpController
+    public class CmsController : AbpController,ICmsCultureRouteable
     {
         public const string ControllerName = "Cms";
 
@@ -49,38 +49,38 @@ namespace Dignite.Cms.Public.Web.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="route"></param>
+        /// <param name="path"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Entry(string route)
+        public async Task<IActionResult> Entry(string path)
         {
-            return await GetEntryActionResult(null, route);
+            return await GetEntryActionResult(null, path);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="culture"></param>
-        /// <param name="route">
+        /// <param name="path">
         /// There are several formats:
         /// 1.{culture}
         /// 2.{culture}/{route}
         /// </param>
         /// <returns></returns>
-        public async Task<IActionResult> CultureEntry(string culture, string route)
+        public async Task<IActionResult> CultureEntry(string culture, string path)
         {
-            return await GetEntryActionResult(culture, route);
+            return await GetEntryActionResult(culture, path);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="culture"></param>
-        /// <param name="route"></param>
+        /// <param name="path"></param>
         /// <returns></returns>
-        protected async Task<IActionResult> GetEntryActionResult(string culture = null, string route = "/")
+        protected async Task<IActionResult> GetEntryActionResult(string culture = null, string path = "/")
         {
-            route = route.IsNullOrEmpty() ? "/" : route.EnsureStartsWith('/');
-            var section = await GetSection(route);
+            path = path.IsNullOrEmpty() ? "/" : path.EnsureStartsWith('/');
+            var section = await GetSectionByEntityPath(path);
             if (section == null)
             {
                 return NotFound();
@@ -121,7 +121,7 @@ namespace Dignite.Cms.Public.Web.Controllers
                 );
 
             //
-            var entry = await GetEntry(culture, section, route);
+            var entry = await GetEntry(culture, path, section);
             if (entry != null)
             {
                 var viewModel = new EntryViewModel(entry, section);
@@ -131,7 +131,7 @@ namespace Dignite.Cms.Public.Web.Controllers
             {
                 if (!culture.Equals(defaultCulture, StringComparison.OrdinalIgnoreCase))
                 {
-                    return Redirect(route);
+                    return Redirect(path);
                 }
                 else
                 {
@@ -140,21 +140,21 @@ namespace Dignite.Cms.Public.Web.Controllers
             }
         }
 
-        protected async Task<SectionDto> GetSection(string route)
+        protected async Task<SectionDto> GetSectionByEntityPath(string entityPath)
         {
-            if (route.IsNullOrEmpty() || route == "/")
+            if (entityPath.IsNullOrEmpty() || entityPath == "/")
             {
                 return await _sectionPublicAppService.GetDefaultAsync();
             }
             else
             {
-                return await _sectionPublicAppService.FindByRouteAsync(route);
+                return await _sectionPublicAppService.FindByRouteAsync(entityPath);
             }
         }
 
-        protected async Task<EntryDto> GetEntry(string culture, SectionDto section, string route)
+        protected async Task<EntryDto> GetEntry(string culture, string entityPath, SectionDto section)
         {
-            var slug = ExtractSlug(section, route);
+            var slug = ExtractSlug(section.Route, entityPath);
             if (slug.IsNullOrEmpty())
             {
                 if (section.Type == Cms.Sections.SectionType.Single)
@@ -175,11 +175,11 @@ namespace Dignite.Cms.Public.Web.Controllers
 
 
 
-        protected virtual string ExtractSlug(SectionDto section, string entryRoute)
+        protected virtual string ExtractSlug(string sectionRoute, string entryPath)
         {
             string slug = null;
             //Extract Slug value from entryRoute
-            var extractResult = FormattedStringValueExtracter.Extract(entryRoute.RemovePreFix("/").RemovePostFix("/"), section.Route.RemovePreFix("/").RemovePostFix("/"), ignoreCase: true);
+            var extractResult = FormattedStringValueExtracter.Extract(entryPath.Trim('/'), sectionRoute.Trim('/'), ignoreCase: true);
             if (extractResult.IsMatch)
             {
                 slug = extractResult.Matches.FirstOrDefault(m => m.Name.Equals(nameof(EntryDto.Slug), StringComparison.InvariantCultureIgnoreCase))?.Value;

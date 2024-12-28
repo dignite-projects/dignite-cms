@@ -4,7 +4,7 @@ using Dignite.Cms.Menus;
 using Dignite.Cms.MultiTenancy;
 using Dignite.Cms.Public.Web;
 using Dignite.Cms.Public.Web.Builder;
-using Dignite.Cms.Public.Web.Localization;
+using Dignite.Cms.Public.Web.Routing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;

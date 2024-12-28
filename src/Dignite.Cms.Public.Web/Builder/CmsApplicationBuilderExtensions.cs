@@ -21,11 +21,11 @@ namespace Dignite.Cms.Public.Web.Builder
                     defaults: new { controller = CmsController.ControllerName, action = nameof(CmsController.Default) });
                 endpoints.MapControllerRoute(
                     name: CmsWebRouteConsts.CultureEntryRouteName,
-                    pattern: "{"+ CultureRouteSegmentConstraint.RouteSegmentName + ":"+ CultureRouteSegmentConstraint.RouteConstraintName + "}/{*route}",
+                    pattern: "{"+ CultureRouteSegmentConstraint.RouteSegmentName + ":"+ CultureRouteSegmentConstraint.RouteConstraintName + "}/{*path}",
                     defaults: new { controller = CmsController.ControllerName, action = nameof(CmsController.CultureEntry) });
                 endpoints.MapControllerRoute(
                     name: CmsWebRouteConsts.EntryRouteName,
-                    pattern: "{*route:regex(^(?!swagger/|account/).*)}", //TODO: Use an options to configure the regular expression for the route
+                    pattern: "{*path:regex(^(?!swagger/|account/).*)}", //TODO: Use an options to configure the regular expression for the route
                     defaults: new { controller = CmsController.ControllerName, action = nameof(CmsController.Entry) });
             });
 

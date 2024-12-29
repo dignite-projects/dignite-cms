@@ -36,14 +36,14 @@ namespace Dignite.Cms.Public.Sections
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="route">
-        /// The entry route does not contain culture.
+        /// <param name="entityPath">
+        /// The entry path does not contain culture.
         /// </param>
         /// <returns></returns>
-        public async Task<SectionDto> FindByRouteAsync( string route)
+        public async Task<SectionDto> FindByEntityPathAsync( string entityPath)
         {
             var allSections = await _sectionRepository.GetListAsync(null, true, true);
-            var section = await MatchingSectionWithRoute(allSections, route);
+            var section = await MatchingSectionByEntityPath(allSections, entityPath);
 
             /**
              * When no matching Section is found, add /index/ to the url to try again.
@@ -51,8 +51,8 @@ namespace Dignite.Cms.Public.Sections
              * **/
             if (section == null)
             {
-                route = route.EnsureEndsWith('/') + EntryConsts.DefaultSlug;
-                section= await MatchingSectionWithRoute(allSections,route);
+                entityPath = entityPath.EnsureEndsWith('/') + EntryConsts.DefaultSlug;
+                section= await MatchingSectionByEntityPath(allSections,entityPath);
             }
 
             return section;
@@ -102,15 +102,15 @@ namespace Dignite.Cms.Public.Sections
             }
         }
 
-        protected async Task<SectionDto> MatchingSectionWithRoute(List<Section> sections, string entryRoute)
+        protected async Task<SectionDto> MatchingSectionByEntityPath(List<Section> sections, string entryPath)
         {
-            entryRoute = entryRoute.EnsureStartsWith('/').EnsureEndsWith('/');
+            entryPath = entryPath.EnsureStartsWith('/').EnsureEndsWith('/');
             foreach (var section in sections.OrderByDescending(s => s.Route))
             {
                 var sectionRoute = section.Route.EnsureStartsWith('/').EnsureEndsWith('/');
-                var extractResult = FormattedStringValueExtracter.Extract(entryRoute, sectionRoute, ignoreCase: true);
+                var extractResult = FormattedStringValueExtracter.Extract(entryPath, sectionRoute, ignoreCase: true);
                 if (
-                    (!sectionRoute.Contains("{slug}", StringComparison.InvariantCultureIgnoreCase) && sectionRoute.Equals(entryRoute,StringComparison.InvariantCultureIgnoreCase))
+                    (!sectionRoute.Contains("{slug}", StringComparison.InvariantCultureIgnoreCase) && sectionRoute.Equals(entryPath,StringComparison.InvariantCultureIgnoreCase))
                     ||
                     (sectionRoute.Contains("{slug}", StringComparison.InvariantCultureIgnoreCase) && extractResult.IsMatch)
                     )

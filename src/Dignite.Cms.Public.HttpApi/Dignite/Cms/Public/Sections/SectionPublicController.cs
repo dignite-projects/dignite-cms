@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
@@ -29,15 +30,15 @@ namespace Dignite.Cms.Public.Sections
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="route">
-        /// The entry route does not contain culture.
+        /// <param name="entityPath">
+        /// The entry path does not contain culture.
         /// </param>
         /// <returns></returns>
         [HttpGet]
-        [Route("find-by-route")]
-        public async Task<SectionDto> FindByRouteAsync(string route)
+        [Route("find-by-entity-path")]
+        public async Task<SectionDto> FindByEntityPathAsync(string entityPath)
         {
-            return await _sectionAppService.FindByRouteAsync(route);
+            return await _sectionAppService.FindByEntityPathAsync(entityPath);
         }
 
         [HttpGet]

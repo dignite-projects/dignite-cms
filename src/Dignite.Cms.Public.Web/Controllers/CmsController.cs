@@ -148,7 +148,7 @@ namespace Dignite.Cms.Public.Web.Controllers
             }
             else
             {
-                return await _sectionPublicAppService.FindByRouteAsync(entityPath);
+                return await _sectionPublicAppService.FindByEntityPathAsync(entityPath);
             }
         }
 

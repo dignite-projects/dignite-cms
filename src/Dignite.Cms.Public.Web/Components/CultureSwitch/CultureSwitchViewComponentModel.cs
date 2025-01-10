@@ -1,28 +1,28 @@
-﻿using Dignite.Cms.Public.Web.Routing;
+﻿using Dignite.Abp.AspNetCore.Mvc.Regionalization.Routing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
-using Volo.Abp.Localization;
+using System.Globalization;
 
 namespace Dignite.Cms.Public.Web.Components.CultureSwitch;
 
 public class CultureSwitchViewComponentModel
 {
-    public CultureSwitchViewComponentModel(string siteDefaultCultureName, string currentCultureName, IReadOnlyList<LanguageInfo> allLanguages, bool isMatchingRoute,string routePattern)
+    public CultureSwitchViewComponentModel(string defaultCultureName, string currentCultureName, IReadOnlyList<CultureInfo> availableCultures, bool isMatchingRoute,string routePattern)
     {
-        SiteDefaultCultureName = siteDefaultCultureName;
+        DefaultCultureName = defaultCultureName;
         CurrentCultureName = currentCultureName;
-        AllLanguages = allLanguages;
+        AvailableCultures = availableCultures;
         IsMatchingRoute = isMatchingRoute;
         RoutePattern = routePattern;
     }
 
-    public string SiteDefaultCultureName { get; }
+    public string DefaultCultureName { get; }
 
     public string CurrentCultureName { get; }
 
-    public IReadOnlyList<LanguageInfo> AllLanguages { get; }
+    public IReadOnlyList<CultureInfo> AvailableCultures { get; }
 
     public bool IsMatchingRoute { get; }
 
@@ -38,7 +38,7 @@ public class CultureSwitchViewComponentModel
         // Parse route pattern segments
         var patternSegments = RoutePattern.TrimStart('/').Split('/');
         var urlSegments = url.Trim('/').Split('/');
-        var cultureSegment = $"{{{CultureRouteSegmentConstraint.RouteSegmentName}:{CultureRouteSegmentConstraint.RouteConstraintName}}}";
+        var cultureSegment = $"{{{RegionalizationRouteDataRequestCultureProvider.RegionalizationRouteDataStringKey}:{RegionalizationRouteConstraint.ConstraintName}}}";
 
         // Find culture parameter position in pattern
         int culturePosition = -1;
@@ -55,9 +55,9 @@ public class CultureSwitchViewComponentModel
 
         // Insert culture parameter
         var newSegments = new List<string>(urlSegments);
-        if (httpContext.GetRouteValue(CultureRouteSegmentConstraint.RouteSegmentName)!=null)
+        if (httpContext.GetRouteValue(RegionalizationRouteDataRequestCultureProvider.RegionalizationRouteDataStringKey)!=null)
         {
-            if (culture.Equals(SiteDefaultCultureName, StringComparison.OrdinalIgnoreCase))
+            if (culture.Equals(DefaultCultureName, StringComparison.OrdinalIgnoreCase))
             {
                 newSegments.RemoveAt(culturePosition);
             }

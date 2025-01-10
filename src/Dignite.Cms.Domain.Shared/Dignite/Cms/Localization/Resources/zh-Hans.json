@@ -20,8 +20,6 @@
     "DomainName{0}AlreadyExist": "域名 \"{0}\" 已绑定到其他站点！",
     "IsActive": "激活",
     "IsDefault": "默认",
-    "DefaultLanguage": "默认语言",
-    "DisplayName:Cms.Site.Languages": "网站支持的语言",
     "Language": "语言",
     "Sections": "版块",
     "SectionType": "版块类型",

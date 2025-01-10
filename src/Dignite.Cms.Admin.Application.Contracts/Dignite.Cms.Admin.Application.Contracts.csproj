@@ -20,6 +20,7 @@
 	<PackageReference Include="Dignite.Abp.DynamicForms.CkEditor" />
 	<PackageReference Include="Dignite.Abp.DynamicForms.FileExplorer" />
 	<PackageReference Include="Dignite.CmsKit.Admin.Application.Contracts" />
+	<PackageReference Include="Dignite.Abp.RegionalizationManagement.Application.Contracts" />
     <ProjectReference Include="..\Dignite.Cms.Common.Application.Contracts\Dignite.Cms.Common.Application.Contracts.csproj" />
   </ItemGroup>
 

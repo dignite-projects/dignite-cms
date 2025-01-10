@@ -1,14 +1,12 @@
 ﻿using Dignite.Abp.Data;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Public.Sections;
-using Dignite.Cms.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Localization;
 
 namespace Dignite.Cms.Public.Entries
 {
@@ -25,18 +23,7 @@ namespace Dignite.Cms.Public.Entries
 
         public async Task<EntryDto> FindBySlugAsync(FindBySlugInput input)
         {
-            var section = await _sectionPublicAppService.GetAsync(input.SectionId);
-
-            if(section==null)
-                return null;
-
-            if (input.Culture.IsNullOrEmpty())
-            {
-                var defaultLanguage = await SettingProvider.GetOrNullAsync(LocalizationSettingNames.DefaultLanguage);
-                input.Culture = defaultLanguage;
-            }
             var entry = await _entryRepository.FindBySlugAsync(input.Culture,input.SectionId,input.Slug);
-
             return ObjectMapper.Map<Entry, EntryDto>(entry);
         }
 

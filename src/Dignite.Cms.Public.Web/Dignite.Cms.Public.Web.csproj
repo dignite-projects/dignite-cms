@@ -13,9 +13,10 @@
   <ItemGroup>
 	<PackageReference Include="Dignite.CmsKit.Public.Web" />
 	<PackageReference Include="Dignite.Abp.Localization" />
+	<PackageReference Include="Dignite.Abp.AspNetCore.Mvc.Regionalization" />
   </ItemGroup>
 
-  <ItemGroup>	
+  <ItemGroup>			
     <ProjectReference Include="..\Dignite.Cms.Public.Application.Contracts\Dignite.Cms.Public.Application.Contracts.csproj" />
   </ItemGroup>
 

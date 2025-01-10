@@ -1,24 +1,25 @@
 ﻿@using System.Linq
 @using Microsoft.AspNetCore.Http.Extensions;
 @using Dignite.Cms.Public.Web.Components.CultureSwitch;
+@using System.Globalization
 @model CultureSwitchViewComponentModel
-@if (Model.AllLanguages.Any()&&Model.AllLanguages.Count>1)
+@if (Model.AvailableCultures.Any()&&Model.AvailableCultures.Count>1)
 {
-    var currentLanguage = Model.AllLanguages.First(l => l.CultureName.Equals(Model.CurrentCultureName, System.StringComparison.OrdinalIgnoreCase));
+    var currentCulture = Model.AvailableCultures.First(l => l.Name.Equals(Model.CurrentCultureName, System.StringComparison.OrdinalIgnoreCase));
     <div class="dropdown">
-        <a class="btn" href="#" id="Menu_CultureSwitch" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="@currentLanguage.DisplayName">
+        <a class="btn" href="#" id="Menu_CultureSwitch" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="@currentCulture?.DisplayName">
             <i class="fa fa-globe" aria-hidden="true"></i>
             <small class="d-none d-lg-inline">
-                @currentLanguage.DisplayName
+                @currentCulture?.DisplayName
             </small>
         </a>
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="Menu_CultureSwitch">
-            @foreach (var language in Model.AllLanguages)
+            @foreach (var culture in Model.AvailableCultures)
             {
-                if (Model.CurrentCultureName == language.CultureName)
+                if (Model.CurrentCultureName == culture.Name)
                 {
                     <span class="dropdown-item active">
-                        @language.DisplayName
+                        @culture.DisplayName
                     </span>
                 }
                 else
@@ -26,15 +27,16 @@
                     string url;
                     if (Model.IsMatchingRoute)
                     {
-                        url = Model.InsertOrReplaceCultureParameter(Context, language.CultureName);
+                        url = Model.InsertOrReplaceCultureParameter(Context, culture.Name);
                         url = url.Trim('/') + Context.Request.QueryString.Value;
                     }
                     else
                     {
-                        url = $"Abp/Languages/Switch?culture={language.CultureName}&uiCulture={language.UiCultureName}&returnUrl={System.Net.WebUtility.UrlEncode(Context.Request.GetEncodedPathAndQuery())}"; 
+                        var uiCultureName = culture.CultureTypes.HasFlag(CultureTypes.NeutralCultures) ? culture.Name : culture.Parent.Name;
+                        url = $"Abp/Languages/Switch?culture={culture.Name}&uiCulture={uiCultureName}&returnUrl={System.Net.WebUtility.UrlEncode(Context.Request.GetEncodedPathAndQuery())}";
                     }
                     <a class="dropdown-item" href="~/@url">
-                        @language.DisplayName
+                        @culture.DisplayName
                     </a>
                 }
             }

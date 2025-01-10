@@ -11,6 +11,7 @@
 
   <ItemGroup>
 	<PackageReference Include="Dignite.CmsKit.Admin.Application" />
+	<PackageReference Include="Dignite.Abp.RegionalizationManagement.Application" />
     <ProjectReference Include="..\Dignite.Cms.Admin.Application.Contracts\Dignite.Cms.Admin.Application.Contracts.csproj" />
     <ProjectReference Include="..\Dignite.Cms.Domain\Dignite.Cms.Domain.csproj" />
   </ItemGroup>

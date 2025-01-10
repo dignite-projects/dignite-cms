@@ -1,18 +1,17 @@
-﻿using Dignite.Abp.DynamicForms;
+﻿using Blazorise;
+using Dignite.Abp.Data;
+using Dignite.Abp.DynamicForms;
+using Dignite.Abp.Regionalization;
 using Dignite.Cms.Admin.Entries;
 using Dignite.Cms.Admin.Sections;
 using Dignite.Cms.Localization;
+using Dignite.Cms.Sections;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Volo.Abp.Localization;
-using Dignite.Abp.Data;
 using System.Threading;
-using Blazorise;
-using Dignite.Cms.Sections;
-using Dignite.Cms.Sites;
+using System.Threading.Tasks;
 
 namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
 {
@@ -29,8 +28,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         Guid? EditingEntryId { get; set; }
 
         protected EntryTypeDto CurrentEntryType { get; set; }
-        public SiteDto Site{ get; private set; } = new SiteDto();
-        protected IReadOnlyList<LanguageInfo> AllLanguages = new List<LanguageInfo>();
+        public Regionalization Regionalization { get; private set; }
         protected IReadOnlyList<EntryDto> AllEntriesOfStructure;
         protected List<EntryDto> AllVersions = null;
 
@@ -53,8 +51,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
         {
             await base.OnInitializedAsync();
             CurrentEntryType = Section.EntryTypes.FirstOrDefault(et => et.Id == Entry.EntryTypeId);
-            AllLanguages = await LanguageProvider.GetLanguagesAsync();
-            Site = await SiteAdminAppService.GetAsync();
+            Regionalization = await RegionalizationProvider.GetRegionalizationAsync();
             await SetCultureAsync(Entry.Culture);
             await GetVersionsAsync();
         }
@@ -185,7 +182,7 @@ namespace Dignite.Cms.Admin.Blazor.Pages.Cms.Admin.Entries
                 ? ValidationStatus.Error
                 : ValidationStatus.Success;
 
-            e.ErrorText = L["EntriesAlreadyExistEntryType", CurrentEntryType.DisplayName, AllLanguages.FirstOrDefault(l=>l.CultureName==Entry.Culture)?.DisplayName];
+            e.ErrorText = L["EntriesAlreadyExistEntryType", CurrentEntryType.DisplayName, Regionalization.AvailableCultures.FirstOrDefault(l=>l.Name==Entry.Culture)?.DisplayName];
         }
     }
 }

@@ -4,7 +4,6 @@
 @model EntryViewModel
 @{
     PageLayout.Content.Title = Model.Entry.Title;
-    ViewBag.FluidLayout = true;
 
     //
     IList<QueryingByField> queryParameters = new List<QueryingByField>
@@ -19,7 +18,7 @@
     </script>
 }
 
-<section class="container my-5">
+<section class="my-5">
     <h1>
         <cms-entry-field field-name="TextboxFieldName" entry="Model"></cms-entry-field>
     </h1>
@@ -29,7 +28,7 @@
     <cms-entry-field field-name="image" entry="Model" partial-name="_banner"></cms-entry-field>
 </div>
 
-<section class="container mb-5">
+<section class="mb-5">
     <h1 class="fs-1 fw-semibold mb-3">
         @localizer["description"]
     </h1>
@@ -39,7 +38,7 @@
 </section>
 
 
-<section class="container mb-5">
+<section class="mb-5">
     <h1 class="fs-1 fw-semibold mb-3">
         @localizer["blog"]
     </h1>

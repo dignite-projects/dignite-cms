@@ -1,16 +1,18 @@
 ﻿using Asp.Versioning;
+using Dignite.Abp.AspNetCore.Mvc.Regionalization;
+using Dignite.Abp.AspNetCore.Mvc.Regionalization.Routing;
+using Dignite.Abp.Regionalization;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Localization;
 using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
-using Dignite.Cms.Public.Sites;
+using Dignite.Cms.Public.Web.Localization;
 using Dignite.Cms.Public.Web.Models;
 using Dignite.Cms.Public.Web.Routing;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RequestLocalization;
-using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,24 +23,23 @@ using Volo.Abp.Text.Formatting;
 namespace Dignite.Cms.Public.Web.Controllers
 {
     [ControllerName(ControllerName)]
-    public class CmsController : AbpController,ICmsCultureRouteable
+    public class CmsController : AbpController, IRegionalizationRouteable
     {
         public const string ControllerName = "Cms";
 
-        private readonly ISitePublicAppService _sitePublicAppService;
+        private readonly IRegionalizationProvider _regionalizationProvider;
         private readonly ISectionPublicAppService _sectionPublicAppService;
         private readonly IEntryPublicAppService _entryPublicAppService;
-        private readonly IOptions<AbpLocalizationOptions> _localizationOptions;
+        private readonly ILanguageProvider _languageProvider;
 
-
-        public CmsController(ISitePublicAppService sitePublicAppService, ISectionPublicAppService sectionPublicAppService, IEntryPublicAppService entryPublicAppService,
-            IOptions<AbpLocalizationOptions> localizationOptions)
+        public CmsController(IRegionalizationProvider regionalizationProvider, ISectionPublicAppService sectionPublicAppService, IEntryPublicAppService entryPublicAppService,
+            ILanguageProvider languageProvider)
         {
             LocalizationResource = typeof(CmsResource);
+            _regionalizationProvider = regionalizationProvider;
             _sectionPublicAppService = sectionPublicAppService;
             _entryPublicAppService = entryPublicAppService;
-            _sitePublicAppService = sitePublicAppService;
-            _localizationOptions = localizationOptions;
+            _languageProvider = languageProvider;
         }
 
         public async Task<IActionResult> Default()
@@ -87,36 +88,37 @@ namespace Dignite.Cms.Public.Web.Controllers
             }
 
             //
-            var site = await _sitePublicAppService.GetAsync();
-            var defaultCulture = site.DefaultLanguage;
+            var regionalization = await _regionalizationProvider.GetRegionalizationAsync();
+            var defaultCultureName = regionalization.DefaultCulture.Name;
             if (culture.IsNullOrEmpty())
             {
-                culture = defaultCulture;
+                culture = defaultCultureName;
             }
             else
             {
                 /* Remove the default culture prefix and redirect to the new route.
                  * Example: the default culture is en, the current request route is /en/about, will jump to /about route
                  */
-                if (culture.Equals(defaultCulture, StringComparison.OrdinalIgnoreCase) 
+                if (culture.Equals(defaultCultureName, StringComparison.OrdinalIgnoreCase) 
                     && Request.Path.Value.EnsureEndsWith('/').StartsWith($"/{culture}/"))
                 {
                     return LocalRedirectPermanent(Request.GetEncodedPathAndQuery().RemovePreFix($"/{culture}").EnsureStartsWith('/').EnsureStartsWith('~'));
                 }
 
-                if (!culture.Equals(defaultCulture, StringComparison.OrdinalIgnoreCase) 
-                    && !Request.RouteValues.Any(r=>r.Key.Equals( CultureRouteSegmentConstraint.RouteSegmentName,StringComparison.OrdinalIgnoreCase)))
+                if (!culture.Equals(defaultCultureName, StringComparison.OrdinalIgnoreCase) 
+                    && !Request.RouteValues.Any(r=>r.Key.Equals(RegionalizationRouteDataRequestCultureProvider.RegionalizationRouteDataStringKey,StringComparison.OrdinalIgnoreCase)))
                 {
                     return Redirect(culture.ToLower());
                 }
             }
 
             //Saving the currently requested cultural information to a cookie
+            var languages = await _languageProvider.GetLanguagesAsync();
             AbpRequestCultureCookieHelper.SetCultureCookie(
                 HttpContext, 
                 new RequestCulture(
-                    culture, 
-                    _localizationOptions.Value.Languages.First(l=>l.CultureName.Equals(culture,StringComparison.OrdinalIgnoreCase)).UiCultureName
+                    culture,
+                    languages.First(l=>l.CultureName.Equals(culture,StringComparison.OrdinalIgnoreCase)).UiCultureName
                     )
                 );
 
@@ -129,7 +131,7 @@ namespace Dignite.Cms.Public.Web.Controllers
             }
             else
             {
-                if (!culture.Equals(defaultCulture, StringComparison.OrdinalIgnoreCase))
+                if (!culture.Equals(defaultCultureName, StringComparison.OrdinalIgnoreCase))
                 {
                     return Redirect(path);
                 }

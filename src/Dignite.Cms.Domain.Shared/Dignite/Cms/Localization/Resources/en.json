@@ -20,8 +20,6 @@
     "DomainName{0}AlreadyExist": "Domain name \"{0}\" is bound to another site!",
     "IsActive": "Is Active",
     "IsDefault": "Is Default",
-    "DefaultLanguage": "Default Language",
-    "DisplayName:Cms.Site.Languages": "Website Languages",
     "Language": "Language",
     "Sections": "Sections",
     "SectionType": "Section Type",

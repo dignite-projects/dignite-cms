@@ -46,7 +46,7 @@ namespace Dignite.Cms.Entries
         public virtual Guid EntryTypeId { get; protected set;}
 
         /// <summary>
-        /// The Culture corresponding to the entry
+        /// The Culture name corresponding to the entry
         /// </summary>
         public virtual string Culture { get; set; }
 

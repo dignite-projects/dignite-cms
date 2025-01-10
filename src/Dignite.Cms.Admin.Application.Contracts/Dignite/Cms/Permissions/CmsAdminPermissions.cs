@@ -38,6 +38,8 @@ namespace Dignite.Cms.Permissions
             public const string Delete = Default + ".Delete";
         }
 
+        public const string Settinging = GroupName + ".Settinging";
+
 
         public static string[] GetAll()
         {

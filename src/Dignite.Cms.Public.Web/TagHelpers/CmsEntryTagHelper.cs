@@ -1,6 +1,6 @@
-﻿using Dignite.Cms.Public.Entries;
+﻿using Dignite.Abp.Regionalization;
+using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
-using Dignite.Cms.Public.Sites;
 using Dignite.Cms.Public.Web.Models;
 using Dignite.Cms.Public.Web.Razor;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -32,29 +32,28 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         private readonly IRazorPartialRenderer _renderer;
         private readonly IEntryPublicAppService _entryAppService;
         private readonly ISectionPublicAppService _sectionAppService;
-        private readonly ISitePublicAppService _siteSettingsPublicAppService;
+        private readonly IRegionalizationProvider _regionalizationProvider;
 
         public CmsEntryTagHelper(
             IRazorPartialRenderer renderer,
             IEntryPublicAppService entryAppService, 
             ISectionPublicAppService sectionAppService,
-            ISitePublicAppService siteSettingsPublicAppService
+            IRegionalizationProvider regionalizationProvider
             )
         {
             _renderer = renderer;
             _entryAppService = entryAppService;
             _sectionAppService = sectionAppService;
-            _siteSettingsPublicAppService = siteSettingsPublicAppService;
+            _regionalizationProvider = regionalizationProvider;
         }
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             var section = await _sectionAppService.FindByNameAsync(SectionName);
-            var site = await _siteSettingsPublicAppService.GetAsync();
-            var defaultLanguageCulture = site.DefaultLanguage;
+            var regionalization = await _regionalizationProvider.GetRegionalizationAsync();
             if (Culture.IsNullOrEmpty())
             {
-                Culture= defaultLanguageCulture;
+                Culture= regionalization.DefaultCulture.Name;
             }
 
             var findEntryBySlugInput = new FindBySlugInput
@@ -66,9 +65,9 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             var model = await _entryAppService.FindBySlugAsync(findEntryBySlugInput);
             if (model == null)
             {
-                if (!Culture.Equals(defaultLanguageCulture, StringComparison.OrdinalIgnoreCase))
+                if (!Culture.Equals(regionalization.DefaultCulture.Name, StringComparison.OrdinalIgnoreCase))
                 {
-                    findEntryBySlugInput.Culture = defaultLanguageCulture;
+                    findEntryBySlugInput.Culture = regionalization.DefaultCulture.Name;
                     model = await _entryAppService.FindBySlugAsync(findEntryBySlugInput);
                 }
             }
@@ -77,7 +76,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             {
                 output.TagName = "p";
                 output.Attributes.Add("class", "p-2 bg-warning text-dark");
-                output.Content.SetContent($"No entries were found for Slug in {Culture} for {Slug}.");
+                output.Content.SetContent($"No entries were found for Slug in {Culture} language for {Slug}.");
             }
             else
             {

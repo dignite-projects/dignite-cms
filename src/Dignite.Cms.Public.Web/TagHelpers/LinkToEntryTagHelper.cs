@@ -1,4 +1,5 @@
-﻿using Dignite.Cms.Public.Entries;
+﻿using Dignite.Abp.AspNetCore.Mvc.Regionalization.Routing;
+using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
 using Dignite.Cms.Public.Web.Routing;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -39,7 +40,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
         /// <param name="section"></param>
         private string GetEntryUrl(EntryDto entry, SectionDto section)
         {
-            var culture = ViewContext.HttpContext.GetRouteValue(CultureRouteSegmentConstraint.RouteSegmentName)?.ToString();
+            var culture = ViewContext.HttpContext.GetRouteValue(RegionalizationRouteDataRequestCultureProvider.RegionalizationRouteDataStringKey)?.ToString();
             var currentCulture = CultureInfo.CurrentUICulture.Name;
             var url = entry.GetUrl(section);
 

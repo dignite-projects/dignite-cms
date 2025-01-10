@@ -27,6 +27,8 @@ namespace Dignite.Cms.Permissions
             entries.AddChild(CmsAdminPermissions.Entry.Create, L("Permission:Create"));
             entries.AddChild(CmsAdminPermissions.Entry.Update, L("Permission:Edit"));
             entries.AddChild(CmsAdminPermissions.Entry.Delete, L("Permission:Delete"));
+
+            group.AddPermission(CmsAdminPermissions.Settinging, L("Permission:Settinging"));
         }
 
         private static LocalizableString L(string name)

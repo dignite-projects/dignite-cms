@@ -20,8 +20,6 @@
     "DomainName{0}AlreadyExist": "ドメイン名 {0} が別のサイトにバインドされている！",
     "IsActive": "アクティブ",
     "IsDefault": "デフォルト",
-    "DefaultLanguage": "デフォルト言語",
-    "DisplayName:Cms.Site.Languages": "ウェブサイト言語",
     "Language": "言語",
     "Sections": "セクション",
     "SectionType": "セクションタイプ",

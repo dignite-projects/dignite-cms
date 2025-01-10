@@ -1,4 +1,5 @@
-﻿using Dignite.Cms.Public.Web.Routing;
+﻿using Dignite.Abp.AspNetCore.Mvc.Regionalization.Routing;
+using Dignite.Cms.Public.Web.Routing;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -41,7 +42,7 @@ namespace Dignite.Cms.Public.Web.TagHelpers
             {
                 if (Culture.IsNullOrEmpty())
                 {
-                    Culture = ViewContext.HttpContext.GetRouteValue(CultureRouteSegmentConstraint.RouteSegmentName)?.ToString();
+                    Culture = ViewContext.HttpContext.GetRouteValue(RegionalizationRouteDataRequestCultureProvider.RegionalizationRouteDataStringKey)?.ToString();
                 }
 
                 EntryPath = ("~/" + Culture).EnsureEndsWith('/') + EntryPath.RemovePreFix("~").RemovePreFix("/");

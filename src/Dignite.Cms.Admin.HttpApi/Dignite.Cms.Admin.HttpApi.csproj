@@ -24,6 +24,7 @@
 
   <ItemGroup>
 	<PackageReference Include="Dignite.CmsKit.Admin.HttpApi" />
+	<PackageReference Include="Dignite.Abp.RegionalizationManagement.HttpApi" />
     <ProjectReference Include="..\Dignite.Cms.Admin.Application.Contracts\Dignite.Cms.Admin.Application.Contracts.csproj" />
   </ItemGroup>
 

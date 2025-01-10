@@ -1,4 +1,5 @@
-﻿using Dignite.Cms.Localization;
+﻿using Dignite.Abp.RegionalizationManagement;
+using Dignite.Cms.Localization;
 using Dignite.CmsKit.Admin;
 using Localization.Resources.AbpUi;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,7 @@ namespace Dignite.Cms.Admin
 {
     [DependsOn(
         typeof(CmsAdminApplicationContractsModule),
+        typeof(RegionalizationManagementHttpApiModule),
         typeof(DigniteCmsKitAdminHttpApiModule))]
     public class CmsAdminHttpApiModule : AbpModule
     {

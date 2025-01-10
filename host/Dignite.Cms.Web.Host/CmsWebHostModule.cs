@@ -1,3 +1,4 @@
+using Dignite.Abp.AspNetCore.Mvc.Regionalization.Routing;
 using Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure;
 using Dignite.Cms.AspNetCore.MultiTenancy;
 using Dignite.Cms.Menus;
@@ -96,17 +97,6 @@ public class CmsWebHostModule : AbpModule
 
         ConfigureCache(configuration);
         ConfigureUrls(configuration);
-
-
-        Configure<AbpLocalizationOptions>(options =>
-        {
-            options.Languages.Add(new LanguageInfo("en", "en", "English"));
-            options.Languages.Add(new LanguageInfo("ja", "ja", "日本語"));
-            options.Languages.Add(new LanguageInfo("zh-hans", "zh-Hans", "简体中文"));
-            options.Languages.Add(new LanguageInfo("zh-hant", "zh-Hant", "繁體中文"));
-        });
-
-
         ConfigureAuthentication(context, configuration);
         ConfigureAutoMapper();
         ConfigureVirtualFileSystem(hostingEnvironment);
@@ -124,7 +114,7 @@ public class CmsWebHostModule : AbpModule
 
         Configure<RazorPagesOptions>(options =>
         {
-            options.Conventions.AddPageRoute("/RazorPageTest", "/{culture:CultureConstraint}/razor-page-test");
+            options.Conventions.AddPageRoute("/RazorPageTest", "/{culture:regionalization}/razor-page-test");
         });
 
         
@@ -277,7 +267,7 @@ public class CmsWebHostModule : AbpModule
         app.UseAbpRequestLocalization(options =>
         {
             options.AddInitialRequestCultureProvider(
-                new CmsRouteRequestCultureProvider() //Read regions from CMS routing and convert to localization
+                new RegionalizationRouteDataRequestCultureProvider() //Read region info from routing and convert to regionalization
             );
         });
 

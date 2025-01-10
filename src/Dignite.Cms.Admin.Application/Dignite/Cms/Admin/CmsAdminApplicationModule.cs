@@ -1,4 +1,5 @@
 ﻿using Dignite.Abp.BlobStoring;
+using Dignite.Abp.RegionalizationManagement;
 using Dignite.Cms.Admin.Entries;
 using Dignite.Cms.Permissions;
 using Dignite.CmsKit.Admin;
@@ -13,6 +14,7 @@ namespace Dignite.Cms.Admin
     [DependsOn(
         typeof(CmsDomainModule),
         typeof(CmsAdminApplicationContractsModule),
+        typeof(RegionalizationManagementApplicationModule),
         typeof(DigniteCmsKitAdminApplicationModule)
         )]
     public class CmsAdminApplicationModule : AbpModule

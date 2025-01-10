@@ -1,6 +1,6 @@
-﻿using Dignite.Abp.Localization;
+﻿using Dignite.Abp.AspNetCore.Mvc.Regionalization;
+using Dignite.Abp.Localization;
 using Dignite.Cms.Localization;
-using Dignite.Cms.Public.Web.Routing;
 using Dignite.Cms.Public.Web.Toolbars;
 using Dignite.CmsKit.Public.Web;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +15,8 @@ namespace Dignite.Cms.Public.Web;
 [DependsOn(
     typeof(CmsPublicApplicationContractsModule),
     typeof(DigniteCmsKitPublicWebModule),
-    typeof(DigniteAbpLocalizationModule)
+    typeof(DigniteAbpLocalizationModule),
+    typeof(AbpAspNetCoreMvcRegionalizationModule)
     )]
 public class CmsPublicWebModule : AbpModule
 {
@@ -50,11 +51,6 @@ public class CmsPublicWebModule : AbpModule
         Configure<AbpToolbarOptions>(options =>
         {
             options.Contributors.Add(new CmsToolbarContributor());
-        });
-
-        context.Services.AddRouting(options =>
-        {
-            options.ConstraintMap.Add(CultureRouteSegmentConstraint.RouteConstraintName, typeof(CultureRouteSegmentConstraint));
         });
     }
 }

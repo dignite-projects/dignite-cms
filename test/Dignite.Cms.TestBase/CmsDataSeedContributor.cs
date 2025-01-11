@@ -1,7 +1,6 @@
 ﻿using Dignite.Abp.Data;
 using Dignite.Abp.DynamicForms.Select;
 using Dignite.Abp.DynamicForms.TextEdit;
-using Dignite.Cms.Domains;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Fields;
 using Dignite.Cms.Sections;
@@ -23,7 +22,6 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
     private readonly ICmsUserRepository _cmsUserRepository;
     private readonly ICurrentTenant _currentTenant;
     private readonly CmsTestData _cmsTestData;
-    private readonly IDomainRepository _domainRepository;
     private readonly ISectionRepository _sectionRepository;
     private readonly IEntryTypeRepository _entryTypeRepository;
     private readonly IFieldGroupRepository _fieldGroupRepository;
@@ -31,14 +29,13 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
     private readonly IEntryRepository _entryRepository;
 
     public CmsDataSeedContributor(IClock clock, ICmsUserRepository cmsUserRepository, ICurrentTenant currentTenant, CmsTestData cmsTestData, 
-        IDomainRepository domainRepository, ISectionRepository sectionRepository, IEntryTypeRepository entryTypeRepository, 
+        ISectionRepository sectionRepository, IEntryTypeRepository entryTypeRepository, 
         IFieldGroupRepository fieldGroupRepository, IFieldRepository fieldRepository, IEntryRepository entryRepository)
     {
         _clock = clock;
         _cmsUserRepository = cmsUserRepository;
         _currentTenant = currentTenant;
         _cmsTestData = cmsTestData;
-        _domainRepository = domainRepository;
         _sectionRepository = sectionRepository;
         _entryTypeRepository = entryTypeRepository;
         _fieldGroupRepository = fieldGroupRepository;
@@ -53,7 +50,6 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
             await SeedUsersAsync();
             await SeedFieldGroupAsync();
             await SeedFieldsAsync();
-            await SeedTenantDomainAsync();
             await SeedSectionsAsync();
             await SeedEntryTypesAsync();
             await SeedEntriesAsync();
@@ -113,14 +109,6 @@ public class CmsDataSeedContributor : IDataSeedContributor, ITransientDependency
                 ),
             autoSave:true
             );
-    }
-
-    private async Task SeedTenantDomainAsync()
-    {
-        var domain = new Domain(Guid.NewGuid(), _cmsTestData.DomainName,_cmsTestData.TenantId);
-        await _domainRepository.InsertAsync(
-            domain,
-            autoSave: true);
     }
 
     private async Task SeedSectionsAsync()

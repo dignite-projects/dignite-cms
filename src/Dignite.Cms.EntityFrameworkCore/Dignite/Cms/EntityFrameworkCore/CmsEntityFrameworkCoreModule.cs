@@ -14,7 +14,6 @@ public class CmsEntityFrameworkCoreModule : AbpModule
     {
         context.Services.AddAbpDbContext<CmsDbContext>(options =>
         {
-            options.AddRepository<Domains.Domain, Domains.EfCoreDomainRepository>();
             options.AddRepository<Sections.Section, Sections.EfCoreSectionRepository>();
             options.AddRepository<Sections.EntryType, Sections.EfCoreEntryTypeRepository>();
             options.AddRepository<Fields.FieldGroup, Fields.EfCoreFieldGroupRepository>();

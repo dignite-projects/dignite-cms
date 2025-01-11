@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using Dignite.Cms.Domains;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Fields;
-using Dignite.Cms.Public.Domains;
 using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
 using Dignite.Cms.Sections;
@@ -15,9 +13,6 @@ public class CmsPublicApplicationAutoMapperProfile : Profile
 {
     public CmsPublicApplicationAutoMapperProfile()
     {
-        /**** domain *****************************************/
-        CreateMap<Domain, DomainDto>();
-
         /**** field *****************************************/
         CreateMap<Field, FieldDto>();
 

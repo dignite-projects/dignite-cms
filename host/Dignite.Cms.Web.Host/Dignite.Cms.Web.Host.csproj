@@ -35,7 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Dignite.Cms.AspNetCore.MultiTenancy\Dignite.Cms.AspNetCore.MultiTenancy.csproj" />
     <ProjectReference Include="..\..\src\Dignite.Cms.HttpApi.Client\Dignite.Cms.HttpApi.Client.csproj" />
     <ProjectReference Include="..\..\src\Dignite.Cms.HttpApi\Dignite.Cms.HttpApi.csproj" />
     <ProjectReference Include="..\..\src\Dignite.Cms.Public.Web\Dignite.Cms.Public.Web.csproj" />

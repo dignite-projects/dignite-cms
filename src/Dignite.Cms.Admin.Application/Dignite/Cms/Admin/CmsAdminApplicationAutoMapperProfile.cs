@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using Dignite.Cms.Admin.Domains;
 using Dignite.Cms.Admin.Entries;
 using Dignite.Cms.Admin.Fields;
 using Dignite.Cms.Admin.Sections;
-using Dignite.Cms.Domains;
 using Dignite.Cms.Entries;
 using Dignite.Cms.Sections;
 using Volo.Abp.AutoMapper;
@@ -15,9 +13,6 @@ namespace Dignite.Cms.Admin
     {
         public CmsAdminApplicationAutoMapperProfile()
         {
-            /**** domain *****************************************/
-            CreateMap<Domain, DomainDto>();
-
             /**** field *****************************************/
             CreateMap<Cms.Fields.FieldGroup, FieldGroupDto>();
             CreateMap<Cms.Fields.Field, Cms.Fields.FieldDto>();

@@ -1,11 +1,9 @@
 using Dignite.Abp.AspNetCore.Mvc.Regionalization.Routing;
 using Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure;
-using Dignite.Cms.AspNetCore.MultiTenancy;
 using Dignite.Cms.Menus;
 using Dignite.Cms.MultiTenancy;
 using Dignite.Cms.Public.Web;
 using Dignite.Cms.Public.Web.Builder;
-using Dignite.Cms.Public.Web.Routing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
@@ -35,7 +33,6 @@ using Volo.Abp.Http.Client.IdentityModel.Web;
 using Volo.Abp.Http.Client.Web;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.Web;
-using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.PermissionManagement;
@@ -72,8 +69,7 @@ namespace Dignite.Cms;
     typeof(AbpSettingManagementHttpApiClientModule),
     typeof(AbpSettingManagementWebModule),
     typeof(AbpAspNetCoreSerilogModule),
-    typeof(AbpSwashbuckleModule),
-    typeof(CmsAspNetCoreMultiTenancyModule)
+    typeof(AbpSwashbuckleModule)
     )]
 public class CmsWebHostModule : AbpModule
 {
@@ -115,13 +111,6 @@ public class CmsWebHostModule : AbpModule
         Configure<RazorPagesOptions>(options =>
         {
             options.Conventions.AddPageRoute("/RazorPageTest", "/{culture:regionalization}/razor-page-test");
-        });
-
-        
-        Configure<AbpTenantResolveOptions>(options =>
-        {
-            // Resolve current tenant by domain name
-            options.AddCmsDomainTenantResolver();
         });
     }
 

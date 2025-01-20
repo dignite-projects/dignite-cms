@@ -7,10 +7,10 @@
 {
     var currentCulture = Model.AvailableCultures.First(l => l.Name.Equals(Model.CurrentCultureName, System.StringComparison.OrdinalIgnoreCase));
     <div class="dropdown">
-        <a class="btn" href="#" id="Menu_CultureSwitch" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="@currentCulture?.DisplayName">
+        <a class="btn" href="#" id="Menu_CultureSwitch" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="@currentCulture?.NativeName">
             <i class="fa fa-globe" aria-hidden="true"></i>
             <small class="d-none d-lg-inline">
-                @currentCulture?.DisplayName
+                @currentCulture?.NativeName
             </small>
         </a>
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="Menu_CultureSwitch">
@@ -19,7 +19,7 @@
                 if (Model.CurrentCultureName == culture.Name)
                 {
                     <span class="dropdown-item active">
-                        @culture.DisplayName
+                        @culture.NativeName
                     </span>
                 }
                 else
@@ -36,7 +36,7 @@
                         url = $"Abp/Languages/Switch?culture={culture.Name}&uiCulture={uiCultureName}&returnUrl={System.Net.WebUtility.UrlEncode(Context.Request.GetEncodedPathAndQuery())}";
                     }
                     <a class="dropdown-item" href="~/@url">
-                        @culture.DisplayName
+                        @culture.NativeName
                     </a>
                 }
             }

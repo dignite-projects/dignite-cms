@@ -9,7 +9,7 @@ namespace Dignite.Cms.Admin
     [DependsOn(
         typeof(CmsAdminApplicationContractsModule),
         typeof(DigniteCmsKitAdminHttpApiClientModule),
-        typeof(RegionalizationManagementHttpApiClientModule))]
+        typeof(AbpRegionalizationManagementHttpApiClientModule))]
     public class CmsAdminHttpApiClientModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)

@@ -10,7 +10,7 @@ namespace Dignite.Cms.Admin
 {
     [DependsOn(
         typeof(CmsAdminApplicationContractsModule),
-        typeof(RegionalizationManagementHttpApiModule),
+        typeof(AbpRegionalizationManagementHttpApiModule),
         typeof(DigniteCmsKitAdminHttpApiModule))]
     public class CmsAdminHttpApiModule : AbpModule
     {

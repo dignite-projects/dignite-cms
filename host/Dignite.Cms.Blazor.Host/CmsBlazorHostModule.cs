@@ -22,7 +22,7 @@ namespace Dignite.Cms.Blazor.Host;
 
 [DependsOn(
     typeof(AbpAutofacWebAssemblyModule),
-    typeof(DigniteAbpAspNetCoreComponentsWebAssemblyPureThemeModule),
+    typeof(AbpAspNetCoreComponentsWebAssemblyPureThemeModule),
     typeof(AbpAccountApplicationContractsModule),
     typeof(AbpIdentityBlazorWebAssemblyModule),
     typeof(AbpTenantManagementBlazorWebAssemblyModule),

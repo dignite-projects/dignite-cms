@@ -12,7 +12,7 @@
 
   <ItemGroup>
 	<PackageReference Include="Dignite.CmsKit.Public.Web" />
-	<PackageReference Include="Dignite.Abp.Localization" />
+	<PackageReference Include="Dignite.Abp.MultiTenancyLocalization" />
 	<PackageReference Include="Dignite.Abp.AspNetCore.Mvc.Regionalization" />
   </ItemGroup>
 

@@ -5,7 +5,7 @@
 @using Dignite.FileExplorer.Files;
 @model EntryFieldViewModel
 @{
-    LocalizationResourceType = typeof(DigniteAbpDynamicFormsFileExplorerResource);
+    LocalizationResourceType = typeof(AbpDynamicFormsFileExplorerResource);
     var files = Model.Entry.GetField<List<FileDescriptorDto>>(Model.Field.Name);
 }
 <table class="table">

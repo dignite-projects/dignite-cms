@@ -49,7 +49,7 @@ using CmsResource = Dignite.Cms.Localization.CmsResource;
 namespace Dignite.Cms;
 
 [DependsOn(
-    typeof(DigniteAbpAspNetCoreMvcUiPureThemeModule),
+    typeof(AbpAspNetCoreMvcUiPureThemeModule),
     typeof(CmsPublicWebModule),
     typeof(CmsHttpApiClientModule),
     typeof(CmsHttpApiModule),

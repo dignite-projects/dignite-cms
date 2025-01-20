@@ -17,9 +17,9 @@ namespace Dignite.Cms.Admin.Blazor
         typeof(AbpAspNetCoreComponentsWebThemingModule),
         typeof(AbpAutoMapperModule),
         typeof(DigniteAbpBlazoriseUiModule),
-        typeof(DigniteAbpDynamicFormsComponentsBlazoriseUiModule),
-        typeof(DigniteAbpDynamicFormsComponentsFileExplorerModule),
-        typeof(DigniteAbpDynamicFormsComponentsCkEditorModule)
+        typeof(AbpDynamicFormsComponentsBlazoriseUiModule),
+        typeof(AbpDynamicFormsComponentsFileExplorerModule),
+        typeof(AbpDynamicFormsComponentsCkEditorModule)
         )]
     public class CmsAdminBlazorModule : AbpModule
     {

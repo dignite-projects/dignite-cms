@@ -14,7 +14,7 @@ namespace Dignite.Cms.Admin
     [DependsOn(
         typeof(CmsDomainModule),
         typeof(CmsAdminApplicationContractsModule),
-        typeof(RegionalizationManagementApplicationModule),
+        typeof(AbpRegionalizationManagementApplicationModule),
         typeof(DigniteCmsKitAdminApplicationModule)
         )]
     public class CmsAdminApplicationModule : AbpModule

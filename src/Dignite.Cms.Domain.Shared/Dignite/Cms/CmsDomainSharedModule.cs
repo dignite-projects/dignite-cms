@@ -9,7 +9,7 @@ using Volo.Abp.VirtualFileSystem;
 
 namespace Dignite.Cms;
 [DependsOn(
-    typeof(DigniteAbpDynamicFormsModule),
+    typeof(AbpDynamicFormsModule),
     typeof(DigniteCmsKitDomainSharedModule)
 )]
 public class CmsDomainSharedModule : AbpModule
@@ -30,7 +30,7 @@ public class CmsDomainSharedModule : AbpModule
         {
             options.Resources
                 .Add<CmsResource>("en")
-                .AddBaseTypes(typeof(DigniteAbpDynamicFormsResource))
+                .AddBaseTypes(typeof(AbpDynamicFormsResource))
                 .AddVirtualJson("/Dignite/Cms/Localization/Resources");
         });
 

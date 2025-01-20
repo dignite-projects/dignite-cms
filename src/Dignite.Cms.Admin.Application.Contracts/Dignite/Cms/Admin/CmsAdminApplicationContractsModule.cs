@@ -9,9 +9,9 @@ namespace Dignite.Cms.Admin
     [DependsOn(
         typeof(CmsCommonApplicationContractsModule),
         typeof(DigniteCmsKitAdminApplicationContractsModule),
-        typeof(RegionalizationManagementApplicationContractsModule),
-        typeof(DigniteAbpDynamicFormsFileExplorerModule),
-        typeof(DigniteAbpDynamicFormsCkEditorModule)
+        typeof(AbpRegionalizationManagementApplicationContractsModule),
+        typeof(AbpDynamicFormsFileExplorerModule),
+        typeof(AbpDynamicFormsCkEditorModule)
         )]
     public class CmsAdminApplicationContractsModule : AbpModule
     {

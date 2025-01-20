@@ -6,18 +6,13 @@ using Dignite.Cms.Entries;
 using Dignite.Cms.Localization;
 using Dignite.Cms.Public.Entries;
 using Dignite.Cms.Public.Sections;
-using Dignite.Cms.Public.Web.Localization;
 using Dignite.Cms.Public.Web.Models;
-using Dignite.Cms.Public.Web.Routing;
 using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RequestLocalization;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc;
-using Volo.Abp.Localization;
 using Volo.Abp.Text.Formatting;
 
 namespace Dignite.Cms.Public.Web.Controllers
@@ -30,16 +25,13 @@ namespace Dignite.Cms.Public.Web.Controllers
         private readonly IRegionalizationProvider _regionalizationProvider;
         private readonly ISectionPublicAppService _sectionPublicAppService;
         private readonly IEntryPublicAppService _entryPublicAppService;
-        private readonly ILanguageProvider _languageProvider;
 
-        public CmsController(IRegionalizationProvider regionalizationProvider, ISectionPublicAppService sectionPublicAppService, IEntryPublicAppService entryPublicAppService,
-            ILanguageProvider languageProvider)
+        public CmsController(IRegionalizationProvider regionalizationProvider, ISectionPublicAppService sectionPublicAppService, IEntryPublicAppService entryPublicAppService)
         {
             LocalizationResource = typeof(CmsResource);
             _regionalizationProvider = regionalizationProvider;
             _sectionPublicAppService = sectionPublicAppService;
             _entryPublicAppService = entryPublicAppService;
-            _languageProvider = languageProvider;
         }
 
         public async Task<IActionResult> Default()
@@ -111,16 +103,6 @@ namespace Dignite.Cms.Public.Web.Controllers
                     return Redirect(culture.ToLower());
                 }
             }
-
-            //Saving the currently requested cultural information to a cookie
-            var languages = await _languageProvider.GetLanguagesAsync();
-            AbpRequestCultureCookieHelper.SetCultureCookie(
-                HttpContext, 
-                new RequestCulture(
-                    culture,
-                    languages.First(l=>l.CultureName.Equals(culture,StringComparison.OrdinalIgnoreCase)).UiCultureName
-                    )
-                );
 
             //
             var entry = await GetEntry(culture, path, section);
